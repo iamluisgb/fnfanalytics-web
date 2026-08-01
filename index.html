@@ -621,8 +621,10 @@ footer a{color:#8ea59b}
 (function(){
   var f = document.getElementById('waitform');
   if(!f) return;
-  // endpoint troceado para no servir el correo en claro a los scrapers
-  var addr = ['luisgonzalezb93','gmail.com'].join('@');
+  // Token de FormSubmit: el correo de destino no viaja en el HTML. Se obtiene
+  // al activar el formulario y es público por diseño (identifica al buzón,
+  // no da acceso a él). Para cambiar el destinatario hay que reactivar.
+  var addr = '1cd257196bf9a567d63dd4a68fbab3f4';
   f.addEventListener('submit', async function(e){
     e.preventDefault();
     if (f._honey && f._honey.value) return;
