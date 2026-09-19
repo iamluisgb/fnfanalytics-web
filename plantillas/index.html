@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plantillas de partes de campo, gratis · FnF Analytics</title>
+<meta name="description" content="Cinco plantillas de partes de trabajo agrícola para imprimir y rellenar a mano: cuadrilla, recolección, poda y aclareo, tractorista y tratamiento fitosanitario. Gratis, en PDF a escala 100%.">
+<style>
+  :root { --tinta:#16211a; --verde:#2e7d32; --gris:#5b6760; --linea:#e2e6e3; --fondo:#f7f8f7; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; color:var(--tinta);
+         background:#fff; line-height:1.55; }
+  header { background:var(--fondo); border-bottom:1px solid var(--linea); padding:22px 20px; }
+  .env { max-width:960px; margin:0 auto; }
+  header img { height:30px; display:block; }
+  h1 { font-size:27px; margin:16px 0 6px; letter-spacing:-.2px; }
+  .sub { color:var(--gris); font-size:16px; margin:0 0 4px; }
+  main { max-width:960px; margin:0 auto; padding:26px 20px 60px; }
+  h2 { font-size:19px; margin:34px 0 10px; }
+  .rejilla { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; margin-top:10px; }
+  .tarjeta { border:1px solid var(--linea); border-radius:6px; overflow:hidden; background:#fff;
+             display:flex; flex-direction:column; }
+  .tarjeta .prev { background:var(--fondo); border-bottom:1px solid var(--linea); }
+  .tarjeta .prev img { width:100%; display:block; }
+  .tarjeta .cuerpo { padding:12px 14px 14px; flex:1; display:flex; flex-direction:column; }
+  .tarjeta h3 { font-size:15px; margin:0 0 2px; }
+  .tarjeta .cod { font-size:11px; color:var(--gris); text-transform:uppercase; letter-spacing:.5px; }
+  .tarjeta p { font-size:13px; color:var(--gris); margin:8px 0 12px; flex:1; }
+  .botones { display:flex; gap:8px; flex-wrap:wrap; }
+  a.b { font-size:13px; font-weight:600; text-decoration:none; padding:7px 11px; border-radius:4px;
+        border:1px solid var(--tinta); color:#fff; background:var(--tinta); }
+  a.b.sec { background:#fff; color:var(--tinta); }
+  .aviso { background:#fff8e1; border:1px solid #f0e0a8; border-radius:6px; padding:14px 16px; font-size:14px; }
+  ol, ul { padding-left:20px; }
+  li { margin-bottom:6px; }
+  .destacado { background:var(--fondo); border:1px solid var(--linea); border-radius:8px; padding:18px 20px; }
+  .destacado h2 { margin-top:0; }
+  .cta { display:inline-block; margin-top:6px; background:var(--verde); border-color:var(--verde); }
+  footer { border-top:1px solid var(--linea); color:var(--gris); font-size:12px; padding:18px 20px 40px; }
+  code { background:var(--fondo); padding:1px 5px; border-radius:3px; font-size:13px; }
+</style>
+</head>
+<body>
+<header><div class="env">
+  <img src="logo-fnf.png" alt="FnF Analytics">
+  <h1>Plantillas de partes de campo</h1>
+  <p class="sub">Cinco hojas para imprimir y rellenar a mano: cuadrilla, recolección, poda y aclareo, tractorista y tratamiento fitosanitario.</p>
+  <p class="sub">Gratis, sin registro y sin marca de agua. A4 apaisado, a escala 100 %.</p>
+</div></header>
+
+<main>
+  <div class="aviso">
+    <b>Estas hojas están hechas para hacerles una foto.</b> Llevan cuatro marcas en las esquinas que enderezan la foto
+    y un QR que identifica la hoja, y piden lo mínimo: casillas para marcar y uno o dos números. Con eso, una foto
+    de móvil se convierte en el parte dentro de la aplicación.
+  </div>
+
+  <h2>Las cinco hojas</h2>
+  <div class="rejilla" id="rejilla"></div>
+
+  <h2>Crea la tuya</h2>
+  <div class="destacado">
+    <p>Cada explotación tiene sus labores y sus costumbres. En el <a href="creador.html">creador de partes</a> eliges
+    una de las cinco, cambias el título, las líneas, las columnas y el vocabulario, y la imprimes. <b>Sin registro:</b>
+    la plantilla viaja en el enlace, así que la puedes guardar o mandar por WhatsApp.</p>
+    <a class="b" href="creador.html">Abrir el creador</a>
+  </div>
+
+  <h2>Cómo se imprimen</h2>
+  <ol>
+    <li>Abre el PDF y dale a imprimir.</li>
+    <li><b>Escala 100 %</b> y <b>A4 apaisado</b>. Si el navegador reduce al 94 %, las casillas dejan de cuadrar.</li>
+    <li>Márgenes del navegador a cero: la hoja ya trae los suyos.</li>
+    <li>Papel normal mate y <b>bolígrafo</b>, no lápiz. Mejor si es de oficina (blanco y negro).</li>
+  </ol>
+
+  <h2>Cómo se rellenan sin perder tiempo</h2>
+  <ul>
+    <li><b>El horario, una vez.</b> En las hojas de cuadrilla va en la cabecera: la cuadrilla empieza y acaba a la vez.</li>
+    <li><b>Lo que ya se sabe, va impreso.</b> Finca, fecha, sector, variedad y hasta los nombres, si se imprimen desde la app.</li>
+    <li><b>Marcar antes que escribir.</b> Las labores y los estados se marcan; solo se escriben horas, kilos o árboles.</li>
+    <li><b>Nada de totales.</b> Las horas y los costes los calcula la aplicación.</li>
+  </ul>
+
+  <h2>Y después, la foto</h2>
+  <div class="destacado">
+    <p>Las hojas llevan el trabajo hecho para que una foto entre en el sistema: cuatro marcas que enderezan y dan
+    escala, un QR que dice qué hoja es (y qué versión), y un vocabulario cerrado para que no haya que interpretar
+    palabras a mano. Lo que el operario escribe son casillas y números; el resto ya es digital.</p>
+    <p style="margin-bottom:0"><a class="b cta" href="creador.html">Empezar por el creador</a></p>
+  </div>
+
+  <h2>Preguntas de una línea</h2>
+  <ul>
+    <li><b>¿Cuesta algo?</b> No. Descargar e imprimir es gratis, y el creador también, sin registro.</li>
+    <li><b>¿Puedo usar mi propia hoja?</b> Sí: se puede partir de una de las cinco y cambiar lo que haga falta.</li>
+    <li><b>¿Sirve sin conexión?</b> El papel funciona sin cobertura, que es de lo que se trata. La lectura de la foto se hace después.</li>
+    <li><b>¿Y mis datos?</b> Lo que se rellena en el papel es tuyo. Cuando la app lee una foto, se queda en tu empresa.</li>
+  </ul>
+</main>
+
+<footer><div class="env">
+  FnF Analytics · analítica de costes para el campo · <span id="anio"></span>
+</div></footer>
+
+<script>
+// Las hojas en datos: el HTML de esta pagina es solo la vitrina.
+const HOJAS = [
+  ["R-001","Parte diario de trabajo y cuadrilla","La hoja de todos los días: el horario de la cuadrilla, la labor marcada y las excepciones.","parte_diario_R001_v2"],
+  ["R-002","Parte de recolección","Envases y kilos por operario: es lo que se paga y lo que permite calcular el €/kg.","parte_recoleccion_R002_v2"],
+  ["R-003","Parte de poda y aclareo a destajo","Los árboles contados, que es el pago. El €/árbol acordado va impreso en la cabecera.","parte_poda_aclareo_R003_v2"],
+  ["R-004","Parte de tractorista","El número de la labor y el horómetro al empezar y al acabar. El gasoil, una vez, al repostar.","parte_tractorista_R004_v2"],
+  ["R-005","Ficha de orden de tratamiento fitosanitario","El registro legal: una orden por familia, con los productos impresos desde la orden y el equipo de aplicación.","parte_tratamiento_R005_v2"]
+];
+document.getElementById("rejilla").innerHTML = HOJAS.map(h =>
+  '<div class="tarjeta"><div class="prev"><img src="pdf/' + h[3] + '.png" alt="' + h[1] + '"></div>' +
+  '<div class="cuerpo"><div class="cod">' + h[0] + '</div><h3>' + h[1] + '</h3><p>' + h[2] + '</p>' +
+  '<div class="botones"><a class="b" href="pdf/' + h[3] + '.pdf" download>Descargar PDF</a>' +
+  '<a class="b sec" href="pdf/' + h[3] + '.png" target="_blank">Ver</a></div></div></div>').join("");
+document.getElementById("anio").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
