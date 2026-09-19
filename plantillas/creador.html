@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Creador de partes de FnF Analytics — version 0 (sin servidor, sin registro)
+  Creador de partes de FnF Analytics — version 1 (sin servidor, sin registro)
 
   Una definicion, tres salidas: aqui vive la DEFINICION (que se puede enlazar en
   la URL) y se renderiza el PAPEL. La app pondra despues el QR y la lectura.
@@ -9,8 +9,9 @@
   que en el servidor hace generar.py. Anadir una plantilla no deberia ser un
   despliegue.
 
-  Para publicar: estos tres ficheros (creador.html, index.html, logo-fnf.png) van
-  juntos en la misma carpeta.
+  Layout: barra lateral de controles (paso 1 plantilla, 2 titulo y lineas,
+  3 columnas, 4 vocabulario) y la hoja a la derecha, que es la protagonista.
+  Al imprimir, solo sale la hoja.
 -->
 <html lang="es">
 <head>
@@ -18,37 +19,77 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Creador de partes de campo · FnF Analytics</title>
 <style>
-  :root { --tinta:#111; --gris:#666; --linea:#555; --fondo:#f4f4f2; }
-  * { box-sizing: border-box; }
+  :root { --tinta:#16211a; --gris:#5b6760; --linea:#e2e6e3; --fondo:#f4f5f4;
+          --suave:#fafbfa; --acento:#2e7d32; }
+  * { box-sizing:border-box; }
   body { margin:0; background:var(--fondo); color:var(--tinta);
-         font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; }
+         font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; font-size:14px; }
+  .layout { display:flex; align-items:flex-start; gap:18px; padding:18px; }
 
-  /* ---------- editor (solo en pantalla) ---------- */
-  .editor { background:#fff; border-bottom:1px solid #ddd; padding:10px 14px;
-            position:sticky; top:0; z-index:10; box-shadow:0 1px 8px rgba(0,0,0,.06); }
-  .editor h1 { font-size:15px; margin:0 0 8px; }
-  .editor h1 small { font-weight:400; color:var(--gris); }
-  .fila { display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end; }
-  .campo { display:flex; flex-direction:column; gap:3px; }
-  .campo label { font-size:10px; font-weight:700; text-transform:uppercase;
-                 letter-spacing:.4px; color:#333; }
+  /* ---------------- barra lateral ---------------- */
+  .panel { position:sticky; top:18px; width:352px; flex:0 0 352px; background:#fff;
+           border:1px solid var(--linea); border-radius:10px; padding:16px;
+           box-shadow:0 1px 3px rgba(0,0,0,.05); max-height:calc(100vh - 36px);
+           overflow:auto; }
+  .marca-cab { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+  .marca-cab img { height:20px; display:block; }
+  .marca-cab span { font-size:11px; color:var(--gris); text-transform:uppercase;
+                    letter-spacing:.6px; }
+  .acciones { display:flex; gap:8px; flex-wrap:wrap; }
+  button { font:inherit; font-size:13px; font-weight:600; padding:8px 12px; cursor:pointer;
+           border:1px solid var(--tinta); background:var(--tinta); color:#fff; border-radius:6px; }
+  button:hover { opacity:.9; }
+  button.sec { background:#fff; color:var(--tinta); }
+  button.mini { padding:4px 8px; font-size:11px; font-weight:500; border-color:var(--linea);
+                color:var(--gris); background:#fff; }
+  button.mini:hover { color:var(--tinta); border-color:#bbb; }
+  .chip { display:inline-block; margin-top:9px; font-size:11px; color:var(--gris);
+          background:var(--suave); border:1px solid var(--linea); border-radius:999px;
+          padding:3px 9px; }
+
+  h2.paso { font-size:11px; text-transform:uppercase; letter-spacing:.7px; color:var(--gris);
+            margin:20px 0 8px; padding-top:14px; border-top:1px solid var(--linea);
+            display:flex; align-items:center; gap:7px; }
+  h2.paso b { display:inline-flex; align-items:center; justify-content:center; width:17px; height:17px;
+              border-radius:50%; background:var(--tinta); color:#fff; font-size:10px; }
+  h2.paso:first-of-type { margin-top:14px; }
+  label.campo { display:block; font-size:11px; font-weight:600; color:#333; margin:0 0 4px; }
   input[type=text], input[type=number], select, textarea {
-    font:inherit; font-size:12px; padding:4px 6px; border:1px solid #bbb; border-radius:3px; }
-  textarea { width:320px; height:64px; font-size:11px; }
-  button { font:inherit; font-size:12px; font-weight:600; padding:7px 12px; cursor:pointer;
-           border:1px solid #111; background:#111; color:#fff; border-radius:3px; }
-  button.sec { background:#fff; color:#111; }
-  .cols { max-height:132px; overflow:auto; border:1px solid #ddd; border-radius:3px;
-          padding:4px 6px; margin-top:4px; }
-  .cols div { display:flex; gap:6px; align-items:center; font-size:12px; }
-  .cols input[type=text] { width:170px; }
-  .aviso { font-size:12px; color:#444; background:#fff8e1; border:1px solid #f0e0a8;
-           border-radius:3px; padding:8px 10px; margin:10px 14px 0; }
-  .lienzo { padding:14px; overflow:auto; }
+    width:100%; font:inherit; font-size:13px; padding:7px 9px; border:1px solid #c9cfca;
+    border-radius:6px; background:#fff; color:var(--tinta); }
+  input:focus, select:focus, textarea:focus { outline:2px solid rgba(46,125,50,.35);
+    border-color:var(--acento); }
+  textarea { height:104px; font-size:12px; line-height:1.5; }
+  .dos { display:flex; gap:10px; }
+  .dos > div { flex:1; }
+  .ayuda { font-size:11px; color:var(--gris); margin:6px 0 0; line-height:1.45; }
 
-  /* ---------- la hoja ---------- */
-  .hoja { position:relative; width:297mm; height:210mm; padding:11mm 11mm 8mm 11mm;
-          background:#fff; margin:0 auto; box-shadow:0 2px 14px rgba(0,0,0,.12); }
+  /* presets como tarjetas, no como desplegable */
+  .presets { display:grid; gap:6px; }
+  .preset { text-align:left; background:#fff; color:var(--tinta); border:1px solid var(--linea);
+            border-radius:7px; padding:8px 10px; font-weight:500; font-size:12.5px; }
+  .preset small { display:block; color:var(--gris); font-weight:400; font-size:11px; margin-top:1px; }
+  .preset.on { border-color:var(--acento); box-shadow:0 0 0 1px var(--acento) inset; background:#f3f9f3; }
+
+  /* columnas */
+  .cols { display:grid; gap:5px; }
+  .col { display:grid; grid-template-columns:auto 1fr auto auto; gap:6px; align-items:center;
+         background:var(--suave); border:1px solid var(--linea); border-radius:6px; padding:4px 6px; }
+  .col.apagada { opacity:.45; }
+  .col input[type=text] { font-size:12px; padding:5px 7px; }
+  .col .tipo { font-size:10px; color:var(--gris); text-transform:uppercase; letter-spacing:.4px;
+               white-space:nowrap; }
+  .col .mover { display:flex; gap:2px; }
+  .anadir { display:grid; grid-template-columns:1fr auto auto; gap:6px; margin-top:7px; }
+  .anadir select { font-size:12px; padding:6px 7px; }
+  .anadir input { font-size:12px; padding:6px 7px; }
+
+  /* ---------------- lienzo ---------------- */
+  .lienzo { flex:1; min-width:0; overflow:auto; }
+  .aviso { background:#fff8e1; border:1px solid #f0e0a8; border-radius:8px; padding:10px 12px;
+           font-size:12.5px; color:#4a4230; margin-bottom:14px; }
+  .hoja { position:relative; width:297mm; height:210mm; padding:11mm 11mm 8mm 11mm; background:#fff;
+          margin:0 auto; box-shadow:0 2px 14px rgba(0,0,0,.13); }
   .marca { position:absolute; width:5mm; height:5mm; background:#000; }
   .m1 { top:5mm; left:5mm; }    .m2 { top:5mm; right:5mm; }
   .m3 { bottom:5mm; left:5mm; } .m4 { bottom:5mm; right:5mm; }
@@ -58,9 +99,8 @@
   .titulo { font-size:14.5pt; font-weight:700; margin:1.2mm 0 0 0; }
   .codigo { font-size:8pt; color:var(--gris); margin-top:.8mm; }
   .qr { text-align:center; }
-  .qr .caja { width:17mm; height:17mm; border:.6pt dashed #bbb; display:flex;
-              align-items:center; justify-content:center; font-size:5pt; color:#999;
-              text-align:center; padding:1mm; }
+  .qr .caja { width:17mm; height:17mm; border:.6pt dashed #bbb; display:flex; align-items:center;
+              justify-content:center; font-size:5pt; color:#999; text-align:center; padding:1mm; }
   .qr .uid { font-family:"SF Mono",Menlo,monospace; font-size:6pt; color:#444; margin-top:.6mm; }
   .contexto { display:flex; gap:4mm; margin-top:2.5mm; }
   .campo-h { flex:1; }
@@ -69,20 +109,19 @@
   .campo-h .valor { border-bottom:.8pt solid var(--gris); height:6.5mm; font-size:10pt; }
   .leyenda { display:flex; gap:2.5mm; flex-wrap:wrap; margin:2.5mm 0 1.5mm; font-size:7pt; }
   .leyenda .it { white-space:nowrap; }
-  .leyenda .aviso-l { color:var(--gris); }
-  table { width:100%; border-collapse:collapse; table-layout:fixed; }
-  th, td { border:.6pt solid var(--linea); }
-  thead th { background:#eee; font-size:6.8pt; font-weight:700; padding:.8mm .4mm;
-             text-align:center; line-height:1.15; }
-  thead th.izq { text-align:left; padding-left:1mm; }
-  tbody td { height:8.6mm; font-size:8pt; padding:0 1mm; }
-  tbody tr:nth-child(even) td { background:#fbfbfb; }
-  td.num { text-align:center; font-size:7.5pt; color:var(--gris); }
-  td.marca-celda { text-align:center; }
-  td.marca-celda i { display:inline-block; width:3.4mm; height:3.4mm; border:.5pt solid #777; }
+  .hoja table { width:100%; border-collapse:collapse; table-layout:fixed; }
+  .hoja th, .hoja td { border:.6pt solid #555; }
+  .hoja thead th { background:#eee; font-size:6.8pt; font-weight:700; padding:.8mm .4mm;
+                   text-align:center; line-height:1.15; }
+  .hoja thead th.izq { text-align:left; padding-left:1mm; }
+  .hoja tbody td { height:8.6mm; font-size:8pt; padding:0 1mm; }
+  .hoja tbody tr:nth-child(even) td { background:#fbfbfb; }
+  .hoja td.num { text-align:center; font-size:7.5pt; color:var(--gris); }
+  .hoja td.marca-celda { text-align:center; }
+  .hoja td.marca-celda i { display:inline-block; width:3.4mm; height:3.4mm; border:.5pt solid #777; }
   .nota { font-size:6.5pt; color:#444; margin:-1mm 0 1.5mm; }
   .abajo { display:flex; gap:4mm; margin-top:2.5mm; }
-  .bloque { border:.8pt solid var(--linea); padding:1.5mm 2mm; flex:1; }
+  .bloque { border:.8pt solid #555; padding:1.5mm 2mm; flex:1; }
   .bloque h3 { margin:0 0 1mm 0; font-size:7.5pt; font-weight:700; text-transform:uppercase;
                letter-spacing:.3pt; }
   .bloque .campos { display:flex; gap:4mm; }
@@ -94,58 +133,84 @@
          justify-content:space-between; font-size:6.2pt; color:var(--gris);
          border-top:.5pt solid #bbb; padding-top:1mm; }
 
-  /* ---------- imprimir: solo la hoja ---------- */
+  /* ---------------- pantallas estrechas ---------------- */
+  @media (max-width: 1180px) {
+    .layout { display:block; padding:12px; }
+    .panel { position:static; width:auto; flex:none; max-height:none; margin-bottom:16px; }
+    .lienzo { overflow:visible; }
+    .hoja { transform-origin:top left; }
+  }
+
+  /* ---------------- imprimir: solo la hoja ---------------- */
   @page { size:A4 landscape; margin:0; }
   @media print {
     body { background:#fff; }
-    .editor, .aviso { display:none !important; }
-    .lienzo { padding:0; overflow:visible; }
+    .panel, .aviso { display:none !important; }
+    .layout { display:block; padding:0; }
+    .lienzo { overflow:visible; }
     .hoja { margin:0; box-shadow:none; page-break-after:avoid; }
     .marca { position:fixed; }
   }
 </style>
 </head>
 <body>
+<div class="layout">
 
-<div class="editor">
-  <h1>Creador de partes de campo <small>· gratis y sin registro · imprímelo a escala 100 % en A4 apaisado</small></h1>
-  <div class="fila">
-    <div class="campo">
-      <label for="preset">Empezar por</label>
-      <select id="preset"></select>
-    </div>
-    <div class="campo">
-      <label for="titulo">Título</label>
-      <input type="text" id="titulo" size="34">
-    </div>
-    <div class="campo">
-      <label for="filas">Líneas</label>
-      <input type="number" id="filas" min="2" max="16" style="width:64px">
-    </div>
-    <div class="campo">
-      <label for="leyenda">Vocabulario (una por línea, «A = Abonado»)</label>
-      <textarea id="leyenda" spellcheck="false"></textarea>
-    </div>
-    <div class="campo">
-      <label>Columnas de la tabla</label>
-      <div class="cols" id="cols"></div>
-    </div>
-    <div class="campo" style="gap:6px">
+  <aside class="panel">
+    <div class="marca-cab"><img src="logo-fnf.png" alt="FnF Analytics"><span>Creador de partes</span></div>
+
+    <div class="acciones">
       <button onclick="imprimir()">Imprimir / Guardar PDF</button>
-      <button class="sec" onclick="copiarEnlace()">Copiar enlace de esta plantilla</button>
-      <button class="sec" onclick="restablecer()">Restablecer</button>
-      <span id="estado" style="font-size:11px;color:#666"></span>
+      <button class="sec" onclick="copiarEnlace()">Copiar enlace</button>
     </div>
+    <div><span class="chip" id="estado">listo · sin registro</span></div>
+
+    <h2 class="paso"><b>1</b> Empieza por una plantilla</h2>
+    <div class="presets" id="presets"></div>
+
+    <h2 class="paso"><b>2</b> Título y líneas</h2>
+    <label class="campo" for="titulo">Título de la hoja</label>
+    <input type="text" id="titulo">
+    <div class="dos" style="margin-top:10px">
+      <div>
+        <label class="campo" for="filas">Líneas</label>
+        <input type="number" id="filas" min="2" max="16">
+      </div>
+      <div>
+        <label class="campo" for="subtitulo">Texto pequeño</label>
+        <input type="text" id="subtitulo">
+      </div>
+    </div>
+
+    <h2 class="paso"><b>3</b> Columnas de la tabla</h2>
+    <div class="cols" id="cols"></div>
+    <div class="anadir">
+      <input type="text" id="nueva" placeholder="Nombre de la columna nueva">
+      <select id="nuevaTipo">
+        <option value="texto">texto</option>
+        <option value="num">número</option>
+        <option value="marca">casilla</option>
+      </select>
+      <button class="sec" onclick="anadirCol()">Añadir</button>
+    </div>
+    <p class="ayuda">La casilla es el cuadradito que se marca; el número es la numeración de la línea.</p>
+
+    <h2 class="paso"><b>4</b> Vocabulario</h2>
+    <textarea id="leyenda" spellcheck="false"></textarea>
+    <p class="ayuda">Una por línea. Con «A = Abonado» se imprime la letra en negrita y el texto al lado.
+      Lo que se repite conviene marcarlo, no escribirlo.</p>
+    <div style="margin-top:8px"><button class="mini" onclick="restaurarVocabulario()">Restaurar el del preset</button></div>
+  </aside>
+
+  <div class="lienzo">
+    <div class="aviso">
+      Esto imprime el <b>papel para rellenar a mano</b>. Las cuatro marcas de las esquinas ya van puestas: son las
+      que después permiten leer una foto. El <b>QR</b> lo añade la app al imprimir desde dentro (con el número de
+      parte); aquí queda marcado su sitio. Guarda el enlace para que la app sepa leer esta plantilla.
+    </div>
+    <div class="hoja" id="hoja"></div>
   </div>
 </div>
-
-<div class="aviso">
-  Lo que se imprime es el <b>papel para rellenar a mano</b>. Las cuatro marcas de las esquinas ya van puestas:
-  son las que después permiten leer una foto. El <b>QR</b> lo añade la app al imprimir desde dentro (con el número
-  de parte); aquí queda marcado su sitio. Para que la app lea las fotos de esta plantilla, guarda su enlace.
-</div>
-
-<div class="lienzo"><div class="hoja" id="hoja"></div></div>
 
 <script>
 // ==========================================================================
@@ -204,7 +269,7 @@ const PRESETS = {
     subtitulo: "una hoja por tractorista, máquina y día · horómetro al empezar y al acabar",
     contexto: [["Empresa",1.1],["Finca",1.1],["Máquina / matrícula",1.3],["Tractorista (nombre)",1.5],
                ["Fecha",.8],["Nº parte",.6]],
-    leyenda: [["Labores", "1 Arar · 2 Gradear · 3 Zachar · 4 Roar · 5 Rayar · 6 Regatera · 7 Limpiar · 8 Quemar · 9 Sacar raíces · 10 Tierra y piedras · 11 Fumigar · 12 Herbicidas · 13 Azufrar · 14 Picar · 15 Transporte o viaje · 16 Otra (escribirla)"]],
+    leyenda: [["Labores","1 Arar · 2 Gradear · 3 Zachar · 4 Roar · 5 Rayar · 6 Regatera · 7 Limpiar · 8 Quemar · 9 Sacar raíces · 10 Tierra y piedras · 11 Fumigar · 12 Herbicidas · 13 Azufrar · 14 Picar · 15 Transporte o viaje · 16 Otra (escribirla)"]],
     nota: "Se escribe el número de la labor y dos números por línea (horómetro al empezar y al acabar): las horas salen de restar. El gasoil se anota una vez, al repostar.",
     cols: [["#",5,"num"],["Labor (nº)",13,"texto"],["Apero / implemento",26,"texto"],["Parcela",22,"texto"],
            ["Horómetro inicio",18,"texto"],["Horómetro fin",18,"texto"],["Observaciones",30,"texto"]],
@@ -219,7 +284,7 @@ const PRESETS = {
     contexto: [["Empresa",1],["Fecha de ejecución",.9],["Hora prevista",.6],["Finca",1],["Familia",.8],
                ["Cultivo y variedades",1.4],["Superficie tratada (ha)",.8]],
     leyenda: [],
-    nota: "Producto, plaga y dosis van impresos desde la orden. Materia activa, nº de registro y plazo de seguridad los pone la app desde el catálogo. Diez productos caben; si hay más, se continúa al dorso.",
+    nota: "Producto, plaga y dosis van impresos desde la orden. Materia activa, nº de registro y plazo de seguridad los pone la app desde el catálogo. Cinco productos caben; si hay más, se continúa al dorso.",
     cols: [["#",5,"num"],["Producto",32,"texto"],["Plaga o enfermedad",25,"texto"],
            ["Dosis prevista",17,"texto"],["Cantidad aplicada",24,"texto"],["Aplicado",13,"marca"]],
     filas: 4,
@@ -229,10 +294,14 @@ const PRESETS = {
   }
 };
 
-let est = null;   // el estado que se esta editando
+const TIPOS = { num: "número", texto: "texto", marca: "casilla" };
+let est = null;
+
+function esc(s) { return String(s === undefined || s === null ? "" : s)
+  .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
 
 // --------------------------------------------------------------------------
-// estado
+// estado y controles
 // --------------------------------------------------------------------------
 function cargar(id, guardado) {
   const p = JSON.parse(JSON.stringify(PRESETS[id]));
@@ -241,24 +310,57 @@ function cargar(id, guardado) {
     contexto: p.contexto, leyenda: p.leyenda, nota: p.nota, filas: p.filas, bloques: p.bloques,
     cols: p.cols.map(c => ({ label: c[0], ancho: c[1], tipo: c[2], on: true }))
   };
-  if (guardado) Object.assign(est, guardado);
-  pintarEditor();
+  if (guardado) {
+    ["titulo", "subtitulo", "nota", "filas"].forEach(k => { if (guardado[k] !== undefined) est[k] = guardado[k]; });
+    if (guardado.leyenda) est.leyenda = guardado.leyenda;
+    if (guardado.cols) est.cols = guardado.cols.map(c => ({ label: c[0], ancho: c[1], tipo: c[2], on: !!c[3] }));
+  }
+  pintarTodo();
   render();
 }
 
-function pintarEditor() {
+function pintarTodo() {
+  document.getElementById("presets").innerHTML = Object.keys(PRESETS).map(k =>
+    '<button class="preset ' + (k === est.preset ? "on" : "") + '" onclick="elegir(\'' + k + '\')">' +
+    esc(PRESETS[k].titulo) + "<small>" + PRESETS[k].codigo + " · " + PRESETS[k].filas + " líneas</small></button>").join("");
   document.getElementById("titulo").value = est.titulo;
+  document.getElementById("subtitulo").value = est.subtitulo;
   document.getElementById("filas").value = est.filas;
-  document.getElementById("leyenda").value = est.leyenda.map(l => l[0] + " = " + l[1]).join("\n");
+  document.getElementById("leyenda").value = est.leyenda.map(l => (l[0] ? l[0] + " = " : "") + l[1]).join("\n");
   document.getElementById("cols").innerHTML = est.cols.map((c, i) =>
-    '<div><input type="checkbox" ' + (c.on ? "checked" : "") + ' onchange="toggleCol(' + i + ',this.checked)">' +
-    '<input type="text" value="' + esc(c.label) + '" oninput="editCol(' + i + ',this.value)">' +
-    '<span style="color:#888;font-size:11px">' + c.tipo + '</span></div>').join("");
+    '<div class="col' + (c.on ? "" : " apagada") + '">' +
+      '<input type="checkbox" ' + (c.on ? "checked" : "") + ' onchange="toggleCol(' + i + ',this.checked)" title="Mostrar en la hoja">' +
+      '<input type="text" value="' + esc(c.label) + '" oninput="editCol(' + i + ',this.value)">' +
+      '<span class="tipo">' + TIPOS[c.tipo] + "</span>" +
+      '<span class="mover"><button class="mini" onclick="moverCol(' + i + ',-1)" title="Subir">&uarr;</button>' +
+      '<button class="mini" onclick="moverCol(' + i + ',1)" title="Bajar">&darr;</button>' +
+      '<button class="mini" onclick="borrarCol(' + i + ')" title="Quitar">&times;</button></span>' +
+    "</div>").join("");
 }
 
-function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;"); }
-function toggleCol(i, v) { est.cols[i].on = v; render(); }
+function elegir(id) { location.hash = ""; cargar(id, null); }
+function toggleCol(i, v) { est.cols[i].on = v; pintarTodo(); render(); }
 function editCol(i, v) { est.cols[i].label = v; render(); }
+function moverCol(i, d) {
+  const j = i + d;
+  if (j < 0 || j >= est.cols.length) return;
+  const c = est.cols.splice(i, 1)[0];
+  est.cols.splice(j, 0, c);
+  pintarTodo(); render();
+}
+function borrarCol(i) { est.cols.splice(i, 1); pintarTodo(); render(); }
+function anadirCol() {
+  const nombre = document.getElementById("nueva").value.trim() || "Columna";
+  const tipo = document.getElementById("nuevaTipo").value;
+  est.cols.push({ label: nombre, ancho: tipo === "marca" ? 9 : 20, tipo: tipo, on: true });
+  document.getElementById("nueva").value = "";
+  pintarTodo(); render();
+}
+function restaurarVocabulario() {
+  est.leyenda = JSON.parse(JSON.stringify(PRESETS[est.preset].leyenda));
+  document.getElementById("leyenda").value = est.leyenda.map(l => (l[0] ? l[0] + " = " : "") + l[1]).join("\n");
+  render();
+}
 function leerLeyenda() {
   est.leyenda = document.getElementById("leyenda").value.split("\n")
     .map(l => l.trim()).filter(l => l).map(l => {
@@ -273,9 +375,10 @@ function leerLeyenda() {
 // --------------------------------------------------------------------------
 function render() {
   const cols = est.cols.filter(c => c.on);
-  const tot = cols.reduce((s, c) => s + c.ancho, 0);
+  const tot = cols.reduce((s, c) => s + c.ancho, 0) || 1;
   const colgroup = cols.map(c => '<col style="width:' + (100 * c.ancho / tot).toFixed(3) + '%">').join("");
-  const cab = cols.map(c => '<th class="' + (c.tipo === "texto" && c.label.length > 3 ? "izq" : "") + '">' + esc(c.label) + "</th>").join("");
+  const cab = cols.map(c => '<th class="' + (c.tipo === "texto" && c.label.length > 3 ? "izq" : "") + '">' +
+    esc(c.label) + "</th>").join("");
   let cuerpo = "";
   for (let i = 1; i <= est.filas; i++) {
     cuerpo += "<tr>" + cols.map(c => {
@@ -284,9 +387,10 @@ function render() {
       return "<td></td>";
     }).join("") + "</tr>";
   }
-  const leyenda = est.leyenda.map(l => '<span class="it">' + (l[0] ? "<b>" + esc(l[0]) + "</b> " : "") + esc(l[1]) + "</span>").join("");
+  const leyenda = est.leyenda.map(l => '<span class="it">' + (l[0] ? "<b>" + esc(l[0]) + "</b> " : "") +
+    esc(l[1]) + "</span>").join("");
   const bloques = est.bloques.map(b => {
-    const [titulo, contenido] = b;
+    const titulo = b[0], contenido = b[1];
     if (Array.isArray(contenido)) {
       return '<div class="bloque"><h3>' + esc(titulo) + '</h3><div class="campos">' +
         contenido.map(c => '<div class="campo-h"><label>' + esc(c) + '</label><div class="valor"></div></div>').join("") +
@@ -294,8 +398,8 @@ function render() {
     }
     if (contenido.indexOf("firmas:") === 0) {
       return '<div class="bloque"><h3>' + esc(titulo) + "</h3>" +
-        contenido.slice(7).split("|").map(f => '<div class="etiqueta-firma">' + esc(f) + '</div><div class="firma"></div>').join("") +
-        "</div>";
+        contenido.slice(7).split("|").map(f => '<div class="etiqueta-firma">' + esc(f) +
+          '</div><div class="firma"></div>').join("") + "</div>";
     }
     return '<div class="bloque"><h3>' + esc(titulo) + '</h3><div class="notas"></div></div>';
   }).join("");
@@ -314,52 +418,49 @@ function render() {
     '<div class="abajo">' + bloques + "</div>" +
     '<div class="pie"><span>Imprimir a escala 100 % en A4 apaisado · rellenar con bolígrafo</span>' +
     "<span>FnF Analytics · plantilla " + esc(est.codigo) + " v" + est.version + " · los partes se validan todas las semanas</span></div>";
+  return cols.length;
 }
 
 // --------------------------------------------------------------------------
 // enlace: la definicion viaja en la URL, asi que no hace falta cuenta
 // --------------------------------------------------------------------------
 function enlace() {
-  const mini = { preset: est.preset, titulo: est.titulo, filas: est.filas, nota: est.nota,
-                 leyenda: est.leyenda, cols: est.cols.map(c => [c.label, c.ancho, c.tipo, c.on ? 1 : 0]) };
+  const mini = { preset: est.preset, titulo: est.titulo, subtitulo: est.subtitulo, filas: est.filas,
+                 nota: est.nota, leyenda: est.leyenda,
+                 cols: est.cols.map(c => [c.label, c.ancho, c.tipo, c.on ? 1 : 0]) };
   return location.origin + location.pathname + "#p=" +
          btoa(unescape(encodeURIComponent(JSON.stringify(mini)))).replace(/=+$/, "");
 }
-
 function copiarEnlace() {
   const u = enlace();
-  const listo = () => document.getElementById("estado").textContent = "enlace copiado · " + u.length + " caracteres";
+  const listo = () => document.getElementById("estado").textContent =
+    "enlace copiado · " + u.length + " caracteres";
   if (navigator.clipboard) navigator.clipboard.writeText(u).then(listo, () => prompt("Copia el enlace:", u));
   else prompt("Copia el enlace:", u);
 }
-
 function leerHash() {
   const m = location.hash.match(/#p=(.+)$/);
   if (!m) return null;
   try {
     const d = JSON.parse(decodeURIComponent(escape(atob(m[1]))));
-    if (d.cols) d.cols = d.cols.map(c => ({ label: c[0], ancho: c[1], tipo: c[2], on: !!c[3] }));
+    // Las columnas se dejan en crudo (listas) y las convierte cargar(): si se
+    // convierten aqui y alli, la segunda pasada las deja sin nombre y apagadas.
     return d;
   } catch (e) { return null; }
 }
-
 function imprimir() { window.print(); }
-function restablecer() { location.hash = ""; cargar(document.getElementById("preset").value, null); }
 
 // --------------------------------------------------------------------------
 // arranque
 // --------------------------------------------------------------------------
-const sel = document.getElementById("preset");
-sel.innerHTML = Object.keys(PRESETS).map(k =>
-  '<option value="' + k + '">' + PRESETS[k].codigo + " · " + esc(PRESETS[k].titulo) + "</option>").join("");
-sel.onchange = () => cargar(sel.value, null);
 document.getElementById("titulo").oninput = e => { est.titulo = e.target.value; render(); };
+document.getElementById("subtitulo").oninput = e => { est.subtitulo = e.target.value; render(); };
 document.getElementById("filas").oninput = e => { est.filas = Math.max(2, Math.min(16, +e.target.value || 2)); render(); };
 document.getElementById("leyenda").oninput = leerLeyenda;
+document.getElementById("nueva").addEventListener("keydown", e => { if (e.key === "Enter") anadirCol(); });
 
 const guardado = leerHash();
 cargar(guardado && PRESETS[guardado.preset] ? guardado.preset : "R001", guardado);
-if (guardado && guardado.preset) sel.value = guardado.preset;
 if (guardado) document.getElementById("estado").textContent = "plantilla cargada desde el enlace";
 </script>
 </body>
