@@ -1,20 +1,21 @@
-// Sección "Analítica" de la landing: mapa SIG (NDVI por parcela) y BI de costes.
-// NDVI: valores de ejemplo sobre recintos SIGPAC reales. Costes: campaña 2024 real de una viña de la v1.
+// Sección "Analítica" de la landing: mapa SIG (NDVI por parcela) y BI de margen por parcela.
+// Geometría: recintos SIGPAC reales. Nombres, NDVI y márgenes: datos de ejemplo.
 (function(){
   var PARCELAS = [
-    {id:0,  n:'Haza Grande',  ha:1.5, v:.52, dv:.02},
-    {id:8,  n:'La Vereda',    ha:0.8, v:.36, dv:-.18, alerta:true},
-    {id:9,  n:'Cañada Honda', ha:0.7, v:.49, dv:.01},
-    {id:10, n:'El Cerro',     ha:0.7, v:.47, dv:-.02},
-    {id:11, n:'La Noria',     ha:0.7, v:.55, dv:.04},
-    {id:12, n:'Los Llanos',   ha:0.6, v:.44, dv:-.03},
-    {id:13, n:'El Majuelo',   ha:0.6, v:.41, dv:-.04},
-    {id:20, n:'La Umbría',    ha:0.5, v:.50, dv:.03},
-    {id:22, n:'Las Suertes',  ha:0.5, v:.46, dv:0},
-    {id:40, n:'El Pozuelo',   ha:0.3, v:.43, dv:-.01}
+    {id:0,  n:'Haza Grande',  ha:1.5, v:.52, dv:.02, mg:1430},
+    {id:8,  n:'La Vereda',    ha:0.8, v:.36, dv:-.18, mg:620, alerta:true},
+    {id:9,  n:'Cañada Honda', ha:0.7, v:.49, dv:.01, mg:1330},
+    {id:10, n:'El Cerro',     ha:0.7, v:.47, dv:-.02, mg:1250},
+    {id:11, n:'La Noria',     ha:0.7, v:.55, dv:.04, mg:1560},
+    {id:12, n:'Los Llanos',   ha:0.6, v:.44, dv:-.03, mg:1180},
+    {id:13, n:'El Majuelo',   ha:0.6, v:.41, dv:-.04, mg:1060},
+    {id:20, n:'La Umbría',    ha:0.5, v:.50, dv:.03, mg:1390},
+    {id:22, n:'Las Suertes',  ha:0.5, v:.46, dv:0, mg:1290},
+    {id:40, n:'El Pozuelo',   ha:0.3, v:.43, dv:-.01, mg:1130}
   ];
   var MESES = ['oct','nov','dic','ene','feb','mar','abr','may','jun','jul','ago','sep'];
   var num = function(x, d){ return x.toFixed(d).replace('.', ','); };
+  var miles = function(x){ return String(Math.round(x)).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); };
   var pct = function(x){ var r = Math.round(x*100); return (r > 0 ? '+' : r < 0 ? '−' : '') + Math.abs(r) + '%'; };
   var tramo = function(v){ return v < .38 ? 1 : v < .42 ? 2 : v < .46 ? 3 : v < .50 ? 4 : 5; };
 
@@ -83,6 +84,7 @@
   function elegir(id){
     var p = byId[id];
     paths.forEach(function(e){ e.classList.toggle('sel', +e.getAttribute('data-p') === id); });
+    for (var k in filas) filas[k].classList.toggle('sel', +k === id);
     document.getElementById('p-nom').textContent = p.n;
     document.getElementById('p-ha').textContent = num(p.ha,1) + ' ha';
     document.getElementById('p-v').textContent = num(p.v,2);
@@ -94,34 +96,31 @@
     else s.innerHTML = '<span class="ic ok">✓ NORMAL</span> · Dentro de lo esperable para esta época (' + pct(p.dv) + ' frente a su media).';
     dibujar(p);
   }
+
+  // Margen por parcela (€/ha), ordenado. Comparte selección con el mapa.
+  var cont = document.getElementById('bars'), filas = {};
+  var MEDIA = 1240, max = Math.max.apply(null, PARCELAS.map(function(p){ return p.mg; }));
+  var btip = document.createElement('div'); btip.className = 'tip'; btip.hidden = true;
+  PARCELAS.slice().sort(function(a,b){ return b.mg - a.mg; }).forEach(function(p){
+    var row = document.createElement('div'), d = p.mg/MEDIA - 1;
+    row.className = 'bar' + (p.alerta ? ' alerta-b' : ''); row.tabIndex = 0; row.setAttribute('role', 'listitem');
+    row.setAttribute('aria-label', p.n + ': ' + p.mg + ' €/ha, ' + pct(d) + ' frente a la media');
+    row.innerHTML = '<span class="nm">' + (p.alerta ? '▼ ' : '') + p.n + '</span><span class="tr"><span class="fl" style="--w:' + (p.mg/max*100) + '%"></span></span>' +
+      '<span class="vl">' + miles(p.mg) + ' €/ha<span>' + pct(d) + '</span></span>';
+    var ver = function(){
+      btip.innerHTML = '<b>' + p.n + '</b> · ' + num(p.ha,1) + ' ha<br>margen ' + miles(p.mg*p.ha) + ' € · ' + pct(d) + ' vs media';
+      btip.style.left = '50%'; btip.style.top = (row.offsetTop - 4) + 'px'; btip.hidden = false;
+    };
+    row.addEventListener('pointerenter', ver); row.addEventListener('focus', ver);
+    row.addEventListener('pointerleave', function(){ btip.hidden = true; }); row.addEventListener('blur', function(){ btip.hidden = true; });
+    row.addEventListener('click', function(){ elegir(p.id); });
+    row.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); elegir(p.id); } });
+    filas[p.id] = row; cont.appendChild(row);
+  });
+  cont.appendChild(btip);
+  var foot = document.createElement('p'); foot.className = 'bi-foot';
+  foot.innerHTML = 'MEDIA DE LA EXPLOTACIÓN = <b>1.240 €/ha</b> · pulsa una barra o una parcela del mapa para verla en los dos sitios.';
+  cont.appendChild(foot);
   elegir(8);
 })();
 
-(function(){
-  // Coste por actividad, €/ha. Viña de 4,5 ha, campaña 2024 (datos reales de la v1).
-  var HA = 4.5, COSTES = [['Poda',350],['Riego',165],['Fumigar',152],['Arar',78],['Preparar alambres',55],['Roar',35],
-    ['Despuntar',28],['Herbicidas',20],['Subir alambres',13],['Costes fijos',12],['Zachar',8]];
-  var cont = document.getElementById('bars'); if (!cont) return;
-  var total = 4152 / HA, max = COSTES[0][1];  // total de la campaña: las partidas vienen redondeadas
-  var tip = document.createElement('div'); tip.className = 'tip'; tip.hidden = true;
-  cont.style.position = 'relative';
-  COSTES.forEach(function(c, i){
-    var p = Math.round(c[1]/total*100), eur = Math.round(c[1]*HA).toLocaleString('es-ES');
-    var row = document.createElement('div');
-    row.className = 'bar' + (i < 3 ? ' top' : ''); row.tabIndex = 0; row.setAttribute('role', 'listitem');
-    row.setAttribute('aria-label', c[0] + ': ' + c[1] + ' €/ha, ' + p + '% del gasto, ' + eur + ' € en total');
-    row.innerHTML = '<span class="nm">' + c[0] + '</span><span class="tr"><span class="fl" style="--w:' + (c[1]/max*100) + '%"></span></span>' +
-      '<span class="vl">' + c[1] + ' €/ha<span>' + p + '%</span></span>';
-    var ver = function(){
-      tip.innerHTML = '<b>' + c[0] + '</b> · ' + eur + ' € en la campaña<br>' + c[1] + ' €/ha · ' + p + '% del gasto';
-      tip.style.left = '50%'; tip.style.top = (row.offsetTop - 4) + 'px'; tip.hidden = false;
-    };
-    row.addEventListener('pointerenter', ver); row.addEventListener('focus', ver);
-    row.addEventListener('pointerleave', function(){ tip.hidden = true; }); row.addEventListener('blur', function(){ tip.hidden = true; });
-    cont.appendChild(row);
-  });
-  cont.appendChild(tip);
-  var foot = document.createElement('p'); foot.className = 'bi-foot';
-  foot.innerHTML = 'PODA + RIEGO + FUMIGAR = <b>667 €/ha (72%)</b> · el resto de actividades pesa 256 €/ha.';
-  cont.appendChild(foot);
-})();
