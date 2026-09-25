@@ -44,7 +44,7 @@
     <a class="logo" href="/" aria-label="Food & Farm Analytics"><img src="/assets/logo-mark.png" alt="" width="19" height="34"><span class="lt"><b>food&amp;farm</b><i>analytics</i></span></a>
     <div class="nav-links">
       <a href="#sistema">Sistema</a>
-      <a href="#flujo">Cómo funciona</a>
+      <a href="#analitica">Analítica</a>
       <a href="/asesores">Asesores</a>
       <a href="#precios">Precios</a>
       <a href="#faq">FAQ</a>
@@ -126,7 +126,7 @@
         </table>
         <div class="terminal" style="border:none;border-top:1px solid var(--line-dark);border-radius:0">
           <div><span class="t-dim">09:41</span> operación #3002 <span class="t-acc">validada</span> · urea 46% dentro de dosis máx.</div>
-          <div><span class="t-dim">09:38</span> NDVI El Pozo <span class="t-warn">-18%</span> vs media 3 años → señal enviada</div>
+          <div><span class="t-dim">09:38</span> NDVI La Vereda <span class="t-warn">-18%</span> vs media 3 años → señal enviada</div>
           <div><span class="t-dim">08:02</span> AEMET: lluvia &gt;5mm mañana · tratamiento del 14 <span class="t-warn">en revisión</span></div>
         </div>
       </div>
@@ -148,6 +148,93 @@
             <div class="r"><span class="label">olivar · coste</span><span class="data">4.320 €</span></div>
             <div class="r"><span class="label">vs campaña 2025</span><span class="data" style="color:var(--ok)">−7%</span></div>
             <div class="r"><span class="label">margen estimado</span><span class="data">1.240 €/ha</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="analitica" style="padding-top:0">
+  <div class="container">
+    <div class="sec-head">
+      <span class="label label--accent">analítica</span>
+      <h2>Del satélite al euro, <em>en la misma pantalla.</em></h2>
+      <p>Cada parcela, con su vigor medido desde el satélite y su coste real. Cuando algo se sale de lo normal, lo ves en el mapa antes de verlo en el árbol.</p>
+    </div>
+
+    <div class="sig" id="sig">
+      <div class="sig-head">
+        <span class="label">SIG · vigor por parcela (NDVI)</span>
+        <span class="dtag">NDVI DE EJEMPLO</span>
+      </div>
+      <div class="sig-body">
+        <figure class="sig-map">
+          <svg viewBox="0 0 1024 790" role="group" aria-label="Mapa de parcelas de olivar coloreadas por NDVI">
+            <image href="/assets/mapa-olivar.webp" width="1024" height="790"/>
+            <path class="parcela" data-p="0" d="M193 374 L250 344 L276 329 L280 325 L286 292 L286 282 L272 258 L262 236 L250 214 L260 208 L272 200 L310 177 L312 175 L326 209 L408 413 L411 420 L489 602 L494 612 L492 613 L492 614 L453 627 L394 648 L357 662 L331 671 L291 584 L260 518 L193 374Z" tabindex="0" role="button" aria-label="Haza Grande, 1,5 ha, NDVI 0,52"></path><path class="parcela" data-p="8" d="M489 602 L411 420 L408 413 L452 367 L447 356 L452 346 L475 335 L489 327 L495 306 L490 292 L478 271 L473 261 L464 244 L497 215 L504 210 L517 253 L521 283 L533 332 L544 372 L586 466 L603 501 L599 506 L603 516 L597 534 L586 547 L564 562 L549 570 L519 586 L489 602Z" tabindex="0" role="button" aria-label="La Vereda, 0,8 ha, NDVI 0,36"></path><path class="parcela" data-p="9" d="M598 16 L611 22 L633 33 L713 99 L730 119 L736 126 L747 138 L768 158 L776 166 L788 175 L797 180 L808 188 L822 196 L841 209 L898 243 L885 249 L858 261 L851 264 L828 274 L793 289 L737 313 L733 304 L702 249 L665 263 L612 159 L666 133 L598 16Z" tabindex="0" role="button" aria-label="Cañada Honda, 0,7 ha, NDVI 0,49"></path><path class="parcela" data-p="10" d="M564 182 L569 189 L586 183 L591 180 L595 178 L602 175 L612 171 L609 163 L602 168 L599 165 L612 159 L665 263 L702 249 L733 304 L737 313 L653 350 L674 385 L604 420 L580 432 L574 418 L552 369 L541 330 L530 281 L525 251 L512 208 L564 182Z" tabindex="0" role="button" aria-label="El Cerro, 0,7 ha, NDVI 0,47"></path><path class="parcela" data-p="11" d="M312 175 L333 159 L347 146 L358 134 L360 130 L363 122 L371 145 L466 76 L471 85 L485 110 L497 135 L497 155 L492 172 L492 201 L497 215 L464 244 L427 276 L415 286 L420 296 L425 307 L430 319 L447 356 L452 367 L408 413 L326 209 L312 175Z" tabindex="0" role="button" aria-label="La Noria, 0,7 ha, NDVI 0,55"></path><path class="parcela" data-p="12" d="M216 237 L162 168 L157 172 L146 159 L144 156 L142 154 L108 112 L88 88 L86 85 L88 85 L96 84 L109 84 L112 83 L114 83 L141 82 L242 68 L273 63 L320 55 L352 49 L363 100 L365 115 L363 122 L360 130 L358 134 L347 146 L333 159 L312 175 L310 177 L272 200 L260 208 L250 214 L216 237Z" tabindex="0" role="button" aria-label="Los Llanos, 0,6 ha, NDVI 0,44"></path><path class="parcela" data-p="13" d="M98 314 L115 308 L152 293 L180 347 L193 374 L260 518 L291 584 L331 671 L324 673 L310 679 L291 687 L281 691 L261 699 L98 314Z" tabindex="0" role="button" aria-label="El Majuelo, 0,6 ha, NDVI 0,41"></path><path class="parcela" data-p="20" d="M180 347 L152 293 L115 308 L98 314 L94 315 L74 316 L40 302 L30 295 L22 293 L20 293 L16 292 L18 280 L19 272 L25 258 L153 172 L151 168 L145 164 L143 162 L142 159 L144 156 L146 159 L157 172 L162 168 L216 237 L232 255 L262 291 L272 302 L239 319 L212 331 L180 347Z" tabindex="0" role="button" aria-label="La Umbría, 0,5 ha, NDVI 0,5"></path><path class="parcela" data-p="22" d="M625 522 L594 462 L586 444 L580 432 L604 420 L674 385 L653 350 L737 313 L792 416 L766 433 L747 446 L722 463 L703 479 L674 498 L625 522Z" tabindex="0" role="button" aria-label="Las Suertes, 0,5 ha, NDVI 0,46"></path><path class="parcela" data-p="40" d="M513 18 L522 17 L544 13 L550 12 L555 12 L579 10 L590 13 L598 16 L666 133 L612 159 L599 165 L591 169 L580 175 L566 126 L551 78 L513 18Z" tabindex="0" role="button" aria-label="El Pozuelo, 0,3 ha, NDVI 0,43"></path>
+            <g class="alerta" aria-hidden="true">
+              <rect x="441" y="376" width="140" height="42" rx="5"/>
+              <text x="511" y="409" text-anchor="middle">▼ −18%</text>
+            </g>
+          </svg>
+          <figcaption>
+            <div class="legend" aria-label="Leyenda NDVI">
+              <span class="label">NDVI</span>
+              <span class="sw" style="--c:var(--ndvi-1)"></span><span>&lt;0,38</span>
+              <span class="sw" style="--c:var(--ndvi-2)"></span><span>0,38–0,42</span>
+              <span class="sw" style="--c:var(--ndvi-3)"></span><span>0,42–0,46</span>
+              <span class="sw" style="--c:var(--ndvi-4)"></span><span>0,46–0,50</span>
+              <span class="sw" style="--c:var(--ndvi-5)"></span><span>≥0,50</span>
+              <span class="sw sw-alerta"></span><span>alerta</span>
+            </div>
+            <span class="credit">Ortofoto <a href="https://pnoa.ign.es" target="_blank" rel="noopener">PNOA</a> cedida por © Instituto Geográfico Nacional · recintos SIGPAC (FEGA) · olivar en Baeza, Jaén</span>
+          </figcaption>
+        </figure>
+
+        <aside class="sig-side" aria-live="polite">
+          <span class="label" id="p-sub">parcela seleccionada</span>
+          <h3 id="p-nom">La Vereda</h3>
+          <div class="p-kpis">
+            <div><span class="label">superficie</span><b class="data" id="p-ha">0,8 ha</b></div>
+            <div><span class="label">NDVI hoy</span><b class="data" id="p-v">0,36</b></div>
+            <div><span class="label">vs media 3 años</span><b class="data" id="p-dv">−18%</b></div>
+          </div>
+          <div class="chart" id="ndvi-chart">
+            <div class="chart-head"><span class="label">NDVI · campaña 2025/26</span>
+              <span class="key"><i class="k-line"></i>esta campaña <i class="k-band"></i>media 3 años</span></div>
+            <svg viewBox="0 0 360 170" aria-hidden="true"></svg>
+            <div class="tip" hidden></div>
+          </div>
+          <p class="p-senal" id="p-senal"></p>
+        </aside>
+      </div>
+      <details class="tabla">
+        <summary>Ver los datos en tabla</summary>
+        <table><thead><tr><th>Parcela</th><th class="n">ha</th><th class="n">NDVI</th><th class="n">vs media</th></tr></thead>
+        <tbody><tr><td>Haza Grande</td><td class="n">1,5</td><td class="n">0,52</td><td class="n">+2%</td></tr><tr><td>La Vereda</td><td class="n">0,8</td><td class="n">0,36</td><td class="n">-18%</td></tr><tr><td>Cañada Honda</td><td class="n">0,7</td><td class="n">0,49</td><td class="n">+1%</td></tr><tr><td>El Cerro</td><td class="n">0,7</td><td class="n">0,47</td><td class="n">-2%</td></tr><tr><td>La Noria</td><td class="n">0,7</td><td class="n">0,55</td><td class="n">+4%</td></tr><tr><td>Los Llanos</td><td class="n">0,6</td><td class="n">0,44</td><td class="n">-3%</td></tr><tr><td>El Majuelo</td><td class="n">0,6</td><td class="n">0,41</td><td class="n">-4%</td></tr><tr><td>La Umbría</td><td class="n">0,5</td><td class="n">0,50</td><td class="n">+3%</td></tr><tr><td>Las Suertes</td><td class="n">0,5</td><td class="n">0,46</td><td class="n">0%</td></tr><tr><td>El Pozuelo</td><td class="n">0,3</td><td class="n">0,43</td><td class="n">-1%</td></tr></tbody></table>
+      </details>
+    </div>
+
+    <div class="bi">
+      <div class="sig-head">
+        <span class="label">BI · coste por actividad</span>
+        <span class="dtag">DATOS REALES · VIÑA DE LA V1</span>
+      </div>
+      <div class="bi-body">
+        <div class="bi-kpis">
+          <div><span class="label">gasto total</span><b class="kpi">4.152 <small>€</small></b><span class="sub">campaña 2024 · 4,5 ha</span></div>
+          <div><span class="label">gasto por hectárea</span><b class="kpi kpi--accent">923 <small>€/ha</small></b><span class="sub">11 actividades</span></div>
+          <div><span class="label">mayor partida</span><b class="kpi">Poda</b><span class="sub">38% del gasto</span></div>
+          <div><span class="label">concentración</span><b class="kpi">3<small>/11</small></b><span class="sub">partidas suman el 72%</span></div>
+        </div>
+        <div class="bi-grid">
+          <div class="bars" id="bars" role="list" aria-label="Coste por actividad en euros por hectárea"></div>
+          <div class="terminal bi-term">
+            <div class="t-dim">SEÑALES · VIÑA · 2024</div>
+            <p><span class="t-dim">[C-01]</span> <span class="t-warn">PODA</span> concentra el 38% del gasto (1.575 €), 2,1× la segunda partida. <span class="t-dim">Revisa rendimiento de cuadrilla y jornal.</span></p>
+            <p><span class="t-dim">[C-02]</span> <span class="t-acc">RIEGO + FUMIGAR</span> suman el 34%: el bloque hídrico-sanitario es tu segunda palanca.</p>
+            <p><span class="t-dim">[C-03]</span> 8 actividades pesan menos del 10% cada una: registrar bien las 3 grandes decide la precisión del coste.</p>
           </div>
         </div>
       </div>
@@ -178,7 +265,7 @@
         <span class="label">03 · decisión</span>
         <h3>Registro, costes y señales</h3>
         <p>Cada operación alimenta tu registro, el margen por parcela y el motor de señales. Papeles fuera, criterio dentro.</p>
-        <span class="ej">margen olivar 2026: 1.240 €/ha · señal: NDVI −18%</span>
+        <span class="ej">margen olivar 2026: 1.240 €/ha · señal: NDVI La Vereda −18%</span>
       </div>
     </div>
   </div>
@@ -443,5 +530,6 @@
 })();
 </script>
 
+<script src="/assets/analitica.js" defer></script>
 </body>
 </html>
