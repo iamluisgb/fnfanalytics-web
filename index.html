@@ -79,13 +79,7 @@
       <div class="dbar"><span class="label">operación por voz</span><span class="dtag">DEMO · EJEMPLO SIMULADO</span></div>
       <div class="dbody">
         <div class="said" aria-live="polite"><span class="ph">Pulsa el botón y escucha un ejemplo…</span></div>
-        <div class="op">
-          <div class="r"><span class="label">operación</span><span class="data">—</span></div>
-          <div class="r"><span class="label">parcela</span><span class="data">—</span></div>
-          <div class="r"><span class="label">producto</span><span class="data">—</span></div>
-          <div class="r"><span class="label">cantidad</span><span class="data">—</span></div>
-          <div class="r"><span class="label">coste imputado</span><span class="data">—</span></div>
-        </div>
+        <div class="op" id="demo-op"></div>
         <div class="dfoot">
           <button class="mic" type="button" id="mic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span>Escuchar ejemplo</span></button>
           <span class="ok" id="demo-ok">✓ VALIDADA</span>
@@ -137,10 +131,11 @@
             <div class="r"><span class="label">operación</span><span class="data">Fertilización</span></div>
             <div class="r"><span class="label">parcela</span><span class="data">El Pozo · 2,3 ha</span></div>
             <div class="r"><span class="label">producto</span><span class="data">Urea 46%</span></div>
-            <div class="r"><span class="label">dosis</span><span class="data">300 kg</span></div>
-            <div class="r"><span class="label">coste imputado</span><span class="data">138,00 €</span></div>
+            <div class="r"><span class="label">dosis</span><span class="data">300 kg · 60 kg N/ha</span></div>
+            <div class="r"><span class="label">tractor</span><span class="data">JD 5075E · 1,5 h</span></div>
+            <div class="r"><span class="label">coste imputado</span><span class="data">171,00 €</span></div>
           </div>
-          <span class="sello">✓ VALIDADA · DOSIS Y PLAZO DE SEGURIDAD OK</span>
+          <span class="sello">✓ VALIDADA · DOSIS DE N OK</span>
         </div>
         <div class="asiento-card">
           <span class="entrada">CONSULTA · <b>MARGEN POR PARCELA</b> · campaña 2026</span>
@@ -254,13 +249,13 @@
         <span class="label">01 · captura</span>
         <h3>Por el canal que ya usas</h3>
         <p>Un audio desde el móvil o por WhatsApp, una foto del albarán o una importación. El operario no aprende nada nuevo.</p>
-        <span class="ej">🎙 "he tratado La Vereda contra el repilo, una cuba de 800 litros de Curenox a 300 gramos"</span>
+        <span class="ej">🎙 "he tratado La Vereda contra el repilo con el atomizador y el John Deere, una cuba de 800 litros de Curenox a 300 gramos"</span>
       </div>
       <div class="step">
         <span class="label">02 · validación</span>
         <h3>El sistema estructura y verifica</h3>
-        <p>Producto, dosis, parcela y plazo de seguridad, verificados automáticamente. Nada queda registrado sin tu confirmación.</p>
-        <span class="ej">✓ oxicloruro de cobre 50% · 300 g/hL (máx. 330) · plazo seg. 14 d · validada</span>
+        <p>Producto, dosis, parcela, equipo y tractor, con su plazo de seguridad. Lo que falta en el parte, te lo pregunta. Nada queda registrado sin tu confirmación.</p>
+        <span class="ej">✓ Curenox 50 Blue (nº 12612) · 300 g/hL (máx. 330) · P.S. 14 d · tractor E-4821-BGK · validada</span>
       </div>
       <div class="step">
         <span class="label">03 · decisión</span>
@@ -452,28 +447,41 @@
 // frase → operación estructurada → validación con dos ejemplos que se alternan.
 (function(){
   var demo = document.getElementById('demo'); if(!demo) return;
+  // Campos de los partes reales (plantillas R-005 de tratamiento y de abonado):
+  // producto con nº de registro, dosis y caldo, equipo, tractor y matrícula, horario.
+  // Coste = producto + horas de tractor (22 €/h, valor de ejemplo).
   var ejemplos = [
-    { dicho: 'He echado trescientos kilos de urea en El Pozo esta mañana.',
-      campos: ['Fertilización', 'El Pozo · 2,3 ha', 'Urea 46%', '300 kg', '138,00 €'],
-      ok: "✓ VALIDADA · DOSIS OK" },
-    { dicho: 'He tratado La Vereda contra el repilo, una cuba de 800 litros de Curenox a 300 gramos.',
-      campos: ['Tratamiento · repilo', 'La Vereda · 0,8 ha', 'Curenox 50 Blue · nº 12612', '2,4 kg en 800 L', '36,84 €'],
-      ok: "✓ VALIDADA · PLAZO SEG. 14 D" }
+    { dicho: 'Esta mañana he abonado El Pozo: 300 kilos de urea con la abonadora, hora y media con el John Deere.',
+      campos: [['operación','Fertilización · abonado'], ['parcela','El Pozo · olivar · 2,3 ha'], ['producto','Urea 46% N'],
+               ['cantidad','300 kg · 60 kg N/ha'], ['equipo','Abonadora centrífuga'], ['tractor','JD 5075E · E-4821-BGK'],
+               ['horario','08:10–09:40 · 1,5 h'], ['coste imputado','171,00 €']],
+      ok: '✓ VALIDADA · DOSIS DE N OK' },
+    { dicho: 'He tratado La Vereda contra el repilo con el atomizador y el John Deere: una cuba de 800 litros de Curenox a 300 gramos, de ocho a diez y sin viento.',
+      campos: [['operación','Tratamiento foliar · repilo'], ['parcela','La Vereda · olivar · 0,8 ha'], ['producto','Curenox 50 Blue · nº 12612'],
+               ['dosis · caldo','300 g/hL · cuba de 800 L'], ['cantidad','2,4 kg'], ['equipo','Atomizador arrastrado'],
+               ['tractor','JD 5075E · E-4821-BGK'], ['horario','08:00–10:00 · sin viento'], ['coste imputado','80,84 €']],
+      ok: '✓ VALIDADA · P.S. 14 D · ROPO AL DÍA' }
   ];
-  var said = demo.querySelector('.said'), rows = demo.querySelectorAll('.op .r'),
-      datos = demo.querySelectorAll('.op .data'), ok = document.getElementById('demo-ok'),
+  var said = demo.querySelector('.said'), op = document.getElementById('demo-op'), ok = document.getElementById('demo-ok'),
       btn = document.getElementById('mic'), n = 0, quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Nueve filas fijas para que la tarjeta no cambie de alto entre ejemplos.
+  for (var k = 0; k < 9; k++) op.insertAdjacentHTML('beforeend', '<div class="r"><span class="label">&nbsp;</span><span class="data">—</span></div>');
+  var rows = op.querySelectorAll('.r');
   function espera(ms){ return new Promise(function(r){ setTimeout(r, quieto ? 0 : ms); }); }
   async function reproducir(){
     var e = ejemplos[n % ejemplos.length]; n++;
     btn.disabled = true; ok.classList.remove('on');
-    rows.forEach(function(r, i){ r.classList.remove('on'); datos[i].textContent = '—'; });
+    rows.forEach(function(r, i){
+      var c = e.campos[i];
+      r.classList.remove('on'); r.style.visibility = c ? '' : 'hidden';
+      r.firstChild.textContent = c ? c[0] : ''; r.lastChild.textContent = '—';
+    });
     said.innerHTML = '🎙 <span class="t"></span><span class="caret"></span>';
     var t = said.querySelector('.t');
-    for (var i = 1; i <= e.dicho.length; i++){ t.textContent = '"' + e.dicho.slice(0, i); await espera(28); }
+    for (var i = 1; i <= e.dicho.length; i++){ t.textContent = '"' + e.dicho.slice(0, i); await espera(22); }
     t.textContent = '"' + e.dicho + '"'; said.querySelector('.caret').remove();
     await espera(350);
-    for (var j = 0; j < rows.length; j++){ datos[j].textContent = e.campos[j]; rows[j].classList.add('on'); await espera(260); }
+    for (var j = 0; j < e.campos.length; j++){ rows[j].lastChild.textContent = e.campos[j][1]; rows[j].classList.add('on'); await espera(200); }
     ok.textContent = e.ok; ok.classList.add('on');
     btn.disabled = false; btn.querySelector('span').textContent = 'Otro ejemplo';
   }
