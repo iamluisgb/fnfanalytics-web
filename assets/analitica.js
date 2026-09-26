@@ -2,16 +2,12 @@
 // Geometría: recintos SIGPAC reales. Nombres, NDVI y márgenes: datos de ejemplo.
 (function(){
   var PARCELAS = [
-    {id:0,  n:'Haza Grande',  ha:1.5, v:.52, dv:.02, mg:1430},
-    {id:8,  n:'La Vereda',    ha:0.8, v:.36, dv:-.18, mg:620, alerta:true},
-    {id:9,  n:'Cañada Honda', ha:0.7, v:.49, dv:.01, mg:1330},
-    {id:10, n:'El Cerro',     ha:0.7, v:.47, dv:-.02, mg:1250},
-    {id:11, n:'La Noria',     ha:0.7, v:.55, dv:.04, mg:1560},
-    {id:12, n:'Los Llanos',   ha:0.6, v:.44, dv:-.03, mg:1180},
-    {id:13, n:'El Majuelo',   ha:0.6, v:.41, dv:-.04, mg:1060},
-    {id:20, n:'La Umbría',    ha:0.5, v:.50, dv:.03, mg:1390},
-    {id:22, n:'Las Suertes',  ha:0.5, v:.46, dv:0, mg:1290},
-    {id:40, n:'El Pozuelo',   ha:0.3, v:.43, dv:-.01, mg:1130}
+    {id:0,  n:'Haza Grande', ha:1.5, v:.52, dv:.02,  mg:1510},
+    {id:8,  n:'La Vereda',   ha:0.8, v:.36, dv:-.18, mg:620, alerta:true},
+    {id:12, n:'Los Llanos',  ha:0.6, v:.44, dv:-.03, mg:1250},
+    {id:13, n:'El Majuelo',  ha:0.6, v:.41, dv:-.04, mg:1110},
+    {id:20, n:'La Umbría',   ha:0.5, v:.50, dv:.03,  mg:1450},
+    {id:22, n:'Las Suertes', ha:0.5, v:.46, dv:0,    mg:1360}
   ];
   var MESES = ['oct','nov','dic','ene','feb','mar','abr','may','jun','jul','ago','sep'];
   var num = function(x, d){ return x.toFixed(d).replace('.', ','); };
