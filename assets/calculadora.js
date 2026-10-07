@@ -65,17 +65,18 @@
     const grupos = new Map();
     S.datos.usos.forEach(u => { if (!grupos.has(u[1])) grupos.set(u[1], new Set()); grupos.get(u[1]).add(u[0]); });
     const plagas = [...grupos].sort((a, b) => b[1].size - a[1].size || a[0].localeCompare(b[0], 'es'));
-    $('plaga').innerHTML = plagas.map(([p, regs]) => `<option value="${esc(p)}">${esc(p)} · ${regs.size} producto${regs.size === 1 ? '' : 's'}</option>`).join('');
+    S.plagas = plagas.map(([p, regs]) => ({n:p, k:regs.size, c:(S.datos.usos.find(u => u[1] === p && u[2]) || [])[2] || ''}));
     const pedida = inicial && params.get('plaga');
-    const hit = pedida && plagas.find(([p]) => slug(p) === pedida);
-    $('plaga').value = hit ? hit[0] : plagas[0][0];
+    const hit = pedida && S.plagas.find(p => slug(p.n) === pedida);
+    S.plaga = (hit || S.plagas[0]).n;
     $('crumbC').textContent = info.n;
     if (!inicial) track('calc-cultivo', {cultivo:info.n});
     alCambiarPlaga(inicial);
   }
   function alCambiarPlaga(inicial) {
-    S.plaga = $('plaga').value; S.dose = null;
+    S.dose = null;
     $('crumbP').textContent = S.plaga;
+    $('plagaName').textContent = S.plaga;
     const usos = usosDePlaga();
     const pedido = inicial && params.get('producto');
     // por defecto, el producto con más usos en el cultivo: el más corriente
@@ -145,35 +146,56 @@
     // ocultar o mostrar la escena no debe mover lo que el usuario tiene bajo el dedo
     const antes = $('cult').getBoundingClientRect().top;
     $('trvBox').hidden = !leñoso;
-    $('scene').hidden = !leñoso;
+    $('scene').hidden = false;
     const salto = $('cult').getBoundingClientRect().top - antes;
     if (compensar && Math.abs(salto) > 1) window.scrollBy(0, salto);
     $('nozHint').textContent = leñoso
       ? 'Caudal por boquilla = caldo × velocidad × ancho ÷ (600 × boquillas). La tabla es de boquillas de abanico; en atomizador con boquillas de cono, usa el caudal por boquilla con la tabla del fabricante.'
       : 'Caudal por boquilla = caldo × velocidad × ancho ÷ (600 × boquillas). Presión estimada con la ley del cuadrado: el caudal sube con la raíz de la presión. Lo habitual en abanico es trabajar entre 2 y 5 bar.';
-    if (leñoso) escena.preparar();
+    escena.preparar();
   }
 
   // ---- buscador de productos (ventana) y tabla completa (plegada) ----
   const lineaUso = u => [rango(u), u[6] ? `caldo ${nf(u[6])}–${nf(u[7] || u[6])} L/ha` : null,
     u[8] ? `${u[8]} aplic.` : null, u[10] != null ? `P. S. ${u[10]} d` : null].filter(Boolean).join(' · ');
+  let modo = 'producto';
   function pintarLista() {
     const q = slug($('buscar').value);
-    const lista = usosDePlaga().filter(u => !q || slug(prod(u)[0] + ' ' + prod(u)[3] + ' ' + u[0]).includes(q));
-    $('dlgHint').textContent = q ? `${lista.length} de ${usosDePlaga().length} usos` : `${S.plaga} en ${S.cultivo.n.toLowerCase()}`;
+    if (modo === 'plaga') {
+      const lista = S.plagas.filter(p => !q || slug(p.n + ' ' + p.c).includes(q));
+      $('dlgHint').textContent = q ? `${lista.length} de ${S.plagas.length}` : `${S.plagas.length} plagas, enfermedades y malas hierbas con productos autorizados en ${S.cultivo.n.toLowerCase()}`;
+      $('list').innerHTML = lista.length ? lista.map((p, i) => `<li><button type="button" data-i="${i}" aria-current="${p.n === S.plaga}"><b>${esc(p.n)}</b>
+        <span class="cc-li-d">${p.c ? esc(p.c) + ' · ' : ''}${p.k} producto${p.k === 1 ? '' : 's'}</span></button></li>`).join('')
+        : `<li class="cc-empty">Nada coincide con «${esc($('buscar').value)}».</li>`;
+      $('list').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+        $('dlg').close(); S.plaga = lista[+b.dataset.i].n; alCambiarPlaga(false); $('pick').focus({preventScroll:true});
+      }));
+      return;
+    }
+    // productos: sin búsqueda, agrupados por materia activa; con búsqueda, en lista plana
+    const ma = u => (prod(u)[3] || 'Materia activa sin indicar en la ficha');
+    let lista = usosDePlaga().filter(u => !q || slug(prod(u)[0] + ' ' + prod(u)[3] + ' ' + u[0]).includes(q));
+    if (!q) lista = lista.slice().sort((a, b) => ma(a).localeCompare(ma(b), 'es') || prod(a)[0].localeCompare(prod(b)[0], 'es'));
+    $('dlgHint').textContent = q ? `${lista.length} de ${usosDePlaga().length} usos` : `${S.plaga} en ${S.cultivo.n.toLowerCase()} · por materia activa`;
+    let grupo = null;
     $('list').innerHTML = lista.length ? lista.map((u, i) => {
-      const p = prod(u);
-      return `<li><button type="button" data-i="${i}" aria-current="${u === S.uso}"><b>${esc(p[0])}</b>
-        <span class="cc-sub">${esc(p[3] || p[1])} · nº ${esc(u[0])}</span><span class="cc-li-d">${lineaUso(u)}</span></button></li>`;
+      const p = prod(u), cab = !q && ma(u) !== grupo ? `<li class="cc-grp">${esc(grupo = ma(u))}</li>` : '';
+      return `${cab}<li><button type="button" data-i="${i}" aria-current="${u === S.uso}"><b>${esc(p[0])}</b>
+        <span class="cc-sub">${q ? esc(p[3] || p[1]) + ' · ' : ''}nº ${esc(u[0])} · ${esc(p[1])}</span><span class="cc-li-d">${lineaUso(u)}</span></button></li>`;
     }).join('') : `<li class="cc-empty">Ningún producto autorizado contra esta plaga coincide con «${esc($('buscar').value)}».</li>`;
     $('list').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
       $('dlg').close(); elegir(lista[+b.dataset.i]); $('doseIn').focus({preventScroll:true});
     }));
   }
-  function abrirLista() {
+  function abrirLista(que) {
+    modo = que;
+    $('dlgT').textContent = que === 'plaga' ? 'Plaga, enfermedad o mala hierba' : 'Productos autorizados';
+    $('buscar').placeholder = que === 'plaga' ? 'Buscar por nombre común o científico' : 'Buscar por producto o materia activa';
+    $('buscar').setAttribute('aria-label', $('buscar').placeholder);
     $('buscar').value = '';
     pintarLista();
     if ($('dlg').showModal) $('dlg').showModal(); else $('dlg').setAttribute('open', '');
+    $('list').scrollTop = 0;
     $('buscar').focus();
   }
   function pintarTabla() {
@@ -292,7 +314,7 @@
 
     escena.actualizar({
       cult:S.tipo, alto:pos('alto', 3), ancho:pos('ancho', 3), calle:pos('calle', 5), caldo, cuba,
-      ha, nT:nCubas, rest:resto, perTank:porCuba, unitP:unidad, qt, vel, trv,
+      ha, nT:nCubas, rest:resto, perTank:porCuba, unitP:unidad, qt, vel, trv, anchoT, nb,
       bad:ck.some(c => c[0] === 'bad')
     });
   }
@@ -317,7 +339,7 @@
         const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); arrancar(); } }, {rootMargin:'300px'});
         io.observe($('scene'));
       },
-      actualizar(st) { ultimo = st; if (api && st.cult !== 'barra') api.update(st); }
+      actualizar(st) { ultimo = st; if (api) api.update(st); }
     };
   })();
 
@@ -332,8 +354,8 @@
   // ---- eventos ----
   const tocado = new Set();
   $('cult').addEventListener('change', () => alCambiarCultivo(false));
-  $('plaga').addEventListener('change', () => alCambiarPlaga(false));
-  $('pick').addEventListener('click', abrirLista);
+  $('plagaBtn').addEventListener('click', () => abrirLista('plaga'));
+  $('pick').addEventListener('click', () => abrirLista('producto'));
   $('buscar').addEventListener('input', pintarLista);
   $('dlgX').addEventListener('click', () => $('dlg').close());
   $('dlg').addEventListener('click', e => { if (e.target === $('dlg')) $('dlg').close(); });

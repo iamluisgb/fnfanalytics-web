@@ -61,9 +61,12 @@
             <label class="cc-f" for="cult">Cultivo
               <select id="cult"><option>Cargando…</option></select>
             </label>
-            <label class="cc-f" for="plaga">Plaga, enfermedad o mala hierba
-              <select id="plaga"></select>
-            </label>
+            <div class="cc-f"><span>Plaga, enfermedad o mala hierba</span>
+              <button type="button" class="cc-pick is-compact" id="plagaBtn" aria-haspopup="dialog">
+                <span class="cc-pick-main"><b id="plagaName">Cargando…</b></span>
+                <span class="cc-pick-cta">Cambiar</span>
+              </button>
+            </div>
           </div>
           <div class="cc-f"><span id="prodLbl">Producto</span>
             <button type="button" class="cc-pick" id="pick" aria-haspopup="dialog" aria-describedby="usesHint">
@@ -227,7 +230,7 @@
       <h2 id="dlgT">Productos autorizados</h2>
       <button type="button" class="cc-x" id="dlgX" aria-label="Cerrar">×</button>
     </div>
-    <input type="search" id="buscar" placeholder="Buscar por producto o materia activa" autocomplete="off" aria-label="Buscar producto o materia activa">
+    <input type="search" id="buscar" autocomplete="off">
     <p class="cc-hint" id="dlgHint"></p>
     <ul class="cc-list" id="list"></ul>
   </dialog>
