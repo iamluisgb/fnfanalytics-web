@@ -3,7 +3,7 @@
    Todas las clases llevan el prefijo cc- para no chocar con site.css. */
 :root{
   --cc-sky:#e6eee8; --cc-soil:#dcd1b6; --cc-soil-row:#cbbd99; --cc-leaf-olive:#86a076; --cc-leaf-vine:#5f9146;
-  --cc-leaf-tree:#6c9a58; --cc-cereal:#a8b878; --cc-cereal-2:#93a866; --cc-trunk:#6d5a45; --cc-tractor:#22312a; --cc-glass:#b9d3dc; --cc-spray:#00a87d; --cc-tank:#ffffff;
+  --cc-leaf-tree:#6c9a58; --cc-cereal:#a8b878; --cc-cereal-2:#93a866; --cc-mulch:#3b423d; --cc-trunk:#6d5a45; --cc-tractor:#22312a; --cc-glass:#b9d3dc; --cc-spray:#00a87d; --cc-tank:#ffffff;
   --cc-top:76px; /* altura de la barra de navegación fija */
 }
 .cc{max-width:var(--container);margin:0 auto;padding-inline:var(--gutter)}

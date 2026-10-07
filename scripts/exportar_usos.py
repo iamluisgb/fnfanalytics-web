@@ -17,13 +17,29 @@ from pathlib import Path
 ORIGEN = Path(sys.argv[1] if len(sys.argv) > 1 else "../fnf-mapa")
 DESTINO = Path(__file__).resolve().parent.parent / "herramientas" / "datos"
 
-# Tipo de plantación: decide la escena 3D, el volumen de copa y los valores de partida.
+# Tipo de cultivo: decide la escena 3D, el volumen de copa y los valores de partida.
+# El orden importa: gana el primer patrón que casa. Lo que no casa con ninguno es hortícola.
 TIPOS = [
-    ("vid", r"^(vid|uva|parral|kiwi)"),
+    # nombres que confundirían a los patrones de abajo (hierba «limón», «lino» en cebollino…)
+    ("horticola", r"hierba lim[oó]n|manzanilla|cebollino|solan[áa]ceas|ra[íi]ces y tub|mostaza china"),
+    ("otro", r"acequia|canales|camino|carretera|cementerio|cortafuego|desag[üu]e|drenaje|erial|equipos|locales|lindero|"
+             r"m[áa]rgenes|objetos|patios|recintos|redes de|solares|encharcad|v[íi]as f[ée]rreas|[áa]reas no cultivadas|"
+             r"arc[ée]n|setas|champi|esquejes|especies vegetales|simientes$"),
     ("olivo", r"^olivo"),
-    ("arbol", r"almendro|avellano|nogal|pistach|casta[ñn]o|pacano|frutales|frutos c[ií]tricos|c[ií]tricos|naranjo|limonero|"
-              r"mandarin|pomelo|lima$|manzano|peral|membrillero|melocot|nectarin|albaricoquero|ciruel|cerezo|granado|"
-              r"caqui|aguacate|mango|n[ií]spero|higuera|algarrobo|moreras|chirimoyo|[áa]rboles y arbustos frutales"),
+    ("vid", r"^(vid|uva|parral|kiwi)|l[úu]pulo|frambueso|zarzamora|ar[áa]ndano|grosellero|bayas de goji"),
+    ("arbol", r"almendro|avellano|nogal|pistach|casta[ñn]o|pacano|pacanas|frutales|frutos de (hueso|pepita|c[áa]scara)|"
+              r"c[ií]tricos|naranj|lim[oó]n|mandarin|pomelo|toronja|^lima$|kumquat|manzan|peral|^peras|membrill|melocot|"
+              r"nectarin|albaricoq|ciruel|cerez|granad|caqui|aguacate|mango|n[ií]spero|nispolero|higuera|algarrob[oe]|"
+              r"moreras|chirimoy|guayabo|guan[áa]bano|lichi|longan|papaya|carambola|macadamia|anacardi|palmera|palm[áa]ceas|"
+              r"platanera|pl[áa]tanos|tropicales|azufaifo|acerolo|endrino|sa[úu]co|espino|le[ñn]os|forestales|encina|"
+              r"alcornoque|robles|quercus|pinos|con[ií]feras|cupres|cipreses|eucalipto|chopos|[áa]lamo|frondosas|sabinas|"
+              r"laurel|arbustos|bojs|hibisco|hortensia|azalea|rosales|[áa]rbol|chumbera|pitaya"),
+    ("extensivo", r"cereal|trigo|cebada|avena|centeno|triticale|tritordeum|arroz|ma[íi]z|sorgo|mijo|panizo|alpiste|teff|"
+                  r"quinoa|alfor|girasol|colza|camelina|lino|c[áa]rtamo|soja|cacahuete|algod|remolacha (azucarera|forrajera)|"
+                  r"alfalfa|veza|tr[ée]bol|esparceta|zulla|yeros|almorta|altramuz|leguminosas( de grano| forrajeras)?$|"
+                  r"garbanzo$|lenteja$|para grano|proteaginoso|forrajer|pastos|praderas|pastizal|c[ée]sped|gram[ií]neas|"
+                  r"patata|tabaco|c[áa][ñn]amo|ca[ñn]a de az|barbecho|rastrojera|extensivas|industriales|oleaginosas|textiles|"
+                  r"semillas|simiente|chufa|adormidera|ricino|s[ée]samo|estevia|stevia|mostaza|fenogreco|alhova|comino|anís|alcaravea"),
 ]
 DESTACADOS = ["Olivo", "Vid", "Almendro", "Cítricos", "Frutales de hueso", "Frutales de pepita",
               "Trigo", "Cebada", "Maíz", "Girasol", "Tomate", "Patata", "Pimiento", "Lechuga y similares"]
@@ -38,7 +54,7 @@ def tipo(cultivo):
     for t, patron in TIPOS:
         if re.search(patron, cultivo, re.I):
             return t
-    return "barra"
+    return "horticola"
 
 
 def num(v):

@@ -3,12 +3,15 @@
 // Las comprobaciones avisan y no bloquean, como en la app.
 (() => {
   'use strict';
+  const V = (document.currentScript && new URL(document.currentScript.src).search) || '';
   const DATOS = '/herramientas/datos/';
   const PRESET = {
     olivo: {caldo:800, cuba:2000, calle:7, alto:3.5, ancho:3.2, fac:.05, vel:5, anchoT:7, nb:14},
     vid:   {caldo:500, cuba:1500, calle:2.6, alto:1.4, ancho:.6, fac:.1, vel:5, anchoT:2.6, nb:10},
     arbol: {caldo:1000, cuba:2000, calle:5, alto:3.5, ancho:3, fac:.06, vel:5, anchoT:5, nb:16},
-    barra: {caldo:200, cuba:3000, vel:8, anchoT:18, nb:36}
+    horticola: {caldo:600, cuba:1000, vel:4, anchoT:12, nb:24},
+    extensivo: {caldo:200, cuba:3000, vel:8, anchoT:18, nb:36},
+    otro: {caldo:400, cuba:200, vel:4, anchoT:1, nb:1}
   };
   // Boquillas de abanico, código de color ISO 10625: caudal nominal a 3 bar (L/min).
   const NOZ = [['01','naranja',.40],['015','verde',.60],['02','amarillo',.80],['025','lila',1.00],['03','azul',1.20],
@@ -28,7 +31,7 @@
 
   // ---- datos ----
   async function cargarIndice() {
-    const r = await fetch(DATOS + 'cultivos.json');
+    const r = await fetch(DATOS + 'cultivos.json' + V);
     S.indice = await r.json();
     const [a, m, d] = S.indice.fecha.split('-');
     $('fecha').textContent = `${+d}-${['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][m - 1]}-${a}`;
@@ -41,7 +44,7 @@
     $('cult').value = por[pedido] ? pedido : (por.olivo ? 'olivo' : S.indice.cultivos[0].s);
   }
   async function cargarCultivo(s) {
-    if (!S.cache.has(s)) S.cache.set(s, fetch(DATOS + 'c/' + s + '.json').then(r => r.json()));
+    if (!S.cache.has(s)) S.cache.set(s, fetch(DATOS + 'c/' + s + '.json' + V).then(r => r.json()));
     return S.cache.get(s);
   }
 
@@ -142,17 +145,17 @@
   function aplicarPreset(compensar) {
     const p = PRESET[S.tipo];
     for (const k in p) if (!tocado.has(k)) $(k).value = p[k];
-    const leñoso = S.tipo !== 'barra';
+    const leñoso = ['olivo', 'vid', 'arbol'].includes(S.tipo);
     // ocultar o mostrar la escena no debe mover lo que el usuario tiene bajo el dedo
     const antes = $('cult').getBoundingClientRect().top;
     $('trvBox').hidden = !leñoso;
-    $('scene').hidden = false;
+    $('scene').hidden = S.tipo === 'otro';
     const salto = $('cult').getBoundingClientRect().top - antes;
     if (compensar && Math.abs(salto) > 1) window.scrollBy(0, salto);
     $('nozHint').textContent = leñoso
       ? 'Caudal por boquilla = caldo × velocidad × ancho ÷ (600 × boquillas). La tabla es de boquillas de abanico; en atomizador con boquillas de cono, usa el caudal por boquilla con la tabla del fabricante.'
       : 'Caudal por boquilla = caldo × velocidad × ancho ÷ (600 × boquillas). Presión estimada con la ley del cuadrado: el caudal sube con la raíz de la presión. Lo habitual en abanico es trabajar entre 2 y 5 bar.';
-    escena.preparar();
+    if (S.tipo !== 'otro') escena.preparar();
   }
 
   // ---- buscador de productos (ventana) y tabla completa (plegada) ----
@@ -325,7 +328,7 @@
     const cargar = src => new Promise((ok, ko) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = ko; document.head.appendChild(s); });
     function arrancar() {
       if (pedido) return; pedido = true;
-      cargar('/assets/vendor/three-r128.min.js').then(() => cargar('/assets/calculadora-3d.js')).then(() => {
+      cargar('/assets/vendor/three-r128.min.js').then(() => cargar('/assets/calculadora-3d.js' + V)).then(() => {
         api = window.FnfEscena && window.FnfEscena.montar();
         if (!api) { $('scene').hidden = true; return; }
         $('sceneLoading').remove();
@@ -339,7 +342,7 @@
         const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); arrancar(); } }, {rootMargin:'300px'});
         io.observe($('scene'));
       },
-      actualizar(st) { ultimo = st; if (api) api.update(st); }
+      actualizar(st) { ultimo = st; if (api && st.cult !== 'otro') api.update(st); }
     };
   })();
 

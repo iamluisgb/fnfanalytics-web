@@ -45,7 +45,9 @@ window.FnfEscena = {montar() {
     trunk: new THREE.MeshLambertMaterial({color:C('--cc-trunk')}),
     strip: new THREE.MeshLambertMaterial({color:C('--cc-soil-row')}),
     cereal: new THREE.MeshLambertMaterial({color:C('--cc-cereal'), flatShading:true}),
-    cereal2: new THREE.MeshLambertMaterial({color:C('--cc-cereal-2')})
+    cereal2: new THREE.MeshLambertMaterial({color:C('--cc-cereal-2')}),
+    huerta: new THREE.MeshStandardMaterial({color:C('--cc-leaf-vine'), flatShading:true, roughness:.9}),
+    acolchado: new THREE.MeshStandardMaterial({color:C('--cc-mulch'), roughness:.35})
   };
   const tallo = new THREE.ConeGeometry(.16, 1, 5); tallo.translate(0, .5, 0);
 
@@ -54,7 +56,7 @@ window.FnfEscena = {montar() {
   function buildRows(st) {
     rows.children.forEach(o => { if (o.isInstancedMesh) o.dispose(); });
     rows.clear();
-    W.barra = st.cult === 'barra';
+    W.barra = st.cult === 'extensivo' || st.cult === 'horticola';
     trv.visible = !W.barra;
     if (W.barra) return buildCampo(st);
     const vine = st.cult === 'vid';
@@ -74,6 +76,8 @@ window.FnfEscena = {montar() {
 
   // herbáceo: cereal en cinta sin fin, con rodadas cada ancho de barra
   function buildCampo(st) {
+    if (st.cult === 'horticola') return buildHuerta(st);
+    W.huerta = false;
     const half = Math.max(st.anchoT * .75, 14), sx = .9, sz = .55, L = 63, n = Math.round(L / sx);
     let s = 5; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
     const rodadas = [];
@@ -90,6 +94,23 @@ window.FnfEscena = {montar() {
     base.rotation.x = -Math.PI / 2; base.position.y = .005; base.receiveShadow = true; rows.add(base);
     rodadas.forEach(z => { const m = new THREE.Mesh(new THREE.PlaneGeometry(240, .45), mat.strip); m.rotation.x = -Math.PI / 2; m.position.set(0, .012, z); m.receiveShadow = true; rows.add(m); });
     Object.assign(W, {vine:false, L:n * sx, trunkH:0});
+  }
+
+  // hortícola: caballones con acolchado y dos líneas de plantas bajas por caballón
+  function buildHuerta(st) {
+    const half = Math.max(st.anchoT * .75, 12), paso = 1.5, sx = .5, L = 63, n = Math.round(L / sx);
+    let s = 9; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+    W.items = [];
+    const camas = [];
+    for (let z = -half; z <= half; z += paso) {
+      camas.push(z);
+      [-.25, .25].forEach(dz => { for (let i = 0; i < n; i++) W.items.push({bx:i * sx + rnd() * .08, z:z + dz, ry:rnd() * 6.28, s:.24 + rnd() * .08}); });
+    }
+    W.can = new THREE.InstancedMesh(canopyGeo, mat.huerta, W.items.length);
+    W.can.castShadow = true; W.can.receiveShadow = true; W.tr = null;
+    rows.add(W.can);
+    camas.forEach(z => { const m = new THREE.Mesh(new THREE.BoxGeometry(240, .14, .95), mat.acolchado); m.position.set(0, .07, z); m.receiveShadow = true; rows.add(m); });
+    Object.assign(W, {vine:false, L:n * sx, trunkH:0, huerta:true});
   }
 
   // caja del volumen de copa, fija delante del tractor en la fila del fondo
@@ -207,7 +228,9 @@ window.FnfEscena = {montar() {
     if (W.barra) {
       W.items.forEach((it, i) => {
         const x = (((it.bx - offset) % L) + L) % L - L / 2;
-        eu.set(0, it.ry, 0); q.setFromEuler(eu); pv.set(x, 0, it.z); sv.set(1, it.s, 1);
+        eu.set(0, it.ry, 0); q.setFromEuler(eu);
+        if (W.huerta) { pv.set(x, .14 + it.s * .8, it.z); sv.set(it.s, it.s * 1.1, it.s); }
+        else { pv.set(x, 0, it.z); sv.set(1, it.s, 1); }
         m4.compose(pv, q, sv); W.can.setMatrixAt(i, m4);
       });
       W.can.instanceMatrix.needsUpdate = true;
@@ -235,7 +258,9 @@ window.FnfEscena = {montar() {
     pj.copy(p).project(cam);
     const w = stage.clientWidth, h = stage.clientHeight;
     el.hidden = pj.z > 1 || Math.abs(pj.x) > 1.05 || Math.abs(pj.y) > 1.05;
-    el.style.transform = `translate(${(pj.x * .5 + .5) * w}px,${(-pj.y * .5 + .5) * h}px) translate(-50%,-100%)`;
+    // la etiqueta nunca se sale por los lados de la escena
+    const mitad = el.offsetWidth / 2 + 6, x = Math.min(w - mitad, Math.max(mitad, (pj.x * .5 + .5) * w));
+    el.style.transform = `translate(${x}px,${(-pj.y * .5 + .5) * h}px) translate(-50%,-100%)`;
   }
   function hud() {
     const st = W.st, used = (cyc.i * st.cuba + (startLevel(cyc.i) - cyc.level) * st.cuba);
@@ -312,8 +337,8 @@ window.FnfEscena = {montar() {
   stage.addEventListener('pointercancel', () => { drag = null; });
 
   function update(st) {
-    const barra = st.cult === 'barra';
-    const gk = barra ? ['barra', st.anchoT].join() : [st.cult, st.alto, st.ancho, st.calle].join();
+    const barra = st.cult === 'extensivo' || st.cult === 'horticola';
+    const gk = barra ? [st.cult, st.anchoT].join() : [st.cult, st.alto, st.ancho, st.calle].join();
     W.st = st;
     if (gk !== W.key) { W.key = gk; buildRows(st); }
     const bk = [st.anchoT, Math.round(st.nb)].join();
