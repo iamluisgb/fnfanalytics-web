@@ -252,8 +252,6 @@ window.FnfEscena = {montar() {
     if (cyc.i >= st.nT) cyc = {i:0, level:startLevel(0), refill:0};
     sprayC.set(st.bad ? tok('--bad') : tok('--cc-spray'));
     liquid.material.color.copy(sprayC);
-    $('hTrv').textContent = `${nf(st.trv)} m³/ha`;
-    $('hCaldo').textContent = `${nf(st.caldo)} L/ha`;
     $('hBad').hidden = !st.bad;
     lab.copa.textContent = `Copa ${nf(st.ancho, 1)} × ${nf(st.alto, 1)} m`;
     lab.calle.textContent = `Calle ${nf(st.calle, 1)} m`;

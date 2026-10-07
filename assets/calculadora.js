@@ -13,7 +13,6 @@
   // Boquillas de abanico, código de color ISO 10625: caudal nominal a 3 bar (L/min).
   const NOZ = [['01','naranja',.40],['015','verde',.60],['02','amarillo',.80],['025','lila',1.00],['03','azul',1.20],
                ['04','rojo',1.60],['05','marrón',2.00],['06','gris',2.40],['08','blanco',3.20]];
-  const LIMITE = 30;
 
   const $ = id => document.getElementById(id);
   const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -24,7 +23,7 @@
   const slug = s => s.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   const track = (e, d) => { try { window.umami && window.umami.track(e, d); } catch (_) {} };
 
-  const S = {indice:null, cultivo:null, datos:null, tipo:null, plaga:null, uso:null, dose:null, todos:false, cache:new Map()};
+  const S = {indice:null, cultivo:null, datos:null, tipo:null, plaga:null, uso:null, dose:null, pasoBoton:1, hayResultado:false, usosPorReg:new Map(), cache:new Map()};
   const params = new URLSearchParams(location.search);
 
   // ---- datos ----
@@ -60,7 +59,9 @@
     S.datos = await cargarCultivo(s);
     if ($('cult').value !== s) return; // llegó otra selección mientras cargaba
     S.cultivo = info;
-    if (info.t !== S.tipo) { S.tipo = info.t; aplicarPreset(); }
+    S.usosPorReg = new Map();
+    S.datos.usos.forEach(u => S.usosPorReg.set(u[0], (S.usosPorReg.get(u[0]) || 0) + 1));
+    if (info.t !== S.tipo) { S.tipo = info.t; aplicarPreset(!inicial); }
     const grupos = new Map();
     S.datos.usos.forEach(u => { if (!grupos.has(u[1])) grupos.set(u[1], new Set()); grupos.get(u[1]).add(u[0]); });
     const plagas = [...grupos].sort((a, b) => b[1].size - a[1].size || a[0].localeCompare(b[0], 'es'));
@@ -73,24 +74,111 @@
     alCambiarPlaga(inicial);
   }
   function alCambiarPlaga(inicial) {
-    S.plaga = $('plaga').value; S.todos = false; S.uso = null; S.dose = null;
-    if (!inicial) $('buscar').value = '';
+    S.plaga = $('plaga').value; S.dose = null;
     $('crumbP').textContent = S.plaga;
+    const usos = usosDePlaga();
     const pedido = inicial && params.get('producto');
-    if (pedido) S.uso = S.datos.usos.find(u => u[1] === S.plaga && u[0] === pedido) || null;
-    pintarUsos();
+    // por defecto, el producto con más usos en el cultivo: el más corriente
+    S.uso = (pedido && usos.find(u => u[0] === pedido)) ||
+      usos.reduce((m, u) => (S.usosPorReg.get(u[0]) > S.usosPorReg.get(m[0]) ? u : m), usos[0]);
+    const nprod = new Set(usos.map(u => u[0])).size;
+    $('usesHint').textContent = `${nprod} producto${nprod === 1 ? '' : 's'} autorizado${nprod === 1 ? '' : 's'} contra ${S.plaga.toLowerCase()} en ${S.cultivo.n.toLowerCase()}` +
+      (usos.length > nprod ? `. Algunos tienen varias dosis según el momento o el modo de aplicación (${usos.length} usos).` : '.');
+    $('allSum').textContent = `Todos los productos autorizados contra ${S.plaga.toLowerCase()} (${nprod})`;
+    if ($('allBox').open) pintarTabla();
+    pintarFicha();
+  }
+  const usosDePlaga = () => S.datos.usos.filter(u => u[1] === S.plaga);
+
+  // ---- producto elegido: ficha con la dosis ----
+  function elegir(u) {
+    S.uso = u; S.dose = null;
+    pintarFicha();
+    if ($('allBox').open) pintarTabla();
+    track('calc-producto');
+  }
+  function pintarFicha() {
+    const u = S.uso;
+    $('ficha').hidden = !u;
+    if (!u) { $('pickName').textContent = 'Elige un producto'; $('pickSub').textContent = ''; calcular(); return; }
+    const p = prod(u);
+    $('pickName').textContent = p[0];
+    $('pickSub').textContent = `Nº ${u[0]} · ${p[3] || p[1]}`;
+    $('fDose').textContent = rango(u);
+    $('fCaldo').textContent = u[6] ? `${nf(u[6])}–${nf(u[7] || u[6])} L/ha` : 'sin indicar';
+    $('fAp').textContent = u[8] ? `máx. ${u[8]}${u[9] ? ` · cada ${u[9]} d` : ''}` : 'sin indicar';
+    $('fPs').textContent = u[10] != null ? `${u[10]} días` : 'sin indicar';
+    prepararDosis();
+    calcular();
   }
 
-  function visibles() {
-    const q = slug($('buscar').value);
-    return S.datos.usos.filter(u => u[1] === S.plaga && (!q || slug(prod(u)[0] + ' ' + prod(u)[3] + ' ' + u[0]).includes(q)));
+  // ---- dosis: deslizador con la zona autorizada, botones y valor escrito ----
+  const redondo = x => Math.pow(10, Math.floor(Math.log10(x)));
+  function prepararDosis() {
+    const u = S.uso, r = $('dose');
+    const top = u[5] * 1.3, paso = redondo(top / 100);
+    const rmin = Math.max(0, Math.floor(u[4] * .5 / paso) * paso), rmax = Math.ceil(top / paso) * paso;
+    r.min = rmin; r.max = rmax; r.step = paso;
+    S.pasoBoton = redondo(u[5] / 10) * (u[5] / redondo(u[5] / 10) >= 50 ? 5 : 1);
+    r.style.setProperty('--a', `${(u[4] - rmin) / (rmax - rmin) * 100}%`);
+    r.style.setProperty('--b', `${(u[5] - rmin) / (rmax - rmin) * 100}%`);
+    $('doseUnit').textContent = unidadDosis(u);
+    $('doseIn').step = paso;
+    const fija = u[4] === u[5];
+    $('dZona').hidden = fija;
+    $('dMin').textContent = fija ? '' : `mín. ${nx(u[4])}`;
+    $('dMax').textContent = fija ? `dosis fija ${nx(u[5])}` : `máx. ${nx(u[5])}`;
+    if (S.dose == null) S.dose = u[4] === u[5] ? u[5] : Math.round((u[4] + u[5]) / 2 / paso) * paso;
+    ponerDosis(S.dose, null);
   }
-  function pintarUsos() {
-    const lista = visibles();
-    if (!S.uso || !lista.includes(S.uso)) { S.uso = lista[0] || null; S.dose = null; }
-    const muestra = S.todos ? lista : lista.slice(0, LIMITE);
-    if (S.uso && !muestra.includes(S.uso)) muestra.unshift(S.uso);
-    $('usesBody').innerHTML = muestra.length ? muestra.map((u, i) => {
+  function ponerDosis(v, desde) {
+    if (!Number.isFinite(v) || v < 0) return;
+    S.dose = +v.toPrecision(6);
+    if (desde !== 'rango') $('dose').value = S.dose;
+    if (desde !== 'texto') $('doseIn').value = S.dose;
+  }
+
+  function aplicarPreset(compensar) {
+    const p = PRESET[S.tipo];
+    for (const k in p) if (!tocado.has(k)) $(k).value = p[k];
+    const leñoso = S.tipo !== 'barra';
+    // ocultar o mostrar la escena no debe mover lo que el usuario tiene bajo el dedo
+    const antes = $('cult').getBoundingClientRect().top;
+    $('trvBox').hidden = !leñoso;
+    $('scene').hidden = !leñoso;
+    const salto = $('cult').getBoundingClientRect().top - antes;
+    if (compensar && Math.abs(salto) > 1) window.scrollBy(0, salto);
+    $('nozHint').textContent = leñoso
+      ? 'Caudal por boquilla = caldo × velocidad × ancho ÷ (600 × boquillas). La tabla es de boquillas de abanico; en atomizador con boquillas de cono, usa el caudal por boquilla con la tabla del fabricante.'
+      : 'Caudal por boquilla = caldo × velocidad × ancho ÷ (600 × boquillas). Presión estimada con la ley del cuadrado: el caudal sube con la raíz de la presión. Lo habitual en abanico es trabajar entre 2 y 5 bar.';
+    if (leñoso) escena.preparar();
+  }
+
+  // ---- buscador de productos (ventana) y tabla completa (plegada) ----
+  const lineaUso = u => [rango(u), u[6] ? `caldo ${nf(u[6])}–${nf(u[7] || u[6])} L/ha` : null,
+    u[8] ? `${u[8]} aplic.` : null, u[10] != null ? `P. S. ${u[10]} d` : null].filter(Boolean).join(' · ');
+  function pintarLista() {
+    const q = slug($('buscar').value);
+    const lista = usosDePlaga().filter(u => !q || slug(prod(u)[0] + ' ' + prod(u)[3] + ' ' + u[0]).includes(q));
+    $('dlgHint').textContent = q ? `${lista.length} de ${usosDePlaga().length} usos` : `${S.plaga} en ${S.cultivo.n.toLowerCase()}`;
+    $('list').innerHTML = lista.length ? lista.map((u, i) => {
+      const p = prod(u);
+      return `<li><button type="button" data-i="${i}" aria-current="${u === S.uso}"><b>${esc(p[0])}</b>
+        <span class="cc-sub">${esc(p[3] || p[1])} · nº ${esc(u[0])}</span><span class="cc-li-d">${lineaUso(u)}</span></button></li>`;
+    }).join('') : `<li class="cc-empty">Ningún producto autorizado contra esta plaga coincide con «${esc($('buscar').value)}».</li>`;
+    $('list').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+      $('dlg').close(); elegir(lista[+b.dataset.i]); $('doseIn').focus({preventScroll:true});
+    }));
+  }
+  function abrirLista() {
+    $('buscar').value = '';
+    pintarLista();
+    if ($('dlg').showModal) $('dlg').showModal(); else $('dlg').setAttribute('open', '');
+    $('buscar').focus();
+  }
+  function pintarTabla() {
+    const lista = usosDePlaga();
+    $('usesBody').innerHTML = lista.map((u, i) => {
       const p = prod(u);
       return `<tr data-i="${i}" tabindex="0" aria-selected="${u === S.uso}">
         <td><span class="cc-pn">${esc(p[0])}</span><span class="cc-sub">Nº ${esc(u[0])} · ${esc(p[3] || p[1])}</span></td>
@@ -98,42 +186,12 @@
         <td class="cc-m">${u[6] ? `${nf(u[6])}–${nf(u[7] || u[6])} L/ha` : '—'}</td>
         <td class="cc-m">${u[8] ?? '—'}${u[9] ? ` · ${u[9]} d` : ''}</td>
         <td class="cc-m">${u[10] != null ? u[10] + ' d' : '—'}</td></tr>`;
-    }).join('') : `<tr><td colspan="5" class="cc-empty">Ningún producto autorizado contra esta plaga coincide con «${esc($('buscar').value)}».</td></tr>`;
+    }).join('');
     [...$('usesBody').rows].forEach(tr => {
-      if (tr.dataset.i == null) return;
-      const elegir = () => { S.uso = muestra[+tr.dataset.i]; S.dose = null; pintarUsos(); track('calc-producto'); };
-      tr.addEventListener('click', elegir);
-      tr.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); elegir(); } });
+      const ir = () => { elegir(lista[+tr.dataset.i]); $('pick').scrollIntoView({block:'center', behavior:'smooth'}); };
+      tr.addEventListener('click', ir);
+      tr.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ir(); } });
     });
-    const resto = lista.length - muestra.length;
-    $('more').hidden = resto <= 0;
-    $('more').textContent = `Ver los ${lista.length} usos`;
-    const nprod = new Set(lista.map(u => u[0])).size;
-    $('usesHint').textContent = `${nprod} producto${nprod === 1 ? '' : 's'} autorizado${nprod === 1 ? '' : 's'} contra ${S.plaga.toLowerCase()} en ${S.cultivo.n.toLowerCase()}. Pulsa una fila para elegirlo. P. S. = plazo de seguridad.`;
-    prepararDosis();
-    calcular();
-  }
-
-  function prepararDosis() {
-    const u = S.uso, r = $('dose');
-    r.disabled = !u;
-    if (!u) return;
-    const top = u[5] * 1.3, paso = Math.pow(10, Math.floor(Math.log10(top / 100)));
-    r.min = Math.max(0, Math.floor(u[4] * .5 / paso) * paso); r.max = Math.ceil(top / paso) * paso; r.step = paso;
-    r.value = S.dose ?? u[5];
-    $('dMin').textContent = `mín. ${nx(u[4])}`; $('dMid').textContent = unidadDosis(u); $('dMax').textContent = `máx. ${nx(u[5])}`;
-  }
-
-  function aplicarPreset() {
-    const p = PRESET[S.tipo];
-    for (const k in p) $(k).value = p[k];
-    const leñoso = S.tipo !== 'barra';
-    $('trvBox').hidden = !leñoso;
-    $('scene').hidden = !leñoso;
-    $('nozHint').textContent = leñoso
-      ? 'Caudal por boquilla = caldo × velocidad × ancho ÷ (600 × boquillas). La tabla es de boquillas de abanico; en atomizador con boquillas de cono, usa el caudal por boquilla con la tabla del fabricante.'
-      : 'Caudal por boquilla = caldo × velocidad × ancho ÷ (600 × boquillas). Presión estimada con la ley del cuadrado: el caudal sube con la raíz de la presión. Lo habitual en abanico es trabajar entre 2 y 5 bar.';
-    if (leñoso) escena.preparar();
   }
 
   // ---- cálculo ----
@@ -145,9 +203,7 @@
       return;
     }
     const p = prod(u), unidad = unidadProd(u);
-    S.dose = parseFloat($('dose').value);
     const ha = Math.max(0, val('ha') || 0), caldo = pos('caldo', PRESET[S.tipo].caldo), cuba = pos('cuba', PRESET[S.tipo].cuba);
-    $('doseLabel').textContent = `${nx(S.dose)} ${unidadDosis(u)}`;
 
     const porHa = u[3] === 'ha' ? S.dose : S.dose * caldo / 100 / 1000;
     const caldoTot = ha * caldo, total = porHa * ha, porCuba = porHa * cuba / caldo;
@@ -155,8 +211,12 @@
     const nCubas = Math.max(1, llenas + (resto > 1 ? 1 : 0));
     const dec = v => v < 10 ? 2 : 1;
 
-    $('perTank').innerHTML = `${nf(porCuba, dec(porCuba))}<small>${unidad}</small>`;
-    $('prodLine').innerHTML = `de <b>${esc(p[0])}</b> en ${nf(cuba)} L de agua`;
+    // sin ninguna cuba llena, lo que importa es lo que va en la única que se prepara
+    const unaSola = ha > 0 && llenas === 0;
+    const enCuba = unaSola ? total : porCuba;
+    $('perTankK').textContent = unaSola ? 'Producto en la cuba' : 'Producto en cada cuba llena';
+    $('perTank').innerHTML = `${nf(enCuba, dec(enCuba))}<small>${unidad}</small>`;
+    $('prodLine').innerHTML = `de <b>${esc(p[0])}</b> en ${nf(unaSola ? resto : cuba)} L de agua`;
     $('tanks').innerHTML = Array.from({length:Math.min(nCubas, 30)}, (_, i) => {
       const h = i < llenas ? 100 : Math.max(6, resto / cuba * 100);
       return `<div class="cc-tk"><span style="height:${h}%"></span></div>`;
@@ -183,6 +243,11 @@
     if (u[8]) ck.push(['warn', `Máximo ${u[8]} aplicaci${u[8] === 1 ? 'ón' : 'ones'} por campaña${u[9] ? `, separadas ${u[9]} días` : ''}. Con el cuaderno, te avisamos de cuántas llevas.`]);
     const nombre = {ok:'Bien', warn:'Ojo', bad:'Fuera'};
     $('checks').innerHTML = ck.map(([s, t]) => `<div class="cc-chk"><span class="cc-pill is-${s}">${nombre[s]}</span><span>${t}</span></div>`).join('');
+    const peor = ck.some(c => c[0] === 'bad') ? 'bad' : ck.some(c => c[0] === 'warn' && (c[1].startsWith('Dosis') || c[1].startsWith('Caldo de'))) ? 'warn' : 'ok';
+    $('barKg').textContent = `${nf(enCuba, dec(enCuba))} ${unidad}${unaSola ? ' en la cuba' : ' por cuba'}`;
+    $('barN').textContent = ha > 0 ? `${nCubas} cuba${nCubas === 1 ? '' : 's'} · ${nf(total, 1)} ${unidad} en total` : 'Pon la superficie';
+    $('barSt').className = `cc-pill is-${peor}`; $('barSt').textContent = nombre[peor];
+    S.hayResultado = true; barra();
 
     // volumen de copa
     const trv = pos('alto', 3) * pos('ancho', 3) * 10000 / pos('calle', 5);
@@ -256,17 +321,34 @@
     };
   })();
 
+  // ---- barra inferior (móvil): visible mientras el resultado no está a la vista ----
+  const enVista = new Set();
+  function barra() { $('bar').hidden = !S.hayResultado || enVista.size > 0; }
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => { es.forEach(e => e.isIntersecting ? enVista.add(e.target) : enVista.delete(e.target)); barra(); });
+    io.observe($('tankCard')); io.observe($('orden'));
+  }
+
   // ---- eventos ----
+  const tocado = new Set();
   $('cult').addEventListener('change', () => alCambiarCultivo(false));
   $('plaga').addEventListener('change', () => alCambiarPlaga(false));
-  $('buscar').addEventListener('input', () => { S.todos = false; pintarUsos(); });
-  $('more').addEventListener('click', () => { S.todos = true; pintarUsos(); });
-  $('dose').addEventListener('input', calcular);
-  ['ha', 'caldo', 'cuba', 'parcela', 'calle', 'alto', 'ancho', 'fac', 'vel', 'anchoT', 'nb'].forEach(id => $(id).addEventListener('input', calcular));
-  $('trvUse').addEventListener('click', () => { $('caldo').value = $('trvUse').dataset.v; calcular(); });
+  $('pick').addEventListener('click', abrirLista);
+  $('buscar').addEventListener('input', pintarLista);
+  $('dlgX').addEventListener('click', () => $('dlg').close());
+  $('dlg').addEventListener('click', e => { if (e.target === $('dlg')) $('dlg').close(); });
+  $('allBox').addEventListener('toggle', () => { if ($('allBox').open) pintarTabla(); });
+  $('dose').addEventListener('input', () => { ponerDosis(parseFloat($('dose').value), 'rango'); calcular(); });
+  $('doseIn').addEventListener('input', () => { ponerDosis(parseFloat($('doseIn').value), 'texto'); calcular(); });
+  $('doseMinus').addEventListener('click', () => { ponerDosis(Math.max(0, S.dose - S.pasoBoton), null); calcular(); });
+  $('dosePlus').addEventListener('click', () => { ponerDosis(S.dose + S.pasoBoton, null); calcular(); });
+  ['ha', 'caldo', 'cuba', 'parcela', 'calle', 'alto', 'ancho', 'fac', 'vel', 'anchoT', 'nb'].forEach(id =>
+    $(id).addEventListener('input', () => { tocado.add(id); calcular(); }));
+  $('trvUse').addEventListener('click', () => { $('caldo').value = $('trvUse').dataset.v; tocado.add('caldo'); calcular(); });
   $('print').addEventListener('click', () => window.print());
+  $('bar').addEventListener('click', () => $('tankCard').scrollIntoView({block:'center', behavior:'smooth'}));
 
   cargarIndice().then(() => alCambiarCultivo(true)).catch(() => {
-    $('usesBody').innerHTML = '<tr><td colspan="5" class="cc-empty">No se han podido cargar los productos autorizados. Recarga la página.</td></tr>';
+    $('pickName').textContent = 'No se han podido cargar los productos autorizados. Recarga la página.';
   });
 })();

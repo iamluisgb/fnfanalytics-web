@@ -51,18 +51,6 @@
 
   <noscript><p class="cc-empty">La calculadora necesita JavaScript activado.</p></noscript>
 
-  <section class="cc-scene" id="scene" aria-label="Simulación del tratamiento en tu parcela" hidden>
-    <div class="cc-stage" id="stage">
-      <div class="cc-loading" id="sceneLoading">Cargando la parcela…</div>
-      <div class="cc-hud is-tl"><span class="cc-k">Volumen de copa</span><b id="hTrv"></b><span class="cc-k">Caldo</span><b id="hCaldo"></b><span class="cc-pill is-bad" id="hBad" hidden>Dosis fuera de lo autorizado</span></div>
-      <div class="cc-hud is-tr"><span class="cc-k" id="hCubaN"></span><b id="hCubaL"></b><div class="cc-meter"><span id="hCubaM"></span></div><span class="cc-k" id="hCubaP"></span></div>
-      <div class="cc-hud is-bl"><span class="cc-k">Superficie tratada</span><b id="hHa"></b><div class="cc-meter"><span id="hHaM"></span></div></div>
-      <div class="cc-lbl" id="lCopa"></div>
-      <div class="cc-lbl" id="lCalle"></div>
-      <div class="cc-ctrl"><small>Arrastra para girar</small><button type="button" id="play">Pausar</button></div>
-    </div>
-  </section>
-
   <div class="cc-grid">
     <section class="cc-steps" aria-label="Datos del tratamiento">
 
@@ -77,21 +65,35 @@
               <select id="plaga"></select>
             </label>
           </div>
-          <label class="cc-f" for="buscar">Buscar producto o materia activa
-            <input type="search" id="buscar" placeholder="Por ejemplo: cobre, azoxistrobin, CURENOX" autocomplete="off">
-          </label>
-          <div class="cc-table cc-uses" role="region" aria-label="Productos autorizados" tabindex="0">
-            <table>
-              <thead><tr><th>Producto</th><th>Dosis autorizada</th><th>Caldo</th><th>Aplic.</th><th>P.&nbsp;S.</th></tr></thead>
-              <tbody id="usesBody"></tbody>
-            </table>
+          <div class="cc-f"><span id="prodLbl">Producto</span>
+            <button type="button" class="cc-pick" id="pick" aria-haspopup="dialog" aria-describedby="usesHint">
+              <span class="cc-pick-main"><b id="pickName">Cargando…</b><span class="cc-sub" id="pickSub"></span></span>
+              <span class="cc-pick-cta">Cambiar</span>
+            </button>
           </div>
-          <button type="button" class="cc-ghost cc-more" id="more" hidden></button>
           <p class="cc-hint" id="usesHint"></p>
-          <div class="cc-dose">
-            <div class="cc-dose-top"><label class="cc-f" for="dose">Dosis que vas a usar</label><strong id="doseLabel" class="cc-num"></strong></div>
-            <input type="range" id="dose">
-            <div class="cc-scale"><span id="dMin"></span><span id="dMid"></span><span id="dMax"></span></div>
+
+          <div class="cc-ficha" id="ficha">
+            <dl class="cc-facts">
+              <div><dt>Dosis autorizada</dt><dd id="fDose"></dd></div>
+              <div><dt>Caldo</dt><dd id="fCaldo"></dd></div>
+              <div><dt>Aplicaciones</dt><dd id="fAp"></dd></div>
+              <div><dt>Plazo de seguridad</dt><dd id="fPs"></dd></div>
+            </dl>
+            <div class="cc-dose">
+              <label class="cc-f" for="doseIn">Dosis que vas a usar</label>
+              <div class="cc-stepper">
+                <button type="button" id="doseMinus" aria-label="Bajar la dosis">−</button>
+                <span class="cc-unit"><input type="number" id="doseIn" min="0" inputmode="decimal"><em id="doseUnit"></em></span>
+                <button type="button" id="dosePlus" aria-label="Subir la dosis">+</button>
+              </div>
+              <input type="range" id="dose" aria-label="Dosis">
+              <div class="cc-scale"><span id="dMin"></span><span id="dZona">zona autorizada</span><span id="dMax"></span></div>
+            </div>
+            <div class="cc-checks" aria-live="polite">
+              <h3 class="cc-h3">Comprobado contra el registro</h3>
+              <div id="checks"></div>
+            </div>
           </div>
         </div>
       </article>
@@ -104,9 +106,6 @@
             <label class="cc-f" for="caldo">Caldo<span class="cc-unit"><input type="number" id="caldo" min="0" step="10" value="800" inputmode="decimal"><em>L/ha</em></span></label>
             <label class="cc-f" for="cuba">Cuba<span class="cc-unit"><input type="number" id="cuba" min="0" step="50" value="2000" inputmode="decimal"><em>L</em></span></label>
           </div>
-          <label class="cc-f" for="parcela">Parcela (para la orden, opcional)
-            <input type="text" id="parcela" placeholder="Por ejemplo: Los Llanos, pol. 12 parc. 45" autocomplete="off">
-          </label>
           <details class="cc-trv" id="trvBox">
             <summary>¿No sabes qué caldo poner? Calcúlalo por el volumen de copa</summary>
             <div class="cc-body">
@@ -123,8 +122,8 @@
         </div>
       </article>
 
-      <article class="cc-step">
-        <header><span class="cc-n">3</span><h2>Ajusta el pulverizador</h2><span class="cc-opt">Opcional</span></header>
+      <details class="cc-step cc-fold">
+        <summary><span class="cc-n">3</span><h2>Ajusta el pulverizador</h2><span class="cc-opt">Opcional</span></summary>
         <div class="cc-body">
           <div class="cc-row">
             <label class="cc-f" for="vel">Velocidad<span class="cc-unit"><input type="number" id="vel" step="0.1" min="0" value="5" inputmode="decimal"><em>km/h</em></span></label>
@@ -140,12 +139,37 @@
           </div>
           <p class="cc-hint" id="nozHint"></p>
         </div>
-      </article>
+      </details>
+
+      <details class="cc-step cc-fold" id="allBox">
+        <summary><h2 id="allSum">Todos los productos autorizados</h2></summary>
+        <div class="cc-body">
+          <div class="cc-table cc-uses" role="region" aria-label="Productos autorizados" tabindex="0">
+            <table>
+              <thead><tr><th>Producto</th><th>Dosis autorizada</th><th>Caldo</th><th>Aplic.</th><th>P.&nbsp;S.</th></tr></thead>
+              <tbody id="usesBody"></tbody>
+            </table>
+          </div>
+          <p class="cc-hint">Pulsa una fila para elegir ese producto. P. S. = plazo de seguridad.</p>
+        </div>
+      </details>
     </section>
 
     <aside class="cc-result" aria-label="Resultado">
-      <div class="cc-card cc-tank" aria-live="polite">
-        <div class="cc-k">Producto en cada cuba llena</div>
+      <section class="cc-scene" id="scene" aria-label="Simulación del tratamiento en tu parcela" hidden>
+        <div class="cc-stage" id="stage">
+          <div class="cc-loading" id="sceneLoading">Cargando la parcela…</div>
+          <span class="cc-pill is-bad cc-scene-bad" id="hBad" hidden>Dosis fuera de lo autorizado</span>
+          <div class="cc-hud is-tr"><span class="cc-k" id="hCubaN"></span><b id="hCubaL"></b><div class="cc-meter"><span id="hCubaM"></span></div><span class="cc-k" id="hCubaP"></span></div>
+          <div class="cc-hud is-bl"><span class="cc-k">Superficie tratada</span><b id="hHa"></b><div class="cc-meter"><span id="hHaM"></span></div></div>
+          <div class="cc-lbl" id="lCopa"></div>
+          <div class="cc-lbl" id="lCalle"></div>
+          <div class="cc-ctrl"><small>Arrastra para girar</small><button type="button" id="play">Pausar</button></div>
+        </div>
+      </section>
+
+      <div class="cc-card cc-tank" id="tankCard" aria-live="polite">
+        <div class="cc-k" id="perTankK">Producto en cada cuba llena</div>
         <div class="cc-big" id="perTank"></div>
         <p id="prodLine"></p>
         <div class="cc-tanks" id="tanks" aria-hidden="true"></div>
@@ -156,41 +180,57 @@
           <div><div class="cc-k">Caldo total</div><div class="cc-v" id="kCaldo"></div></div>
         </div>
       </div>
-
-      <div class="cc-card cc-checks">
-        <h3 class="cc-h3">Comprobado contra el registro</h3>
-        <div id="checks" style="display:grid;gap:8px"></div>
-      </div>
-
-      <div class="cc-card cc-order">
-        <h3 class="cc-h3">Orden de tratamiento</h3>
-        <div class="cc-sheet" id="sheet">
-          <div class="cc-sheet-t">Orden de tratamiento fitosanitario <span id="oDate"></span></div>
-          <dl>
-            <dt>Parcela</dt><dd id="oParc"></dd>
-            <dt>Cultivo</dt><dd id="oCult"></dd>
-            <dt>Motivo</dt><dd id="oPlaga"></dd>
-            <dt>Producto</dt><dd id="oProd"></dd>
-            <dt>Dosis</dt><dd id="oDose"></dd>
-            <dt>Caldo</dt><dd id="oCaldo"></dd>
-            <dt>Por cuba</dt><dd id="oTank"></dd>
-            <dt>Boquillas</dt><dd id="oNoz"></dd>
-            <dt>No cosechar antes</dt><dd id="oPS"></dd>
-          </dl>
-          <div class="cc-sign"><div>Asesor (ROPO)</div><div>Aplicador</div></div>
-          <p class="cc-sheet-src">Calculado con fnfanalytics.com/herramientas/calculadora-caldo sobre el registro del MAPA. La etiqueta del producto manda.</p>
-        </div>
-        <div class="cc-actions">
-          <a class="cc-btn is-primary" href="/#acceso" data-umami-event="calc-cuaderno">Regístralo en tu cuaderno</a>
-          <div class="cc-two">
-            <button class="cc-btn is-sec" type="button" id="print" data-umami-event="calc-imprimir">Imprimir o PDF</button>
-            <a class="cc-btn is-sec" id="wa" href="#" target="_blank" rel="noopener" data-umami-event="calc-whatsapp">Enviar por WhatsApp</a>
-          </div>
-          <p class="cc-foot">Gratis y sin registro. El cuaderno sí pide cuenta: guarda la orden, la parcela y el aplicador, y la exporta al SIEX.</p>
-        </div>
-      </div>
     </aside>
   </div>
+
+  <section class="cc-card cc-order" id="orden" aria-labelledby="ordenT">
+    <div class="cc-order-main">
+      <h2 class="cc-h3" id="ordenT">Orden de tratamiento</h2>
+      <div class="cc-sheet" id="sheet">
+        <div class="cc-sheet-t">Orden de tratamiento fitosanitario <span id="oDate"></span></div>
+        <dl>
+          <dt>Parcela</dt><dd id="oParc"></dd>
+          <dt>Cultivo</dt><dd id="oCult"></dd>
+          <dt>Motivo</dt><dd id="oPlaga"></dd>
+          <dt>Producto</dt><dd id="oProd"></dd>
+          <dt>Dosis</dt><dd id="oDose"></dd>
+          <dt>Caldo</dt><dd id="oCaldo"></dd>
+          <dt>Por cuba</dt><dd id="oTank"></dd>
+          <dt>Boquillas</dt><dd id="oNoz"></dd>
+          <dt>No cosechar antes</dt><dd id="oPS"></dd>
+        </dl>
+        <div class="cc-sign"><div>Asesor (ROPO)</div><div>Aplicador</div></div>
+        <p class="cc-sheet-src">Calculado con fnfanalytics.com/herramientas/calculadora-caldo sobre el registro del MAPA. La etiqueta del producto manda.</p>
+      </div>
+    </div>
+    <div class="cc-actions">
+      <label class="cc-f" for="parcela">Parcela (opcional)
+        <input type="text" id="parcela" placeholder="Por ejemplo: Los Llanos, pol. 12 parc. 45" autocomplete="off">
+      </label>
+      <a class="cc-btn is-primary" href="/#acceso" data-umami-event="calc-cuaderno">Regístralo en tu cuaderno</a>
+      <div class="cc-two">
+        <button class="cc-btn is-sec" type="button" id="print" data-umami-event="calc-imprimir">Imprimir o PDF</button>
+        <a class="cc-btn is-sec" id="wa" href="#" target="_blank" rel="noopener" data-umami-event="calc-whatsapp">Enviar por WhatsApp</a>
+      </div>
+      <p class="cc-foot">Gratis y sin registro. El cuaderno sí pide cuenta: guarda la orden, la parcela y el aplicador, y la exporta al SIEX.</p>
+    </div>
+  </section>
+
+  <button type="button" class="cc-bar" id="bar" hidden>
+    <span class="cc-bar-main"><b id="barKg"></b><span id="barN"></span></span>
+    <span class="cc-pill" id="barSt"></span>
+    <span class="cc-bar-go">Ver</span>
+  </button>
+
+  <dialog class="cc-dlg" id="dlg" aria-labelledby="dlgT">
+    <div class="cc-dlg-head">
+      <h2 id="dlgT">Productos autorizados</h2>
+      <button type="button" class="cc-x" id="dlgX" aria-label="Cerrar">×</button>
+    </div>
+    <input type="search" id="buscar" placeholder="Buscar por producto o materia activa" autocomplete="off" aria-label="Buscar producto o materia activa">
+    <p class="cc-hint" id="dlgHint"></p>
+    <ul class="cc-list" id="list"></ul>
+  </dialog>
 </main>
 
 <footer>
