@@ -23,4 +23,11 @@ html = PAGINA.read_text(encoding="utf-8")
 html = re.sub(r'(/assets/calculadora\.(?:css|js))(?:\?v=[0-9a-f]+)?"', rf'\1?v={v}"', html)
 html = re.sub(r'(/herramientas/datos/cultivos\.json)(?:\?v=[0-9a-f]+)?"', rf'\1?v={v}"', html)
 PAGINA.write_text(html, encoding="utf-8")
-print("versión", v)
+
+# dirección de trabajo: su propio JS y el CSS compartido
+DIR = RAIZ / "herramientas" / "direccion-de-trabajo.html"
+vd = hashlib.sha256((RAIZ / "assets" / "direccion.js").read_bytes() + (RAIZ / "assets" / "calculadora.css").read_bytes()).hexdigest()[:10]
+d = DIR.read_text(encoding="utf-8")
+d = re.sub(r'(/assets/(?:direccion\.js|calculadora\.css))(?:\?v=[0-9a-f]+)?"', rf'\1?v={vd}"', d)
+DIR.write_text(d, encoding="utf-8")
+print("versión", v, "· dirección", vd)
