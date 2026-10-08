@@ -32,9 +32,8 @@
 {"@context":"https://schema.org","@type":"Organization","name":"Food & Farm Analytics","alternateName":"FnF Analytics","url":"https://fnfanalytics.com/","logo":"https://fnfanalytics.com/favicon-512.png","email":"hola@fnfanalytics.com","award":"Premio Emilio Botín 2020 (ceiA3 y Santander Universidades)"}
 </script>
   <!-- Umami Analytics (script self-hosteado; data-domains evita contar localhost).
-       TODO: crear website propio "fnfanalytics.com" en cloud.umami.is y cambiar aquí el
-       data-website-id (y en el resto de páginas); mientras tanto comparte propiedad con
-       luisgonzalezbernal.com (separable en el dashboard con el filtro de Host). -->
+       Comparte propiedad con luisgonzalezbernal.com y bookreader (el plan gratuito no admite
+       más webs): se separa con el filtro de Host. Informe semanal: scripts/informe_umami.py. -->
   <script defer src="/u/s.js" data-website-id="08c1619b-4bb8-471b-9dc9-9b6cda88e8ae" data-host-url="https://cloud.umami.is" data-domains="fnfanalytics.com,www.fnfanalytics.com"></script>
 </head>
 <body>
@@ -480,6 +479,7 @@
         })
       });
       if(!r.ok) throw 0;
+      if (window.umami) umami.track('acceso-enviado', { perfil: f.perfil.value, origen: new URLSearchParams(location.search).get('origen') || 'web' });
       f.style.display='none';
       document.getElementById('consent-row').style.display='none';
       document.getElementById('ok').style.display='block';
@@ -491,6 +491,24 @@
 })();
 </script>
 
+<script>
+// Hasta dónde baja cada visita: un evento por sección, la primera vez que su borde
+// superior pasa del 60 % de la pantalla (las secciones altas no caben enteras en el móvil).
+(function(){
+  if (!('IntersectionObserver' in window)) return;
+  var vistas = {};
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      var id = e.target.id;
+      if (!e.isIntersecting || vistas[id] || !window.umami) return;
+      vistas[id] = 1; io.unobserve(e.target); umami.track('ve-' + id);
+    });
+  }, { rootMargin: '0px 0px -40% 0px' });
+  ['inteligencia','analitica','asesores','precios','acceso'].forEach(function(id){
+    var el = document.getElementById(id); if (el) io.observe(el);
+  });
+})();
+</script>
 <script src="/assets/analitica.js?v=20261008" defer></script>
 <script>
 // Sección «inteligencia»: la demo va en un marco aislado; aquí se ajusta su altura y se le avisa de que ya se ve.
