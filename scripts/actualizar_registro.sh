@@ -26,7 +26,21 @@ avisar() { osascript -e "display notification \"$1\" with title \"FnF · registr
 echo "===== $(date) — carga del registro en la web ====="
 if [ "$SCRAPE" = 1 ]; then
   echo "[1/5] estado de los productos en el registro..."
-  ( cd "$MAPA" && python3 scrape_mapa.py registro_fitosanitarios.csv.nuevo ) || { echo "FALLO del scrape"; avisar "Falló la descarga del registro"; exit 1; }
+  # Desde octubre de 2026 el MAPA firma con la raíz «AC RAIZ FNMT-RCM SERVIDORES SEGUROS G2R», que
+  # no está en los almacenes de Python (certifi, /etc/ssl). Se baja de la sede de la FNMT y solo se
+  # usa si su huella SHA-1 es la publicada allí (y la que enviaba el MAPA el 8-oct-2026).
+  G2R_URL="https://www.sede.fnmt.gob.es/documents/10445900/10526749/AC_RAIZ_FNMTRCM_Servidores_Seguros_G2R.cer"
+  G2R_SHA1="19:87:94:8D:AB:7D:62:00:9E:2D:6B:BE:D8:83:DC:3A:F5:67:99:E8"
+  CA="$LOGS/raices-fnf.pem"
+  TMP=$(mktemp)
+  curl -sSfL -A "Mozilla/5.0" "$G2R_URL" -o "$TMP" || { echo "No se pudo bajar la raíz de la FNMT"; avisar "Falló la raíz de la FNMT"; exit 1; }
+  # la FNMT la sirve en DER o en PEM, según el archivo
+  RAIZ=$(openssl x509 -inform DER -in "$TMP" 2>/dev/null || openssl x509 -in "$TMP" 2>/dev/null); rm -f "$TMP"
+  [ -n "$RAIZ" ] || { echo "La raíz de la FNMT no se puede leer"; avisar "Falló la raíz de la FNMT"; exit 1; }
+  HUELLA=$(printf '%s\n' "$RAIZ" | openssl x509 -noout -fingerprint -sha1 | cut -d= -f2)
+  [ "$HUELLA" = "$G2R_SHA1" ] || { echo "Huella de la raíz FNMT inesperada: $HUELLA"; avisar "La raíz de la FNMT no coincide"; exit 1; }
+  { cat /etc/ssl/cert.pem; printf '%s\n' "$RAIZ"; } > "$CA"
+  ( cd "$MAPA" && SSL_CERT_FILE="$CA" python3 scrape_mapa.py registro_fitosanitarios.csv.nuevo ) || { echo "FALLO del scrape"; avisar "Falló la descarga del registro"; exit 1; }
   # solo se sustituye si la descarga parece completa (no menos del 95 % de las filas de antes)
   antes=$(wc -l < "$MAPA/registro_fitosanitarios.csv"); ahora=$(wc -l < "$MAPA/registro_fitosanitarios.csv.nuevo")
   if [ "$ahora" -lt $((antes * 95 / 100)) ]; then echo "Descarga incompleta ($ahora de $antes filas): no se usa"; avisar "Descarga del registro incompleta"; exit 1; fi
