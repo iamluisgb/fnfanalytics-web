@@ -78,7 +78,7 @@ window.FnfEscena = {montar() {
   function buildCampo(st) {
     if (st.cult === 'horticola') return buildHuerta(st);
     W.huerta = false;
-    const half = Math.max(st.anchoT * .75, 14), sx = .9, sz = .55, L = 63, n = Math.round(L / sx);
+    const half = Math.max(st.anchoT * 1.25, 16), sx = .9, sz = .55, L = 63, n = Math.round(L / sx);
     let s = 5; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
     const rodadas = [];
     for (let k = -2; k <= 2; k++) rodadas.push(k * st.anchoT - .9, k * st.anchoT + .9);
@@ -326,7 +326,7 @@ window.FnfEscena = {montar() {
   if ('ResizeObserver' in window) new ResizeObserver(resize).observe(stage); else addEventListener('resize', resize);
 
   let drag = null;
-  stage.addEventListener('pointerdown', e => { if (e.target === btn) return; drag = {x:e.clientX, y:e.clientY, yaw, pitch}; stage.setPointerCapture(e.pointerId); });
+  stage.addEventListener('pointerdown', e => { if (e.target === btn || e.target.classList.contains('is-link')) return; drag = {x:e.clientX, y:e.clientY, yaw, pitch}; stage.setPointerCapture(e.pointerId); });
   stage.addEventListener('pointermove', e => {
     if (!drag) return;
     yaw = Math.max(-1.6, Math.min(.3, drag.yaw - (e.clientX - drag.x) * .006));
@@ -351,7 +351,10 @@ window.FnfEscena = {montar() {
     sprayC.set(st.bad ? tok('--bad') : tok('--cc-spray'));
     liquid.material.color.copy(sprayC);
     $('hBad').hidden = !st.bad;
-    lab.copa.textContent = barra ? `Barra ${nf(st.anchoT, 1)} m · ${Math.round(st.nb)} boquillas` : `Copa ${nf(st.ancho, 1)} × ${nf(st.alto, 1)} m`;
+    lab.copa.classList.toggle('is-link', barra);
+    if (barra) { lab.copa.setAttribute('role', 'button'); lab.copa.tabIndex = 0; lab.copa.title = 'Cambiar el ancho de la barra'; }
+    else { lab.copa.removeAttribute('role'); lab.copa.removeAttribute('tabindex'); lab.copa.removeAttribute('title'); }
+    lab.copa.textContent = barra ? `Barra ${nf(st.anchoT, 1)} m · ${Math.round(st.nb)} boquillas · cambiar` : `Copa ${nf(st.ancho, 1)} × ${nf(st.alto, 1)} m`;
     lab.calle.textContent = `Calle ${nf(st.calle, 1)} m`;
     resize(); sync();
     if (!running) draw();

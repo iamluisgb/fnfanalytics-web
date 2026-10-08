@@ -149,6 +149,8 @@
     // ocultar o mostrar la escena no debe mover lo que el usuario tiene bajo el dedo
     const antes = $('cult').getBoundingClientRect().top;
     $('trvBox').hidden = !leñoso;
+    // en herbáceos la barra (ancho y boquillas) pesa en el resultado: el paso 3 sale abierto
+    $('pulvBox').open = !leñoso && S.tipo !== 'otro';
     $('scene').hidden = S.tipo === 'otro';
     const salto = $('cult').getBoundingClientRect().top - antes;
     if (compensar && Math.abs(salto) > 1) window.scrollBy(0, salto);
@@ -371,6 +373,15 @@
     $(id).addEventListener('input', () => { tocado.add(id); calcular(); }));
   $('trvUse').addEventListener('click', () => { $('caldo').value = $('trvUse').dataset.v; tocado.add('caldo'); calcular(); });
   $('print').addEventListener('click', () => window.print());
+  // la etiqueta de la barra en la escena lleva al ancho de trabajo
+  const irAlAncho = () => {
+    if (!$('lCopa').classList.contains('is-link')) return;
+    $('pulvBox').open = true;
+    $('anchoT').scrollIntoView({block:'center', behavior:'smooth'});
+    $('anchoT').focus({preventScroll:true});
+  };
+  $('lCopa').addEventListener('click', irAlAncho);
+  $('lCopa').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); irAlAncho(); } });
   $('bar').addEventListener('click', () => $('tankCard').scrollIntoView({block:'center', behavior:'smooth'}));
 
   cargarIndice().then(() => alCambiarCultivo(true)).catch(() => {
