@@ -11,16 +11,20 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://fnfanalytics.com/herramientas/calculadora-caldo">
 <meta property="og:locale" content="es_ES">
-<meta property="og:image" content="https://fnfanalytics.com/og.jpg">
+<meta property="og:image" content="https://fnfanalytics.com/herramientas/og-calculadora.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Calculadora de caldo de FnF: 4,80 kg de producto por cuba sobre una escena 3D de olivar">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://fnfanalytics.com/herramientas/og-calculadora.jpg">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#0c1210">
 <link rel="preload" href="/assets/fonts/Poppins-700.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/herramientas/datos/cultivos.json?v=be5809f01c" as="fetch" crossorigin>
+<link rel="preload" href="/herramientas/datos/cultivos.json?v=97bfcb0e90" as="fetch" crossorigin>
 <link rel="stylesheet" href="/assets/site.css">
-<link rel="stylesheet" href="/assets/calculadora.css?v=be5809f01c">
+<link rel="stylesheet" href="/assets/calculadora.css?v=97bfcb0e90">
 <script defer src="/u/s.js" data-website-id="08c1619b-4bb8-471b-9dc9-9b6cda88e8ae" data-host-url="https://cloud.umami.is" data-domains="fnfanalytics.com,www.fnfanalytics.com"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"Calculadora de caldo y dosis de fitosanitarios","url":"https://fnfanalytics.com/herramientas/calculadora-caldo","applicationCategory":"BusinessApplication","operatingSystem":"Web","inLanguage":"es","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"publisher":{"@type":"Organization","name":"Food & Farm Analytics","url":"https://fnfanalytics.com"}}
@@ -83,6 +87,7 @@
               <div><dt>Aplicaciones</dt><dd id="fAp"></dd></div>
               <div><dt>Plazo de seguridad</dt><dd id="fPs"></dd></div>
             </dl>
+            <p class="cc-hint cc-origen" id="fOrigen" hidden></p>
             <div class="cc-dose">
               <label class="cc-f" for="doseIn">Dosis que vas a usar</label>
               <div class="cc-stepper">
@@ -96,6 +101,19 @@
             <div class="cc-checks" aria-live="polite">
               <h3 class="cc-h3">Comprobado contra el registro</h3>
               <div id="checks"></div>
+            </div>
+            <div class="cc-alerta">
+              <p class="cc-alerta-t"><b>¿Te avisamos si cambia?</b> Si el MAPA retira o cambia la autorización de <span id="aProd"></span> en <span id="aCult"></span>, te escribimos.</p>
+              <form id="alertaForm">
+                <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+                <div class="cc-alerta-row">
+                  <input type="email" id="aEmail" required placeholder="tu@correo.es" autocomplete="email" aria-label="Correo electrónico">
+                  <button type="submit" class="cc-btn is-sec" data-umami-event="calc-alerta-envio">Avisarme</button>
+                </div>
+                <label class="cc-consent"><input type="checkbox" required> <span>He leído la <a href="/privacidad">política de privacidad</a> y acepto que FnF me escriba sobre este aviso y sobre FnF.</span></label>
+                <p class="cc-rgpd">Responsable: Luis González Bernal. Finalidad: avisarte de cambios en el registro de este producto. Destinatario: FormSubmit (EE. UU.). Derechos en hola@fnfanalytics.com.</p>
+              </form>
+              <p class="cc-hint" id="aMsg" role="status"></p>
             </div>
           </div>
         </div>
@@ -113,13 +131,15 @@
             <summary>¿No sabes qué caldo poner? Calcúlalo por el volumen de copa</summary>
             <div class="cc-body">
               <div class="cc-row">
-                <label class="cc-f" for="calle">Ancho de calle<span class="cc-unit"><input type="number" id="calle" step="0.1" min="0" value="7" inputmode="decimal"><em>m</em></span></label>
-                <label class="cc-f" for="alto">Altura de copa<span class="cc-unit"><input type="number" id="alto" step="0.1" min="0" value="3.5" inputmode="decimal"><em>m</em></span></label>
-                <label class="cc-f" for="ancho">Anchura de copa<span class="cc-unit"><input type="number" id="ancho" step="0.1" min="0" value="3.2" inputmode="decimal"><em>m</em></span></label>
-                <label class="cc-f" for="fac">Litros por m³ de copa<span class="cc-unit"><input type="number" id="fac" step="0.005" min="0" value="0.05" inputmode="decimal"><em>L/m³</em></span></label>
+                <label class="cc-f" for="calle">Ancho de calle<span class="cc-unit"><input type="number" id="calle" step="0.1" min="0" value="8" inputmode="decimal"><em>m</em></span></label>
+                <label class="cc-f" for="entre" id="lEntre">Entre árboles<span class="cc-unit"><input type="number" id="entre" step="0.1" min="0" value="8" inputmode="decimal"><em>m</em></span></label>
+                <label class="cc-f" for="alto">Altura de copa<span class="cc-unit"><input type="number" id="alto" step="0.1" min="0" value="4" inputmode="decimal"><em>m</em></span></label>
+                <label class="cc-f" for="ancho" id="lAncho">Diámetro de copa<span class="cc-unit"><input type="number" id="ancho" step="0.1" min="0" value="4" inputmode="decimal"><em>m</em></span></label>
+                <label class="cc-f" for="fac">Litros por m³ de copa<span class="cc-unit"><input type="number" id="fac" step="0.005" min="0" value="0.12" inputmode="decimal"><em>L/m³</em></span></label>
               </div>
               <div class="cc-out"><span>Volumen de copa <b id="trvV"></b></span><span>Caldo recomendado <b id="trvC"></b></span><button class="cc-ghost" id="trvUse" type="button">Usar este caldo</button></div>
-              <p class="cc-hint">Método TRV (volumen de vegetación por hectárea), el mismo principio que DOSA3D. El factor de litros por m³ es orientativo: ajústalo a tu equipo y a tu experiencia.</p>
+              <p class="cc-hint" id="trvArb"></p>
+              <p class="cc-hint" id="trvFuente"></p>
             </div>
           </details>
         </div>
@@ -136,7 +156,7 @@
           <div class="cc-out"><span>Caudal por boquilla <b id="qb"></b></span><span>Caudal total <b id="qt"></b></span></div>
           <div class="cc-table" role="region" aria-label="Boquillas" tabindex="0">
             <table style="min-width:420px">
-              <thead><tr><th>Boquilla ISO</th><th>Caudal a 3 bar</th><th>Presión necesaria</th><th></th></tr></thead>
+              <thead><tr><th id="nozH1">Boquilla</th><th id="nozH2">Caudal</th><th>Presión necesaria</th><th></th></tr></thead>
               <tbody id="nozBody"></tbody>
             </table>
           </div>
@@ -210,7 +230,7 @@
       <label class="cc-f" for="parcela">Parcela (opcional)
         <input type="text" id="parcela" placeholder="Por ejemplo: Los Llanos, pol. 12 parc. 45" autocomplete="off">
       </label>
-      <a class="cc-btn is-primary" href="/#acceso" data-umami-event="calc-cuaderno">Regístralo en tu cuaderno</a>
+      <a class="cc-btn is-primary" href="/?origen=calculadora#acceso" data-umami-event="calc-cuaderno">Regístralo en tu cuaderno</a>
       <div class="cc-two">
         <button class="cc-btn is-sec" type="button" id="print" data-umami-event="calc-imprimir">Imprimir o PDF</button>
         <a class="cc-btn is-sec" id="wa" href="#" target="_blank" rel="noopener" data-umami-event="calc-whatsapp">Enviar por WhatsApp</a>
@@ -250,6 +270,6 @@
     <p>© 2026 · <a href="mailto:hola@fnfanalytics.com">hola@fnfanalytics.com</a></p>
   </div>
 </footer>
-<script src="/assets/calculadora.js?v=be5809f01c"></script>
+<script src="/assets/calculadora.js?v=97bfcb0e90"></script>
 </body>
 </html>

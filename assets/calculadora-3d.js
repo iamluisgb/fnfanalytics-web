@@ -60,7 +60,8 @@ window.FnfEscena = {montar() {
     trv.visible = !W.barra;
     if (W.barra) return buildCampo(st);
     const vine = st.cult === 'vid';
-    const sp = vine ? 1.1 : Math.max(st.ancho * (st.cult === 'olivo' ? 1.6 : 1.4), st.cult === 'olivo' ? 5 : 3.5);
+    // árboles a la distancia del marco, sin que las copas se monten
+    const sp = vine ? 1.1 : Math.max(st.entre || st.ancho * 1.5, st.ancho * 1.05);
     const n = Math.ceil(70 / sp), zs = [-1.5, -.5, .5, 1.5].map(k => k * st.calle);
     let s = 3; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
     W.items = [];
@@ -338,7 +339,7 @@ window.FnfEscena = {montar() {
 
   function update(st) {
     const barra = st.cult === 'extensivo' || st.cult === 'horticola';
-    const gk = barra ? [st.cult, st.anchoT].join() : [st.cult, st.alto, st.ancho, st.calle].join();
+    const gk = barra ? [st.cult, st.anchoT].join() : [st.cult, st.alto, st.ancho, st.calle, st.entre].join();
     W.st = st;
     if (gk !== W.key) { W.key = gk; buildRows(st); }
     const bk = [st.anchoT, Math.round(st.nb)].join();

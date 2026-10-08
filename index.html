@@ -523,6 +523,8 @@
           perfil: f.perfil.value,
           email: f.email.value,
           consentimiento: 'aceptado ' + new Date().toISOString(),
+          // de dónde llega la solicitud (?origen=calculadora desde la herramienta), para medir
+          origen: new URLSearchParams(location.search).get('origen') || 'web',
           _subject: 'FnF · nueva solicitud de acceso',
           _template: 'table',
           _captcha: 'false'

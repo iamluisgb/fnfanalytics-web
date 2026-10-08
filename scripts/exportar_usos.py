@@ -5,9 +5,15 @@ Lee los CSV de workspace/projects/fnf-mapa y escribe herramientas/datos/:
   - c/<slug>.json        productos y usos de un cultivo
 
 Solo entran usos de productos vigentes con la dosis normalizada (por hL o por ha).
-Uso:  python3 scripts/exportar_usos.py ../fnf-mapa
+Familias: un uso autorizado en un grupo del registro («Frutales de hueso») vale para sus
+cultivos («Melocotonero»). Las equivalencias salen del catálogo de la app
+(agridashboard/fields/catalogo_familias.py), para que la web y la app digan lo mismo; esos usos
+llevan el nombre del cultivo del registro para el que están autorizados.
+
+Uso:  python3 scripts/exportar_usos.py ../fnf-mapa ../agridashboard
 """
 import csv
+import importlib.util
 import json
 import re
 import sys
@@ -15,6 +21,7 @@ import unicodedata
 from pathlib import Path
 
 ORIGEN = Path(sys.argv[1] if len(sys.argv) > 1 else "../fnf-mapa")
+APP = Path(sys.argv[2] if len(sys.argv) > 2 else "../agridashboard")
 DESTINO = Path(__file__).resolve().parent.parent / "herramientas" / "datos"
 
 # Tipo de cultivo: decide la escena 3D, el volumen de copa y los valores de partida.
@@ -65,6 +72,22 @@ def num(v):
         return None
 
 
+def familias():
+    """{cultivo del registro: [grupos y equivalentes cuyos usos también le valen]}."""
+    spec = importlib.util.spec_from_file_location("catalogo", APP / "fields" / "catalogo_familias.py")
+    cat = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(cat)
+    extra = {}
+    for f in cat.FAMILIAS:
+        # las familias «sin especificar» y las de jardinería agrupan al revés (el grupo con todos
+        # sus cultivos): sirven para no dar avisos falsos en la app, no para listar productos
+        if not f["mapa"] or "sin especificar" in f["nombre"] or f["nombre"] in ("Parques y jardines", "Ornamentales", "Forestal"):
+            continue
+        propio, otros = f["mapa"][0], f["mapa"][1:]
+        extra.setdefault(propio, [c for c in otros if c != propio])
+    return extra
+
+
 def leer(nombre):
     with open(ORIGEN / nombre, encoding="utf-8") as f:
         return list(csv.DictReader(f, delimiter=";"))
@@ -96,6 +119,18 @@ def main():
         vistos.add(clave)
         por_cultivo.setdefault(r["cultivo"], []).append(uso)
         fecha = max(fecha, r["fecha_consulta"])
+
+    # usos heredados de los grupos de la familia, marcados con el cultivo en que están registrados
+    propios = {c: list(u) for c, u in por_cultivo.items()}
+    for cultivo, grupos in familias().items():
+        if cultivo not in propios:
+            continue
+        ya = {tuple(u) for u in propios[cultivo]}
+        for g in grupos:
+            for u in propios.get(g, []):
+                if tuple(u) not in ya:
+                    ya.add(tuple(u))
+                    por_cultivo[cultivo].append(u + [g])
 
     (DESTINO / "c").mkdir(parents=True, exist_ok=True)
     for viejo in (DESTINO / "c").glob("*.json"):

@@ -6,14 +6,24 @@
   const V = (document.currentScript && new URL(document.currentScript.src).search) || '';
   const DATOS = '/herramientas/datos/';
   const PRESET = {
-    olivo: {caldo:800, cuba:2000, calle:7, alto:3.5, ancho:3.2, fac:.05, vel:5, anchoT:7, nb:14},
-    vid:   {caldo:500, cuba:1500, calle:2.6, alto:1.4, ancho:.6, fac:.1, vel:5, anchoT:2.6, nb:10},
-    arbol: {caldo:1000, cuba:2000, calle:5, alto:3.5, ancho:3, fac:.06, vel:5, anchoT:5, nb:16},
+    olivo: {caldo:600, cuba:2000, calle:8, entre:8, alto:4, ancho:4, fac:.12, vel:5, anchoT:8, nb:16},
+    vid:   {caldo:500, cuba:1500, calle:2.6, entre:1.2, alto:1.4, ancho:.6, fac:.095, vel:5, anchoT:2.6, nb:10},
+    arbol: {caldo:800, cuba:2000, calle:6, entre:5, alto:3.5, ancho:3.5, fac:.1, vel:5, anchoT:6, nb:16},
     horticola: {caldo:600, cuba:1000, vel:4, anchoT:12, nb:24},
     extensivo: {caldo:200, cuba:3000, vel:8, anchoT:18, nb:36},
     otro: {caldo:400, cuba:200, vel:4, anchoT:1, nb:1}
   };
-  // Boquillas de abanico, código de color ISO 10625: caudal nominal a 3 bar (L/min).
+  // Litros de caldo por m³ de copa, con su fuente. En olivo, el volumen se mide árbol a árbol.
+  const FACTOR = {
+    olivo: 'Olivo: 0,12 L por m³ de copa medido árbol a árbol (Miranda-Fuentes et al., 2016, Universidad de Córdoba).',
+    vid: 'Viña: 0,095 L por m³ de vegetación (Doruchowski, 2003).',
+    arbol: 'Frutales: 0,1 L por m³ es un valor orientativo; no hay un factor único para todas las especies y formas de conducción.'
+  };
+  // Atomizador: Albuz ATR 80 (cono hueco), caudal a 10 bar según el catálogo del fabricante.
+  // Albuz recomienda 10 bar y trabajar entre 10 y 15.
+  const ATR = [['blanca',.38],['lila',.50],['marrón',.67],['amarilla',1.03],['naranja',1.39],['roja',1.92],
+               ['gris',2.08],['verde',2.47],['negra',2.78],['azul',3.40]];
+  // Barra: boquillas de abanico, código de color ISO 10625, caudal nominal a 3 bar (L/min).
   const NOZ = [['01','naranja',.40],['015','verde',.60],['02','amarillo',.80],['025','lila',1.00],['03','azul',1.20],
                ['04','rojo',1.60],['05','marrón',2.00],['06','gris',2.40],['08','blanco',3.20]];
 
@@ -112,6 +122,9 @@
     $('fCaldo').textContent = u[6] ? `${nf(u[6])}–${nf(u[7] || u[6])} L/ha` : 'sin indicar';
     $('fAp').textContent = u[8] ? `máx. ${u[8]}${u[9] ? ` · cada ${u[9]} d` : ''}` : 'sin indicar';
     $('fPs').textContent = u[10] != null ? `${u[10]} días` : 'sin indicar';
+    $('fOrigen').hidden = !u[11];
+    $('fOrigen').textContent = u[11] ? `Autorizado en «${u[11]}», que incluye ${S.cultivo.n.toLowerCase()}.` : '';
+    pintarAlerta();
     prepararDosis();
     calcular();
   }
@@ -151,6 +164,13 @@
     $('trvBox').hidden = !leñoso;
     // en herbáceos la barra (ancho y boquillas) pesa en el resultado: el paso 3 sale abierto
     $('pulvBox').open = !leñoso && S.tipo !== 'otro';
+    if (leñoso) {
+      const sueltos = S.tipo !== 'vid';
+      $('lEntre').hidden = !sueltos;
+      $('lAncho').firstChild.textContent = sueltos ? 'Diámetro de copa' : 'Anchura de copa';
+      $('trvFuente').textContent = (sueltos ? 'Árboles sueltos: la copa se calcula como un elipsoide y se multiplica por los árboles por hectárea. '
+        : 'Seto continuo: altura × anchura de la vegetación × 10.000 ÷ ancho de calle. ') + FACTOR[S.tipo];
+    }
     $('scene').hidden = S.tipo === 'otro';
     const salto = $('cult').getBoundingClientRect().top - antes;
     if (compensar && Math.abs(salto) > 1) window.scrollBy(0, salto);
@@ -161,7 +181,7 @@
   }
 
   // ---- buscador de productos (ventana) y tabla completa (plegada) ----
-  const lineaUso = u => [rango(u), u[6] ? `caldo ${nf(u[6])}–${nf(u[7] || u[6])} L/ha` : null,
+  const lineaUso = u => [rango(u), u[11] ? `en ${u[11]}` : null, u[6] ? `caldo ${nf(u[6])}–${nf(u[7] || u[6])} L/ha` : null,
     u[8] ? `${u[8]} aplic.` : null, u[10] != null ? `P. S. ${u[10]} d` : null].filter(Boolean).join(' · ');
   let modo = 'producto';
   function pintarLista() {
@@ -208,7 +228,7 @@
     $('usesBody').innerHTML = lista.map((u, i) => {
       const p = prod(u);
       return `<tr data-i="${i}" tabindex="0" aria-selected="${u === S.uso}">
-        <td><span class="cc-pn">${esc(p[0])}</span><span class="cc-sub">Nº ${esc(u[0])} · ${esc(p[3] || p[1])}</span></td>
+        <td><span class="cc-pn">${esc(p[0])}</span><span class="cc-sub">Nº ${esc(u[0])} · ${esc(p[3] || p[1])}${u[11] ? ` · autorizado en ${esc(u[11])}` : ''}</span></td>
         <td class="cc-m">${rango(u)}</td>
         <td class="cc-m">${u[6] ? `${nf(u[6])}–${nf(u[7] || u[6])} L/ha` : '—'}</td>
         <td class="cc-m">${u[8] ?? '—'}${u[9] ? ` · ${u[9]} d` : ''}</td>
@@ -277,8 +297,13 @@
     S.hayResultado = true; barra();
 
     // volumen de copa
-    const trv = pos('alto', 3) * pos('ancho', 3) * 10000 / pos('calle', 5);
-    const rec = Math.round(trv * pos('fac', .05) / 10) * 10;
+    const sueltos = S.tipo === 'olivo' || S.tipo === 'arbol';
+    const alto = pos('alto', 3), ancho = pos('ancho', 3), calle = pos('calle', 5), entre = pos('entre', 5);
+    const trv = sueltos
+      ? Math.PI / 6 * ancho * ancho * alto * 10000 / (calle * entre)  // copa como elipsoide × árboles por ha
+      : alto * ancho * 10000 / calle;                                // seto continuo
+    const rec = Math.round(trv * pos('fac', .1) / 10) * 10;
+    $('trvArb').textContent = sueltos ? `${nf(Math.PI / 6 * ancho * ancho * alto, 1)} m³ por árbol · ${nf(10000 / (calle * entre))} árboles/ha` : '';
     $('trvV').textContent = `${nf(trv)} m³/ha`; $('trvC').textContent = `${nf(rec)} L/ha`; $('trvUse').dataset.v = rec;
 
     // pulverizador
@@ -286,11 +311,18 @@
     const qt = caldo * vel * anchoT / 600, qb = qt / nb;
     $('qb').textContent = `${nf(qb, 2)} L/min`; $('qt').textContent = `${nf(qt, 1)} L/min`;
     let mejor = null;
-    $('nozBody').innerHTML = NOZ.map(([c, col, q3]) => {
-      const bar = 3 * (qb / q3) ** 2, ok = bar >= 2 && bar <= 5;
-      if (ok && !mejor) mejor = {c, col, bar};
-      const s = ok ? '<span class="cc-pill is-ok">Encaja</span>' : `<span class="cc-pill is-warn">${bar < 2 ? 'Poca presión' : 'Demasiada'}</span>`;
-      return `<tr><td class="cc-m">${c} · ${col}</td><td class="cc-m">${nf(q3, 2)} L/min</td><td class="cc-m">${nf(bar, 1)} bar</td><td>${s}</td></tr>`;
+    const cono = ['olivo', 'vid', 'arbol'].includes(S.tipo);
+    // el caudal crece con la raíz de la presión: P = Pref · (q / qref)²
+    const [tabla, pref, pmin, pmax] = cono ? [ATR.map(([c, q]) => [`ATR 80 ${c}`, q]), 10, 10, 15]
+                                           : [NOZ.map(([c, col, q]) => [`ISO ${c} · ${col}`, q]), 3, 2, 5];
+    $('nozH1').textContent = cono ? 'Boquilla de cono' : 'Boquilla de abanico';
+    $('nozH2').textContent = `Caudal a ${pref} bar`;
+    $('nozBody').innerHTML = tabla.map(([nombre, q]) => {
+      const bar = pref * (qb / q) ** 2, ok = bar >= pmin && bar <= pmax;
+      // para la orden, la que trabaja más cerca de la presión de referencia del fabricante
+      if (ok && (!mejor || Math.abs(bar - pref) < Math.abs(mejor.bar - pref))) mejor = {nombre, bar};
+      const s = ok ? '<span class="cc-pill is-ok">Encaja</span>' : `<span class="cc-pill is-warn">${bar < pmin ? 'Poca presión' : 'Demasiada'}</span>`;
+      return `<tr><td class="cc-m">${nombre}</td><td class="cc-m">${nf(q, 2)} L/min</td><td class="cc-m">${nf(bar, 1)} bar</td><td>${s}</td></tr>`;
     }).join('');
 
     // orden
@@ -301,24 +333,25 @@
       Parcela: $('parcela').value.trim() || '—',
       Cultivo: `${S.cultivo.n} · ${nf(ha, 2)} ha`,
       Motivo: S.plaga + (u[2] ? ` (${u[2]})` : ''),
-      Producto: `${p[0]} (nº ${u[0]})`,
+      Producto: `${p[0]} (nº ${u[0]})` + (u[11] ? ` · autorizado en ${u[11]}` : ''),
       Dosis: `${nx(S.dose)} ${unidadDosis(u)} = ${nf(porHa, 2)} ${unidad}/ha`,
       Caldo: `${nf(caldo)} L/ha · ${nf(caldoTot)} L en total`,
       'Por cuba': `${nf(porCuba, 2)} ${unidad} en ${nf(cuba)} L · ${nCubas} cuba${nCubas === 1 ? '' : 's'}` + (resto > 1 && llenas ? ` (la última de ${nf(resto)} L con ${nf(porHa * resto / caldo, 2)} ${unidad})` : ''),
-      Boquillas: mejor ? `${nb} × ISO ${mejor.c} (${mejor.col}) a ${nf(mejor.bar, 1)} bar · ${nf(vel, 1)} km/h` : `${nf(qb, 2)} L/min por boquilla: revisa la tabla del fabricante`,
+      Boquillas: mejor ? `${nb} × ${mejor.nombre} a ${nf(mejor.bar, 1)} bar · ${nf(vel, 1)} km/h` : `${nf(qb, 2)} L/min por boquilla: revisa la tabla del fabricante`,
       'No cosechar antes': u[10] ? `${fd(cosecha)} (${u[10]} días)` : 'sin plazo en la etiqueta'
     };
     $('oDate').textContent = fd(hoy);
     const ids = {Parcela:'oParc', Cultivo:'oCult', Motivo:'oPlaga', Producto:'oProd', Dosis:'oDose', Caldo:'oCaldo', 'Por cuba':'oTank', Boquillas:'oNoz', 'No cosechar antes':'oPS'};
     for (const k in ids) $(ids[k]).textContent = orden[k];
+    const enlace = `https://fnfanalytics.com/herramientas/calculadora-caldo?cultivo=${S.cultivo.s}&plaga=${slug(S.plaga)}&producto=${encodeURIComponent(u[0])}&utm_source=whatsapp&utm_medium=orden`;
     const texto = `*Orden de tratamiento* · ${fd(hoy)}\n` + Object.entries(orden).map(([k, v]) => `${k}: ${v}`).join('\n') +
-      `\n\nLa etiqueta del producto manda. Calculado con fnfanalytics.com/herramientas/calculadora-caldo`;
+      `\n\nLa etiqueta del producto manda. Ábrelo en la calculadora: ${enlace}`;
     $('wa').href = 'https://wa.me/?text=' + encodeURIComponent(texto);
 
     history.replaceState(null, '', `?cultivo=${S.cultivo.s}&plaga=${slug(S.plaga)}&producto=${encodeURIComponent(u[0])}`);
 
     escena.actualizar({
-      cult:S.tipo, alto:pos('alto', 3), ancho:pos('ancho', 3), calle:pos('calle', 5), caldo, cuba,
+      cult:S.tipo, alto, ancho, calle, entre, caldo, cuba,
       ha, nT:nCubas, rest:resto, perTank:porCuba, unitP:unidad, qt, vel, trv, anchoT, nb,
       bad:ck.some(c => c[0] === 'bad')
     });
@@ -348,6 +381,36 @@
     };
   })();
 
+  // ---- alerta: «avísame si cambia la autorización» ----
+  // Mismo buzón que el formulario de la landing (token público de FormSubmit).
+  const FORM = 'https://formsubmit.co/ajax/1cd257196bf9a567d63dd4a68fbab3f4';
+  const claveAlerta = u => `cc-alerta:${u[0]}:${S.cultivo.s}`;
+  function pintarAlerta() {
+    const u = S.uso, p = prod(u);
+    $('aProd').textContent = p[0]; $('aCult').textContent = S.cultivo.n.toLowerCase();
+    let ya = false; try { ya = !!localStorage.getItem(claveAlerta(u)); } catch (_) {}
+    $('alertaForm').hidden = ya; $('aMsg').textContent = ya ? `Ya te avisamos si cambia ${p[0]} en ${S.cultivo.n.toLowerCase()}.` : '';
+  }
+  $('alertaForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const f = $('alertaForm'), u = S.uso, p = prod(u), b = f.querySelector('button');
+    if (f._honey.value) return;
+    b.disabled = true; b.textContent = 'Enviando…'; $('aMsg').textContent = '';
+    try {
+      const r = await fetch(FORM, {method:'POST', headers:{'Content-Type':'application/json', Accept:'application/json'},
+        body:JSON.stringify({email:$('aEmail').value, producto:p[0], registro:u[0], cultivo:S.cultivo.n, plaga:S.plaga,
+          consentimiento:'aceptado ' + new Date().toISOString(), origen:'calculadora-caldo',
+          _subject:'FnF · alerta del registro', _template:'table', _captcha:'false'})});
+      if (!r.ok) throw 0;
+      try { localStorage.setItem(claveAlerta(u), '1'); } catch (_) {}
+      track('calc-alerta');
+      f.hidden = true; $('aMsg').textContent = `Hecho. Si el MAPA cambia ${p[0]} en ${S.cultivo.n.toLowerCase()}, te escribimos.`;
+    } catch (_) {
+      $('aMsg').textContent = 'No se ha podido enviar. Inténtalo de nuevo o escríbenos a hola@fnfanalytics.com.';
+    }
+    b.disabled = false; b.textContent = 'Avisarme';
+  });
+
   // ---- barra inferior (móvil): visible mientras el resultado no está a la vista ----
   const enVista = new Set();
   function barra() { $('bar').hidden = !S.hayResultado || enVista.size > 0; }
@@ -358,6 +421,10 @@
 
   // ---- eventos ----
   const tocado = new Set();
+  let usada = false;
+  const uso = () => { if (!usada) { usada = true; track('calc-uso'); } };
+  ['dose', 'doseIn', 'ha', 'caldo', 'cuba'].forEach(id => $(id).addEventListener('input', uso));
+  ['doseMinus', 'dosePlus'].forEach(id => $(id).addEventListener('click', uso));
   $('cult').addEventListener('change', () => alCambiarCultivo(false));
   $('plagaBtn').addEventListener('click', () => abrirLista('plaga'));
   $('pick').addEventListener('click', () => abrirLista('producto'));
@@ -369,7 +436,7 @@
   $('doseIn').addEventListener('input', () => { ponerDosis(parseFloat($('doseIn').value), 'texto'); calcular(); });
   $('doseMinus').addEventListener('click', () => { ponerDosis(Math.max(0, S.dose - S.pasoBoton), null); calcular(); });
   $('dosePlus').addEventListener('click', () => { ponerDosis(S.dose + S.pasoBoton, null); calcular(); });
-  ['ha', 'caldo', 'cuba', 'parcela', 'calle', 'alto', 'ancho', 'fac', 'vel', 'anchoT', 'nb'].forEach(id =>
+  ['ha', 'caldo', 'cuba', 'parcela', 'calle', 'entre', 'alto', 'ancho', 'fac', 'vel', 'anchoT', 'nb'].forEach(id =>
     $(id).addEventListener('input', () => { tocado.add(id); calcular(); }));
   $('trvUse').addEventListener('click', () => { $('caldo').value = $('trvUse').dataset.v; tocado.add('caldo'); calcular(); });
   $('print').addEventListener('click', () => window.print());
