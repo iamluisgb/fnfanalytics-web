@@ -22,9 +22,9 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#0c1210">
 <link rel="preload" href="/assets/fonts/Poppins-700.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/herramientas/datos/cultivos.json?v=a1f1edec4e" as="fetch" crossorigin>
+<link rel="preload" href="/herramientas/datos/cultivos.json?v=0c584cca8d" as="fetch" crossorigin>
 <link rel="stylesheet" href="/assets/site.css">
-<link rel="stylesheet" href="/assets/calculadora.css?v=a1f1edec4e">
+<link rel="stylesheet" href="/assets/calculadora.css?v=0c584cca8d">
 <script defer src="/u/s.js" data-website-id="08c1619b-4bb8-471b-9dc9-9b6cda88e8ae" data-host-url="https://cloud.umami.is" data-domains="fnfanalytics.com,www.fnfanalytics.com"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"Calculadora de caldo y dosis de fitosanitarios","url":"https://fnfanalytics.com/herramientas/calculadora-caldo","applicationCategory":"BusinessApplication","operatingSystem":"Web","inLanguage":"es","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"publisher":{"@type":"Organization","name":"Food & Farm Analytics","url":"https://fnfanalytics.com"}}
@@ -160,13 +160,22 @@
       <details class="cc-step cc-fold" id="pulvBox">
         <summary><span class="cc-n">3</span><h2>Ajusta el pulverizador</h2><span class="cc-opt">Opcional</span></summary>
         <div class="cc-body">
+          <fieldset class="cc-sistema" id="sisBox" hidden>
+            <legend class="cc-f">Sistema de aplicación</legend>
+            <div class="cc-seg">
+              <label><input type="radio" name="sistema" value="barra"><span>Barra<small>aire libre</small></span></label>
+              <label><input type="radio" name="sistema" value="vertical"><span>Barras verticales<small>carretilla, entutorado</small></span></label>
+              <label><input type="radio" name="sistema" value="pistola"><span>Pistola o lanza<small>invernadero</small></span></label>
+            </div>
+          </fieldset>
           <div class="cc-row">
-            <label class="cc-f" for="vel">Velocidad<span class="cc-unit"><input type="number" id="vel" step="0.1" min="0" value="5" inputmode="decimal"><em>km/h</em></span></label>
-            <label class="cc-f" for="anchoT">Ancho de trabajo<span class="cc-unit"><input type="number" id="anchoT" step="0.1" min="0" value="7" inputmode="decimal"><em>m</em></span></label>
-            <label class="cc-f" for="nb">Boquillas abiertas<span class="cc-unit"><input type="number" id="nb" step="1" min="1" value="14" inputmode="numeric"><em>ud</em></span></label>
+            <label class="cc-f" for="caudalP" id="lCaudalP" hidden>Caudal de la pistola<span class="cc-unit"><input type="number" id="caudalP" step="0.5" min="0" value="6" inputmode="decimal"><em>L/min</em></span></label>
+            <label class="cc-f" for="vel" id="lVel">Velocidad<span class="cc-unit"><input type="number" id="vel" step="0.1" min="0" value="5" inputmode="decimal"><em>km/h</em></span></label>
+            <label class="cc-f" for="anchoT" id="lAnchoT">Ancho de trabajo<span class="cc-unit"><input type="number" id="anchoT" step="0.1" min="0" value="7" inputmode="decimal"><em>m</em></span></label>
+            <label class="cc-f" for="nb" id="lNb">Boquillas abiertas<span class="cc-unit"><input type="number" id="nb" step="1" min="1" value="14" inputmode="numeric"><em>ud</em></span></label>
           </div>
-          <div class="cc-out"><span>Caudal por boquilla <b id="qb"></b></span><span>Caudal total <b id="qt"></b></span></div>
-          <div class="cc-table" role="region" aria-label="Boquillas" tabindex="0">
+          <div class="cc-out" id="pulvOut"><span>Caudal por boquilla <b id="qb"></b></span><span>Caudal total <b id="qt"></b></span></div>
+          <div class="cc-table" id="nozTable" role="region" aria-label="Boquillas" tabindex="0">
             <table style="min-width:420px">
               <thead><tr><th id="nozH1">Boquilla</th><th id="nozH2">Caudal</th><th>Presión necesaria</th><th></th></tr></thead>
               <tbody id="nozBody"></tbody>
@@ -233,7 +242,7 @@
           <dt>Por cuba</dt><dd id="oTank"></dd>
           <dt id="oMezT" hidden>Mezcla con</dt><dd id="oMez" hidden></dd>
           <dt id="oCargaT" hidden>Orden de carga</dt><dd id="oCarga" hidden></dd>
-          <dt>Boquillas</dt><dd id="oNoz"></dd>
+          <dt>Aplicación</dt><dd id="oNoz"></dd>
           <dt>No cosechar antes</dt><dd id="oPS"></dd>
         </dl>
         <div class="cc-sign"><div>Asesor (ROPO)</div><div>Aplicador</div></div>
@@ -286,6 +295,6 @@
     <p>© 2026 · <a href="mailto:hola@fnfanalytics.com">hola@fnfanalytics.com</a></p>
   </div>
 </footer>
-<script src="/assets/calculadora.js?v=a1f1edec4e"></script>
+<script src="/assets/calculadora.js?v=0c584cca8d"></script>
 </body>
 </html>

@@ -56,22 +56,25 @@ window.FnfEscena = {montar() {
   function buildRows(st) {
     rows.children.forEach(o => { if (o.isInstancedMesh) o.dispose(); });
     rows.clear();
-    W.barra = st.cult === 'extensivo' || st.cult === 'horticola';
-    trv.visible = !W.barra;
+    W.modo = modoDe(st);
+    W.barra = W.modo === 'barra'; W.inv = W.modo === 'vertical' || W.modo === 'pistola';
+    trv.visible = W.modo === 'atom'; techo.visible = W.inv;
     if (W.barra) return buildCampo(st);
-    const vine = st.cult === 'vid';
+    // invernadero: setos de plantas entutoradas de unos 2 m, con la separación entre líneas del usuario
+    W.g = W.inv ? {alto:2.1, ancho:.5, calle:st.anchoT} : {alto:st.alto, ancho:st.ancho, calle:st.calle};
+    const vine = st.cult === 'vid' || W.inv;
     // árboles a la distancia del marco, sin que las copas se monten
-    const sp = vine ? 1.1 : Math.max(st.entre || st.ancho * 1.5, st.ancho * 1.05);
-    const n = Math.ceil(70 / sp), zs = [-1.5, -.5, .5, 1.5].map(k => k * st.calle);
+    const sp = W.inv ? .55 : vine ? 1.1 : Math.max(st.entre || st.ancho * 1.5, st.ancho * 1.05);
+    const n = Math.ceil(70 / sp), zs = [-2.5, -1.5, -.5, .5, 1.5, 2.5].slice(W.inv ? 0 : 1, W.inv ? 6 : 5).map(k => k * W.g.calle);
     let s = 3; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
     W.items = [];
     zs.forEach(z => { for (let i = 0; i < n; i++) W.items.push({bx:i * sp + rnd() * sp * .12, z:z + (rnd() - .5) * .15, ry:vine ? (rnd() - .5) * .5 : rnd() * 6.28, s:.88 + rnd() * .24}); });
-    W.can = new THREE.InstancedMesh(canopyGeo, mat[st.cult] || mat.arbol, W.items.length);
+    W.can = new THREE.InstancedMesh(canopyGeo, W.inv ? mat.huerta : (mat[st.cult] || mat.arbol), W.items.length);
     W.tr = new THREE.InstancedMesh(trunkGeo, mat.trunk, W.items.length);
     W.can.castShadow = W.tr.castShadow = true; W.can.receiveShadow = true;
     rows.add(W.can, W.tr);
-    zs.forEach(z => { const m = new THREE.Mesh(new THREE.PlaneGeometry(240, st.ancho * 1.3), mat.strip); m.rotation.x = -Math.PI / 2; m.position.set(0, .01, z); m.receiveShadow = true; rows.add(m); });
-    Object.assign(W, {vine, sp, L:n * sp, trunkH:vine ? .7 : 1.0});
+    zs.forEach(z => { const m = new THREE.Mesh(new THREE.PlaneGeometry(240, W.g.ancho * 1.3), mat.strip); m.rotation.x = -Math.PI / 2; m.position.set(0, .01, z); m.receiveShadow = true; rows.add(m); });
+    Object.assign(W, {vine, sp, L:n * sp, trunkH:W.inv ? .05 : vine ? .7 : 1.0});
     buildTRV(st);
   }
 
@@ -153,6 +156,50 @@ window.FnfEscena = {montar() {
   const ringG = new THREE.TorusGeometry(.82, .06, 6, 28); ringG.rotateY(Math.PI / 2);
   const atomizador = [add(fanG, dark, -2.7, 1.35, 0), add(ringG, accent, -2.9, 1.35, 0)];
 
+  const tractor = [...rig.children]; // tractor, cuba y atomizador: fuera en invernadero
+
+  // qué se dibuja: atomizador (leñosos), barra (extensivos y hortícolas al aire libre),
+  // carretilla de barras verticales o pistola (hortícolas entutorados)
+  function modoDe(st) {
+    if (st.cult === 'extensivo') return 'barra';
+    if (st.cult === 'horticola') return st.sistema === 'vertical' ? 'vertical' : st.sistema === 'pistola' ? 'pistola' : 'barra';
+    return 'atom';
+  }
+
+  // techo del invernadero: plástico translúcido
+  const techo = new THREE.Group(); S.add(techo);
+  const plastico = new THREE.Mesh(new THREE.PlaneGeometry(240, 40), new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:.18, depthWrite:false, side:THREE.DoubleSide}));
+  plastico.rotation.x = -Math.PI / 2; plastico.position.y = 3.4; techo.add(plastico);
+  techo.visible = false;
+
+  // carretilla de barras verticales: depósito, dos barras con boquillas a cada lado
+  const carro = new THREE.Group(); rig.add(carro); carro.visible = false;
+  const pieza = (geo, m, x, y, z, g = carro) => { const k = new THREE.Mesh(geo, m); k.position.set(x, y, z); k.castShadow = true; g.add(k); return k; };
+  pieza(new THREE.BoxGeometry(.75, .5, .5), M('--cc-tank', {transparent:true, opacity:.8}), 0, .55, 0);
+  pieza(new THREE.BoxGeometry(.8, .06, .55), dark, 0, .3, 0);
+  [-.28, .28].forEach(z => { const g = new THREE.CylinderGeometry(.16, .16, .08, 14); g.rotateX(Math.PI / 2); pieza(g, dark, .1, .16, z); });
+  pieza(new THREE.BoxGeometry(.6, .04, .04), dark, -.6, .8, 0).rotation.z = -.5;
+  [-.32, .32].forEach(z => {
+    pieza(new THREE.BoxGeometry(.05, 1.9, .05), dark, -.25, 1.2, z);
+    for (let j = 0; j < 7; j++) pieza(new THREE.BoxGeometry(.06, .06, .08), accent, -.25, .4 + j * .27, z + Math.sign(z) * .04);
+  });
+
+  // operario: empuja la carretilla o lleva la lanza
+  const operario = new THREE.Group(); rig.add(operario); operario.visible = false;
+  const ropa = M('--cc-tractor'), piel = M('--cc-trunk');
+  const piernas = [-.1, .1].map(z => { const g = new THREE.BoxGeometry(.14, .8, .14); g.translate(0, -.4, 0); return pieza(g, dark, 0, .82, z, operario); });
+  pieza(new THREE.BoxGeometry(.28, .6, .4), ropa, 0, 1.12, 0, operario);
+  pieza(new THREE.SphereGeometry(.13, 12, 10), piel, 0, 1.56, 0, operario);
+  pieza(new THREE.BoxGeometry(.3, .08, .44), M('--brand'), 0, 1.68, 0, operario);
+  // la lanza gira sobre el hombro hacia el lado que trata
+  const lanza = new THREE.Group(); lanza.position.set(.15, 1.25, 0); operario.add(lanza);
+  const tubo = new THREE.Mesh(new THREE.CylinderGeometry(.02, .02, .9, 6), dark); tubo.position.set(0, .45, 0); lanza.add(tubo);
+  const punta = new THREE.Vector3(.35, 1.15, 0);
+  const manguera = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(.15, 1, 0), new THREE.Vector3(-.4, .05, .2), new THREE.Vector3(-8, .03, .2)]),
+    new THREE.LineBasicMaterial({color:C('--carbon')}));
+  operario.add(manguera);
+  const equipoAnchor = new THREE.Vector3(0, 2.3, 0), pasilloAnchor = new THREE.Vector3(3, .1, 0);
+
   // barra de pulverización: tantas boquillas como diga el usuario (hasta 60 a la vista)
   const boom = new THREE.Group(); rig.add(boom);
   const BX = -2.9, BY = 1.0;
@@ -199,12 +246,27 @@ window.FnfEscena = {montar() {
       }
       return;
     }
+    if (W.inv) {
+      for (; k > 0; k--) {
+        const i = head; head = (head + 1) % N;
+        const t = .3 + Math.random() * .12, a = Math.random();
+        let side, x0, y0, z0;
+        if (W.modo === 'vertical') { side = Math.random() < .5 ? -1 : 1; x0 = -.25; y0 = .35 + a * 1.65; z0 = side * .36; }
+        else { side = W.lado; x0 = punta.x; y0 = punta.y + (Math.random() - .5) * .2; z0 = side * .95; }
+        pos[i * 3] = x0; pos[i * 3 + 1] = y0; pos[i * 3 + 2] = z0;
+        vel[i * 3] = -speed * .5 + (Math.random() - .5) * .6;
+        vel[i * 3 + 1] = (W.modo === 'pistola' ? (Math.random() - .5) * 2.4 : (Math.random() - .5) * .8) + .6;
+        vel[i * 3 + 2] = side * Math.max(.3, W.g.calle / 2 - Math.abs(z0) - .1) / t * (.8 + Math.random() * .4);
+        age[i] = 0; life[i] = t;
+      }
+      return;
+    }
     for (; k > 0; k--) {
       const i = head; head = (head + 1) % N; life[i] = LIFE; const side = Math.random() < .5 ? -1 : 1, a = Math.random();
       pos[i * 3] = -2.9; pos[i * 3 + 1] = .6 + a * 1.5; pos[i * 3 + 2] = side * .7;
       vel[i * 3] = -speed * .6 + (Math.random() - .5) * 1.2;
-      vel[i * 3 + 1] = ((W.trunkH + st.alto * (a * 1.1)) - (.6 + a * 1.5)) / LIFE + Math.random() * .8;
-      vel[i * 3 + 2] = side * (st.calle / 2 - .5) / LIFE * (.75 + Math.random() * .45);
+      vel[i * 3 + 1] = ((W.trunkH + W.g.alto * (a * 1.1)) - (.6 + a * 1.5)) / LIFE + Math.random() * .8;
+      vel[i * 3 + 2] = side * (W.g.calle / 2 - .5) / LIFE * (.75 + Math.random() * .45);
       age[i] = 0;
     }
   }
@@ -240,8 +302,8 @@ window.FnfEscena = {montar() {
     W.items.forEach((it, i) => {
       const x = (((it.bx - offset) % L) + L) % L - L / 2;
       eu.set(0, it.ry, 0); q.setFromEuler(eu);
-      const hy = st.alto / 2;
-      pv.set(x, W.trunkH + hy * .9, it.z); sv.set((W.vine ? .75 : st.ancho / 2) * it.s, hy * it.s, st.ancho / 2 * it.s);
+      const hy = W.g.alto / 2;
+      pv.set(x, W.trunkH + hy * .9, it.z); sv.set((W.inv ? .4 : W.vine ? .75 : W.g.ancho / 2) * it.s, hy * it.s, W.g.ancho / 2 * it.s);
       m4.compose(pv, q, sv); W.can.setMatrixAt(i, m4);
       pv.set(x, 0, it.z); sv.set(1, W.trunkH + .25, 1); m4.compose(pv, q, sv); W.tr.setMatrixAt(i, m4);
     });
@@ -277,21 +339,30 @@ window.FnfEscena = {montar() {
 
   let yaw = -1.12, pitch = .6;
   function placeCam() {
-    const d = W.barra ? 9 + W.st.anchoT * .95 : 10 + W.st.calle * 1.9 + W.st.alto * 1.6;
-    cam.position.set(Math.sin(yaw) * Math.cos(pitch) * d + 2, Math.sin(pitch) * d + 1.2, Math.cos(yaw) * Math.cos(pitch) * d);
-    cam.lookAt(2, 1.3, 0);
+    const d = W.barra ? 9 + W.st.anchoT * .95 : W.inv ? 6 + W.g.calle * 2.2 : 10 + W.g.calle * 1.9 + W.g.alto * 1.6;
+    const cx = W.inv ? .5 : 2, pit = W.inv ? Math.max(pitch, .85) : pitch; // en invernadero, mirando al pasillo
+    cam.position.set(Math.sin(yaw) * Math.cos(pit) * d + cx, Math.sin(pit) * d + 1.2, Math.cos(yaw) * Math.cos(pit) * d);
+    cam.lookAt(cx, W.inv ? 1 : 1.3, 0);
   }
 
   function step(dt) {
     const st = W.st;
-    let speed = st.vel / 3.6 * 1.6;
+    let speed = W.modo === 'pistola' ? (st.avance || 10) / 60 * 1.6 : st.vel / 3.6 * 1.6;
+    // el operario mueve la lanza arriba y abajo y cambia de lado cada poco
+    W.reloj = (W.reloj || 0) + dt;
+    if (W.modo === 'pistola') {
+      W.lado = Math.floor(W.reloj / 1.8) % 2 ? -1 : 1;
+      lanza.rotation.x = W.lado * -1.2; punta.set(.35, 1.15 + Math.sin(W.reloj * 2.4) * .55, 0);
+      lanza.rotation.z = Math.sin(W.reloj * 2.4) * .45;
+    }
+    if (W.inv) piernas.forEach((pi, j) => { pi.rotation.z = cyc.refill > 0 ? 0 : Math.sin(W.reloj * 6 + j * Math.PI) * .35; });
     if (cyc.refill > 0) {
       cyc.refill -= dt; speed = 0;
       cyc.level = startLevel(cyc.i) * (1 - Math.max(0, cyc.refill) / TR);
       if (cyc.refill <= 0) cyc.level = startLevel(cyc.i);
     } else {
       cyc.level = Math.min(startLevel(cyc.i), cyc.level - dt / TC);
-      acc += dt * (W.barra ? Math.min(1400, Math.max(300, st.qt * 18)) : Math.min(650, Math.max(90, st.qt * 7)));
+      acc += dt * (W.barra ? Math.min(1400, Math.max(300, st.qt * 18)) : W.inv ? Math.min(500, Math.max(160, st.qt * 22)) : Math.min(650, Math.max(90, st.qt * 7)));
       const k = Math.floor(acc); acc -= k; spawn(k, speed);
       if (cyc.level <= 0) { cyc.i = (cyc.i + 1) % st.nT; cyc.level = 0; cyc.refill = TR; }
     }
@@ -302,7 +373,8 @@ window.FnfEscena = {montar() {
   function draw() {
     placeRows(); setLiquid(cyc.level); placeCam(); hud();
     R.render(S, cam);
-    project(lab.copa, W.barra ? boomAnchor : copaAnchor); if (W.barra) lab.calle.hidden = true; else project(lab.calle, calleAnchor);
+    project(lab.copa, W.barra ? boomAnchor : W.inv ? equipoAnchor : copaAnchor);
+    if (W.barra) lab.calle.hidden = true; else project(lab.calle, W.inv ? pasilloAnchor : calleAnchor);
   }
 
   // bucle: solo corre si se ve y no está en pausa
@@ -338,13 +410,16 @@ window.FnfEscena = {montar() {
   stage.addEventListener('pointercancel', () => { drag = null; });
 
   function update(st) {
-    const barra = st.cult === 'extensivo' || st.cult === 'horticola';
-    const gk = barra ? [st.cult, st.anchoT].join() : [st.cult, st.alto, st.ancho, st.calle, st.entre].join();
+    const modo = modoDe(st), barra = modo === 'barra', inv = modo === 'vertical' || modo === 'pistola';
+    const gk = barra ? [st.cult, modo, st.anchoT].join() : inv ? [modo, st.anchoT].join() : [st.cult, st.alto, st.ancho, st.calle, st.entre].join();
     W.st = st;
     if (gk !== W.key) { W.key = gk; buildRows(st); }
     const bk = [st.anchoT, Math.round(st.nb)].join();
     if (barra && bk !== W.boomKey) { W.boomKey = bk; buildBoom(st); }
-    boom.visible = barra; atomizador.forEach(m => { m.visible = !barra; });
+    tractor.forEach(m => { m.visible = !inv; });
+    boom.visible = barra; atomizador.forEach(m => { m.visible = modo === 'atom'; });
+    carro.visible = modo === 'vertical'; operario.visible = inv; lanza.visible = modo === 'pistola';
+    operario.position.x = modo === 'vertical' ? -1 : 0;
     boomAnchor.set(BX, BY + .6, -st.anchoT * .3);
     const ck = [st.nT, st.cuba, st.rest].join();
     if (ck !== W.cycKey) { W.cycKey = ck; cyc = {i:0, level:startLevel(0), refill:0}; }
@@ -355,8 +430,11 @@ window.FnfEscena = {montar() {
     lab.copa.classList.toggle('is-link', barra);
     if (barra) { lab.copa.setAttribute('role', 'button'); lab.copa.tabIndex = 0; lab.copa.title = 'Cambiar el ancho de la barra'; }
     else { lab.copa.removeAttribute('role'); lab.copa.removeAttribute('tabindex'); lab.copa.removeAttribute('title'); }
-    lab.copa.textContent = barra ? `Barra ${nf(st.anchoT, 1)} m · ${Math.round(st.nb)} boquillas · cambiar` : `Copa ${nf(st.ancho, 1)} × ${nf(st.alto, 1)} m`;
-    lab.calle.textContent = `Calle ${nf(st.calle, 1)} m`;
+    lab.copa.textContent = barra ? `Barra ${nf(st.anchoT, 1)} m · ${Math.round(st.nb)} boquillas · cambiar`
+      : modo === 'vertical' ? `Carretilla · ${Math.round(st.nb)} boquillas`
+      : modo === 'pistola' ? `Pistola ${nf(st.Q, 1)} L/min · 10 m cada ${nf(600 / (st.avance || 10))} s`
+      : `Copa ${nf(st.ancho, 1)} × ${nf(st.alto, 1)} m`;
+    lab.calle.textContent = inv ? `Líneas a ${nf(st.anchoT, 1)} m` : `Calle ${nf(st.calle, 1)} m`;
     resize(); sync();
     if (!running) draw();
   }

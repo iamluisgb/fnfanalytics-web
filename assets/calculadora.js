@@ -13,6 +13,14 @@
     extensivo: {caldo:200, cuba:3000, vel:8, anchoT:18, nb:36},
     otro: {caldo:400, cuba:200, vel:4, anchoT:1, nb:1}
   };
+  // Hortícolas: tres formas de aplicar, cada una con sus valores de partida (orientativos).
+  const SISTEMA = {
+    barra:    {caldo:600, vel:4, anchoT:12, nb:24},
+    vertical: {caldo:1000, vel:2, anchoT:1.8, nb:12},
+    pistola:  {caldo:1000, caudalP:6, anchoT:1.8}
+  };
+  // cultivos que suelen ir entutorados (invernadero): empiezan con pistola
+  const ENTUTORADO = /tomate|pimiento|berenjena|pepino|pepinillo|calabac|judía verde/i;
   // Litros de caldo por m³ de copa, con su fuente. En olivo, el volumen se mide árbol a árbol.
   const FACTOR = {
     olivo: 'Olivo: 0,12 L por m³ de copa medido árbol a árbol (Miranda-Fuentes et al., 2016, Universidad de Córdoba).',
@@ -81,6 +89,12 @@
     S.usosPorReg = new Map();
     S.datos.usos.forEach(u => S.usosPorReg.set(u[0], (S.usosPorReg.get(u[0]) || 0) + 1));
     if (info.t !== S.tipo) { S.tipo = info.t; aplicarPreset(!inicial); }
+    $('sisBox').hidden = S.tipo !== 'horticola';
+    if (S.tipo === 'horticola') {
+      const pedido = inicial && params.get('sistema');
+      if (SISTEMA[pedido]) { S.sistemaElegido = true; ponerSistema(pedido, true); }
+      else if (!S.sistemaElegido) ponerSistema(ENTUTORADO.test(info.n) ? 'pistola' : 'barra', true);
+    } else ponerSistema(null, false);
     const grupos = new Map();
     S.datos.usos.forEach(u => { if (!grupos.has(u[1])) grupos.set(u[1], new Set()); grupos.get(u[1]).add(u[0]); });
     const plagas = [...grupos].sort((a, b) => b[1].size - a[1].size || a[0].localeCompare(b[0], 'es'));
@@ -159,6 +173,16 @@
     S.dose = +v.toPrecision(6);
     if (desde !== 'rango') $('dose').value = S.dose;
     if (desde !== 'texto') $('doseIn').value = S.dose;
+  }
+
+  function ponerSistema(sis, aplicar) {
+    S.sistema = sis;
+    document.querySelectorAll('input[name=sistema]').forEach(r => { r.checked = r.value === sis; });
+    if (aplicar && sis) for (const k in SISTEMA[sis]) if (!tocado.has(k)) $(k).value = SISTEMA[sis][k];
+    $('lCaudalP').hidden = sis !== 'pistola';
+    $('lVel').hidden = $('lNb').hidden = sis === 'pistola';
+    $('lAnchoT').firstChild.textContent = !sis || sis === 'barra' ? 'Ancho de trabajo' : 'Separación entre líneas';
+    $('lNb').firstChild.textContent = sis === 'vertical' ? 'Boquillas (las dos barras)' : 'Boquillas abiertas';
   }
 
   function aplicarPreset(compensar) {
@@ -363,12 +387,30 @@
     $('trvArb').textContent = sueltos ? `${nf(Math.PI / 6 * ancho * ancho * alto, 1)} m³ por árbol · ${nf(10000 / (calle * entre))} árboles/ha` : '';
     $('trvV').textContent = `${nf(trv)} m³/ha`; $('trvC').textContent = `${nf(rec)} L/ha`; $('trvUse').dataset.v = rec;
 
-    // pulverizador
-    const vel = pos('vel', 5), anchoT = pos('anchoT', 5), nb = Math.max(1, Math.round(pos('nb', 1)));
-    const qt = caldo * vel * anchoT / 600, qb = qt / nb;
-    $('qb').textContent = `${nf(qb, 2)} L/min`; $('qt').textContent = `${nf(qt, 1)} L/min`;
+    // pulverizador: atomizador (leñosos), barra, barras verticales o pistola (hortícolas)
+    const sis = S.tipo === 'horticola' ? S.sistema : ['olivo', 'vid', 'arbol'].includes(S.tipo) ? 'atomizador' : 'barra';
+    const vel = pos('vel', 5), anchoT = pos('anchoT', 5), nb = Math.max(1, Math.round(pos('nb', 1))), Q = pos('caudalP', 6);
+    let qt = caldo * vel * anchoT / 600, qb = qt / nb, avance = null, aplicacion = null;
+    if (sis === 'pistola') {
+      // con pistola, el caldo por hectárea lo pone el paso: avance = caudal ÷ (caldo × separación entre líneas)
+      qt = Q; avance = Q * 10000 / (caldo * anchoT);
+      const s10 = 600 / avance, horas = caldo / Q / 60;
+      const aviso = avance > 40 ? `<span class="cc-pill is-warn">Ojo</span> A ${nf(avance)} m/min no da tiempo a mojar bien: baja el caudal (boquilla más pequeña o menos presión) o sube el caldo.`
+        : avance < 5 ? `<span class="cc-pill is-warn">Ojo</span> Irías muy despacio: sube el caudal de la pistola o baja el caldo.` : '';
+      $('pulvOut').innerHTML = `<span>Avanza a <b>${nf(avance, 1)} m/min</b>: 10 m cada <b>${nf(s10)} s</b></span><span>Tiempo <b>${nf(horas, 1)} h/ha</b> · ${nf(horas * ha, 1)} h en total</span>${aviso ? `<span>${aviso}</span>` : ''}`;
+      aplicacion = `Pistola a ${nf(Q, 1)} L/min, avanzando 10 m cada ${nf(s10)} s (${nf(avance, 1)} m/min), líneas a ${nf(anchoT, 1)} m`;
+    } else {
+      $('pulvOut').innerHTML = `<span>Caudal por boquilla <b>${nf(qb, 2)} L/min</b></span><span>Caudal total <b>${nf(qt, 1)} L/min</b></span>`;
+    }
+    $('nozTable').hidden = sis === 'pistola';
+    $('nozHint').innerHTML = {
+      atomizador: 'Caudal por boquilla = caldo × velocidad × ancho ÷ (600 × boquillas). La tabla es de la Albuz ATR 80 (cono hueco) a 10 bar; con otras boquillas, usa el caudal por boquilla con la tabla de su fabricante.',
+      barra: 'Caudal por boquilla = caldo × velocidad × ancho ÷ (600 × boquillas). Presión estimada con la ley del cuadrado: el caudal sube con la raíz de la presión. Lo habitual en abanico es trabajar entre 2 y 5 bar. ¿En qué dirección das las pasadas? <a href="/herramientas/direccion-de-trabajo?labor=barra">Calcula la que ahorra vueltas en tu recinto</a>.',
+      vertical: 'Con carretilla de barras verticales tratas media fila a cada lado del pasillo: el ancho de trabajo es la separación entre líneas. Caudal por boquilla = caldo × velocidad × separación ÷ (600 × boquillas de las dos barras). Tabla de la Albuz ATR 80 (cono hueco) a 10 bar.',
+      pistola: 'Con pistola, el caldo por hectárea depende de lo rápido que avances. Pon el caudal real de tu pistola (llena un cubo durante un minuto) y la separación entre líneas. Los valores de partida son orientativos.'
+    }[sis] || '';
     let mejor = null;
-    const cono = ['olivo', 'vid', 'arbol'].includes(S.tipo);
+    const cono = sis === 'atomizador' || sis === 'vertical';
     // el caudal crece con la raíz de la presión: P = Pref · (q / qref)²
     const [tabla, pref, pmin, pmax] = cono ? [ATR.map(([c, q]) => [`ATR 80 ${c}`, q]), 10, 10, 15]
                                            : [NOZ.map(([c, col, q]) => [`ISO ${c} · ${col}`, q]), 3, 2, 5];
@@ -395,7 +437,7 @@
       Dosis: `${nx(S.dose)} ${unidadDosis(u)} = ${nf(porHa, 2)} ${unidad}/ha`,
       Caldo: `${nf(caldo)} L/ha · ${nf(caldoTot)} L en total`,
       'Por cuba': `${nf(porCuba, 2)} ${unidad} en ${nf(cuba)} L · ${nCubas} cuba${nCubas === 1 ? '' : 's'}` + (resto > 1 && llenas ? ` (la última de ${nf(resto)} L con ${nf(porHa * resto / caldo, 2)} ${unidad})` : ''),
-      Boquillas: mejor ? `${nb} × ${mejor.nombre} a ${nf(mejor.bar, 1)} bar · ${nf(vel, 1)} km/h` : `${nf(qb, 2)} L/min por boquilla: revisa la tabla del fabricante`,
+      'Aplicación': aplicacion || (mejor ? `${nb} × ${mejor.nombre} a ${nf(mejor.bar, 1)} bar · ${nf(vel, 1)} km/h` : `${nf(qb, 2)} L/min por boquilla: revisa la tabla del fabricante`),
       ...(mezcla.length ? {
         'Mezcla con': mezcla.map(m => `${m.p[0]} (nº ${m.u[0]}) contra ${m.u[1]}: ${nx(m.dose)} ${unidadDosis(m.u)} = ${nf(m.porCuba, 2)} ${m.unidad} por cuba`).join(' · '),
         'Orden de carga': cargas.map((x, i) => `${i + 1}) ${x.nombre}`).join(' → ')
@@ -403,21 +445,21 @@
       'No cosechar antes': ps ? `${fd(cosecha)} (${ps} días${mezcla.length ? ', el más largo de la mezcla' : ''})` : 'sin plazo en la etiqueta'
     };
     $('oDate').textContent = fd(hoy);
-    const ids = {Parcela:'oParc', Cultivo:'oCult', Motivo:'oPlaga', Producto:'oProd', Dosis:'oDose', Caldo:'oCaldo', 'Por cuba':'oTank', Boquillas:'oNoz', 'No cosechar antes':'oPS'};
+    const ids = {Parcela:'oParc', Cultivo:'oCult', Motivo:'oPlaga', Producto:'oProd', Dosis:'oDose', Caldo:'oCaldo', 'Por cuba':'oTank', 'Aplicación':'oNoz', 'No cosechar antes':'oPS'};
     for (const k in ids) $(ids[k]).textContent = orden[k];
     [['oMezT', 'oMez', 'Mezcla con'], ['oCargaT', 'oCarga', 'Orden de carga']].forEach(([t, d, k]) => {
       $(t).hidden = $(d).hidden = !orden[k]; $(d).textContent = orden[k] || '';
     });
-    const enlace = `https://fnfanalytics.com/herramientas/calculadora-caldo?cultivo=${S.cultivo.s}&plaga=${slug(S.plaga)}&producto=${encodeURIComponent(u[0])}&utm_source=whatsapp&utm_medium=orden`;
+    const enlace = `https://fnfanalytics.com/herramientas/calculadora-caldo?cultivo=${S.cultivo.s}&plaga=${slug(S.plaga)}&producto=${encodeURIComponent(u[0])}${S.tipo === 'horticola' ? '&sistema=' + S.sistema : ''}&utm_source=whatsapp&utm_medium=orden`;
     const texto = `*Orden de tratamiento* · ${fd(hoy)}\n` + Object.entries(orden).map(([k, v]) => `${k}: ${v}`).join('\n') +
       `\n\nLa etiqueta del producto manda. Ábrelo en la calculadora: ${enlace}`;
     $('wa').href = 'https://wa.me/?text=' + encodeURIComponent(texto);
 
-    history.replaceState(null, '', `?cultivo=${S.cultivo.s}&plaga=${slug(S.plaga)}&producto=${encodeURIComponent(u[0])}`);
+    history.replaceState(null, '', `?cultivo=${S.cultivo.s}&plaga=${slug(S.plaga)}&producto=${encodeURIComponent(u[0])}${S.tipo === 'horticola' ? '&sistema=' + S.sistema : ''}`);
 
     escena.actualizar({
       cult:S.tipo, alto, ancho, calle, entre, caldo, cuba,
-      ha, nT:nCubas, rest:resto, perTank:porCuba, unitP:unidad, qt, vel, trv, anchoT, nb,
+      ha, nT:nCubas, rest:resto, perTank:porCuba, unitP:unidad, qt, vel, trv, anchoT, nb, sistema:sis, avance, Q,
       bad:ck.some(c => c[0] === 'bad')
     });
   }
@@ -524,9 +566,12 @@
   $('doseIn').addEventListener('input', () => { ponerDosis(parseFloat($('doseIn').value), 'texto'); calcular(); });
   $('doseMinus').addEventListener('click', () => { ponerDosis(Math.max(0, S.dose - S.pasoBoton), null); calcular(); });
   $('dosePlus').addEventListener('click', () => { ponerDosis(S.dose + S.pasoBoton, null); calcular(); });
-  ['ha', 'caldo', 'cuba', 'parcela', 'calle', 'entre', 'alto', 'ancho', 'fac', 'vel', 'anchoT', 'nb'].forEach(id =>
+  ['ha', 'caldo', 'cuba', 'parcela', 'calle', 'entre', 'alto', 'ancho', 'fac', 'vel', 'anchoT', 'nb', 'caudalP'].forEach(id =>
     $(id).addEventListener('input', () => { tocado.add(id); calcular(); }));
   $('trvUse').addEventListener('click', () => { $('caldo').value = $('trvUse').dataset.v; tocado.add('caldo'); calcular(); });
+  document.querySelectorAll('input[name=sistema]').forEach(r => r.addEventListener('change', () => {
+    S.sistemaElegido = true; ponerSistema(r.value, true); calcular(); track('calc-sistema', {sistema:r.value});
+  }));
   $('print').addEventListener('click', () => window.print());
   // la etiqueta de la barra en la escena lleva al ancho de trabajo
   const irAlAncho = () => {

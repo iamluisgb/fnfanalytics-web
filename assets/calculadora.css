@@ -145,6 +145,17 @@
   .cc-kpis>div:nth-child(3){grid-column:1/-1;border-left:0;padding-left:0;border-top:1px solid var(--line-dark);margin-top:8px}
 }
 
+.cc-sistema{border:0;margin:0;padding:0;display:grid;gap:6px;min-width:0}
+.cc-sistema legend{padding:0;margin-bottom:6px}
+.cc-seg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.cc-seg label{display:block;cursor:pointer}
+.cc-seg input{position:absolute;opacity:0;pointer-events:none}
+.cc-seg span{display:grid;gap:1px;height:100%;border:1px solid var(--line-strong);border-radius:var(--r-s);padding:9px 10px;font-size:14px;font-weight:600;background:var(--paper);min-height:48px}
+.cc-seg small{font-size:11.5px;font-weight:400;color:var(--ink-soft)}
+.cc-seg input:checked+span{border-color:var(--brand-deep);background:var(--ok-bg)}
+.cc-seg input:focus-visible+span{outline:2px solid var(--brand);outline-offset:2px}
+@media (max-width:560px){.cc-seg{grid-template-columns:1fr}}
+
 /* pasos plegables */
 .cc-fold>summary{display:flex;align-items:baseline;gap:12px;padding:14px 18px;cursor:pointer;list-style:none;min-height:48px}
 .cc-fold>summary::-webkit-details-marker{display:none}
