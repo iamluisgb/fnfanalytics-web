@@ -27,7 +27,7 @@
 <link rel="preload" href="/assets/fonts/Poppins-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/JetBrainsMono-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/hero-olivar.webp" as="image">
-<link rel="stylesheet" href="/assets/site.css?v=20261008d">
+<link rel="stylesheet" href="/assets/site.css?v=20261008e">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Organization","name":"Food & Farm Analytics","alternateName":"FnF Analytics","url":"https://fnfanalytics.com/","logo":"https://fnfanalytics.com/favicon-512.png","email":"hola@fnfanalytics.com","award":"Premio Emilio Botín 2020 (ceiA3 y Santander Universidades)"}
 </script>
@@ -43,7 +43,7 @@
   <div class="in">
     <a class="logo" href="/" aria-label="Food & Farm Analytics"><img src="/assets/logo-mark.png" alt="" width="19" height="34"><span class="lt"><b>food&amp;farm</b><i>analytics</i></span></a>
     <div class="nav-links">
-      <a href="#sistema">Sistema</a>
+      <a href="#inteligencia">Inteligencia</a>
       <a href="#analitica">Analítica</a>
       <a href="/asesores">Asesores</a>
       <a href="#precios">Precios</a>
@@ -61,12 +61,12 @@
       <div class="rotator" aria-hidden="true">
         <span class="on">Dicta el tratamiento <em>desde el tractor</em></span>
         <span>Sabe cuánto ganas <em>en cada parcela</em></span>
-        <span>Te avisa <em>antes de la helada</em></span>
+        <span>Te dice <em>por qué cae una parcela</em></span>
       </div>
       <p class="sub">Dices lo que has hecho en el campo y FnF lo convierte en una operación validada, con su coste imputado a la parcela. El cuaderno se mantiene al día sin teclear y sabes el margen de cada parcela cuando lo necesitas.</p>
       <div class="ctas">
         <a class="btn btn-primary" href="#acceso">Solicita acceso</a>
-        <a class="btn btn-ghost" href="#precios">Ver precios</a>
+        <a class="btn btn-ghost" href="#inteligencia">Ver cómo razona</a>
       </div>
       <div class="trust">
         <div><i></i>VALIDACIÓN CONTRA EL REGISTRO OFICIAL</div>
@@ -99,57 +99,6 @@
   </div>
 </div>
 
-<section class="section" id="sistema">
-  <div class="container">
-    <div class="sec-head">
-      <span class="label label--accent">el sistema</span>
-      <h2>Tu explotación, vista como la ve <em>quien decide.</em></h2>
-      <p>Un panel de control con la cartera al día, un registro que se construye solo y señales que avisan antes de que cuesten dinero.</p>
-    </div>
-    <div class="sistema">
-      <div class="panel">
-        <div class="pbar"><span class="label">panel de cartera — campaña 2026</span><span class="live">vista de ejemplo</span></div>
-        <table>
-          <thead><tr><th>Explotación</th><th>Cultivo</th><th>Últ. operación</th><th>Estado</th></tr></thead>
-          <tbody>
-            <tr><td>Olivar Hnos. Ruiz</td><td>Olivar</td><td class="d">hoy 09:41</td><td><span class="pill pill-dark-ok">AL DÍA</span></td></tr>
-            <tr><td>Finca La Loma</td><td>Almendro</td><td class="d">ayer 18:12</td><td><span class="pill pill-dark-ok">AL DÍA</span></td></tr>
-            <tr><td>El Chaparral</td><td>Olivar</td><td class="d">hace 9 días</td><td><span class="pill pill-dark-warn">FALTA FERTILIZ.</span></td></tr>
-            <tr><td>Cortijo Nuevo</td><td>Viña</td><td class="d">hace 26 días</td><td><span class="pill pill-dark-bad">REVISAR DOSIS</span></td></tr>
-          </tbody>
-        </table>
-        <div class="terminal" style="border:none;border-top:1px solid var(--line-dark);border-radius:0">
-          <div><span class="t-dim">09:41</span> operación #3002 <span class="t-acc">validada</span> · urea 46% dentro de dosis máx.</div>
-          <div><span class="t-dim">09:38</span> NDVI La Vereda <span class="t-warn">-18%</span> vs media 3 años → señal enviada</div>
-          <div><span class="t-dim">08:02</span> AEMET: lluvia &gt;5mm mañana · tratamiento del 14 <span class="t-warn">en revisión</span></div>
-        </div>
-      </div>
-      <div class="col-r">
-        <div class="asiento-card">
-          <span class="entrada">OPERACIÓN #3002 · <b>ENTRADA POR VOZ</b> · 09:41</span>
-          <div class="asiento">
-            <div class="r"><span class="label">operación</span><span class="data">Fertilización</span></div>
-            <div class="r"><span class="label">parcela</span><span class="data">El Pozo · 2,3 ha</span></div>
-            <div class="r"><span class="label">producto</span><span class="data">Urea 46%</span></div>
-            <div class="r"><span class="label">dosis</span><span class="data">300 kg · 60 kg N/ha</span></div>
-            <div class="r"><span class="label">tractor</span><span class="data">JD 5075E · 1,5 h</span></div>
-            <div class="r"><span class="label">coste imputado</span><span class="data">171,00 €</span></div>
-          </div>
-          <span class="sello">✓ VALIDADA · DOSIS DE N OK</span>
-        </div>
-        <div class="asiento-card">
-          <span class="entrada">CONSULTA · <b>MARGEN POR PARCELA</b> · campaña 2026</span>
-          <div class="asiento">
-            <div class="r"><span class="label">olivar · coste</span><span class="data">4.320 €</span></div>
-            <div class="r"><span class="label">vs campaña 2025</span><span class="data" style="color:var(--ok)">−7%</span></div>
-            <div class="r"><span class="label">margen estimado</span><span class="data">1.240 €/ha</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section class="section ig" id="inteligencia">
   <div class="container">
     <div class="sec-head">
@@ -158,16 +107,17 @@
       <p>Lo que apunta tu equipo, los sensores que ya tienes y las fuentes públicas, en un solo mapa vivo de tu explotación. Cuando algo se sale de lo normal, la IA cruza las fuentes, te enseña por qué y te deja la acción preparada. Tú decides; nada se ejecuta sin tu visto bueno.</p>
       <span class="ig-ej">Ejemplo · algunas conexiones están en desarrollo</span>
     </div>
-    <iframe id="ig-frame" class="ig-frame" src="/demo/inteligencia.html" title="Ejemplo animado: fuentes y sensores, la finca en 3D y la decisión de la IA" loading="lazy"></iframe>
+    <iframe id="ig-frame" class="ig-frame" src="/demo/inteligencia.html?v=20261008e" title="Ejemplo animado: fuentes y sensores, la finca en 3D y la decisión de la IA" loading="lazy"></iframe>
+    <div class="ig-cta"><a class="btn btn-primary" href="#acceso">Solicita acceso</a><span>Empezamos con tu cuaderno, tus costes y el satélite. El resto se conecta a medida que entra.</span></div>
   </div>
 </section>
 
-<section class="section" id="analitica" style="padding-top:0">
+<section class="section" id="analitica">
   <div class="container">
     <div class="sec-head">
-      <span class="label label--accent">analítica</span>
+      <span class="label label--accent">analítica · ya funciona hoy</span>
       <h2>Del satélite al euro, <em>en la misma pantalla.</em></h2>
-      <p>Cada parcela, con su vigor medido desde el satélite y su coste real. Cuando algo se sale de lo normal, lo ves en el mapa antes de verlo en el árbol.</p>
+      <p>Esto ya lo tienes desde el primer día: cada parcela, con su vigor medido desde el satélite y su coste real. Cuando algo se sale de lo normal, lo ves en el mapa antes de verlo en el árbol.</p>
     </div>
 
     <div class="sig" id="sig">
@@ -262,37 +212,17 @@
         <span class="label">01 · captura</span>
         <h3>Por el canal que ya usas</h3>
         <p>Un audio desde el móvil (pronto, también por WhatsApp), una foto del albarán o una importación. El operario no aprende nada nuevo.</p>
-        <span class="ej">🎙 "he tratado La Vereda contra el repilo con el atomizador y el John Deere, una cuba de 800 litros de Curenox a 300 gramos"</span>
       </div>
       <div class="step">
         <span class="label">02 · validación</span>
         <h3>El sistema estructura y verifica</h3>
         <p>Producto, dosis, parcela, equipo y tractor, con su plazo de seguridad. Lo que falta en el parte, te lo pregunta. Nada queda registrado sin tu confirmación.</p>
-        <span class="ej">✓ Curenox 50 Blue (nº 12612) · 300 g/hL (máx. 330) · P.S. 14 d · tractor E-4821-BGK · validada</span>
       </div>
       <div class="step">
         <span class="label">03 · decisión</span>
         <h3>Registro, costes y señales</h3>
         <p>Cada operación alimenta tu registro, el margen por parcela y el motor de señales. Papeles fuera, criterio dentro.</p>
-        <span class="ej">margen frutales 2026: 2.865 €/ha · señal: NDVI El Cercado −18%</span>
       </div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="sec-head">
-      <span class="label label--accent">módulos</span>
-      <h2>Un sistema, <em>seis instrumentos.</em></h2>
-    </div>
-    <div class="mods">
-      <div class="mod"><span class="label">M-01 · registro</span><h3>Operaciones validadas</h3><p>Fertilización, tratamientos y riego registrados con validación automática y traza completa. El cumplimiento normativo, resuelto de serie.</p></div>
-      <div class="mod"><span class="label">M-02 · economía</span><h3>Costes y márgenes</h3><p>Cada operación imputa su coste. Margen por parcela, cultivo y campaña — hoy, no al cierre.</p></div>
-      <div class="mod"><span class="label">M-03 · señales</span><h3>Motor de señales</h3><p>Meteo × plan de tratamientos, plazos normativos, desviaciones de coste y de vigor. Avisa antes de que cueste dinero.</p></div>
-      <div class="mod"><span class="label">M-04 · teledetección</span><h3>Satélite</h3><p>NDVI y humedad por parcela cada pocos días, comparados contra el histórico de tu propia finca.</p></div>
-      <div class="mod"><span class="label">M-05 · cartera</span><h3>Panel de asesor</h3><p>Toda la cartera en una tabla: estado de cada explotación, incoherencias detectadas, presentación oficial en lote.</p></div>
-      <div class="mod entrada-mod"><span class="label">M-00 · entrada</span><h3>Captura por voz</h3><p>La rampa de acceso al sistema: dictar un parte cuesta 20 segundos y no requiere aprender nada. La barrera de entrada, a cero. Por WhatsApp, próximamente.</p></div>
     </div>
   </div>
 </section>
@@ -314,13 +244,17 @@
           <a class="btn btn-ghost" href="/asesores">Cómo funciona para asesores</a>
         </div>
       </div>
-      <div class="terminal">
-        <div><span class="t-dim"># datos de ejemplo</span></div>
-        <div><span class="t-dim">$</span> cartera --estado</div>
-        <div>34 explotaciones · 1.176 ha</div>
-        <div><span class="t-acc">29 al día</span> · <span class="t-warn">4 señales abiertas</span> · 1 crítica</div>
-        <div><span class="t-dim">$</span> cartera --presentar --lote feb-2026</div>
-        <div>29 explotaciones listas → <span class="t-acc">presentación validada</span></div>
+      <div class="panel">
+        <div class="pbar"><span class="label">panel de cartera — campaña 2026</span><span class="live">datos de ejemplo</span></div>
+        <table>
+          <thead><tr><th>Explotación</th><th>Cultivo</th><th>Últ. operación</th><th>Estado</th></tr></thead>
+          <tbody>
+            <tr><td>Olivar Hnos. Ruiz</td><td>Olivar</td><td class="d">hoy 09:41</td><td><span class="pill pill-dark-ok">AL DÍA</span></td></tr>
+            <tr><td>Finca La Loma</td><td>Almendro</td><td class="d">ayer 18:12</td><td><span class="pill pill-dark-ok">AL DÍA</span></td></tr>
+            <tr><td>El Chaparral</td><td>Olivar</td><td class="d">hace 9 días</td><td><span class="pill pill-dark-warn">FALTA FERTILIZ.</span></td></tr>
+            <tr><td>Cortijo Nuevo</td><td>Viña</td><td class="d">hace 26 días</td><td><span class="pill pill-dark-bad">REVISAR DOSIS</span></td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -472,11 +406,11 @@
                ['cantidad','300 kg · 60 kg N/ha'], ['equipo','Abonadora centrífuga'], ['tractor','JD 5075E · E-4821-BGK'],
                ['horario','08:10–09:40 · 1,5 h'], ['coste imputado','171,00 €']],
       ok: '✓ VALIDADA · DOSIS DE N OK' },
-    { dicho: 'He tratado La Vereda contra el repilo con el atomizador y el John Deere: una cuba de 800 litros de Curenox a 300 gramos, de ocho a diez y sin viento.',
-      campos: [['operación','Tratamiento foliar · repilo'], ['parcela','La Vereda · olivar · 0,8 ha'], ['producto','Curenox 50 Blue · nº 12612'],
-               ['dosis · caldo','300 g/hL · cuba de 800 L'], ['cantidad','2,4 kg'], ['equipo','Atomizador arrastrado'],
-               ['tractor','JD 5075E · E-4821-BGK'], ['horario','08:00–10:00 · sin viento'], ['coste imputado','80,84 €']],
-      ok: '✓ VALIDADA · P.S. 14 D · ROPO AL DÍA' }
+    { dicho: 'He regado el sector 3 de El Cercado con el goteo, de seis a diez, con la bomba del cabezal.',
+      campos: [['operación','Riego · goteo'], ['parcela','El Cercado · frutales · 1,4 ha'], ['sector','Sector 3 · cabezal norte'],
+               ['horario','06:00–10:00 · 4 h'], ['agua aplicada','33 m³ · 24 m³/ha'], ['fuente','Caudalímetro del cabezal'],
+               ['coste imputado','9,90 € · energía y agua']],
+      ok: '✓ VALIDADA · DENTRO DE LA DOTACIÓN' }
   ];
   var said = demo.querySelector('.said'), op = document.getElementById('demo-op'), ok = document.getElementById('demo-ok'),
       btn = document.getElementById('mic'), n = 0, quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;

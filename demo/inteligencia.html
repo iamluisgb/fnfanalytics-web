@@ -107,14 +107,7 @@ svg.beams{position:absolute;inset:0;pointer-events:none;z-index:1}
 .salida .c{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand)}
 .salida b{font-size:13.5px;font-weight:600}
 .salida .pie{font-family:var(--mono);font-size:10px;color:var(--soft)}
-.barras{display:grid;gap:4px}
-.barras i{position:relative;display:grid;grid-template-columns:78px minmax(0,1fr) 40px;align-items:center;gap:6px;font-style:normal;font-size:10.5px;color:var(--soft)}
-.barras i::after{content:"";grid-column:2;grid-row:1;height:6px;border-radius:2px;width:0;background:var(--brand);transition:width .9s .2s}
-.salida.on .barras i::after{width:var(--w)}
-.barras i.w::after{background:var(--warn)}
-.barras i.w span{color:var(--warn)}
-.barras em{grid-column:3;font-style:normal;font-family:var(--mono);text-align:right;color:var(--ink)}
-.riego{display:flex;align-items:flex-end;gap:10px;height:70px}
+.salida.on .riego{display:flex;align-items:flex-end;gap:10px;height:70px}
 .riego i{flex:1;position:relative;height:100%;display:flex;align-items:flex-end;font-style:normal}
 .riego i::before{content:"";width:100%;height:0;background:#2b4a74;border-radius:2px 2px 0 0;transition:height .9s .2s}
 .salida.on .riego i::before{height:var(--h)}
@@ -128,7 +121,14 @@ svg.beams{position:absolute;inset:0;pointer-events:none;z-index:1}
 .spark .s{fill:none;stroke:var(--warn);stroke-width:2.2;stroke-dasharray:300;stroke-dashoffset:300;transition:stroke-dashoffset 1.4s .2s}
 .salida.on .spark .s{stroke-dashoffset:0}
 @media (max-width:1100px){.salidas{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:560px){.salidas{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:560px){
+  .salidas{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:84%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+  .sal-head{grid-column:auto;grid-row:1;flex-direction:column;gap:2px}
+  .salida{grid-row:2;scroll-snap-align:start}
+  .cards:not(.todas) .extra:not(.hot){display:none}
+  .mas{display:block}
+}
+.mas{display:none;grid-column:1/-1;justify-self:start;font:inherit;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--brand);background:none;border:1px solid var(--line-2);border-radius:4px;padding:6px 10px;cursor:pointer}
 @media (max-width:1100px){
   .stage{grid-template-columns:minmax(0,1fr)}
   .stage{grid-template-rows:none}
@@ -173,13 +173,13 @@ html,body{background:transparent}
     <div class="salidas" id="salidas">
       <div class="sal-head"><span class="label">Salidas</span><span class="sub">lo que se actualiza solo con cada decisión</span></div>
       <div class="salida">
-        <span class="c">Panel de la finca</span><b>Margen por parcela</b>
-        <div class="barras">
-          <i style="--w:100%"><span>La Vega</span><em>3.350</em></i><i style="--w:95%"><span>El Canal</span><em>3.180</em></i>
-          <i style="--w:91%"><span>Los Regadíos</span><em>3.050</em></i><i style="--w:81%"><span>Las Suertes</span><em>2.720</em></i>
-          <i style="--w:76%"><span>El Molino</span><em>2.540</em></i><i class="w" style="--w:42%"><span>El Cercado</span><em>1.400</em></i>
-        </div>
-        <span class="pie">€/ha · campaña 2025/26</span>
+        <span class="c">Aviso a tu equipo</span><b>Orden de trabajo de hoy</b>
+        <ul class="lista">
+          <li><em>→</em>Antonio: riego S3, 4 h desde las 18:00</li>
+          <li><em>→</em>Mira el envés en las filas 10 a 14</li>
+          <li><em>→</em>Sin tratar: el acaricida, en espera</li>
+        </ul>
+        <span class="pie">enviado al móvil del encargado · 08:16</span>
       </div>
       <div class="salida">
         <span class="c">Plan de riego</span><b>Esta semana, por sector</b>
@@ -258,6 +258,16 @@ html,body{background:transparent}
     });
   });
   cabecera('Sensores de tu explotación → en el mapa');
+  // en el móvil, solo las fuentes que usa el razonamiento; el resto tras un botón
+  const usadas = new Set(PASOS.flatMap(p => p[1]));
+  let ocultas = 0;
+  Object.entries(FUENTES).forEach(([k, f]) => { if (!f.obj && !usadas.has(k)) { f.el.classList.add('extra'); ocultas++; } });
+  if (ocultas) {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'mas';
+    b.textContent = `Ver ${ocultas} fuentes más`;
+    b.addEventListener('click', () => { cards.classList.add('todas'); b.remove(); });
+    cards.insertBefore(b, cards.lastElementChild);
+  }
 
   // ---- escena 3D ----
   const escena = $('escena');

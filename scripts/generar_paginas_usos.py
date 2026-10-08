@@ -91,7 +91,7 @@ def pagina(titulo, descripcion, ruta, migas, cuerpo):
   <div class="in">
     <a class="logo" href="/" aria-label="Food & Farm Analytics"><img src="/assets/logo-mark.png" alt="" width="19" height="34"><span class="lt"><b>food&amp;farm</b><i>analytics</i></span></a>
     <div class="nav-links">
-      <a href="/#sistema">Sistema</a>
+      <a href="/#inteligencia">Inteligencia</a>
       <a href="/asesores">Asesores</a>
       <a href="/#precios">Precios</a>
       <a href="/cuaderno-digital">Cuaderno digital</a>
