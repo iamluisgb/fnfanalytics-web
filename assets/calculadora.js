@@ -46,12 +46,9 @@
     const [a, m, d] = S.indice.fecha.split('-');
     $('fecha').textContent = `${+d}-${['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][m - 1]}-${a}`;
     const por = Object.fromEntries(S.indice.cultivos.map(c => [c.s, c]));
-    const opt = c => `<option value="${c.s}">${esc(c.n)}</option>`;
-    $('cult').innerHTML =
-      `<optgroup label="Más consultados">${S.indice.destacados.map(s => opt(por[s])).join('')}</optgroup>` +
-      `<optgroup label="Todos los cultivos">${S.indice.cultivos.map(opt).join('')}</optgroup>`;
+    S.por = por;
     const pedido = params.get('cultivo');
-    $('cult').value = por[pedido] ? pedido : (por.olivo ? 'olivo' : S.indice.cultivos[0].s);
+    S.cultSel = por[pedido] ? pedido : (por.olivo ? 'olivo' : S.indice.cultivos[0].s);
   }
   async function cargarCultivo(s) {
     if (!S.cache.has(s)) S.cache.set(s, fetch(DATOS + 'c/' + s + '.json' + V).then(r => r.json()));
@@ -67,10 +64,11 @@
 
   // ---- cultivo y plaga ----
   async function alCambiarCultivo(inicial) {
-    const s = $('cult').value;
+    const s = S.cultSel;
+    $('cultName').textContent = S.por[s].n;
     const info = S.indice.cultivos.find(c => c.s === s);
     S.datos = await cargarCultivo(s);
-    if ($('cult').value !== s) return; // llegó otra selección mientras cargaba
+    if (S.cultSel !== s) return; // llegó otra selección mientras cargaba
     S.cultivo = info;
     S.usosPorReg = new Map();
     S.datos.usos.forEach(u => S.usosPorReg.set(u[0], (S.usosPorReg.get(u[0]) || 0) + 1));
@@ -184,8 +182,26 @@
   const lineaUso = u => [rango(u), u[11] ? `en ${u[11]}` : null, u[6] ? `caldo ${nf(u[6])}–${nf(u[7] || u[6])} L/ha` : null,
     u[8] ? `${u[8]} aplic.` : null, u[10] != null ? `P. S. ${u[10]} d` : null].filter(Boolean).join(' · ');
   let modo = 'producto';
+  const TIPO = {olivo:'olivo', vid:'viña y espaldera', arbol:'frutales y árboles', horticola:'hortícola', extensivo:'extensivo', otro:'sin cultivo'};
   function pintarLista() {
     const q = slug($('buscar').value);
+    if (modo === 'cultivo') {
+      // sin búsqueda: primero los más consultados; con búsqueda, los que empiezan por lo escrito van antes
+      const todos = S.indice.cultivos;
+      const lista = q ? todos.filter(c => slug(c.n).includes(q)).sort((a, b) => slug(b.n).startsWith(q) - slug(a.n).startsWith(q))
+                      : [...S.indice.destacados.map(s => S.por[s]), ...todos];
+      $('dlgHint').textContent = q ? `${lista.length} de ${todos.length} cultivos` : `${todos.length} cultivos del registro del MAPA`;
+      const item = (c, i) => `<li><button type="button" data-i="${i}" aria-current="${c.s === S.cultSel}"><b>${esc(c.n)}</b>
+        <span class="cc-li-d">${c.p} producto${c.p === 1 ? '' : 's'} · ${TIPO[c.t]}</span></button></li>`;
+      const nd = S.indice.destacados.length;
+      $('list').innerHTML = !lista.length ? `<li class="cc-empty">Ningún cultivo coincide con «${esc($('buscar').value)}».</li>`
+        : q ? lista.map(item).join('')
+        : `<li class="cc-grp">Más consultados</li>${lista.slice(0, nd).map(item).join('')}<li class="cc-grp">Todos los cultivos</li>${lista.slice(nd).map((c, i) => item(c, i + nd)).join('')}`;
+      $('list').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+        $('dlg').close(); S.cultSel = lista[+b.dataset.i].s; alCambiarCultivo(false); $('plagaBtn').focus({preventScroll:true});
+      }));
+      return;
+    }
     if (modo === 'plaga') {
       const lista = S.plagas.filter(p => !q || slug(p.n + ' ' + p.c).includes(q));
       $('dlgHint').textContent = q ? `${lista.length} de ${S.plagas.length}` : `${S.plagas.length} plagas, enfermedades y malas hierbas con productos autorizados en ${S.cultivo.n.toLowerCase()}`;
@@ -214,8 +230,8 @@
   }
   function abrirLista(que) {
     modo = que;
-    $('dlgT').textContent = que === 'plaga' ? 'Plaga, enfermedad o mala hierba' : 'Productos autorizados';
-    $('buscar').placeholder = que === 'plaga' ? 'Buscar por nombre común o científico' : 'Buscar por producto o materia activa';
+    $('dlgT').textContent = {cultivo:'Cultivo', plaga:'Plaga, enfermedad o mala hierba', producto:'Productos autorizados'}[que];
+    $('buscar').placeholder = {cultivo:'Buscar cultivo: olivo, tomate, trigo…', plaga:'Buscar por nombre común o científico', producto:'Buscar por producto o materia activa'}[que];
     $('buscar').setAttribute('aria-label', $('buscar').placeholder);
     $('buscar').value = '';
     pintarLista();
@@ -425,7 +441,7 @@
   const uso = () => { if (!usada) { usada = true; track('calc-uso'); } };
   ['dose', 'doseIn', 'ha', 'caldo', 'cuba'].forEach(id => $(id).addEventListener('input', uso));
   ['doseMinus', 'dosePlus'].forEach(id => $(id).addEventListener('click', uso));
-  $('cult').addEventListener('change', () => alCambiarCultivo(false));
+  $('cult').addEventListener('click', () => abrirLista('cultivo'));
   $('plagaBtn').addEventListener('click', () => abrirLista('plaga'));
   $('pick').addEventListener('click', () => abrirLista('producto'));
   $('buscar').addEventListener('input', pintarLista);
