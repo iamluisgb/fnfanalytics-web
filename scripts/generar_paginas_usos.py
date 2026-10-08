@@ -162,7 +162,7 @@ def main():
             usos.sort(key=lambda u: prods[u[0]][0])
             cientifico = next((u[2] for u in usos if u[2]), "")
             ma = collections.Counter()
-            for reg in {u[0] for u in usos}:
+            for reg in sorted({u[0] for u in usos}):
                 for sust in filter(None, (prods[reg][3] or "").split(";")):
                     ma[sust.strip().capitalize()] += 1
             filas = []
@@ -183,7 +183,8 @@ def main():
             titulo = f"Productos autorizados contra {plaga.lower()} en {cultivo.lower()}"
             desc = (f"{n} productos autorizados por el MAPA contra {plaga.lower()} en {cultivo.lower()}: dosis, caldo, "
                     f"número de aplicaciones y plazo de seguridad. Calcula cuánto va en tu cuba, gratis.")
-            resumen = ", ".join(f"{x} ({k})" for x, k in ma.most_common(8)) or "sin datos en las fichas"
+            # orden estable (empates por nombre): si no, cada ejecución «cambia» las páginas
+            resumen = ", ".join(f"{x} ({k})" for x, k in sorted(ma.items(), key=lambda t: (-t[1], t[0]))[:8]) or "sin datos en las fichas"
             cuerpo = f"""    <h1>{e(titulo[0].upper() + titulo[1:])}</h1>
     <p class="cc-lede">{n} productos del Registro de Productos Fitosanitarios del MAPA{f' contra <i>{e(cientifico)}</i>' if cientifico else ''}. Elige uno y la calculadora te dice cuántas cubas salen y cuánto producto va en cada una.</p>
     <div class="cc-source"><span class="cc-dot"></span><span>Registro del MAPA consultado el {fecha} · la etiqueta del producto manda</span></div>

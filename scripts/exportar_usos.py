@@ -113,13 +113,17 @@ def main():
         fichas.setdefault(r["NumRegistro"], [r["Nombre"], r["Titular"], (r["Unidad"] or "").lower(), "",
                                              formulacion("", r["Nombre"])])
 
+    # el estado vigente lo manda el registro más reciente (scrape_mapa.py, semanal): así una
+    # cancelación sale de la web sin volver a descargar las fichas de usos
+    cancelados = {r["NumRegistro"] for r in leer("registro_fitosanitarios.csv") if r["Situacion"].strip().lower() != "vigente"}
+
     por_cultivo, vistos, fecha = {}, set(), ""
     for r in leer("usos_normalizado.csv"):
         if r["estado_registro"] != "Vigente" or r["normalizable"] != "si" or not r["cultivo"]:
             continue
         reg = r["NumRegistro"]
         dmax = num(r["dosis_max_norm"])
-        if reg not in fichas or not dmax:
+        if reg not in fichas or not dmax or reg in cancelados:
             continue
         dmin = num(r["dosis_min_norm"]) or dmax
         plaga = (r["plaga_comun"] or r["plaga"]).strip()
