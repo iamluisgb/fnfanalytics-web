@@ -235,6 +235,29 @@
 .cc-list .cc-grp{position:sticky;top:0;z-index:1;background:var(--paper);font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--brand-deep);padding:12px 10px 6px;border-bottom:1px solid var(--line)}
 @media (max-width:560px){.cc-dlg{width:100%;max-width:100%;height:100%;max-height:100%;border-radius:0;border:0;margin:0}}
 
+/* páginas de usos por cultivo y plaga (usos/) */
+.cc-usos-body{display:grid;gap:16px;padding-bottom:56px;min-width:0}
+.cc-usos-body h2{font-size:1.15rem;margin-top:8px}
+.cc-usos .cc-table table{min-width:760px}
+.cc-calc{white-space:nowrap;display:inline-flex;align-items:center;text-decoration:none}
+.cc-usos-cta{padding:18px;display:grid;gap:10px;justify-items:start}
+.cc-usos-cta h2{margin:0}
+.cc-usos-cta p{margin:0;color:var(--ink-soft);max-width:64ch}
+.cc-usos-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px}
+.cc-usos-list li{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-s);padding:10px 12px;display:grid;gap:2px}
+.cc-usos-list a{font-weight:600;color:var(--ink)}
+.cc-inline{display:inline-block}
+@media (max-width:640px){
+  .cc-usos .cc-table{border:0;overflow:visible}
+  .cc-usos .cc-table table{min-width:0}
+  .cc-usos .cc-table thead{display:none}
+  .cc-usos .cc-table tbody,.cc-usos .cc-table tr,.cc-usos .cc-table td{display:block}
+  .cc-usos .cc-table tr{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-s);padding:10px 12px;margin-bottom:10px}
+  .cc-usos .cc-table td{border:0;padding:3px 0;white-space:normal}
+  .cc-usos .cc-table td[data-l]::before{content:attr(data-l) " · ";font-family:var(--font-mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft)}
+  .cc-usos .cc-calc{margin-top:6px}
+}
+
 /* imprimir: solo la orden de tratamiento */
 @media print{
   body *{visibility:hidden}
