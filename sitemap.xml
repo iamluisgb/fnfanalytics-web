@@ -17,68 +17,187 @@
 
   <!-- usos -->
   <url><loc>https://fnfanalytics.com/usos/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/tomate/mildiu-de-la-patata-y-el-tomate</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/tomate/alternaria-de-las-solanaceas</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/tomate/bacteriosis</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/tomate/oidio-del-tomate</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/tomate/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://fnfanalytics.com/usos/olivo/repilo-del-olivo</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://fnfanalytics.com/usos/olivo/tuberculosis-del-olivo</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://fnfanalytics.com/usos/olivo/prays-polilla-del-olivo</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/olivo/dicotiledoneas-malas-hierbas-de-hoja-ancha</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/olivo/mosca-del-olivo</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/olivo/antracnosis-aceituna-jabonosa</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/olivo/emplomado-repilo-plomizo</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/olivo/glifodes</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/olivo/barrenillo-del-olivo</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/olivo/cochinilla-caparreta-negra</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/olivo/algodon-del-olivo</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/olivo/malas-hierbas-de-hoja-ancha</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/olivo/gramineas</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://fnfanalytics.com/usos/olivo/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/patata/mildiu-de-la-patata-y-el-tomate</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/patata/alternaria-de-las-solanaceas</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/patata/escarabajo-de-la-patata</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/patata/afidos-pulgones</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/patata/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://fnfanalytics.com/usos/vid/oidio-de-la-vid</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://fnfanalytics.com/usos/vid/mildiu-de-la-vid</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://fnfanalytics.com/usos/vid/polilla-del-racimo</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/vid/botrytis-podredumbre-gris</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/vid/arana-roja</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/vid/erinosis-y-acariosis</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/vid/mosquito-verde</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/vid/trips</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/vid/cotonet-y-cochinillas</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/vid/black-rot-podredumbre-negra</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/vid/excoriosis</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/vid/malas-hierbas-de-hoja-ancha</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/vid/gramineas</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://fnfanalytics.com/usos/vid/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/trigo/dicotiledoneas-malas-hierbas-de-hoja-ancha</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/trigo/septoriosis-del-trigo</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/trigo/dicotiledoneas-anuales</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/trigo/oidio-de-los-cereales</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/trigo/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/cebada/dicotiledoneas-malas-hierbas-de-hoja-ancha</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/cebada/dicotiledoneas-anuales</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/cebada/helmintosporiosis-reticular-de-la-cebada</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/cebada/oidio-de-los-cereales</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/cebada/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/almendro/monilia</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/almendro/cribado-perdigonado</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/almendro/lepra-abolladura</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/almendro/mancha-ocre</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/almendro/bacteriosis</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/almendro/chancro-del-almendro</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/almendro/pulgon</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/almendro/avispilla-del-almendro</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/almendro/anarsia-minadora-de-brotes</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/almendro/polilla-oriental</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/almendro/arana-roja</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/almendro/malas-hierbas-de-hoja-ancha</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/almendro/gramineas</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/almendro/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/citricos/aguado-gomosis-phytophthora</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/citricos/mosca-de-la-fruta</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/citricos/piojo-rojo-de-california</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/citricos/cotonet-cochinilla-algodonosa</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/citricos/cochinillas</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/citricos/pulgon</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/citricos/mosca-blanca</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/citricos/trips</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/citricos/minador-de-los-citricos</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/citricos/arana-roja-acaro-rojo</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/citricos/prays-de-los-citricos</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/citricos/alternaria-de-la-mandarina</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/citricos/psila-africana</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/citricos/mal-seco</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/citricos/malas-hierbas-de-hoja-ancha</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/citricos/gramineas</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/citricos/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://fnfanalytics.com/usos/frutales-de-hueso/monilia</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://fnfanalytics.com/usos/frutales-de-hueso/cribado-perdigonado</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/frutales-de-hueso/lepra-abolladura</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/frutales-de-hueso/oidio</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://fnfanalytics.com/usos/frutales-de-hueso/bacteriosis</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/frutales-de-hueso/abolladura-lepra-del-melocotonero</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/frutales-de-hueso/pulgon</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/frutales-de-hueso/polilla-oriental</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/frutales-de-hueso/anarsia-minadora-de-brotes</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/frutales-de-hueso/mosca-de-la-fruta</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/frutales-de-hueso/drosophila-suzukii</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/frutales-de-hueso/trips</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/frutales-de-hueso/arana-roja</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/frutales-de-hueso/piojo-de-san-jose</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/frutales-de-hueso/malas-hierbas-de-hoja-ancha</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://fnfanalytics.com/usos/frutales-de-hueso/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/frutales-de-pepita/moteado-o-rona-del-manzano</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/frutales-de-pepita/bacteriosis</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/frutales-de-pepita/moteado-o-rona-del-peral</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/frutales-de-pepita/moteado-o-rona</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/frutales-de-pepita/carpocapsa</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/frutales-de-pepita/psila-del-peral</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/frutales-de-pepita/oidio-del-manzano</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/frutales-de-pepita/pulgon</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/frutales-de-pepita/estemfiliosis</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/frutales-de-pepita/chancro-europeo</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://fnfanalytics.com/usos/frutales-de-pepita/monilia</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/frutales-de-pepita/bacteriosis</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/frutales-de-pepita/arana-roja</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/frutales-de-pepita/piojo-de-san-jose</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/frutales-de-pepita/malas-hierbas-de-hoja-ancha</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://fnfanalytics.com/usos/frutales-de-pepita/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/lechuga-y-similares/mildiu-de-la-lechuga</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/lechuga-y-similares/bacteriosis</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/lechuga-y-similares/alternaria-spp</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/lechuga-y-similares/antracnosis</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/lechuga-y-similares/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/almendro/monilia</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/almendro/bacteriosis</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/almendro/cribado-perdigonado</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/almendro/abolladura-lepra-del-melocotonero</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/almendro/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/maiz/dicotiledoneas-malas-hierbas-de-hoja-ancha</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/maiz/dicotiledoneas-anuales</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/maiz/monocotiledoneas-anuales</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/trigo/septoria</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/trigo/roya-amarilla</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/trigo/roya-parda</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/trigo/oidio</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/trigo/fusariosis</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/trigo/helmintosporiosis</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/trigo/pulgon</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/trigo/malas-hierbas-de-hoja-ancha</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/trigo/avena-loca</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/trigo/vallico</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/trigo/alpiste</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/trigo/cola-de-zorro</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/trigo/garrapatillo-y-sanpedrito</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/trigo/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/cebada/helmintosporiosis</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/cebada/rincosporiosis-escaldado</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/cebada/oidio</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/cebada/roya-parda</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/cebada/ramularia</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/cebada/pulgon</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/cebada/malas-hierbas-de-hoja-ancha</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/cebada/avena-loca</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/cebada/vallico</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/cebada/alpiste</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/cebada/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/maiz/taladro-del-maiz</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/maiz/diabrotica</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/maiz/gusano-de-alambre</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/maiz/rosquilla-gusanos-grises</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/maiz/heliothis</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/maiz/pulgon</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/maiz/malas-hierbas-de-hoja-ancha</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/maiz/gramineas</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/maiz/canota</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/maiz/juncia</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/maiz/tizon-del-maiz</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://fnfanalytics.com/usos/maiz/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/citricos/aguado-gomosis-de-los-citricos</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/citricos/mildiu-terrestre-del-tomate</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/citricos/bacteriosis</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/citricos/dicotiledoneas-malas-hierbas-de-hoja-ancha</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/citricos/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/pimiento/moscas-blancas</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/pimiento/alternaria-de-las-solanaceas</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/girasol/malas-hierbas-de-hoja-ancha</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/girasol/gramineas</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/girasol/pulgon</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/girasol/gusano-de-alambre</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/girasol/rosquilla-gusanos-grises</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/girasol/babosas-y-caracoles</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/girasol/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/tomate/tuta-absoluta</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/tomate/mosca-blanca</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/tomate/trips</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/tomate/arana-roja</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/tomate/pulgon</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/tomate/mildiu-de-la-patata-y-el-tomate</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/tomate/oidio</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/tomate/botrytis-podredumbre-gris</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/tomate/alternaria</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/tomate/heliothis</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/tomate/rosquillas-y-orugas</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/tomate/minador-liriomiza</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/tomate/nematodos</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/tomate/cladosporiosis</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/tomate/antracnosis</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/tomate/bacteriosis</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/tomate/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/patata/mildiu</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/patata/alternaria</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/patata/escarabajo-de-la-patata</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/patata/polilla-de-la-patata</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/patata/pulgon</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/patata/gusano-de-alambre</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/patata/sarna</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/patata/desecante</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/patata/malas-hierbas-de-hoja-ancha</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/patata/gramineas</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/patata/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/pimiento/mosca-blanca</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/pimiento/trips</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/pimiento/pulgon</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/pimiento/arana-roja</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/pimiento/oidio</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://fnfanalytics.com/usos/pimiento/mildiu-del-pimiento</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://fnfanalytics.com/usos/pimiento/afidos-pulgones</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/pimiento/botrytis-podredumbre-gris</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/pimiento/orugas</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/pimiento/nematodos</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/pimiento/alternaria</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/pimiento/sclerotinia</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://fnfanalytics.com/usos/pimiento/</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/lechuga-y-similares/mildiu-de-la-lechuga</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/lechuga-y-similares/pulgon</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/lechuga-y-similares/sclerotinia</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/lechuga-y-similares/botrytis-podredumbre-gris</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/lechuga-y-similares/orugas</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/lechuga-y-similares/mosca-blanca</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/lechuga-y-similares/minador-liriomiza</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/lechuga-y-similares/antracnosis</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/lechuga-y-similares/alternaria</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/lechuga-y-similares/bacteriosis</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/lechuga-y-similares/babosas-y-caracoles</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://fnfanalytics.com/usos/lechuga-y-similares/</loc><lastmod>2026-09-27</lastmod></url>
   <!-- /usos -->
 </urlset>

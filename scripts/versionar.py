@@ -10,7 +10,7 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 PAGINA = RAIZ / "herramientas" / "calculadora-caldo.html"
-ARCHIVOS = ["assets/calculadora.css", "assets/calculadora.js", "assets/calculadora-3d.js", "herramientas/datos/cultivos.json"]
+ARCHIVOS = ["assets/calculadora.css", "assets/calculadora.js", "assets/calculadora-3d.js", "assets/usos.js", "herramientas/datos/cultivos.json"]
 
 h = hashlib.sha256()
 for a in ARCHIVOS:
