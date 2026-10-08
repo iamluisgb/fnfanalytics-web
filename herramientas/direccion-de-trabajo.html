@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dirección de trabajo de la parcela · Food & Farm Analytics</title>
+<meta name="description" content="Elige tu recinto SIGPAC y te decimos en qué dirección dar las pasadas para dar menos vueltas en las cabeceras: grada, subsolador, sembradora, abonadora o pulverizador. Gratis.">
+<link rel="canonical" href="https://fnfanalytics.com/herramientas/direccion-de-trabajo">
+<meta property="og:title" content="¿En qué dirección trabajo la parcela? · Gratis">
+<meta property="og:description" content="Tu recinto SIGPAC, el ancho del apero y te decimos la dirección con menos vueltas, en minutos y litros de gasóleo.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://fnfanalytics.com/herramientas/direccion-de-trabajo">
+<meta property="og:locale" content="es_ES">
+<meta property="og:image" content="https://fnfanalytics.com/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0c1210">
+<link rel="preload" href="/assets/fonts/Poppins-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/calculadora.css">
+<link rel="stylesheet" href="/assets/vendor/leaflet/leaflet.css">
+<script defer src="/u/s.js" data-website-id="08c1619b-4bb8-471b-9dc9-9b6cda88e8ae" data-host-url="https://cloud.umami.is" data-domains="fnfanalytics.com,www.fnfanalytics.com"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Dirección de trabajo de la parcela","url":"https://fnfanalytics.com/herramientas/direccion-de-trabajo","applicationCategory":"BusinessApplication","operatingSystem":"Web","inLanguage":"es","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"publisher":{"@type":"Organization","name":"Food & Farm Analytics","url":"https://fnfanalytics.com"}}
+</script>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="in">
+    <a class="logo" href="/" aria-label="Food & Farm Analytics"><img src="/assets/logo-mark.png" alt="" width="19" height="34"><span class="lt"><b>food&amp;farm</b><i>analytics</i></span></a>
+    <div class="nav-links">
+      <a href="/#sistema">Sistema</a>
+      <a href="/asesores">Asesores</a>
+      <a href="/#precios">Precios</a>
+      <a href="/cuaderno-digital">Cuaderno digital</a>
+      <a class="btn btn-primary" href="/#acceso">Solicita acceso</a>
+    </div>
+  </div>
+</nav>
+
+<main class="cc">
+  <div class="cc-head">
+    <div class="cc-crumb"><a href="/plantillas/">Herramientas gratis</a><span aria-hidden="true">›</span><span>Dirección de trabajo</span></div>
+    <h1>¿En qué dirección trabajo la parcela?</h1>
+    <p class="cc-lede">Busca tu recinto SIGPAC o púlsalo en el mapa y elige la labor. Te decimos en qué dirección dar las pasadas para dar menos vueltas en las cabeceras, y cuánto tiempo y gasóleo ahorras frente a la peor.</p>
+    <div class="cc-source"><span class="cc-dot"></span><span>Recintos del SIGPAC (FEGA) y ortofoto PNOA del IGN · los tiempos y consumos son orientativos: pon los tuyos</span></div>
+  </div>
+
+  <div class="cc-grid dt-grid">
+    <section class="cc-steps" aria-label="Datos">
+      <article class="cc-step">
+        <header><span class="cc-n">1</span><h2>Tu parcela</h2></header>
+        <div class="cc-body">
+          <form id="refForm" class="dt-ref">
+            <label class="cc-f" for="ref">Referencia SIGPAC
+              <input type="text" id="ref" placeholder="Provincia:Municipio:Agregado:Zona:Polígono:Parcela:Recinto" autocomplete="off" inputmode="numeric">
+            </label>
+            <button type="submit" class="cc-btn is-sec">Buscar</button>
+          </form>
+          <p class="cc-hint">Por ejemplo <code>47:87:0:0:7:450:1</code>. También puedes pulsar el recinto en el mapa o <button type="button" class="dt-link" id="geo">ir a tu ubicación</button>.</p>
+          <p class="cc-hint" id="refMsg" role="status"></p>
+          <div class="dt-recinto" id="recInfo" hidden></div>
+        </div>
+      </article>
+
+      <article class="cc-step">
+        <header><span class="cc-n">2</span><h2>La labor</h2></header>
+        <div class="cc-body">
+          <label class="cc-f" for="labor">Labor
+            <select id="labor"></select>
+          </label>
+          <div class="cc-row">
+            <label class="cc-f" for="ancho">Ancho de trabajo<span class="cc-unit"><input type="number" id="ancho" min="0.5" step="0.5" inputmode="decimal"><em>m</em></span></label>
+            <label class="cc-f" for="vel">Velocidad<span class="cc-unit"><input type="number" id="vel" min="1" step="0.5" inputmode="decimal"><em>km/h</em></span></label>
+          </div>
+          <div class="cc-row">
+            <label class="cc-f" for="giro">Cada vuelta en cabecera<span class="cc-unit"><input type="number" id="giro" min="5" step="5" inputmode="numeric"><em>s</em></span></label>
+            <label class="cc-f" for="cons">Consumo del tractor<span class="cc-unit"><input type="number" id="cons" min="1" step="1" inputmode="decimal"><em>L/h</em></span></label>
+            <label class="cc-f" for="veces">Labores al año<span class="cc-unit"><input type="number" id="veces" min="1" step="1" value="4" inputmode="numeric"><em>×</em></span></label>
+          </div>
+          <p class="cc-hint">Los valores de cada labor son de partida. El que más pesa es el tiempo de cada vuelta: mídelo un día con el reloj.</p>
+        </div>
+      </article>
+
+      <article class="cc-card dt-nota">
+        <h3 class="cc-h3">Qué cuenta y qué no</h3>
+        <p>Probamos todas las direcciones, de grado en grado. Para cada una contamos las pasadas del ancho de tu apero, los tramos en que se corta cada pasada si la parcela tiene entrantes, y las vueltas para pasar de un tramo al siguiente. No cuenta las cabeceras que se trabajan al final ni los obstáculos dentro del recinto.</p>
+        <p id="pendNota" hidden></p>
+      </article>
+    </section>
+
+    <aside class="cc-result dt-result" aria-label="Resultado">
+      <div class="dt-mapa" id="mapa" aria-label="Mapa de la parcela"></div>
+      <div class="dt-leyenda"><span class="dt-l is-best"></span>Mejor dirección <span id="cadaN"></span> <label class="dt-peor"><input type="checkbox" id="verPeor"> <span class="dt-l is-worst"></span>Ver la peor</label></div>
+      <div class="cc-card cc-tank" aria-live="polite">
+        <div class="cc-k">Mejor dirección de las pasadas</div>
+        <div class="cc-big" id="rumbo">—</div>
+        <p id="rumboTxt"></p>
+        <div class="cc-kpis">
+          <div><div class="cc-k">Pasadas</div><div class="cc-v" id="kPas"></div></div>
+          <div><div class="cc-k">Vueltas</div><div class="cc-v" id="kVue"></div></div>
+          <div><div class="cc-k">Tiempo</div><div class="cc-v" id="kTie"></div></div>
+        </div>
+      </div>
+      <div class="cc-card dt-ahorro">
+        <h3 class="cc-h3">Frente a la peor dirección</h3>
+        <p id="ahorro">—</p>
+        <p class="cc-hint" id="ahorroAnio"></p>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  <div class="in">
+    <div class="fl"><img src="/assets/logo-mark.png" alt="" width="13" height="24"><b>food&amp;farm analytics</b></div>
+    <nav aria-label="Pie">
+      <a href="/cuaderno-digital">Cuaderno digital 2027</a>
+      <a href="/plantillas/">Plantillas gratis</a>
+      <a href="/herramientas/calculadora-caldo">Calculadora de caldo</a>
+      <a href="/herramientas/direccion-de-trabajo">Dirección de trabajo</a>
+      <a href="/usos/">Usos autorizados</a>
+      <a href="/asesores">Asesores</a>
+      <a href="/privacidad">Privacidad</a>
+      <a href="/aviso-legal">Aviso legal</a>
+    </nav>
+    <p>© 2026 · <a href="mailto:hola@fnfanalytics.com">hola@fnfanalytics.com</a></p>
+  </div>
+</footer>
+<script src="/assets/vendor/leaflet/leaflet.js"></script>
+<script src="/assets/direccion.js"></script>
+</body>
+</html>

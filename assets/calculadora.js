@@ -180,9 +180,9 @@
     $('scene').hidden = S.tipo === 'otro';
     const salto = $('cult').getBoundingClientRect().top - antes;
     if (compensar && Math.abs(salto) > 1) window.scrollBy(0, salto);
-    $('nozHint').textContent = leñoso
+    $('nozHint').innerHTML = leñoso
       ? 'Caudal por boquilla = caldo × velocidad × ancho ÷ (600 × boquillas). La tabla es de boquillas de abanico; en atomizador con boquillas de cono, usa el caudal por boquilla con la tabla del fabricante.'
-      : 'Caudal por boquilla = caldo × velocidad × ancho ÷ (600 × boquillas). Presión estimada con la ley del cuadrado: el caudal sube con la raíz de la presión. Lo habitual en abanico es trabajar entre 2 y 5 bar.';
+      : 'Caudal por boquilla = caldo × velocidad × ancho ÷ (600 × boquillas). Presión estimada con la ley del cuadrado: el caudal sube con la raíz de la presión. Lo habitual en abanico es trabajar entre 2 y 5 bar. ¿En qué dirección das las pasadas? <a href="/herramientas/direccion-de-trabajo?labor=barra">Calcula la que ahorra vueltas en tu recinto</a>.';
     if (S.tipo !== 'otro') escena.preparar();
   }
 

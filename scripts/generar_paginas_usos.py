@@ -113,6 +113,7 @@ def pagina(titulo, descripcion, ruta, migas, cuerpo):
       <a href="/cuaderno-digital">Cuaderno digital 2027</a>
       <a href="/plantillas/">Plantillas gratis</a>
       <a href="/herramientas/calculadora-caldo">Calculadora de caldo</a>
+      <a href="/herramientas/direccion-de-trabajo">Dirección de trabajo</a>
       <a href="/usos/">Usos autorizados</a>
       <a href="/asesores">Asesores</a>
       <a href="/privacidad">Privacidad</a>
