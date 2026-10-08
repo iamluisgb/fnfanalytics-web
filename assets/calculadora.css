@@ -180,6 +180,18 @@
 .cc input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--paper);border:2px solid var(--ink)}
 
 .cc-origen{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-s);padding:8px 10px;color:var(--ink)}
+.cc-mezcla{border-top:1px solid var(--line);padding-top:14px;display:grid;gap:10px}
+.cc-mezcla-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.cc-mez-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.cc-mez-list:empty{display:none}
+.cc-mez{display:grid;grid-template-columns:minmax(0,1fr) 150px auto;gap:10px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-s);padding:10px}
+.cc-mez b{font-size:14px;font-weight:600}
+.cc-mez-cuba{grid-column:1/-1;font-family:var(--font-mono);font-size:12.5px;color:var(--ink-soft)}
+.cc-mez .cc-x{width:44px;height:44px}
+@media (max-width:560px){.cc-mez{grid-template-columns:minmax(0,1fr) auto}.cc-mez .cc-unit{grid-column:1/2;grid-row:2}.cc-mez-cuba{grid-row:3}}
+.cc-carga{margin:0;padding-left:22px;display:grid;gap:6px;font-size:13.5px}
+.cc-carga li::marker{font-family:var(--font-mono);color:var(--brand-deep);font-weight:600}
+.cc-carga .cc-form{font-family:var(--font-mono);font-size:11.5px;color:var(--ink-soft)}
 .cc-alerta{border-top:1px solid var(--line);padding-top:14px;display:grid;gap:8px}
 .cc-alerta-t{margin:0;font-size:13.5px}
 #alertaForm{display:grid;gap:8px}

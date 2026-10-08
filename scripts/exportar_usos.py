@@ -52,6 +52,17 @@ DESTACADOS = ["Olivo", "Vid", "Almendro", "Cítricos", "Frutales de hueso", "Fru
               "Trigo", "Cebada", "Maíz", "Girasol", "Tomate", "Patata", "Pimiento", "Lechuga y similares"]
 
 
+# Código de formulación (WG, SC, EC…): sale de la composición del registro («AZUFRE 80% [WG] P/P»)
+# o, en los productos nuevos sin composición, del nombre («… 250 SC»). Lo usa el orden de carga.
+CODIGO = re.compile(r"\b(WSB|SG|WG|WDG|WP|SC|CS|SE|OD|EW|EC|SL|ME|SP|DC|EG|ZC)\b")
+
+
+def formulacion(composicion, nombre):
+    m = re.search(r"\[([A-Z]{2,3})\]", composicion or "") or CODIGO.search((nombre or "").upper())
+    codigo = m.group(1) if m else ""
+    return "WG" if codigo == "WDG" else codigo
+
+
 def slug(texto):
     t = unicodedata.normalize("NFKD", texto).encode("ascii", "ignore").decode().lower()
     return re.sub(r"[^a-z0-9]+", "-", t).strip("-")
@@ -96,9 +107,11 @@ def leer(nombre):
 def main():
     fichas = {}
     for r in leer("existentes_completo.csv"):
-        fichas[r["NumRegistro"]] = [r["NombreComercial"], r["Titular"], (r["Unidad"] or "").lower(), r["Sustancias"]]
+        fichas[r["NumRegistro"]] = [r["NombreComercial"], r["Titular"], (r["Unidad"] or "").lower(), r["Sustancias"],
+                                    formulacion(r["Composicion"], r["NombreComercial"])]
     for r in leer("nuevos_enriquecido.csv"):
-        fichas.setdefault(r["NumRegistro"], [r["Nombre"], r["Titular"], (r["Unidad"] or "").lower(), ""])
+        fichas.setdefault(r["NumRegistro"], [r["Nombre"], r["Titular"], (r["Unidad"] or "").lower(), "",
+                                             formulacion("", r["Nombre"])])
 
     por_cultivo, vistos, fecha = {}, set(), ""
     for r in leer("usos_normalizado.csv"):

@@ -22,9 +22,9 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#0c1210">
 <link rel="preload" href="/assets/fonts/Poppins-700.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/herramientas/datos/cultivos.json?v=64c164423b" as="fetch" crossorigin>
+<link rel="preload" href="/herramientas/datos/cultivos.json?v=090d0edcdc" as="fetch" crossorigin>
 <link rel="stylesheet" href="/assets/site.css">
-<link rel="stylesheet" href="/assets/calculadora.css?v=64c164423b">
+<link rel="stylesheet" href="/assets/calculadora.css?v=090d0edcdc">
 <script defer src="/u/s.js" data-website-id="08c1619b-4bb8-471b-9dc9-9b6cda88e8ae" data-host-url="https://cloud.umami.is" data-domains="fnfanalytics.com,www.fnfanalytics.com"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"Calculadora de caldo y dosis de fitosanitarios","url":"https://fnfanalytics.com/herramientas/calculadora-caldo","applicationCategory":"BusinessApplication","operatingSystem":"Web","inLanguage":"es","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"publisher":{"@type":"Organization","name":"Food & Farm Analytics","url":"https://fnfanalytics.com"}}
@@ -104,6 +104,15 @@
             <div class="cc-checks" aria-live="polite">
               <h3 class="cc-h3">Comprobado contra el registro</h3>
               <div id="checks"></div>
+            </div>
+            <div class="cc-mezcla">
+              <div class="cc-mezcla-head"><h3 class="cc-h3">Mezcla en la cuba</h3><button type="button" class="cc-ghost" id="mezAdd">+ Añadir otro producto</button></div>
+              <ul class="cc-mez-list" id="mezList"></ul>
+              <div id="cargaBox" hidden>
+                <h3 class="cc-h3">Orden de carga</h3>
+                <ol class="cc-carga" id="carga"></ol>
+                <p class="cc-hint">Orden de la <a href="https://www.mapa.gob.es/es/agricultura/temas/sanidad-vegetal/guiabuenaspracticasmezclasfinalcorregido_tcm30-57931.pdf" target="_blank" rel="noopener">Guía de buenas prácticas para la mezcla en campo</a> (MAPA, 2015), según la formulación. Mantén la agitación desde que mezclas hasta que aplicas. Si la etiqueta de un producto dice que no se mezcle, no se mezcla.</p>
+              </div>
             </div>
             <div class="cc-alerta">
               <p class="cc-alerta-t"><b>¿Te avisamos si cambia?</b> Si el MAPA retira o cambia la autorización de <span id="aProd"></span> en <span id="aCult"></span>, te escribimos.</p>
@@ -222,6 +231,8 @@
           <dt>Dosis</dt><dd id="oDose"></dd>
           <dt>Caldo</dt><dd id="oCaldo"></dd>
           <dt>Por cuba</dt><dd id="oTank"></dd>
+          <dt id="oMezT" hidden>Mezcla con</dt><dd id="oMez" hidden></dd>
+          <dt id="oCargaT" hidden>Orden de carga</dt><dd id="oCarga" hidden></dd>
           <dt>Boquillas</dt><dd id="oNoz"></dd>
           <dt>No cosechar antes</dt><dd id="oPS"></dd>
         </dl>
@@ -273,6 +284,6 @@
     <p>© 2026 · <a href="mailto:hola@fnfanalytics.com">hola@fnfanalytics.com</a></p>
   </div>
 </footer>
-<script src="/assets/calculadora.js?v=64c164423b"></script>
+<script src="/assets/calculadora.js?v=090d0edcdc"></script>
 </body>
 </html>

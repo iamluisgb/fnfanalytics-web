@@ -8,7 +8,7 @@
   const PRESET = {
     olivo: {caldo:600, cuba:2000, calle:8, entre:8, alto:4, ancho:4, fac:.12, vel:5, anchoT:8, nb:16},
     vid:   {caldo:500, cuba:1500, calle:2.6, entre:1.2, alto:1.4, ancho:.6, fac:.095, vel:5, anchoT:2.6, nb:10},
-    arbol: {caldo:800, cuba:2000, calle:6, entre:5, alto:3.5, ancho:3.5, fac:.1, vel:5, anchoT:6, nb:16},
+    arbol: {caldo:800, cuba:2000, calle:6, entre:5, alto:3.5, ancho:3.5, fac:.094, vel:5, anchoT:6, nb:16},
     horticola: {caldo:600, cuba:1000, vel:4, anchoT:12, nb:24},
     extensivo: {caldo:200, cuba:3000, vel:8, anchoT:18, nb:36},
     otro: {caldo:400, cuba:200, vel:4, anchoT:1, nb:1}
@@ -17,12 +17,18 @@
   const FACTOR = {
     olivo: 'Olivo: 0,12 L por m³ de copa medido árbol a árbol (Miranda-Fuentes et al., 2016, Universidad de Córdoba).',
     vid: 'Viña: 0,095 L por m³ de vegetación (Doruchowski, 2003).',
-    arbol: 'Frutales: 0,1 L por m³ es un valor orientativo; no hay un factor único para todas las especies y formas de conducción.'
+    arbol: 'Frutales: 0,094 L por m³ de copa (0,7 galones por 1.000 pies³), el volumen diluido de referencia del método TRV en manzano (Cornell Cooperative Extension). Es un máximo, para mojar hasta goteo: muchos aplican bastante menos.'
   };
   // Atomizador: Albuz ATR 80 (cono hueco), caudal a 10 bar según el catálogo del fabricante.
   // Albuz recomienda 10 bar y trabajar entre 10 y 15.
   const ATR = [['blanca',.38],['lila',.50],['marrón',.67],['amarilla',1.03],['naranja',1.39],['roja',1.92],
                ['gris',2.08],['verde',2.47],['negra',2.78],['azul',3.40]];
+  // Orden de carga por formulación: Tabla 1 de la Guía de buenas prácticas para la mezcla en
+  // campo de productos fitosanitarios (MAPA, 2015). Lo que no está en la tabla va al final.
+  const CARGA = ['WSB', 'SG', 'WG', 'WP', 'SC', 'CS', 'SE', 'OD', 'EW', 'EC', 'SL'];
+  const FORMA = {WSB:'bolsa hidrosoluble', SG:'granulado soluble', WG:'granulado dispersable', WP:'polvo mojable',
+    SC:'suspensión concentrada', CS:'suspensión de cápsulas', SE:'suspoemulsión', OD:'suspensión oleosa',
+    EW:'emulsión acuosa', EC:'concentrado emulsionable', SL:'concentrado soluble'};
   // Barra: boquillas de abanico, código de color ISO 10625, caudal nominal a 3 bar (L/min).
   const NOZ = [['01','naranja',.40],['015','verde',.60],['02','amarillo',.80],['025','lila',1.00],['03','azul',1.20],
                ['04','rojo',1.60],['05','marrón',2.00],['06','gris',2.40],['08','blanco',3.20]];
@@ -36,7 +42,7 @@
   const slug = s => s.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   const track = (e, d) => { try { window.umami && window.umami.track(e, d); } catch (_) {} };
 
-  const S = {indice:null, cultivo:null, datos:null, tipo:null, plaga:null, uso:null, dose:null, pasoBoton:1, hayResultado:false, usosPorReg:new Map(), cache:new Map()};
+  const S = {mezcla:[], indice:null, cultivo:null, datos:null, tipo:null, plaga:null, uso:null, dose:null, pasoBoton:1, hayResultado:false, usosPorReg:new Map(), cache:new Map()};
   const params = new URLSearchParams(location.search);
 
   // ---- datos ----
@@ -69,7 +75,9 @@
     const info = S.indice.cultivos.find(c => c.s === s);
     S.datos = await cargarCultivo(s);
     if (S.cultSel !== s) return; // llegó otra selección mientras cargaba
+    if (S.cultivo && S.cultivo.s !== s) S.mezcla = [];
     S.cultivo = info;
+    pintarMezcla();
     S.usosPorReg = new Map();
     S.datos.usos.forEach(u => S.usosPorReg.set(u[0], (S.usosPorReg.get(u[0]) || 0) + 1));
     if (info.t !== S.tipo) { S.tipo = info.t; aplicarPreset(!inicial); }
@@ -202,6 +210,21 @@
       }));
       return;
     }
+    if (modo === 'mezcla') {
+      // todo lo autorizado en el cultivo, contra cualquier plaga: una mezcla suele cubrir dos
+      const fuera = new Set([S.uso[0], ...S.mezcla.map(m => m.u[0])]);
+      const todos = S.datos.usos.filter(u => !fuera.has(u[0]));
+      const lista = (q ? todos.filter(u => slug(prod(u)[0] + ' ' + prod(u)[3] + ' ' + u[1]).includes(q)) : todos).slice(0, 150);
+      const n = q ? todos.filter(u => slug(prod(u)[0] + ' ' + prod(u)[3] + ' ' + u[1]).includes(q)).length : todos.length;
+      $('dlgHint').textContent = n > lista.length ? `${lista.length} de ${n}: escribe el producto, la materia activa o la plaga` : `${n} usos autorizados en ${S.cultivo.n.toLowerCase()}`;
+      $('list').innerHTML = lista.length ? lista.map((u, i) => {
+        const p = prod(u);
+        return `<li><button type="button" data-i="${i}"><b>${esc(p[0])}</b><span class="cc-sub">contra ${esc(u[1])} · ${esc(p[3] || p[1])}</span>
+          <span class="cc-li-d">${lineaUso(u)}${p[4] ? ' · ' + p[4] : ''}</span></button></li>`;
+      }).join('') : `<li class="cc-empty">Nada coincide con «${esc($('buscar').value)}».</li>`;
+      $('list').querySelectorAll('button').forEach(b => b.addEventListener('click', () => { $('dlg').close(); anadirMezcla(lista[+b.dataset.i]); }));
+      return;
+    }
     if (modo === 'plaga') {
       const lista = S.plagas.filter(p => !q || slug(p.n + ' ' + p.c).includes(q));
       $('dlgHint').textContent = q ? `${lista.length} de ${S.plagas.length}` : `${S.plagas.length} plagas, enfermedades y malas hierbas con productos autorizados en ${S.cultivo.n.toLowerCase()}`;
@@ -230,8 +253,8 @@
   }
   function abrirLista(que) {
     modo = que;
-    $('dlgT').textContent = {cultivo:'Cultivo', plaga:'Plaga, enfermedad o mala hierba', producto:'Productos autorizados'}[que];
-    $('buscar').placeholder = {cultivo:'Buscar cultivo: olivo, tomate, trigo…', plaga:'Buscar por nombre común o científico', producto:'Buscar por producto o materia activa'}[que];
+    $('dlgT').textContent = {cultivo:'Cultivo', plaga:'Plaga, enfermedad o mala hierba', producto:'Productos autorizados', mezcla:'Añadir a la cuba'}[que];
+    $('buscar').placeholder = {cultivo:'Buscar cultivo: olivo, tomate, trigo…', plaga:'Buscar por nombre común o científico', producto:'Buscar por producto o materia activa', mezcla:'Producto, materia activa o plaga'}[que];
     $('buscar').setAttribute('aria-label', $('buscar').placeholder);
     $('buscar').value = '';
     pintarLista();
@@ -302,6 +325,24 @@
       if (caldo < u[6] || caldo > cmax) ck.push(['warn', `Caldo de ${nf(caldo)} L/ha fuera del rango de la etiqueta (${nf(u[6])}–${nf(cmax)} L/ha).`]);
       else ck.push(['ok', 'Caldo dentro del rango de la etiqueta.']);
     }
+    const mezcla = S.mezcla.map(m => {
+      const ph = m.u[3] === 'ha' ? m.dose : m.dose * caldo / 100 / 1000;
+      return {...m, p:prod(m.u), porHa:ph, porCuba:ph * cuba / caldo, unidad:unidadProd(m.u)};
+    });
+    mezcla.forEach((m, i) => {
+      const el = $('mezC-' + i);
+      if (el) el.textContent = `${nf(m.porCuba, 2)} ${m.unidad} por cuba · ${nf(m.porHa * ha, 1)} ${m.unidad} en total`;
+      if (m.dose > m.u[5]) ck.push(['bad', `${m.p[0]}: dosis de ${nx(m.dose)} ${unidadDosis(m.u)}, por encima del máximo autorizado (${nx(m.u[5])}).`]);
+      else if (m.dose < m.u[4]) ck.push(['warn', `${m.p[0]}: dosis por debajo del mínimo de la etiqueta (${nx(m.u[4])} ${unidadDosis(m.u)}).`]);
+      if (m.u[6] && (caldo < m.u[6] || caldo > (m.u[7] || m.u[6]))) ck.push(['warn', `${m.p[0]}: el caldo de ${nf(caldo)} L/ha está fuera del rango de su etiqueta (${nf(m.u[6])}–${nf(m.u[7] || m.u[6])} L/ha).`]);
+    });
+    // orden de carga: el producto principal y los de la mezcla, por formulación
+    const cargas = [{nombre:p[0], f:p[4], c:porCuba, un:unidad}, ...mezcla.map(m => ({nombre:m.p[0], f:m.p[4], c:m.porCuba, un:m.unidad}))]
+      .map(x => ({...x, k:CARGA.includes(x.f) ? CARGA.indexOf(x.f) : 99}))
+      .sort((a, b) => a.k - b.k);
+    $('cargaBox').hidden = !mezcla.length;
+    $('carga').innerHTML = mezcla.length ? '<li>Agua, con la agitación en marcha (y el corrector de pH primero si tu agua es alcalina).</li>' +
+      cargas.map(x => `<li><b>${esc(x.nombre)}</b>: ${nf(x.c, 2)} ${x.un} <span class="cc-form">${x.k < 99 ? `${x.f} · ${FORMA[x.f]}` : x.f ? `${x.f}: la guía no le da un puesto, mira la etiqueta` : 'formulación sin identificar en el registro: mira la etiqueta'}</span></li>`).join('') : '';
     if (u[3] === 'hl') ck.push(['ok', `La etiqueta da la dosis por hectolitro: con ${nf(caldo)} L/ha salen ${nf(porHa, 2)} ${unidad}/ha.`]);
     if (u[8]) ck.push(['warn', `Máximo ${u[8]} aplicaci${u[8] === 1 ? 'ón' : 'ones'} por campaña${u[9] ? `, separadas ${u[9]} días` : ''}. Con el cuaderno, te avisamos de cuántas llevas.`]);
     const nombre = {ok:'Bien', warn:'Ojo', bad:'Fuera'};
@@ -343,7 +384,8 @@
 
     // orden
     const hoy = new Date(), cosecha = new Date(hoy);
-    cosecha.setDate(cosecha.getDate() + (u[10] || 0));
+    const ps = Math.max(u[10] || 0, ...mezcla.map(m => m.u[10] || 0));
+    cosecha.setDate(cosecha.getDate() + ps);
     const fd = x => x.toLocaleDateString('es-ES', {day:'numeric', month:'short', year:'numeric'});
     const orden = {
       Parcela: $('parcela').value.trim() || '—',
@@ -354,11 +396,18 @@
       Caldo: `${nf(caldo)} L/ha · ${nf(caldoTot)} L en total`,
       'Por cuba': `${nf(porCuba, 2)} ${unidad} en ${nf(cuba)} L · ${nCubas} cuba${nCubas === 1 ? '' : 's'}` + (resto > 1 && llenas ? ` (la última de ${nf(resto)} L con ${nf(porHa * resto / caldo, 2)} ${unidad})` : ''),
       Boquillas: mejor ? `${nb} × ${mejor.nombre} a ${nf(mejor.bar, 1)} bar · ${nf(vel, 1)} km/h` : `${nf(qb, 2)} L/min por boquilla: revisa la tabla del fabricante`,
-      'No cosechar antes': u[10] ? `${fd(cosecha)} (${u[10]} días)` : 'sin plazo en la etiqueta'
+      ...(mezcla.length ? {
+        'Mezcla con': mezcla.map(m => `${m.p[0]} (nº ${m.u[0]}) contra ${m.u[1]}: ${nx(m.dose)} ${unidadDosis(m.u)} = ${nf(m.porCuba, 2)} ${m.unidad} por cuba`).join(' · '),
+        'Orden de carga': cargas.map((x, i) => `${i + 1}) ${x.nombre}`).join(' → ')
+      } : {}),
+      'No cosechar antes': ps ? `${fd(cosecha)} (${ps} días${mezcla.length ? ', el más largo de la mezcla' : ''})` : 'sin plazo en la etiqueta'
     };
     $('oDate').textContent = fd(hoy);
     const ids = {Parcela:'oParc', Cultivo:'oCult', Motivo:'oPlaga', Producto:'oProd', Dosis:'oDose', Caldo:'oCaldo', 'Por cuba':'oTank', Boquillas:'oNoz', 'No cosechar antes':'oPS'};
     for (const k in ids) $(ids[k]).textContent = orden[k];
+    [['oMezT', 'oMez', 'Mezcla con'], ['oCargaT', 'oCarga', 'Orden de carga']].forEach(([t, d, k]) => {
+      $(t).hidden = $(d).hidden = !orden[k]; $(d).textContent = orden[k] || '';
+    });
     const enlace = `https://fnfanalytics.com/herramientas/calculadora-caldo?cultivo=${S.cultivo.s}&plaga=${slug(S.plaga)}&producto=${encodeURIComponent(u[0])}&utm_source=whatsapp&utm_medium=orden`;
     const texto = `*Orden de tratamiento* · ${fd(hoy)}\n` + Object.entries(orden).map(([k, v]) => `${k}: ${v}`).join('\n') +
       `\n\nLa etiqueta del producto manda. Ábrelo en la calculadora: ${enlace}`;
@@ -396,6 +445,28 @@
       actualizar(st) { ultimo = st; if (api && st.cult !== 'otro') api.update(st); }
     };
   })();
+
+  // ---- mezcla: otros productos en la misma cuba ----
+  function pintarMezcla() {
+    $('mezList').innerHTML = S.mezcla.map((m, i) => {
+      const p = prod(m.u);
+      return `<li class="cc-mez"><div><b>${esc(p[0])}</b><span class="cc-sub">contra ${esc(m.u[1])} · ${rango(m.u)}</span></div>
+        <span class="cc-unit"><input type="number" min="0" step="any" inputmode="decimal" data-i="${i}" value="${m.dose}" aria-label="Dosis de ${esc(p[0])}"><em>${unidadDosis(m.u)}</em></span>
+        <button type="button" class="cc-x" data-q="${i}" aria-label="Quitar ${esc(p[0])} de la mezcla">×</button>
+        <span class="cc-mez-cuba" id="mezC-${i}"></span></li>`;
+    }).join('');
+    $('mezList').querySelectorAll('input').forEach(inp => inp.addEventListener('input', () => {
+      const v = parseFloat(inp.value); if (Number.isFinite(v) && v >= 0) { S.mezcla[+inp.dataset.i].dose = v; calcular(); }
+    }));
+    $('mezList').querySelectorAll('[data-q]').forEach(b => b.addEventListener('click', () => {
+      S.mezcla.splice(+b.dataset.q, 1); pintarMezcla(); calcular();
+    }));
+  }
+  function anadirMezcla(u) {
+    const paso = redondo(u[5] * 1.3 / 100);
+    S.mezcla.push({u, dose:u[4] === u[5] ? u[5] : +(Math.round((u[4] + u[5]) / 2 / paso) * paso).toPrecision(6)});
+    pintarMezcla(); calcular(); track('calc-mezcla');
+  }
 
   // ---- alerta: «avísame si cambia la autorización» ----
   // Mismo buzón que el formulario de la landing (token público de FormSubmit).
@@ -444,6 +515,7 @@
   $('cult').addEventListener('click', () => abrirLista('cultivo'));
   $('plagaBtn').addEventListener('click', () => abrirLista('plaga'));
   $('pick').addEventListener('click', () => abrirLista('producto'));
+  $('mezAdd').addEventListener('click', () => abrirLista('mezcla'));
   $('buscar').addEventListener('input', pintarLista);
   $('dlgX').addEventListener('click', () => $('dlg').close());
   $('dlg').addEventListener('click', e => { if (e.target === $('dlg')) $('dlg').close(); });
