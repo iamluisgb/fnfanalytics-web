@@ -66,7 +66,7 @@
       <p class="sub">Dices lo que has hecho en el campo y FnF lo convierte en una operación validada, con su coste imputado a la parcela. El cuaderno se mantiene al día sin teclear y sabes el margen de cada parcela cuando lo necesitas.</p>
       <div class="ctas">
         <a class="btn btn-primary" href="#acceso">Solicita acceso</a>
-        <a class="btn btn-ghost" href="#inteligencia">Ver cómo razona</a>
+        <a class="btn btn-ghost" href="#inteligencia" data-umami-event="hero-ver-como-razona">Ver cómo razona</a>
       </div>
       <div class="trust">
         <div><i></i>VALIDACIÓN CONTRA EL REGISTRO OFICIAL</div>
@@ -107,8 +107,8 @@
       <p>Lo que apunta tu equipo, los sensores que ya tienes y las fuentes públicas, en un solo mapa vivo de tu explotación. Cuando algo se sale de lo normal, la IA cruza las fuentes, te enseña por qué y te deja la acción preparada. Tú decides; nada se ejecuta sin tu visto bueno.</p>
       <span class="ig-ej">Ejemplo · algunas conexiones están en desarrollo</span>
     </div>
-    <iframe id="ig-frame" class="ig-frame" src="/demo/inteligencia.html?v=20261008e" title="Ejemplo animado: fuentes y sensores, la finca en 3D y la decisión de la IA" loading="lazy"></iframe>
-    <div class="ig-cta"><a class="btn btn-primary" href="#acceso">Solicita acceso</a><span>Empezamos con tu cuaderno, tus costes y el satélite. El resto se conecta a medida que entra.</span></div>
+    <iframe id="ig-frame" class="ig-frame" src="/demo/inteligencia.html?v=20261008f" title="Ejemplo animado: fuentes y sensores, la finca en 3D y la decisión de la IA" loading="lazy"></iframe>
+    <div class="ig-cta"><a class="btn btn-primary" href="#acceso" data-umami-event="ig-solicita-acceso">Solicita acceso</a><span>Empezamos con tu cuaderno, tus costes y el satélite. El resto se conecta a medida que entra.</span></div>
   </div>
 </section>
 
@@ -497,7 +497,9 @@
 (function(){
   var f = document.getElementById('ig-frame'); if (!f) return;
   var visto = false, avisar = function(){ if (visto) try { f.contentWindow.postMessage({ig:'empieza'}, location.origin); } catch (_) {} };
-  addEventListener('message', function(e){ if (e.origin === location.origin && e.data && e.data.ig === 'altura') f.style.height = e.data.h + 'px'; });
+  addEventListener('message', function(e){ if (e.origin === location.origin && e.data && e.data.ig === 'altura') f.style.height = e.data.h + 'px';
+    // eventos de la demo (explorar la finca, tocar un punto) a Umami
+    else if (e.origin === location.origin && e.data && e.data.ig === 'evento' && /^ig-[a-z-]+$/.test(e.data.n) && window.umami) umami.track(e.data.n); });
   f.addEventListener('load', avisar);
   if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ if (es.some(function(x){ return x.isIntersecting; })) { visto = true; avisar(); } }, {threshold:.2}).observe(f);
   else { visto = true; avisar(); }

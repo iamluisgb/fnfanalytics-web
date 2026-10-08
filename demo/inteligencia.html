@@ -71,6 +71,17 @@ svg.beams{position:absolute;inset:0;pointer-events:none;z-index:1}
 .beam.hot{stroke:var(--warn);stroke-width:2}
 .bdot{fill:var(--brand)}
 .bdot.hot{fill:var(--warn)}
+.explora{position:absolute;right:12px;bottom:12px;z-index:3;display:flex;gap:6px;align-items:center}
+.explora[hidden],.explora [hidden]{display:none}
+.explora button{font:inherit;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);background:rgba(17,25,23,.92);border:1px solid var(--line-2);border-radius:4px;padding:7px 10px;cursor:pointer}
+.explora button:focus-visible{outline:2px solid var(--brand-2);outline-offset:2px}
+.explora .ir{border-color:var(--brand);color:var(--brand)}
+.explora .z{width:32px;padding:6px 0;font-size:15px;line-height:1}
+.explora .pista{font-family:var(--mono);font-size:10px;color:var(--soft);background:rgba(17,25,23,.92);border-radius:4px;padding:6px 8px}
+.escena.explorando canvas{cursor:grab}
+.escena.explorando.sobre canvas{cursor:pointer}
+.escena.arrastrando canvas{cursor:grabbing}
+.chip.tip{z-index:3;border-color:var(--brand)}
 
 .ia{padding:18px 18px 20px;display:flex;flex-direction:column;gap:14px;min-width:0;background:linear-gradient(var(--panel),var(--bg));z-index:2}
 .ia-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
@@ -152,6 +163,7 @@ html,body{background:transparent}
     <div class="escena" id="escena" role="img" aria-label="Una finca de frutales en 3D: seis parcelas de frutales con sus árboles en hileras, la parcela El Cercado con árboles más pequeños y en naranja, y los sensores de la explotación sobre el terreno.">
       <div class="hud"><span><b>17</b> fuentes</span><span><b>6</b> parcelas · 13,8 ha</span><span id="reloj">08:14:07</span></div>
       <div class="leyenda"><span><i style="background:#1fc394"></i>vigor alto</span><span><i style="background:#127f61"></i>vigor medio</span><span><i style="background:#e0a33e"></i>en alerta</span><span>tamaño de copa = NDVI</span></div>
+      <div class="explora" id="explora" hidden><span class="pista" id="pista" hidden></span><button type="button" class="z" id="zmas" aria-label="Acercar" hidden>+</button><button type="button" class="z" id="zmenos" aria-label="Alejar" hidden>−</button><button type="button" class="ir" id="ir">Explora la finca</button></div>
     </div>
     <aside class="ia" aria-live="polite">
       <div class="ia-head"><span class="label">IA · razonamiento</span><span class="st" id="st"><i></i>esperando datos</span></div>
@@ -426,14 +438,18 @@ html,body{background:transparent}
   // ---- estado y bucle ----
   const E = {on:new Set(), hot:new Set(), alzado:0, foco:0, t:0};
   let yaw = .9, last = performance.now(), running = true;
+  // exploración libre al acabar la historia: giro con límites, zoom con botones y vuelta sola a los 6 s
+  const U = {on:false, pitch:0, zoom:1, idle:0, drag:null, sel:null, tocado:false};
   function placeCam(dt) {
     E.foco += ((E.final ? 1 : 0) - E.foco) * Math.min(1, dt * 1.2);
     const tgt = new THREE.Vector3(-.5 + (cer.c[0] + .5) * E.foco, .3, -.5 + (cer.c[1] + .5) * E.foco);
     // escena alta (pocas columnas de ancho): cámara más cenital para que la finca la llene
     const alta = Math.min(1, Math.max(0, (1.25 - cam.aspect) / .6));
     const rad = 17 - 5 * E.foco - 7.5 * alta, alt = 12 - 3.5 * E.foco + 2.5 * alta;
-    yaw += dt * (E.final ? .18 : .05);
-    cam.position.set(tgt.x + Math.sin(yaw) * rad, alt, tgt.z + Math.cos(yaw) * rad);
+    if (!U.drag && !U.sel && (!U.on || U.idle > 6)) yaw += dt * (E.final && !U.on ? .18 : .05);
+    if (!U.drag) { U.idle += dt; if (U.idle > 6) { const k = Math.min(1, dt * 1.5); U.pitch -= U.pitch * k; U.zoom += (1 - U.zoom) * k; } }
+    const rr = rad * U.zoom, aa = Math.max(1.6, alt * U.zoom * (1 + U.pitch));
+    cam.position.set(tgt.x + Math.sin(yaw) * rr, aa, tgt.z + Math.cos(yaw) * rr);
     cam.lookAt(tgt);
   }
   function draw() {
@@ -445,10 +461,17 @@ html,body{background:transparent}
       f.el.style.transform = `translate(${x - (r.left - s.left)}px,${y - (r.top - s.top)}px) translate(-50%,-100%)`;
       f.el.classList.toggle('on', E.on.has(k)); f.el.classList.toggle('hot', E.hot.has(k));
       // compactas: durante el razonamiento las que no son prueba; al final y en móvil, todas (el detalle está en el panel)
-      f.el.classList.toggle('mini', (E.razona && !E.hot.has(k)) || E.final || escena.clientWidth < 560);
+      f.el.classList.toggle('mini', !(U.on && E.hot.has(k)) && ((E.razona && !E.hot.has(k)) || E.final || escena.clientWidth < 560));
     });
     { const [x, y] = proyectar(new THREE.Vector3(cer.c[0], cer.h * E.alzado + .2, cer.c[1])), r = escena.getBoundingClientRect(), s = $('stage').getBoundingClientRect();
       etiq.style.transform = `translate(${x - (r.left - s.left) - 70}px,${y - (r.top - s.top) + 52}px)`; etiq.classList.toggle('on', E.alzado > .9); }
+    if (U.sel && U.sel[0] === 'p') {
+      const p = parcelas[+U.sel.slice(1)], [x, y] = proyectar(new THREE.Vector3(p.c[0], p.h + .1, p.c[1])), r = escena.getBoundingClientRect(), s = $('stage').getBoundingClientRect();
+      // dentro de la escena aunque la parcela quede en el borde
+      const tw = tip.offsetWidth, th = tip.offsetHeight;
+      const tx = Math.min(r.width - tw / 2 - 6, Math.max(tw / 2 + 6, x - (r.left - s.left))), ty = Math.max(th + 6, y - (r.top - s.top));
+      tip.style.transform = `translate(${tx}px,${ty}px) translate(-50%,-100%)`;
+    }
     // haces
     const sr = $('stage').getBoundingClientRect();
     beams.setAttribute('viewBox', `0 0 ${sr.width} ${sr.height}`);
@@ -478,6 +501,7 @@ html,body{background:transparent}
     // parcelas que suben
     parcelas.forEach((p, i) => crecer(p, Math.min(1, Math.max(0, E.alzado * 1.6 - i * .12))));
     cer.placaMat.opacity = .14 + (E.hot.size ? .14 + Math.sin(E.t * 5) * .12 : 0);
+    parcelas.forEach((p, i) => { if (!p.alerta) p.placaMat.opacity = U.sel === 'p' + i ? .42 : .14; });
     // anillos de los sensores citados
     Object.entries(objetos).forEach(([k, o]) => { if (o.ring) o.ring.material.opacity = E.hot.has(k) ? .55 + Math.sin(E.t * 6) * .3 : 0; });
     placeCam(dt); draw();
@@ -495,6 +519,71 @@ html,body{background:transparent}
   if (R) { escena.prepend(R.domElement); new ResizeObserver(resize).observe(escena); }
   else escena.insertAdjacentHTML('afterbegin', '<p style="padding:60px 20px;color:var(--soft)">Tu navegador no muestra 3D.</p>');
 
+  // ---- exploración: tocar sensores y parcelas, girar con el ratón ----
+  const tip = document.createElement('div'); tip.className = 'chip tip'; escena.appendChild(tip);
+  const HA = [2.9, 3.5, 2.3, 2.4, 1.4, 1.4], MG = [3350, 3050, 3180, 2720, 2540, 1400];
+  const fino = matchMedia('(hover:hover) and (pointer:fine)').matches;
+  const avisa = n => { if (window.parent !== window) parent.postMessage({ig:'evento', n}, location.origin); };
+  const redraw = () => { if (!running) { placeCam(0); draw(); } };
+  const ray = new THREE.Raycaster(), ptr = new THREE.Vector2(); ray.params.Line.threshold = .04;
+  Object.entries(objetos).forEach(([k, o]) => o.g.traverse(m => { m.userData.k = k; }));
+  parcelas.forEach((p, i) => p.g.traverse(m => { m.userData.p = i; }));
+  const tocables = [...Object.values(objetos).map(o => o.g), ...parcelas.map(p => p.g)];
+  function pick(ev) {
+    const r = R.domElement.getBoundingClientRect();
+    ptr.set((ev.clientX - r.left) / r.width * 2 - 1, -(ev.clientY - r.top) / r.height * 2 + 1);
+    ray.setFromCamera(ptr, cam);
+    const h = ray.intersectObjects(tocables.filter(g => g.visible), true)[0];
+    if (!h) return null;
+    const d = h.object.userData; return d.k ? d.k : d.p !== undefined ? 'p' + d.p : null;
+  }
+  function elegir(sel) {
+    if (sel === U.sel) return; U.sel = sel; escena.classList.toggle('sobre', !!sel);
+    if (sel) { $('pista').hidden = true; if (!U.tocado) { U.tocado = true; avisa('ig-toca'); } }
+    // El Cercado enciende todo lo que se apunta de esa parcela; un sensor, su etiqueta completa y su anillo
+    hot(!sel ? [] : sel === 'p' + ALERTA ? Object.keys(DESTINO).filter(k => DESTINO[k] === 'cer') : sel[0] === 'p' ? [] : [sel]);
+    const i = sel && sel[0] === 'p' ? +sel.slice(1) : -1;
+    tip.classList.toggle('on', i >= 0 && i !== ALERTA);
+    if (i >= 0) tip.innerHTML = `<span class="t">parcela</span><b>${NOMBRES[i]}</b><span class="v">${HA[i].toLocaleString('es-ES')} ha · NDVI ${NDVI[i].toLocaleString('es-ES', {minimumFractionDigits:2})} · ${String(MG[i]).replace(/\B(?=(\d{3})+$)/g, '.')} €/ha</span>`;
+    redraw();
+  }
+  function explorar() {
+    U.on = true; U.idle = 0; hot([]); escena.classList.add('explorando');
+    $('ir').hidden = true; $('zmas').hidden = $('zmenos').hidden = false;
+    $('pista').hidden = false; $('pista').textContent = fino ? 'Arrastra para girar · pasa por un punto' : 'Toca un sensor o una parcela';
+    avisa('ig-explora'); redraw();
+  }
+  function salirExplora() {
+    U.on = false; U.sel = null; U.drag = null; U.pitch = 0; U.zoom = 1; tip.classList.remove('on');
+    escena.classList.remove('explorando', 'arrastrando');
+    $('explora').hidden = true; $('ir').hidden = false; $('zmas').hidden = $('zmenos').hidden = $('pista').hidden = true;
+  }
+  $('ir').addEventListener('click', explorar);
+  const zoom = f => { U.zoom = Math.min(1.3, Math.max(.45, U.zoom * f)); U.idle = 0; redraw(); };
+  $('zmas').addEventListener('click', () => zoom(.8));
+  $('zmenos').addEventListener('click', () => zoom(1.25));
+  if (R) {
+    const cv = R.domElement;
+    // el dedo nunca gira la finca (bajaría la página); solo el ratón o el lápiz
+    cv.addEventListener('pointerdown', ev => {
+      if (!U.on || ev.pointerType === 'touch') return;
+      U.drag = {x:ev.clientX, y:ev.clientY, mov:0}; cv.setPointerCapture(ev.pointerId); escena.classList.add('arrastrando');
+    });
+    cv.addEventListener('pointermove', ev => {
+      if (!U.on) return;
+      if (U.drag) {
+        const dx = ev.clientX - U.drag.x, dy = ev.clientY - U.drag.y; U.drag.x = ev.clientX; U.drag.y = ev.clientY; U.drag.mov += Math.abs(dx) + Math.abs(dy);
+        yaw -= dx * .006; U.pitch = Math.min(.35, Math.max(-.45, U.pitch - dy * .003)); U.idle = 0;
+        if (U.drag.mov > 5) $('pista').hidden = true;
+        redraw();
+      } else if (ev.pointerType === 'mouse') elegir(pick(ev));
+    });
+    const soltar = () => { U.drag = null; escena.classList.remove('arrastrando'); };
+    cv.addEventListener('pointerup', ev => { const d = U.drag; soltar(); if (U.on && (!d || d.mov < 5)) { U.idle = 0; elegir(pick(ev)); } });
+    cv.addEventListener('pointercancel', soltar);
+    cv.addEventListener('pointerleave', ev => { if (U.on && !U.drag && ev.pointerType === 'mouse') elegir(null); });
+  }
+
   // ---- línea de tiempo ----
   let timers = [], alzar = null;
   const at = (ms, fn) => timers.push(setTimeout(fn, quieto ? 0 : ms));
@@ -510,7 +599,7 @@ html,body{background:transparent}
     if (c && cards.scrollHeight > cards.clientHeight + 4) cards.scrollTo({top:c.el.offsetTop - cards.offsetTop - 30, behavior:quieto ? 'auto' : 'smooth'});
   }
   function play() {
-    timers.forEach(clearTimeout); timers = []; clearInterval(alzar);
+    timers.forEach(clearTimeout); timers = []; clearInterval(alzar); salirExplora();
     E.on.clear(); hot([]); E.alzado = 0; E.final = false; E.razona = false;
     Object.values(FUENTES).forEach(f => { if (f.obj) { if (f.o.g !== sat) f.o.g.visible = false; } else f.el.classList.remove('on'); });
     sat.visible = false;
@@ -533,7 +622,7 @@ html,body{background:transparent}
       hot([...new Set(PASOS.flatMap(p => p[1]))]); E.final = true;
       $('decision').classList.add('on'); estado('acción propuesta', false);
       const ia = document.querySelector('.ia'); setTimeout(() => ia.scrollTo({top:$('decision').offsetTop - ia.offsetTop - 14, behavior:quieto ? 'auto' : 'smooth'}), 200);
-      $('salidas').classList.add('on');
+      $('salidas').classList.add('on'); $('explora').hidden = false;
       document.querySelectorAll('.salida').forEach((x, i) => setTimeout(() => x.classList.add('on'), quieto ? 0 : 500 + i * 350));
     });
   }
