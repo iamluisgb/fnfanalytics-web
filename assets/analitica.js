@@ -2,12 +2,12 @@
 // Geometría: recintos SIGPAC reales. Nombres, NDVI y márgenes: datos de ejemplo.
 (function(){
   var PARCELAS = [
-    {id:0,  n:'Haza Grande', ha:1.5, v:.52, dv:.02,  mg:1510},
-    {id:8,  n:'La Vereda',   ha:0.8, v:.36, dv:-.18, mg:620, alerta:true},
-    {id:12, n:'Los Llanos',  ha:0.6, v:.44, dv:-.03, mg:1250},
-    {id:13, n:'El Majuelo',  ha:0.6, v:.41, dv:-.04, mg:1110},
-    {id:20, n:'La Umbría',   ha:0.5, v:.50, dv:.03,  mg:1450},
-    {id:22, n:'Las Suertes', ha:0.5, v:.46, dv:0,    mg:1360}
+    {id:0,  n:'La Vega', ha:2.9, v:0.54, dv:0.02, mg:3350},
+    {id:1,  n:'Los Regadíos', ha:3.5, v:0.50, dv:0.01, mg:3050},
+    {id:2,  n:'El Canal', ha:2.3, v:0.52, dv:0.03, mg:3180},
+    {id:3,  n:'Las Suertes', ha:2.4, v:0.47, dv:-0.03, mg:2720},
+    {id:4,  n:'El Molino', ha:1.4, v:0.45, dv:-0.04, mg:2540},
+    {id:5,  n:'El Cercado', ha:1.4, v:0.38, dv:-0.18, mg:1400, alerta:true}
   ];
   var MESES = ['oct','nov','dic','ene','feb','mar','abr','may','jun','jul','ago','sep'];
   var num = function(x, d){ return x.toFixed(d).replace('.', ','); };
@@ -15,10 +15,10 @@
   var pct = function(x){ var r = Math.round(x*100); return (r > 0 ? '+' : r < 0 ? '−' : '') + Math.abs(r) + '%'; };
   var tramo = function(v){ return v < .38 ? 1 : v < .42 ? 2 : v < .46 ? 3 : v < .50 ? 4 : 5; };
 
-  // Serie mensual: media de 3 años con estacionalidad del olivar (máximo en invierno)
-  // y la campaña actual desviándose hasta el valor de hoy.
+  // Serie mensual: media de 3 años con la estacionalidad de un frutal de hoja caduca (máximo en julio,
+  // mínimo en invierno sin hoja) y la campaña actual desviándose hasta el valor de hoy.
   function serie(p){
-    var ola = function(t){ return .05*Math.cos(2*Math.PI*(t-4)/12); };
+    var ola = function(t){ return .10*Math.cos(2*Math.PI*(t-9)/12); };
     var b = p.v/(1+p.dv) - ola(11), out = [];
     for (var t = 0; t < 12; t++){
       var media = b + ola(t), ruido = .012*Math.sin(p.id*1.7 + t*2.3);
@@ -41,14 +41,14 @@
   });
 
   var chart = document.getElementById('ndvi-chart'), svg = chart.querySelector('svg'), tip = chart.querySelector('.tip');
-  var W = 360, H = 170, L = 34, R = 8, T = 8, B = 22, y0 = .30, y1 = .65;
+  var W = 360, H = 170, L = 34, R = 8, T = 8, B = 22, y0 = .25, y1 = .65;
   var X = function(i){ return L + i*(W-L-R)/11; }, Y = function(v){ return T + (y1-v)/(y1-y0)*(H-T-B); };
   function el(tag, attrs, parent){ var e = document.createElementNS(svgNS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); (parent||svg).appendChild(e); return e; }
 
   function dibujar(p){
     var s = serie(p), neg = p.dv <= -.1;
     svg.innerHTML = '';
-    [.35,.45,.55,.65].forEach(function(v){
+    [.30,.40,.50,.60].forEach(function(v){
       el('line', {class:'grid', x1:L, x2:W-R, y1:Y(v), y2:Y(v)});
       el('text', {class:'axis', x:L-6, y:Y(v)+3, 'text-anchor':'end'}).textContent = num(v,2);
     });
@@ -95,7 +95,7 @@
 
   // Margen por parcela (€/ha), ordenado. Comparte selección con el mapa.
   var cont = document.getElementById('bars'), filas = {};
-  var MEDIA = 1240, max = Math.max.apply(null, PARCELAS.map(function(p){ return p.mg; }));
+  var MEDIA = 2865, max = Math.max.apply(null, PARCELAS.map(function(p){ return p.mg; }));
   var btip = document.createElement('div'); btip.className = 'tip'; btip.hidden = true;
   PARCELAS.slice().sort(function(a,b){ return b.mg - a.mg; }).forEach(function(p){
     var row = document.createElement('div'), d = p.mg/MEDIA - 1;
@@ -115,8 +115,8 @@
   });
   cont.appendChild(btip);
   var foot = document.createElement('p'); foot.className = 'bi-foot';
-  foot.innerHTML = 'MEDIA DE LA EXPLOTACIÓN = <b>1.240 €/ha</b> · pulsa una barra o una parcela del mapa para verla en los dos sitios.';
+  foot.innerHTML = 'MEDIA DE LA EXPLOTACIÓN = <b>2.865 €/ha</b> · pulsa una barra o una parcela del mapa para verla en los dos sitios.';
   cont.appendChild(foot);
-  elegir(8);
+  elegir(5);
 })();
 
