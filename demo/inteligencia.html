@@ -33,21 +33,22 @@ h1{font-size:clamp(1.8rem,4vw,3rem);line-height:1.08;letter-spacing:-.02em;margi
 h1 em{font-style:normal;color:var(--brand)}
 .lede{color:var(--soft);max-width:74ch;margin:0}
 
-.stage{position:relative;margin-top:28px;display:grid;grid-template-columns:230px minmax(0,1fr) 340px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg)}
-.cards{padding:14px 12px;display:flex;flex-direction:column;gap:8px;border-right:1px solid var(--line);z-index:2;background:linear-gradient(90deg,var(--bg),rgba(12,18,16,.6))}
+.stage{position:relative;margin-top:28px;display:grid;grid-template-columns:230px minmax(0,1fr) 340px;grid-template-rows:760px auto;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg)}
+.cards{padding:12px 10px;display:flex;flex-direction:column;gap:6px;border-right:1px solid var(--line);z-index:2;background:linear-gradient(90deg,var(--bg),rgba(12,18,16,.6))}
 .grupo{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);margin:2px 2px 0}
-.card{position:relative;border:1px solid var(--line-2);border-radius:6px;background:var(--panel);padding:8px 10px;opacity:.3;transition:opacity .4s,border-color .3s,background .3s}
+.card{position:relative;border:1px solid var(--line-2);border-radius:6px;background:var(--panel);padding:6px 9px;opacity:.3;transition:opacity .4s,border-color .3s,background .3s}
 .card.on{opacity:1}
 .card.hot{border-color:var(--warn);background:var(--panel-2)}
-.card .c{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
-.card b{display:block;font-size:13px;font-weight:600;line-height:1.25}
-.card .v{font-family:var(--mono);font-size:10.5px;color:var(--soft)}
+.card .c{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+.card b{display:block;font-size:12.5px;font-weight:600;line-height:1.2}
+.card .v{display:block;font-family:var(--mono);font-size:10px;line-height:1.35;color:var(--soft)}
 .card.hot .v{color:var(--warn)}
 .card::after{content:"";position:absolute;right:8px;top:9px;width:7px;height:7px;border-radius:50%;background:var(--line-2)}
 .card.on::after{background:var(--brand)}
 .card.hot::after{background:var(--warn)}
 
-.escena{position:relative;min-width:0;min-height:640px;border-right:1px solid var(--line)}
+.escena{position:relative;min-width:0;min-height:0;overflow:hidden;border-right:1px solid var(--line)}
+.cards,.ia{overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--line-2) transparent}
 .escena canvas{position:absolute;inset:0}
 .escena canvas{display:block;width:100%;height:100%}
 .chip{position:absolute;left:0;top:0;transform:translate(-50%,-100%);pointer-events:none;border:1px solid var(--line-2);border-radius:5px;background:rgba(17,25,23,.9);padding:5px 8px;white-space:nowrap;opacity:0;transition:opacity .4s,border-color .3s}
@@ -130,6 +131,8 @@ svg.beams{position:absolute;inset:0;pointer-events:none;z-index:1}
 @media (max-width:560px){.salidas{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:1100px){
   .stage{grid-template-columns:minmax(0,1fr)}
+  .stage{grid-template-rows:none}
+  .cards,.ia{overflow:visible}
   .escena{order:-1;min-height:0;height:440px;border-right:0;border-bottom:1px solid var(--line)}
   .cards{border-right:0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}
   .grupo{grid-column:1/-1}
@@ -304,7 +307,7 @@ html,body{background:transparent}
     pos.forEach((_, j) => inst.setColorAt(j, base.clone().offsetHSL(0, 0, (rnd() - .5) * .1)));
     g.add(inst);
     const c = poly.reduce((a, [x, z]) => [a[0] + x / poly.length, a[1] + z / poly.length], [0, 0]);
-    return {g, inst, pos, r, alerta, c, h:r * 2, placaMat, crecido:-1};
+    return {g, inst, pos, r, alerta, c, poly, h:r * 2, placaMat, crecido:-1};
   });
   // los árboles crecen (escala de 0 a 1); solo se recalculan mientras cambian
   const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), vp = new THREE.Vector3(), vs = new THREE.Vector3();
@@ -341,15 +344,21 @@ html,body{background:transparent}
       const s = new THREE.Mesh(new THREE.CylinderGeometry(.02, .02, .6, 6), M(0xb9c9c1)); s.position.set(cer.c[0] + dx, base + .3, cer.c[1] + dz); g.add(s);
       const t = new THREE.Mesh(new THREE.CylinderGeometry(.06, .06, .08, 10), M(0x00c896)); t.position.set(cer.c[0] + dx, base + .62, cer.c[1] + dz); g.add(t);
     });
-    S.add(g); objetos.sonda = {g, a:ancla(cer.c[0] - .2, base + .75, cer.c[1] - .1), ring:anillo(cer.c[0], cer.c[1])};
+    S.add(g); objetos.sonda = {g, a:ancla(cer.c[0] + .1, base + 1.25, cer.c[1] - .1), ring:anillo(cer.c[0], cer.c[1])};
   }
-  // caudalímetro y válvula del sector 3
+  // caudalímetro en la cabecera de riego de El Cercado, con la tubería que entra en la parcela
   {
-    const g = new THREE.Group(), x = cer.c[0] - 1.4, z = cer.c[1] + 1.5;
-    const tubo = new THREE.Mesh(new THREE.CylinderGeometry(.05, .05, 1.2, 10), M(0x31443b)); tubo.rotation.z = Math.PI / 2; tubo.position.y = .08; g.add(tubo);
-    const caja = new THREE.Mesh(new THREE.BoxGeometry(.24, .2, .2), M(0x4f8fe6)); caja.position.y = .2; g.add(caja);
-    g.position.set(x, 0, z); S.add(g); objetos.caudal = {g, a:ancla(x, .6, z), ring:anillo(x, z)};
+    const g = new THREE.Group(), [cx, cz] = cer.c;
+    const esq = cer.poly.reduce((m, p) => (p[0] - p[1] < m[0] - m[1] ? p : m));
+    const dx = esq[0] - cx, dz = esq[1] - cz, d = Math.hypot(dx, dz) || 1;
+    const x = esq[0] + dx / d * .2, z = esq[1] + dz / d * .2;
+    const caja = new THREE.Mesh(new THREE.BoxGeometry(.18, .16, .14), M(0x4f8fe6)); caja.position.set(x, .1, z); g.add(caja);
+    const valv = new THREE.Mesh(new THREE.CylinderGeometry(.05, .05, .03, 12), M(0xe0a33e)); valv.position.set(x, .22, z); g.add(valv);
+    const L = Math.hypot(cx - x, cz - z), tg = new THREE.CylinderGeometry(.022, .022, L, 8); tg.rotateZ(Math.PI / 2);
+    const tubo = new THREE.Mesh(tg, M(0x4f8fe6)); tubo.position.set((x + cx) / 2, .035, (z + cz) / 2); tubo.rotation.y = -Math.atan2(cz - z, cx - x); g.add(tubo);
+    S.add(g); objetos.caudal = {g, a:ancla(x, .3, z), ring:anillo(x, z)};
   }
+
   // trampa con cámara en La Vega
   {
     const g = new THREE.Group(), x = vega.c[0] + .3, z = vega.c[1];
@@ -410,7 +419,9 @@ html,body{background:transparent}
   function placeCam(dt) {
     E.foco += ((E.final ? 1 : 0) - E.foco) * Math.min(1, dt * 1.2);
     const tgt = new THREE.Vector3(-.5 + (cer.c[0] + .5) * E.foco, .3, -.5 + (cer.c[1] + .5) * E.foco);
-    const rad = 17 - 5 * E.foco, alt = 12 - 3.5 * E.foco;
+    // escena alta (pocas columnas de ancho): cámara más cenital para que la finca la llene
+    const alta = Math.min(1, Math.max(0, (1.25 - cam.aspect) / .6));
+    const rad = 17 - 5 * E.foco - 7.5 * alta, alt = 12 - 3.5 * E.foco + 2.5 * alta;
     yaw += dt * (E.final ? .18 : .05);
     cam.position.set(tgt.x + Math.sin(yaw) * rad, alt, tgt.z + Math.cos(yaw) * rad);
     cam.lookAt(tgt);
@@ -432,7 +443,8 @@ html,body{background:transparent}
     const sr = $('stage').getBoundingClientRect();
     beams.setAttribute('viewBox', `0 0 ${sr.width} ${sr.height}`);
     Object.entries(FUENTES).filter(([, f]) => !f.obj).forEach(([k, f]) => {
-      const cr = f.el.getBoundingClientRect(), x1 = cr.right - sr.left, y1 = cr.top + cr.height / 2 - sr.top;
+      const cr = f.el.getBoundingClientRect(), col = cards.getBoundingClientRect(), x1 = cr.right - sr.left;
+      const y1 = Math.min(col.bottom - sr.top - 10, Math.max(col.top - sr.top + 10, cr.top + cr.height / 2 - sr.top));
       const [x2, y2] = proyectar(DESTINO[k] === 'cer' ? new THREE.Vector3(cer.c[0], cer.h * E.alzado, cer.c[1]) : centro);
       const c1 = x1 + (x2 - x1) * .45, d = `M${x1} ${y1} C${c1} ${y1}, ${c1} ${y2}, ${x2} ${y2}`;
       f.path.setAttribute('d', d); f.path.classList.toggle('on', E.on.has(k)); f.path.classList.toggle('hot', E.hot.has(k));
@@ -450,8 +462,8 @@ html,body{background:transparent}
     objetos.sat.a.set(sat.position.x, sat.position.y + .5, sat.position.z);
     const blanco = E.hot.has('sat') ? new THREE.Vector3(cer.c[0], cer.h, cer.c[1]) : new THREE.Vector3(Math.cos(E.t * .8) * 3 - .5, 0, Math.sin(E.t * .6) * 2.5);
     const dir = blanco.clone().sub(sat.position), L = dir.length();
-    haz.position.copy(sat.position); haz.quaternion.setFromUnitVectors(new THREE.Vector3(0, -1, 0), dir.normalize()); haz.scale.set(E.hot.has('sat') ? .5 : 1, L, E.hot.has('sat') ? .5 : 1);
-    haz.material.opacity = sat.visible ? (E.hot.has('sat') ? .22 : .08) : 0;
+    haz.position.copy(sat.position); haz.quaternion.setFromUnitVectors(new THREE.Vector3(0, -1, 0), dir.normalize()); haz.scale.set(E.hot.has('sat') ? .16 : .22, L, E.hot.has('sat') ? .16 : .22);
+    haz.material.opacity = sat.visible ? (E.hot.has('sat') ? .18 : .05) : 0;
     if (objetos.est.molino) objetos.est.molino.rotation.y += dt * 4;
     // parcelas que suben
     parcelas.forEach((p, i) => crecer(p, Math.min(1, Math.max(0, E.alzado * 1.6 - i * .12))));
@@ -465,7 +477,10 @@ html,body{background:transparent}
     if (!R) return;
     const w = escena.clientWidth, h = escena.clientHeight;
     R.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); R.setSize(w, h, false);
-    cam.aspect = w / h; cam.updateProjectionMatrix(); draw();
+    cam.aspect = w / h;
+    // en escenas altas se abre el campo vertical para conservar el ancho de vista de una apaisada
+    cam.fov = cam.aspect < 1 ? 2 * Math.atan(Math.tan(19 * Math.PI / 180) / cam.aspect) * 180 / Math.PI : 38;
+    cam.updateProjectionMatrix(); draw();
   }
   if (R) { escena.prepend(R.domElement); new ResizeObserver(resize).observe(escena); }
   else escena.insertAdjacentHTML('afterbegin', '<p style="padding:60px 20px;color:var(--soft)">Tu navegador no muestra 3D.</p>');
@@ -481,6 +496,8 @@ html,body{background:transparent}
   function hot(keys) {
     E.hot = new Set(keys);
     Object.entries(FUENTES).forEach(([k, f]) => { if (!f.obj) f.el.classList.toggle('hot', E.hot.has(k)); });
+    const c = keys.map(k => FUENTES[k]).find(f => !f.obj);
+    if (c && cards.scrollHeight > cards.clientHeight + 4) cards.scrollTo({top:c.el.offsetTop - cards.offsetTop - 30, behavior:quieto ? 'auto' : 'smooth'});
   }
   function play() {
     timers.forEach(clearTimeout); timers = []; clearInterval(alzar);
@@ -488,6 +505,7 @@ html,body{background:transparent}
     Object.values(FUENTES).forEach(f => { if (f.obj) { if (f.o.g !== sat) f.o.g.visible = false; } else f.el.classList.remove('on'); });
     sat.visible = false;
     $('pasos').innerHTML = ''; $('decision').classList.remove('on'); $('toast').textContent = '';
+    document.querySelector('.ia').scrollTop = 0; cards.scrollTop = 0;
     document.querySelectorAll('.salida').forEach(x => x.classList.remove('on')); $('salidas').classList.remove('on');
     estado('conectando fuentes y sensores', true);
     ORDEN.forEach((k, i) => at(300 + i * 200, () => { encender(k); if (k === 'sat') sat.visible = true; }));
@@ -499,10 +517,12 @@ html,body{background:transparent}
       const li = document.createElement('li');
       li.innerHTML = `<span class="n">${String(i + 1).padStart(2, '0')}</span><span>${t}<br>${refs.map(r => `<span class="cita${FUENTES[r].obj && !FUENTES[r].pub ? ' prop' : ''}">${FUENTES[r].n}</span>`).join('')}</span>`;
       $('pasos').appendChild(li); requestAnimationFrame(() => li.classList.add('on'));
+      const ia = document.querySelector('.ia'); ia.scrollTo({top:ia.scrollHeight, behavior:quieto ? 'auto' : 'smooth'});
     }));
     at(5500 + PASOS.length * 1900 + 300, () => {
       hot([...new Set(PASOS.flatMap(p => p[1]))]); E.final = true;
       $('decision').classList.add('on'); estado('acción propuesta', false);
+      const ia = document.querySelector('.ia'); setTimeout(() => ia.scrollTo({top:$('decision').offsetTop - ia.offsetTop - 14, behavior:quieto ? 'auto' : 'smooth'}), 200);
       $('salidas').classList.add('on');
       document.querySelectorAll('.salida').forEach((x, i) => setTimeout(() => x.classList.add('on'), quieto ? 0 : 500 + i * 350));
     });
