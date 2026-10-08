@@ -451,13 +451,15 @@ footer nav a:hover{color:#fff}
 .sig-body{display:grid;grid-template-columns:1.35fr 1fr}
 .sig-map{margin:0;border-right:1px solid var(--line);display:flex;flex-direction:column}
 .sig-map svg{display:block;width:100%;height:auto;background:#2a3a33}
-.parcela{fill:var(--ndvi-3);fill-opacity:.42;stroke:#fff;stroke-opacity:.95;stroke-width:2.5;stroke-linejoin:round;cursor:pointer;filter:drop-shadow(0 0 1.5px rgba(0,0,0,.7));transition:fill-opacity var(--t-fast) var(--ease)}
-.parcela:hover{fill-opacity:.6}
+/* el resto del mapa queda velado: las parcelas monitorizadas son lo único a todo color */
+.velo{fill:#0c1210;fill-opacity:.58;pointer-events:none}
+.parcela{fill:var(--ndvi-3);fill-opacity:.72;stroke:#fff;stroke-opacity:1;stroke-width:4;stroke-linejoin:round;cursor:pointer;filter:drop-shadow(0 0 1.5px rgba(0,0,0,.7));transition:fill-opacity var(--t-fast) var(--ease)}
+.parcela:hover{fill-opacity:.85}
 .parcela:focus{outline:none}
-.parcela.sel,.parcela:focus-visible{stroke:#fff;stroke-opacity:1;stroke-width:6;fill-opacity:.62}
+.parcela.sel,.parcela:focus-visible{stroke:#fff;stroke-opacity:1;stroke-width:8;fill-opacity:.85}
 .parcela.b1{fill:var(--ndvi-1)}.parcela.b2{fill:var(--ndvi-2)}.parcela.b3{fill:var(--ndvi-3)}.parcela.b4{fill:var(--ndvi-4)}.parcela.b5{fill:var(--ndvi-5)}
-.parcela.alerta-p{stroke:var(--alerta);stroke-opacity:1;stroke-width:4;stroke-dasharray:16 9}
-.parcela.alerta-p.sel{stroke-width:7}
+.parcela.alerta-p{stroke:var(--alerta);stroke-opacity:1;stroke-width:5;stroke-dasharray:16 9}
+.parcela.alerta-p.sel{stroke-width:8}
 .alerta{pointer-events:none}
 .alerta rect{fill:#0c1210;fill-opacity:.88;stroke:var(--alerta);stroke-width:2}
 .alerta text{font-family:var(--font-mono);font-size:46px;font-weight:600;fill:var(--alerta)}
