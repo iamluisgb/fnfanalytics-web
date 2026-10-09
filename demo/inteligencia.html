@@ -508,8 +508,9 @@ html,body{background:transparent}
     if (running) requestAnimationFrame(frame);
   }
   function resize() {
-    if (!R) return;
     const w = escena.clientWidth, h = escena.clientHeight;
+    // sin medidas (primer layout, iframe diferido, pestaña oculta) el aspecto saldría ∞ o 0 y los haces, NaN
+    if (!R || w < 2 || h < 2) return;
     R.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); R.setSize(w, h, false);
     cam.aspect = w / h;
     // en escenas altas se abre el campo vertical para conservar el ancho de vista de una apaisada

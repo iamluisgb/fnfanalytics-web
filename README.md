@@ -22,6 +22,13 @@ Generada desde `workspace/fnfanalytics-relanzamiento/` (design system v2).
 - La guía del cuaderno digital lleva fecha de revisión: revísala cuando cambie la normativa.
 - Pendiente legal: añadir NIF y domicilio del titular en `aviso-legal.html` (LSSI art. 10).
 
+## Incidencias conocidas
+
+### NaN en los haces SVG de la demo `inteligencia` (arreglado el 9-oct-2026)
+Salían en ráfaga al cargar la sección errores como `<path> attribute d: Expected number, "M… CNaN …"` y `<circle> attribute cx: Expected length, "NaN"`. Si `.escena` mide 0 cuando salta `resize()` (primer *layout*, iframe diferido, pestaña oculta), `cam.aspect = w / h` sale `∞` o `0`, la proyección da `NaN` y `draw()` lo escribe en los haces. Ahora `resize()` sale sin hacer nada mientras `w` o `h` midan menos de 2 px. Prueba: forzando `.escena{height:0}` había 4.983 errores; con la guarda, 0.
+
+**No confundir** con otros mensajes de la consola que no son del sitio: `Cannot create item with duplicate id … LastPass/Add Password/…` (extensión LastPass), `[VAULT] syncVaultIfOutdated …` (script de fondo de una extensión) y `cloud.umami.is/api/send → ERR_BLOCKED_BY_CLIENT` (Umami bloqueado por un bloqueador de anuncios).
+
 ## Captura de leads
 El formulario envía por AJAX a **FormSubmit** → llegan a tu correo con asunto "FnF · nueva solicitud de acceso" (perfil + email en tabla).
 - **Activación (una sola vez)**: haz un envío de prueba y pulsa el enlace de activación que te llega por correo.
