@@ -71,13 +71,21 @@ svg.beams{position:absolute;inset:0;pointer-events:none;z-index:1}
 .beam.hot{stroke:var(--warn);stroke-width:2}
 .bdot{fill:var(--brand)}
 .bdot.hot{fill:var(--warn)}
-.explora{position:absolute;right:12px;bottom:12px;z-index:3;display:flex;gap:6px;align-items:center}
+.explora{position:absolute;right:12px;top:10px;z-index:3;display:flex;gap:6px;align-items:center}
 .explora[hidden],.explora [hidden]{display:none}
 .explora button{font:inherit;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);background:rgba(17,25,23,.92);border:1px solid var(--line-2);border-radius:4px;padding:7px 10px;cursor:pointer}
 .explora button:focus-visible{outline:2px solid var(--brand-2);outline-offset:2px}
 .explora .ir{border-color:var(--brand);color:var(--brand)}
 .explora .z{width:32px;padding:6px 0;font-size:15px;line-height:1}
-.explora .pista{font-family:var(--mono);font-size:10px;color:var(--soft);background:rgba(17,25,23,.92);border-radius:4px;padding:6px 8px}
+.explora .pista{position:absolute;right:0;top:calc(100% + 6px);white-space:nowrap;font-family:var(--mono);font-size:10px;color:var(--soft);background:rgba(17,25,23,.92);border-radius:4px;padding:6px 8px}
+.explora .ir span[aria-hidden]{font-size:13px}
+svg.beams.mapa{opacity:0;transition:opacity .4s}
+.chip.fuera{opacity:0}
+.chip.nombre{background:none;border:0;padding:0;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--ink);text-shadow:0 1px 3px #000,0 0 8px #000;z-index:0}
+html.grande,html.grande body{overflow:hidden}
+html.grande .escena{position:fixed;inset:0;z-index:50;height:auto!important;border:0;background:var(--bg)}
+html.grande .escena canvas{touch-action:none}
+html.grande svg.beams{display:none}
 .escena.explorando canvas{cursor:grab}
 .escena.explorando.sobre canvas{cursor:pointer}
 .escena.arrastrando canvas{cursor:grabbing}
@@ -149,7 +157,7 @@ svg.beams{position:absolute;inset:0;pointer-events:none;z-index:1}
   .grupo{grid-column:1/-1}
   svg.beams{display:none}
 }
-@media (max-width:560px){.escena{height:360px}.chip{padding:3px 6px}.chip b{font-size:10.5px}.chip .v{font-size:9.5px}.hud{gap:10px}.leyenda{display:none}}
+@media (max-width:560px){.explora{top:auto;bottom:12px}.explora .pista{top:auto;bottom:calc(100% + 6px)}.explora .txt{display:none}.escena{height:360px}.chip{padding:3px 6px}.chip b{font-size:10.5px}.chip .v{font-size:9.5px}.hud{gap:10px}.leyenda{display:none}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 [hidden]{display:none!important}
 html,body{background:transparent}
@@ -163,7 +171,7 @@ html,body{background:transparent}
     <div class="escena" id="escena" role="img" aria-label="Una finca de frutales en 3D: seis parcelas de frutales con sus árboles en hileras, la parcela El Cercado con árboles más pequeños y en naranja, y los sensores de la explotación sobre el terreno.">
       <div class="hud"><span><b>17</b> fuentes</span><span><b>6</b> parcelas · 13,8 ha</span><span id="reloj">08:14:07</span></div>
       <div class="leyenda"><span><i style="background:#4a8530"></i>vigor alto</span><span><i style="background:#6a8034"></i>vigor medio</span><span><i style="background:#e0a33e"></i>en alerta</span><span>tamaño de copa = NDVI</span></div>
-      <div class="explora" id="explora" hidden><span class="pista" id="pista" hidden></span><button type="button" class="z" id="zmas" aria-label="Acercar" hidden>+</button><button type="button" class="z" id="zmenos" aria-label="Alejar" hidden>−</button><button type="button" class="ir" id="ir">Explora la finca</button></div>
+      <div class="explora" id="explora"><span class="pista" id="pista" role="status" hidden></span><button type="button" id="saltar" hidden>Saltar al final</button><button type="button" class="z" id="inicio" aria-label="Volver a la vista inicial" title="Vista inicial" hidden>⟲</button><button type="button" class="z" id="zmas" aria-label="Acercar">+</button><button type="button" class="z" id="zmenos" aria-label="Alejar">−</button><button type="button" class="ir" id="grande" aria-label="Ver en grande"><span aria-hidden="true">⤢</span><span class="txt"> Ver en grande</span></button><button type="button" class="ir" id="cerrar" hidden>✕ Salir</button></div>
     </div>
     <aside class="ia" aria-live="polite">
       <div class="ia-head"><span class="label">IA · razonamiento</span><span class="st" id="st"><i></i>esperando datos</span></div>
@@ -539,11 +547,11 @@ html,body{background:transparent}
     barra(sat, V(.17, .1, 0), V(.38, .1, 0), .012, MAT.alu);
     [0, 1, 2].forEach(k => { caja(sat, .42, .02, .4, MAT.alu, .62 + k * .44, .1, 0); caja(sat, .4, .025, .38, MAT.panel, .62 + k * .44, .1, 0); });
     pieza(sat, new THREE.CylinderGeometry(.09, .02, .08, 16, 1, true), MAT.alu, -.05, .3, 0);
-    sat.scale.setScalar(.5); sat.position.set(6, 8.5, 0); S.add(sat); }
+    sat.scale.setScalar(.5); sat.position.set(4.5, 9, -.5); S.add(sat); }
   const conoGeo = new THREE.ConeGeometry(.9, 1, 32, 1, true); conoGeo.translate(0, -.5, 0);
   const haz = new THREE.Mesh(conoGeo, new THREE.MeshBasicMaterial({color:0x6fa8f0, transparent:true, opacity:0, side:THREE.DoubleSide, depthWrite:false}));
   S.add(haz);
-  objetos.sat = {g:sat, a:new THREE.Vector3(6, 9, 0), ring:null};
+  objetos.sat = {g:sat, a:new THREE.Vector3(4.5, 9.5, -.5), ring:null};
   // los sensores dan sombra; los colores de los materiales se escribieron en sRGB y la escena trabaja en lineal
   Object.values(objetos).forEach(o => o.g !== sat && o.g.traverse(m => { if (m.isMesh) m.castShadow = true; }));
   const vistos = new Set();
@@ -561,6 +569,8 @@ html,body{background:transparent}
     if (k !== 'sat') f.o.g.visible = false;
   });
   sat.visible = false;
+  const nombres = parcelas.map((p, i) => ({p, i})).filter(({i}) => i !== ALERTA).map(({p, i}) => {
+    const el = document.createElement('div'); el.className = 'chip nombre'; el.textContent = NOMBRES[i]; escena.appendChild(el); return {el, p}; });
   // etiqueta de El Cercado
   const etiq = document.createElement('div'); etiq.className = 'chip'; etiq.innerHTML = '<span class="t" style="color:var(--warn)">alerta</span><b>El Cercado</b><span class="v">NDVI 0,38 · margen 1.400 €/ha</span>';
   escena.appendChild(etiq);
@@ -579,22 +589,33 @@ html,body{background:transparent}
     return [(pj.x * .5 + .5) * r.width + r.left - s.left, (-pj.y * .5 + .5) * r.height + r.top - s.top, pj.z < 1];
   }
 
-  // ---- estado y bucle ----
+  // ---- estado y cámara ----
+  // La cámara se describe como en un mapa: centro en el suelo, distancia, inclinación (0 = cenital) y giro.
+  // La historia pone la meta en cada cuadro; en cuanto alguien navega, la meta es suya. La cámara la persigue suavizada.
   const E = {on:new Set(), hot:new Set(), alzado:0, foco:0, t:0};
-  let yaw = .9, last = performance.now(), running = true;
-  // exploración libre al acabar la historia: giro con límites, zoom con botones y vuelta sola a los 6 s
-  const U = {on:false, pitch:0, zoom:1, idle:0, drag:null, sel:null, tocado:false};
-  function placeCam(dt) {
+  let last = performance.now(), running = true, giroAuto = .9;
+  const U = {on:false, sel:null, drag:null, tocado:false, rapidez:40};
+  const C = {x:0, z:0, dist:20, incl:1, giro:.9}, G = {...C};
+  const LIM = {x:6.5, z:5, dmin:2.6, dmax:24, imin:.05, imax:1.15};
+  const ajustar = o => { o.x = Math.min(LIM.x, Math.max(-LIM.x, o.x)); o.z = Math.min(LIM.z, Math.max(-LIM.z, o.z));
+    o.dist = Math.min(LIM.dmax, Math.max(LIM.dmin, o.dist)); o.incl = Math.min(LIM.imax, Math.max(LIM.imin, o.incl)); };
+  function metaHistoria(dt) {
     E.foco += ((E.final ? 1 : 0) - E.foco) * Math.min(1, dt * 1.2);
-    const tgt = new THREE.Vector3(-.5 + (cer.c[0] + .5) * E.foco, .3, -.5 + (cer.c[1] + .5) * E.foco);
     // escena alta (pocas columnas de ancho): cámara más cenital para que la finca la llene
     const alta = Math.min(1, Math.max(0, (1.25 - cam.aspect) / .6));
-    const rad = 17 - 5 * E.foco - 7.5 * alta, alt = 12 - 3.5 * E.foco + 2.5 * alta;
-    if (!U.drag && !U.sel && (!U.on || U.idle > 6)) yaw += dt * (E.final && !U.on ? .18 : .05);
-    if (!U.drag) { U.idle += dt; if (U.idle > 6) { const k = Math.min(1, dt * 1.5); U.pitch -= U.pitch * k; U.zoom += (1 - U.zoom) * k; } }
-    const rr = rad * U.zoom, aa = Math.max(1.6, alt * U.zoom * (1 + U.pitch));
-    cam.position.set(tgt.x + Math.sin(yaw) * rr, aa, tgt.z + Math.cos(yaw) * rr);
-    cam.lookAt(tgt);
+    const rad = 17 - 5 * E.foco - 7.5 * alta, alt = 12 - 3.5 * E.foco + 2.5 * alta - .3;
+    if (!U.sel) giroAuto += dt * (E.final ? .18 : .05);
+    Object.assign(G, {x:-.5 + (cer.c[0] + .5) * E.foco, z:-.5 + (cer.c[1] + .5) * E.foco, dist:Math.hypot(rad, alt), incl:Math.atan2(rad, alt), giro:giroAuto});
+  }
+  function placeCam(dt) {
+    if (!U.on) metaHistoria(dt);
+    // tras volar a un punto o volver a la vista inicial, la rapidez se recupera poco a poco
+    U.rapidez = Math.min(U.on ? 14 : 40, U.rapidez + dt * (U.on ? 4 : 12));
+    const k = running ? 1 - Math.exp(-dt * U.rapidez) : 1, dg = Math.atan2(Math.sin(G.giro - C.giro), Math.cos(G.giro - C.giro));
+    ['x', 'z', 'dist', 'incl'].forEach(n => { C[n] += (G[n] - C[n]) * k; }); C.giro += dg * k;
+    const h = Math.sin(C.incl) * C.dist;
+    cam.position.set(C.x + Math.sin(C.giro) * h, .3 + Math.cos(C.incl) * C.dist, C.z + Math.cos(C.giro) * h);
+    cam.lookAt(C.x, .3, C.z);
   }
   function draw() {
     if (!R) return;
@@ -610,18 +631,26 @@ html,body{background:transparent}
     Object.entries(FUENTES).filter(([, f]) => f.obj).map(([k, f]) => {
       f.el.classList.toggle('on', E.on.has(k)); f.el.classList.toggle('hot', E.hot.has(k));
       // compactas: durante el razonamiento las que no son prueba; al final y en móvil, todas (el detalle está en el panel)
-      f.el.classList.toggle('mini', !(U.on && E.hot.has(k)) && ((E.razona && !E.hot.has(k)) || E.final || escena.clientWidth < 560));
+      f.el.classList.toggle('mini', U.sel !== k && ((E.razona && !E.hot.has(k)) || E.final || escena.clientWidth < 560));
       const [x, y] = proyectar(f.o.a); return {k, f, x:x - ox, y:y - oy};
     }).sort((a, b) => b.y - a.y).forEach(({k, f, x, y}) => {
       let meta = y;
-      if (E.on.has(k)) {
+      // fuera de cuadro (al acercar en el mapa) no se enseña ni empuja a las demás
+      const fuera = x < -40 || x > escena.clientWidth + 40 || y < 0 || y > escena.clientHeight + 30;
+      f.el.classList.toggle('fuera', fuera);
+      if (E.on.has(k) && !fuera) {
         const w = f.el.offsetWidth, h = f.el.offsetHeight, l = x - w / 2;
         for (let n = 0; n < 8; n++) { const o = puestas.find(b => l < b.r + 2 && l + w > b.l - 2 && meta - h < b.b + 2 && meta > b.t - 2); if (!o) break; meta = o.t - 4; }
         puestas.push({l, r:l + w, t:meta - h, b:meta});
+        // si para no chocar tendría que salirse por arriba, mejor no se enseña
+        if (meta - h < 0) f.el.classList.add('fuera');
       }
       f.dy = f.dy === undefined || !running ? meta - y : f.dy + (meta - y - f.dy) * .2;
       f.el.style.transform = `translate(${x}px,${y + f.dy}px) translate(-50%,-100%)`;
     });
+    // nombres de las parcelas en el suelo cuando se navega cerca
+    nombres.forEach(({el, p}) => { const [x, y] = proyectar(new THREE.Vector3(p.c[0], .05, p.c[1]));
+      el.style.transform = `translate(${x - ox}px,${y - oy}px) translate(-50%,-50%)`; el.classList.toggle('on', U.on && C.dist < 11 && E.alzado > .9); });
     if (U.sel && U.sel[0] === 'p') {
       const p = parcelas[+U.sel.slice(1)], [x, y] = proyectar(new THREE.Vector3(p.c[0], p.h + .1, p.c[1])), r = escena.getBoundingClientRect(), s = $('stage').getBoundingClientRect();
       // dentro de la escena aunque la parcela quede en el borde
@@ -629,7 +658,8 @@ html,body{background:transparent}
       const tx = Math.min(r.width - tw / 2 - 6, Math.max(tw / 2 + 6, x - (r.left - s.left))), ty = Math.max(th + 6, y - (r.top - s.top));
       tip.style.transform = `translate(${tx}px,${ty}px) translate(-50%,-100%)`;
     }
-    // haces
+    // haces (al navegar el mapa estorban: se apagan)
+    beams.classList.toggle('mapa', U.on);
     const sr = $('stage').getBoundingClientRect();
     beams.setAttribute('viewBox', `0 0 ${sr.width} ${sr.height}`);
     Object.entries(FUENTES).filter(([, f]) => !f.obj).forEach(([k, f]) => {
@@ -648,7 +678,9 @@ html,body{background:transparent}
   function frame(t) {
     const dt = Math.max(0, Math.min(.05, (t - last) / 1000)); last = t; E.t += dt;
     // satélite en órbita y su haz
-    const ang = E.t * .35; sat.position.set(Math.cos(ang) * 6, 8.5, Math.sin(ang) * 4.5); sat.rotation.y = -ang;
+    const ang = E.t * .35; sat.position.set(Math.cos(ang) * 5 - .5, 9, Math.sin(ang) * 4 - .5); sat.rotation.y = -ang;
+    // si pasa cerca de la cámara se encoge, en vez de taparlo todo
+    sat.scale.setScalar(.5 * Math.min(1, Math.max(.15, (cam.position.distanceTo(sat.position) - 3) / 6)));
     objetos.sat.a.set(sat.position.x, sat.position.y + .5, sat.position.z);
     const blanco = E.hot.has('sat') ? new THREE.Vector3(cer.c[0], cer.h, cer.c[1]) : new THREE.Vector3(Math.cos(E.t * .8) * 3 - .5, 0, Math.sin(E.t * .6) * 2.5);
     const dir = blanco.clone().sub(sat.position), L = dir.length();
@@ -677,27 +709,28 @@ html,body{background:transparent}
   if (R) { escena.prepend(R.domElement); new ResizeObserver(resize).observe(escena); }
   else escena.insertAdjacentHTML('afterbegin', '<p style="padding:60px 20px;color:var(--soft)">Tu navegador no muestra 3D.</p>');
 
-  // ---- exploración: tocar sensores y parcelas, girar con el ratón ----
+  // ---- navegar como un mapa ----
+  // En la portada los gestos comparten el scroll: la rueda sola y un dedo mueven la página; Ctrl/⌘ + rueda y dos dedos, la finca.
+  // «Ver en grande» la pone a pantalla completa y ahí todo es del mapa.
   const tip = document.createElement('div'); tip.className = 'chip tip'; escena.appendChild(tip);
   const HA = [2.9, 3.5, 2.3, 2.4, 1.4, 1.4], MG = [3350, 3050, 3180, 2720, 2540, 1400];
-  const fino = matchMedia('(hover:hover) and (pointer:fine)').matches;
+  const fino = matchMedia('(hover:hover) and (pointer:fine)').matches, mac = /Mac|iPhone|iPad/.test(navigator.platform);
   const avisa = n => { if (window.parent !== window) parent.postMessage({ig:'evento', n}, location.origin); };
   const redraw = () => { if (!running) { placeCam(0); draw(); } };
-  const ray = new THREE.Raycaster(), ptr = new THREE.Vector2(); ray.params.Line.threshold = .04;
+  const ray = new THREE.Raycaster(), ptr = new THREE.Vector2(), plano = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0); ray.params.Line.threshold = .04;
   Object.entries(objetos).forEach(([k, o]) => o.g.traverse(m => { m.userData.k = k; }));
   parcelas.forEach((p, i) => p.g.traverse(m => { m.userData.p = i; }));
   const tocables = [...Object.values(objetos).map(o => o.g), ...parcelas.map(p => p.g)];
+  function apuntar(cx, cy) { const r = R.domElement.getBoundingClientRect(); ptr.set((cx - r.left) / r.width * 2 - 1, -(cy - r.top) / r.height * 2 + 1); ray.setFromCamera(ptr, cam); }
   function pick(ev) {
-    const r = R.domElement.getBoundingClientRect();
-    ptr.set((ev.clientX - r.left) / r.width * 2 - 1, -(ev.clientY - r.top) / r.height * 2 + 1);
-    ray.setFromCamera(ptr, cam);
+    apuntar(ev.clientX, ev.clientY);
     const h = ray.intersectObjects(tocables.filter(g => g.visible), true)[0];
     if (!h) return null;
     const d = h.object.userData; return d.k ? d.k : d.p !== undefined ? 'p' + d.p : null;
   }
   function elegir(sel) {
-    if (sel === U.sel) return; U.sel = sel; escena.classList.toggle('sobre', !!sel);
-    if (sel) { $('pista').hidden = true; if (!U.tocado) { U.tocado = true; avisa('ig-toca'); } }
+    if (!E.final || sel === U.sel) return; U.sel = sel; escena.classList.toggle('sobre', !!sel);
+    if (sel && !U.tocado) { U.tocado = true; avisa('ig-toca'); }
     // El Cercado enciende todo lo que se apunta de esa parcela; un sensor, su etiqueta completa y su anillo
     hot(!sel ? [] : sel === 'p' + ALERTA ? Object.keys(DESTINO).filter(k => DESTINO[k] === 'cer') : sel[0] === 'p' ? [] : [sel]);
     const i = sel && sel[0] === 'p' ? +sel.slice(1) : -1;
@@ -705,46 +738,103 @@ html,body{background:transparent}
     if (i >= 0) tip.innerHTML = `<span class="t">parcela</span><b>${NOMBRES[i]}</b><span class="v">${HA[i].toLocaleString('es-ES')} ha · NDVI ${NDVI[i].toLocaleString('es-ES', {minimumFractionDigits:2})} · ${String(MG[i]).replace(/\B(?=(\d{3})+$)/g, '.')} €/ha</span>`;
     redraw();
   }
-  function explorar() {
-    U.on = true; U.idle = 0; hot([]); escena.classList.add('explorando');
-    $('ir').hidden = true; $('zmas').hidden = $('zmenos').hidden = false;
-    $('pista').hidden = false; $('pista').textContent = fino ? 'Arrastra para girar · pasa por un punto' : 'Toca un sensor o una parcela';
-    avisa('ig-explora'); redraw();
+  let tPista;
+  function pista(t) { clearTimeout(tPista); $('pista').textContent = t; $('pista').hidden = !t; if (t) tPista = setTimeout(() => { $('pista').hidden = true; }, 2200); }
+  // quien navega se queda con la cámara (hasta «Vista inicial»)
+  function tomar() {
+    U.rapidez = Math.max(U.rapidez, 14);
+    if (U.on) return; U.on = true; Object.assign(G, C); $('inicio').hidden = false;
+    if (!U.avisado) { U.avisado = true; avisa('ig-explora'); }
   }
-  function salirExplora() {
-    U.on = false; U.sel = null; U.drag = null; U.pitch = 0; U.zoom = 1; tip.classList.remove('on');
-    escena.classList.remove('explorando', 'arrastrando');
-    $('explora').hidden = true; $('ir').hidden = false; $('zmas').hidden = $('zmenos').hidden = $('pista').hidden = true;
+  function vistaInicial() { U.on = false; U.rapidez = 2.5; giroAuto = C.giro; $('inicio').hidden = true; tip.classList.remove('on'); redraw(); }
+  // arrastrar: el suelo sigue al cursor o al dedo
+  function mover(dx, dy) {
+    tomar();
+    const wpp = 2 * G.dist * Math.tan(cam.fov * Math.PI / 360) / escena.clientHeight, f = wpp / Math.max(.45, Math.cos(G.incl));
+    const sg = Math.sin(G.giro), cg = Math.cos(G.giro), mx = -cg * dx * wpp - sg * dy * f, mz = sg * dx * wpp - cg * dy * f;
+    G.x += mx; G.z += mz; C.x += mx; C.z += mz; ajustar(G); ajustar(C); redraw();
   }
-  $('ir').addEventListener('click', explorar);
-  const zoom = f => { U.zoom = Math.min(1.3, Math.max(.45, U.zoom * f)); U.idle = 0; redraw(); };
-  $('zmas').addEventListener('click', () => zoom(.8));
-  $('zmenos').addEventListener('click', () => zoom(1.25));
+  function girar(dg, di) { tomar(); G.giro += dg; C.giro += dg; G.incl += di; ajustar(G); C.incl = G.incl; redraw(); }
+  // acercar hacia un punto de la pantalla, como en un mapa
+  function acercar(f, cx, cy) {
+    tomar();
+    const d = Math.min(LIM.dmax, Math.max(LIM.dmin, G.dist * f)), q = d / G.dist;
+    if (cx !== undefined) { apuntar(cx, cy); const p = ray.ray.intersectPlane(plano, new THREE.Vector3()); if (p) { G.x = p.x + (G.x - p.x) * q; G.z = p.z + (G.z - p.z) * q; } }
+    G.dist = d; ajustar(G); redraw();
+  }
+  // tocar un sensor o una parcela: la cámara vuela hasta él
+  function volar(sel) {
+    if (!sel || sel === 'sat') return;
+    const [x, z] = sel[0] === 'p' ? parcelas[+sel.slice(1)].c : [objetos[sel].a.x, objetos[sel].a.z];
+    tomar(); Object.assign(G, {x, z, dist:Math.min(G.dist, 6)}); ajustar(G); U.rapidez = 3; redraw();
+  }
+  let grande = false;
+  function ponerGrande(on) {
+    grande = on; document.documentElement.classList.toggle('grande', on);
+    $('grande').hidden = on; $('cerrar').hidden = !on;
+    if (window.parent !== window) parent.postMessage({ig:'grande', on}, location.origin);
+    if (on) { tomar(); avisa('ig-grande'); pista(fino ? 'Arrastra para moverte · rueda para acercar' : 'Un dedo mueve · dos dedos acercan y giran'); $('cerrar').focus(); }
+    else { pista(''); $('grande').focus({preventScroll:true}); }
+  }
+  addEventListener('keydown', e => { if (e.key === 'Escape' && grande) ponerGrande(false); });
+  addEventListener('message', e => { if (e.origin === location.origin && e.data && e.data.ig === 'salir' && grande) ponerGrande(false); });
+  $('grande').addEventListener('click', () => ponerGrande(true));
+  $('cerrar').addEventListener('click', () => ponerGrande(false));
+  $('inicio').addEventListener('click', vistaInicial);
+  $('zmas').addEventListener('click', () => acercar(.7));
+  $('zmenos').addEventListener('click', () => acercar(1.4));
   if (R) {
-    const cv = R.domElement;
-    // el dedo nunca gira la finca (bajaría la página); solo el ratón o el lápiz
+    const cv = R.domElement; escena.classList.add('explorando');
+    // ratón o lápiz: arrastrar mueve; con el botón derecho, Mayús, Ctrl o ⌘, gira e inclina
+    cv.addEventListener('contextmenu', ev => ev.preventDefault());
     cv.addEventListener('pointerdown', ev => {
-      if (!U.on || ev.pointerType === 'touch') return;
-      U.drag = {x:ev.clientX, y:ev.clientY, mov:0}; cv.setPointerCapture(ev.pointerId); escena.classList.add('arrastrando');
+      if (ev.pointerType === 'touch') { U.toque = {x:ev.clientX, y:ev.clientY, gesto:false}; return; }
+      U.drag = {x:ev.clientX, y:ev.clientY, mov:0, girar:ev.button === 2 || ev.shiftKey || ev.ctrlKey || ev.metaKey || ev.altKey};
+      cv.setPointerCapture(ev.pointerId); escena.classList.add('arrastrando');
     });
     cv.addEventListener('pointermove', ev => {
-      if (!U.on) return;
       if (U.drag) {
         const dx = ev.clientX - U.drag.x, dy = ev.clientY - U.drag.y; U.drag.x = ev.clientX; U.drag.y = ev.clientY; U.drag.mov += Math.abs(dx) + Math.abs(dy);
-        yaw -= dx * .006; U.pitch = Math.min(.35, Math.max(-.45, U.pitch - dy * .003)); U.idle = 0;
-        if (U.drag.mov > 5) $('pista').hidden = true;
-        redraw();
+        if (U.drag.mov > 4) U.drag.girar ? girar(-dx * .006, -dy * .004) : mover(dx, dy);
       } else if (ev.pointerType === 'mouse') elegir(pick(ev));
     });
     const soltar = () => { U.drag = null; escena.classList.remove('arrastrando'); };
-    cv.addEventListener('pointerup', ev => { const d = U.drag; soltar(); if (U.on && (!d || d.mov < 5)) { U.idle = 0; elegir(pick(ev)); } });
-    cv.addEventListener('pointercancel', soltar);
-    cv.addEventListener('pointerleave', ev => { if (U.on && !U.drag && ev.pointerType === 'mouse') elegir(null); });
+    cv.addEventListener('pointerup', ev => {
+      const d = U.drag, t = U.toque; soltar(); U.toque = null;
+      // un toque o un clic sin arrastrar elige lo que hay debajo y vuela hasta ello
+      const toque = ev.pointerType === 'touch' ? t && !t.gesto && Math.hypot(ev.clientX - t.x, ev.clientY - t.y) < 8 : d && d.mov <= 4;
+      if (toque && E.final) { const sel = pick(ev); elegir(sel); volar(sel); }
+    });
+    cv.addEventListener('pointercancel', () => { soltar(); U.toque = null; });
+    cv.addEventListener('pointerleave', ev => { if (!U.drag && ev.pointerType === 'mouse') elegir(null); });
+    cv.addEventListener('wheel', ev => {
+      if (!(ev.ctrlKey || ev.metaKey || grande)) { pista(`${mac ? '⌘' : 'Ctrl'} + rueda para acercar`); return; }
+      ev.preventDefault(); acercar(Math.exp(ev.deltaY * (ev.deltaMode ? .1 : .004)), ev.clientX, ev.clientY);
+    }, {passive:false});
+    // dedos: en la portada, uno baja la página y dos mueven, acercan y giran; en grande, uno ya mueve
+    let T = null;
+    const medir = ts => { const a = ts[0], b = ts[1] || ts[0];
+      return {n:ts.length, x:(a.clientX + b.clientX) / 2, y:(a.clientY + b.clientY) / 2, d:Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY) || 1, a:Math.atan2(b.clientY - a.clientY, b.clientX - a.clientX)}; };
+    cv.addEventListener('touchstart', ev => { if (ev.touches.length > 1 || grande) { ev.preventDefault(); T = medir(ev.touches); if (U.toque) U.toque.gesto = ev.touches.length > 1; } }, {passive:false});
+    cv.addEventListener('touchmove', ev => {
+      if (ev.touches.length < 2 && !grande) { if (E.final && !U.on) pista('Usa dos dedos para mover la finca'); return; }
+      if (!ev.cancelable) return; ev.preventDefault();
+      const m = medir(ev.touches);
+      if (T && T.n === m.n) {
+        mover(m.x - T.x, m.y - T.y);
+        if (m.n > 1) { acercar(T.d / m.d, m.x, m.y); const da = Math.atan2(Math.sin(m.a - T.a), Math.cos(m.a - T.a)); girar(da, 0); }
+      }
+      if (U.toque && (m.n > 1 || Math.hypot(m.x - U.toque.x, m.y - U.toque.y) > 8)) U.toque.gesto = true;
+      T = m;
+    }, {passive:false});
+    cv.addEventListener('touchend', ev => { T = ev.touches.length ? medir(ev.touches) : null; });
+    cv.addEventListener('touchcancel', () => { T = null; });
   }
 
   // ---- línea de tiempo ----
   let timers = [], alzar = null;
-  const at = (ms, fn) => timers.push(setTimeout(fn, quieto ? 0 : ms));
+  let rapido = false;
+  const at = (ms, fn) => timers.push(setTimeout(fn, quieto || rapido ? 0 : ms));
   function encender(k) {
     E.on.add(k); const f = FUENTES[k];
     if (f.obj) { f.o.g.visible = true; } else f.el.classList.add('on');
@@ -756,8 +846,9 @@ html,body{background:transparent}
     const c = keys.map(k => FUENTES[k]).find(f => !f.obj);
     if (c && cards.scrollHeight > cards.clientHeight + 4) cards.scrollTo({top:c.el.offsetTop - cards.offsetTop - 30, behavior:quieto ? 'auto' : 'smooth'});
   }
-  function play() {
-    timers.forEach(clearTimeout); timers = []; clearInterval(alzar); salirExplora();
+  function play(saltar) {
+    timers.forEach(clearTimeout); timers = []; clearInterval(alzar); rapido = !!saltar;
+    U.sel = null; tip.classList.remove('on'); if (!saltar) vistaInicial(); $('saltar').hidden = !!saltar;
     E.on.clear(); hot([]); E.alzado = 0; E.final = false; E.razona = false;
     Object.values(FUENTES).forEach(f => { if (f.obj) { if (f.o.g !== sat) f.o.g.visible = false; } else f.el.classList.remove('on'); });
     sat.visible = false;
@@ -767,7 +858,7 @@ html,body{background:transparent}
     estado('conectando fuentes y sensores', true);
     ORDEN.forEach((k, i) => at(300 + i * 200, () => { encender(k); if (k === 'sat') sat.visible = true; }));
     at(3700, () => { estado('construyendo el mapa de la finca', true);
-      if (quieto) E.alzado = 1; else alzar = setInterval(() => { E.alzado = Math.min(1, E.alzado + .025); if (E.alzado >= 1) clearInterval(alzar); }, 30); });
+      if (quieto || rapido) E.alzado = 1; else alzar = setInterval(() => { E.alzado = Math.min(1, E.alzado + .025); if (E.alzado >= 1) clearInterval(alzar); }, 30); });
     at(5200, () => { estado('cruzando fuentes', true); E.razona = true; });
     PASOS.forEach(([t, refs], i) => at(5500 + i * 1900, () => {
       hot(refs);
@@ -780,17 +871,19 @@ html,body{background:transparent}
       hot([...new Set(PASOS.flatMap(p => p[1]))]); E.final = true;
       $('decision').classList.add('on'); estado('acción propuesta', false);
       const ia = document.querySelector('.ia'); setTimeout(() => ia.scrollTo({top:$('decision').offsetTop - ia.offsetTop - 14, behavior:quieto ? 'auto' : 'smooth'}), 200);
-      $('salidas').classList.add('on'); $('explora').hidden = false;
-      document.querySelectorAll('.salida').forEach((x, i) => setTimeout(() => x.classList.add('on'), quieto ? 0 : 500 + i * 350));
+      $('salidas').classList.add('on'); $('saltar').hidden = true;
+      if (!U.on) pista(fino ? 'Arrastra para moverte · toca un punto' : 'Toca un punto · dos dedos para moverte');
+      document.querySelectorAll('.salida').forEach((x, i) => setTimeout(() => x.classList.add('on'), quieto || rapido ? 0 : 500 + i * 350));
     });
   }
 
   let s = 8 * 3600 + 14 * 60 + 7;
   setInterval(() => { s++; const h = String(Math.floor(s / 3600) % 24).padStart(2, '0'), m = String(Math.floor(s / 60) % 60).padStart(2, '0'), x = String(s % 60).padStart(2, '0'); $('reloj').textContent = `${h}:${m}:${x}`; }, 1000);
   document.querySelectorAll('.btn').forEach(b => b.addEventListener('click', () => { $('toast').textContent = '✓ ' + b.dataset.t; }));
-  $('again').addEventListener('click', play);
+  $('again').addEventListener('click', () => play());
+  $('saltar').addEventListener('click', () => play(true));
 
-  resize(); placeCam(0);
+  resize(); metaHistoria(0); Object.assign(C, G); placeCam(0);
   if (!quieto) requestAnimationFrame(frame); else { running = false; }
   let hecho = false;
   const go = () => { if (!hecho) { hecho = true; play(); if (quieto) setTimeout(() => { placeCam(0); draw(); }, 50); } };
