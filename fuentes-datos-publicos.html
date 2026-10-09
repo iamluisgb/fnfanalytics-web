@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fuentes de datos públicos del agro español · Food &amp; Farm Analytics</title>
+<meta name="description" content="30 fuentes oficiales de datos agrarios —parcela, meteorología, alertas, satélite, fitosanitarios, precios, ayudas— con dónde están, cómo se piden, qué devuelven y las trampas que cuestan horas.">
+<link rel="canonical" href="https://fnfanalytics.com/fuentes-datos-publicos">
+<meta property="og:title" content="Los datos públicos del campo, en un solo sitio">
+<meta property="og:description" content="30 fuentes oficiales con acceso, clave, formato y trampas. Las que se pueden probar sin alta, comprobadas con llamadas reales.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://fnfanalytics.com/fuentes-datos-publicos">
+<meta property="og:locale" content="es_ES">
+<meta property="og:image" content="https://fnfanalytics.com/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0c1210">
+<link rel="preload" href="/assets/fonts/Poppins-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+<script defer src="/u/s.js" data-website-id="08c1619b-4bb8-471b-9dc9-9b6cda88e8ae" data-host-url="https://cloud.umami.is" data-domains="fnfanalytics.com,www.fnfanalytics.com"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"Fuentes de datos públicos del agro español","description":"30 fuentes oficiales de datos agrarios con acceso, clave, formato y trampas; 14 comprobadas con llamadas reales.","url":"https://fnfanalytics.com/fuentes-datos-publicos","inLanguage":"es","datePublished":"2026-10-09","dateModified":"2026-10-09","author":{"@type":"Organization","name":"Food & Farm Analytics","url":"https://fnfanalytics.com"}}
+</script>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="in">
+    <a class="logo" href="/" aria-label="Food &amp; Farm Analytics"><img src="/assets/logo-mark.png" alt="" width="19" height="34"><span class="lt"><b>food&amp;farm</b><i>analytics</i></span></a>
+    <div class="nav-links">
+      <a href="/#inteligencia">Inteligencia</a>
+      <a href="/asesores">Asesores</a>
+      <a href="/#precios">Precios</a>
+      <a href="/cuaderno-digital">Cuaderno digital</a>
+      <a class="btn btn-primary" href="/#acceso">Solicita acceso</a>
+    </div>
+  </div>
+</nav>
+
+<header class="page-head">
+  <div class="container">
+    <span class="label" style="color:var(--brand)">recursos · datos abiertos</span>
+    <h1>Los datos públicos del campo, en un solo sitio.</h1>
+    <p>30 fuentes oficiales —parcela, meteorología, alertas, satélite, fitosanitarios, precios, ayudas— con dónde están, cómo se piden, qué devuelven y las trampas que cuestan horas. Las que se pueden probar sin alta, comprobadas con llamadas reales.</p>
+  </div>
+</header>
+
+<main class="prose">
+
+<div class="fuentes cifras">
+<table>
+  <tr><th>Fuentes catalogadas</th><th>Comprobadas con llamadas reales</th><th>Trampas documentadas</th><th>Coste</th></tr>
+  <tr><td data-label="Fuentes catalogadas"><strong>30</strong></td><td data-label="Comprobadas con llamadas reales"><strong>14</strong></td><td data-label="Trampas documentadas"><strong>6</strong></td><td data-label="Coste">0 € · sin registro en la mayoría</td></tr>
+</table>
+</div>
+
+<h2>Cómo leer esta guía</h2>
+<p>Para cada fuente: qué datos da, cómo se accede (endpoint concreto), si hace falta clave o alta, qué formato devuelve y para qué vale. La columna <strong>Probado</strong> dice si lanzamos la llamada real (9 de octubre de 2026) y comprobamos lo que devuelve. Donde pone «No», la fuente exige clave, alta o ser el titular, o solo hay web: la ficha sale de su página oficial.</p>
+
+<h2>Parcelas y territorio</h2>
+<div class="fuentes">
+<table>
+  <tr><th>Fuente</th><th>Qué da</th><th>Cómo se accede</th><th>Clave</th><th>Formato</th><th>Probado</th></tr>
+  <tr><td data-label="Fuente">SIGPAC (FEGA)</td><td data-label="Qué da">Recintos de toda España: uso, superficie, pendiente, coeficiente de regadío, altitud, incidencias y geometría. En capas aparte, el <strong>cultivo declarado en la PAC</strong> y los elementos del paisaje (CC BY 4.0)</td><td data-label="Cómo se accede"><code>sigpac-hubcloud.es</code>: consulta REST por coordenadas o códigos, OGC API, WMS, teselas y GeoPackage por provincia</td><td data-label="Clave">No</td><td data-label="Formato">JSON, GeoJSON, WKT, GPKG</td><td data-label="Probado">Sí</td></tr>
+  <tr><td data-label="Fuente">Catastro — Oficina Virtual</td><td data-label="Qué da">Referencia catastral, superficie y uso del inmueble (datos no protegidos)</td><td data-label="Cómo se accede"><code>ovc.catastro.meh.es</code> · <code>Consulta_DNPRC</code> por referencia catastral</td><td data-label="Clave">No</td><td data-label="Formato">XML</td><td data-label="Probado">Sí</td></tr>
+  <tr><td data-label="Fuente">IDEE / CNIG</td><td data-label="Qué da">Catálogo INSPIRE completo y geocodificador de direcciones</td><td data-label="Cómo se accede"><code>idee.es</code> (CSW) y servicios OGC del IGN</td><td data-label="Clave">No</td><td data-label="Formato">XML, JSON</td><td data-label="Probado">Sí</td></tr>
+  <tr><td data-label="Fuente">Equivalencias de municipios</td><td data-label="Qué da">Tabla que traduce códigos INE, INE-Tempus, SIGPAC/Catastro y DIR3 de los 8.132 municipios</td><td data-label="Cómo se accede"><code>datos/municipios.csv</code> del catálogo de Bquant (CC0); ficheros oficiales del INE</td><td data-label="Clave">No</td><td data-label="Formato">CSV, XLSX, JSON</td><td data-label="Probado">Sí</td></tr>
+</table>
+</div>
+
+<h2>Meteorología y agroclima</h2>
+<div class="fuentes">
+<table>
+  <tr><th>Fuente</th><th>Qué da</th><th>Cómo se accede</th><th>Clave</th><th>Formato</th><th>Probado</th></tr>
+  <tr><td data-label="Fuente">AEMET OpenData</td><td data-label="Qué da">Predicción diaria a 7 días y horaria a 48 h por municipio, observación, climatología y avisos</td><td data-label="Cómo se accede"><code>opendata.aemet.es</code> (API REST)</td><td data-label="Clave">Sí, gratis</td><td data-label="Formato">JSON, XML</td><td data-label="Probado">Sí</td></tr>
+  <tr><td data-label="Fuente">SiAR (MAPA)</td><td data-label="Qué da">Más de 500 estaciones agrometeorológicas: ET0 (Penman-Monteith) y <strong>necesidades netas de riego por cultivo</strong>, medio-horario a mensual</td><td data-label="Cómo se accede"><code>servicio.mapa.gob.es/siarweb</code> (consulta y descarga) y su API</td><td data-label="Clave">Sí, alta</td><td data-label="Formato">JSON, CSV, XLSX</td><td data-label="Probado">No</td></tr>
+  <tr><td data-label="Fuente">RAIF Andalucía</td><td data-label="Qué da">Avisos fitosanitarios por cultivo y provincia, informes agroclimáticos mensuales y unas 70 estaciones propias en zonas de cultivo (168 sumando las del IFAPA)</td><td data-label="Cómo se accede">Portal de la RAIF en la web de la Junta de Andalucía y su catálogo de datos abiertos</td><td data-label="Clave">No</td><td data-label="Formato">HTML, PDF</td><td data-label="Probado">No</td></tr>
+</table>
+</div>
+
+<h2>Alertas</h2>
+<div class="fuentes">
+<table>
+  <tr><th>Fuente</th><th>Qué da</th><th>Cómo se accede</th><th>Clave</th><th>Formato</th><th>Probado</th></tr>
+  <tr><td data-label="Fuente">Avisos meteorológicos</td><td data-label="Qué da">Fenómenos adversos hasta 72 h por zona (plan Meteoalerta, avisos europeos incluidos)</td><td data-label="Cómo se accede">Web de AEMET (libre) y su API OpenData (con la clave de arriba); formato CAP</td><td data-label="Clave">Solo la API</td><td data-label="Formato">HTML, CAP</td><td data-label="Probado">No</td></tr>
+  <tr><td data-label="Fuente">Avisos fitosanitarios por comunidad</td><td data-label="Qué da">Estado de plagas y enfermedades y recomendación de tratamiento, cosecha a cosecha, en cada CCAA (Cataluña, Comunitat Valenciana, Aragón, Andalucía…)</td><td data-label="Cómo se accede">Portales autonómicos de sanidad vegetal</td><td data-label="Clave">No</td><td data-label="Formato">HTML, PDF</td><td data-label="Probado">No</td></tr>
+  <tr><td data-label="Fuente">EPPO Global Database</td><td data-label="Qué da">Ficha oficial de cada plaga: códigos, taxonomía, hospedantes, plagas asociadas, categorización (A1/A2) y distribución por país</td><td data-label="Cómo se accede"><code>gd.eppo.int</code> (fichas) y su API REST v2 con clave gratuita del panel de <code>data.eppo.int</code></td><td data-label="Clave">Sí para la API</td><td data-label="Formato">JSON, HTML</td><td data-label="Probado">Sí</td></tr>
+  <tr><td data-label="Fuente">Alertas alimentarias (AESAN)</td><td data-label="Qué da">Alertas de seguridad alimentaria y registro sanitario de empresas</td><td data-label="Cómo se accede">Portal de AESAN (alertas paginadas)</td><td data-label="Clave">No</td><td data-label="Formato">HTML, XLSX</td><td data-label="Probado">No</td></tr>
+</table>
+</div>
+
+<h2>Satélite y ortofoto</h2>
+<div class="fuentes">
+<table>
+  <tr><th>Fuente</th><th>Qué da</th><th>Cómo se accede</th><th>Clave</th><th>Formato</th><th>Probado</th></tr>
+  <tr><td data-label="Fuente">Copernicus (CDSE)</td><td data-label="Qué da">Sentinel-1/2/3 y Landsat; <strong>estadísticas de vegetación (NDVI, humedad) por parcela y periodo</strong> con máscara de nubes</td><td data-label="Cómo se accede"><code>dataspace.copernicus.eu</code>: catálogo STAC y la API estadística de Sentinel Hub</td><td data-label="Clave">Sí, registro (el catálogo STAC es libre)</td><td data-label="Formato">JSON, GeoTIFF, WMS</td><td data-label="Probado">Sí</td></tr>
+  <tr><td data-label="Fuente">PNOA / IGN</td><td data-label="Qué da">Ortofoto de máxima actualidad (vuelo cada 2-3 años) e históricas desde 1956, para ver la evolución de la parcela</td><td data-label="Cómo se accede">WMS/WMTS de <code>ign.es</code>; descarga por hojas en el Centro de Descargas del CNIG</td><td data-label="Clave">No</td><td data-label="Formato">WMS/WMTS, COG</td><td data-label="Probado">Sí</td></tr>
+</table>
+</div>
+
+<h2>Productos fitosanitarios, fertilizantes y residuos</h2>
+<div class="fuentes">
+<table>
+  <tr><th>Fuente</th><th>Qué da</th><th>Cómo se accede</th><th>Clave</th><th>Formato</th><th>Probado</th></tr>
+  <tr><td data-label="Fuente">Registro de Productos Fitosanitarios (MAPA)</td><td data-label="Qué da">Productos autorizados con usos por cultivo y plaga, dosis y plazos de seguridad. <strong>Se actualiza cada viernes</strong></td><td data-label="Cómo se accede"><code>servicio.mapa.gob.es/regfiweb</code>. <strong>No hay API ni descarga masiva de usos.</strong> El listado de productos sale de la tabla de búsqueda (HTML) y los usos, dosis y plazos, de la <strong>ficha en PDF</strong> de cada producto. La exportación a Excel solo trae autorizaciones y suspensiones</td><td data-label="Clave">No</td><td data-label="Formato">HTML, PDF, XLSX</td><td data-label="Probado">Sí</td></tr>
+  <tr><td data-label="Fuente">Registro de productos fertilizantes (MAPA)</td><td data-label="Qué da">Productos fertilizantes inscritos: código, tipo, fabricante y fecha de registro</td><td data-label="Cómo se accede"><code>servicio.mapa.gob.es/regfertiwai</code></td><td data-label="Clave">No</td><td data-label="Formato">HTML</td><td data-label="Probado">No</td></tr>
+  <tr><td data-label="Fuente">Límites máximos de residuos (UE)</td><td data-label="Qué da">LMR por sustancia activa y producto, con la legislación que los fija</td><td data-label="Cómo se accede">Base de datos de plaguicidas de la Comisión Europea (consulta y exportación)</td><td data-label="Clave">No</td><td data-label="Formato">XML, Excel</td><td data-label="Probado">No</td></tr>
+  <tr><td data-label="Fuente">RETO</td><td data-label="Qué da">Registro electrónico de transacciones y operaciones con productos fitosanitarios (operadores profesionales)</td><td data-label="Cómo se accede">Portal de la comunidad autónoma correspondiente</td><td data-label="Clave">Alta como operador</td><td data-label="Formato">HTML</td><td data-label="Probado">No</td></tr>
+</table>
+</div>
+<p><em>La etiqueta autorizada del producto es la única referencia legal de uso. El registro es una herramienta de consulta y vigilancia: verifícala antes de aplicar o recomendar un tratamiento.</em></p>
+
+<h2>Precios y mercados</h2>
+<div class="fuentes">
+<table>
+  <tr><th>Fuente</th><th>Qué da</th><th>Cómo se accede</th><th>Clave</th><th>Formato</th><th>Probado</th></tr>
+  <tr><td data-label="Fuente">MAPA — Estadísticas agrarias</td><td data-label="Qué da">Precios percibidos y pagados, precios medios nacionales semanales, anuario de estadística, avances de superficies y producciones y la encuesta ESYRCE (rendimientos por cultivo y comunidad)</td><td data-label="Cómo se accede">Descargas del MAPA (XLSX por capítulo y por tabla)</td><td data-label="Clave">No</td><td data-label="Formato">XLSX, PDF</td><td data-label="Probado">No</td></tr>
+  <tr><td data-label="Fuente">AICA</td><td data-label="Qué da">Balance mensual de la campaña del aceite de oliva (producción, salidas, existencias). Los precios en origen están en los precios semanales del MAPA</td><td data-label="Cómo se accede">Informes de mercado de la AICA</td><td data-label="Clave">No</td><td data-label="Formato">HTML, PDF</td><td data-label="Probado">No</td></tr>
+  <tr><td data-label="Fuente">Lonjas</td><td data-label="Qué da">Cotizaciones semanales por lonja (Sevilla, Ebro, León, Barcelona…): cereales, girasol, aceite y más</td><td data-label="Cómo se accede">Web de cada lonja. No hay API común</td><td data-label="Clave">No</td><td data-label="Formato">HTML, PDF</td><td data-label="Probado">No</td></tr>
+  <tr><td data-label="Fuente">Mercas mayoristas</td><td data-label="Qué da">Precios del día en destino (mínimo, máximo y más frecuente) por artículo y procedencia</td><td data-label="Cómo se accede">Portal de cada mercado; alguno permite exportar la tabla</td><td data-label="Clave">No</td><td data-label="Formato">HTML, XLS, PDF</td><td data-label="Probado">No</td></tr>
+</table>
+</div>
+
+<h2>Ayudas, PAC y normativa</h2>
+<div class="fuentes">
+<table>
+  <tr><th>Fuente</th><th>Qué da</th><th>Cómo se accede</th><th>Clave</th><th>Formato</th><th>Probado</th></tr>
+  <tr><td data-label="Fuente">FEGA — beneficiarios de la PAC</td><td data-label="Qué da">Quién cobra ayudas FEAGA y FEADER, por ejercicio, importe y medida; y los pagos semanales</td><td data-label="Cómo se accede">Datos abiertos del FEGA: consulta de beneficiarios y pagos semanales FEAGA</td><td data-label="Clave">No</td><td data-label="Formato">HTML, CSV, XLSX</td><td data-label="Probado">Sí</td></tr>
+  <tr><td data-label="Fuente">BDNS — subvenciones</td><td data-label="Qué da">Convocatorias y concesiones de subvenciones de todas las administraciones</td><td data-label="Cómo se accede">API REST de <code>infosubvenciones.es/bdnstrans/api</code>. La reutilización tiene aviso legal propio</td><td data-label="Clave">No</td><td data-label="Formato">JSON</td><td data-label="Probado">Sí</td></tr>
+  <tr><td data-label="Fuente">BOE</td><td data-label="Qué da">Sumario diario y <strong>texto consolidado vigente</strong> de cualquier norma</td><td data-label="Cómo se accede">API de datos abiertos del BOE</td><td data-label="Clave">No (requiere cabecera <code>Accept: application/xml</code>)</td><td data-label="Formato">XML</td><td data-label="Probado">Sí</td></tr>
+  <tr><td data-label="Fuente">BORME</td><td data-label="Qué da">Sumario diario del Registro Mercantil: constituciones y actos inscritos</td><td data-label="Cómo se accede">API de datos abiertos del BOE (misma que el sumario)</td><td data-label="Clave">No (misma cabecera)</td><td data-label="Formato">XML</td><td data-label="Probado">Sí</td></tr>
+</table>
+</div>
+
+<h2>Ganadería</h2>
+<div class="fuentes">
+<table>
+  <tr><th>Fuente</th><th>Qué da</th><th>Cómo se accede</th><th>Clave</th><th>Formato</th><th>Probado</th></tr>
+  <tr><td data-label="Fuente">REGA / SIGGAN</td><td data-label="Qué da">Registro de explotaciones ganaderas, censos, movimientos y trazabilidad animal</td><td data-label="Cómo se accede">El registro estatal y autonómico es de acceso restringido al titular; algunas comunidades publican censos agregados en abierto</td><td data-label="Clave">Restringido</td><td data-label="Formato">CSV, JSON, XLSX</td><td data-label="Probado">No</td></tr>
+  <tr><td data-label="Fuente">PRESVET</td><td data-label="Qué da">Prescripciones veterinarias de antibióticos (comunicación al menos quincenal)</td><td data-label="Cómo se accede">Servicios web del sistema, previa autorización</td><td data-label="Clave">Restringido</td><td data-label="Formato">JSON, XML</td><td data-label="Probado">No</td></tr>
+  <tr><td data-label="Fuente">Estadísticas ganaderas</td><td data-label="Qué da">Encuestas de efectivos y de sacrificio de ganado por especie</td><td data-label="Cómo se accede">Descargas del MAPA</td><td data-label="Clave">No</td><td data-label="Formato">XLSX, PDF</td><td data-label="Probado">No</td></tr>
+</table>
+</div>
+
+<h2>Trazabilidad e industria (EUDR)</h2>
+<div class="fuentes">
+<table>
+  <tr><th>Fuente</th><th>Qué da</th><th>Cómo se accede</th><th>Clave</th><th>Formato</th><th>Probado</th></tr>
+  <tr><td data-label="Fuente">Global Forest Watch</td><td data-label="Qué da">Alertas de deforestación casi en tiempo real (tres sistemas de detección) y análisis de riesgo por cadena de suministro, orientado a la <strong>diligencia debida</strong> que exige el Reglamento europeo de deforestación</td><td data-label="Cómo se accede">Portal de datos abiertos y su Data API</td><td data-label="Clave">Gratis con registro</td><td data-label="Formato">JSON, CSV, GeoTIFF</td><td data-label="Probado">Sí</td></tr>
+  <tr><td data-label="Fuente">TRACES NT</td><td data-label="Qué da">Certificados sanitarios y trazabilidad del comercio intracomunitario e importación</td><td data-label="Cómo se accede">Portal de la Comisión Europea (acceso autenticado)</td><td data-label="Clave">Sí, EU Login</td><td data-label="Formato">HTML, PDF</td><td data-label="Probado">No</td></tr>
+</table>
+</div>
+
+<h2>Las 6 trampas que cuestan horas</h2>
+<p>No saltan a la vista en la documentación. Nos costaron tiempo; a ti te lo ahorran.</p>
+<ul>
+  <li><strong>El certificado del MAPA.</strong> Desde octubre de 2026, <code>servicio.mapa.gob.es</code> usa la jerarquía nueva de la FNMT, y su raíz (<em>AC RAIZ FNMT-RCM SERVIDORES SEGUROS G2R</em>) no viene en el almacén de Python ni en el de muchas imágenes de Linux. El navegador entra, pero el script falla con <code>CERTIFICATE_VERIFY_FAILED</code>. La solución es añadir esa raíz, descargada de la sede de la FNMT, no desactivar la verificación.</li>
+  <li><strong>SIGPAC llega siempre comprimido.</strong> Si no pides la descompresión, recibes bytes binarios en lugar de JSON.</li>
+  <li><strong>La OGC API de SIGPAC sirve 250 recintos por página como mucho.</strong> Si pides <code>limit=1000</code> te da 250 sin error. El total está en <code>numberMatched</code> y el resto, siguiendo el enlace <code>next</code>: si no paginas, trabajas con menos datos sin darte cuenta.</li>
+  <li><strong>SIGPAC no usa el código de municipio del INE.</strong> Usa el del Catastro: Madrid es 28:900, no 28079. Más de 4.400 municipios cambian de número. Sin la tabla de equivalencias, cruzas datos y <em>no da error</em>: da mal.</li>
+  <li><strong>El BOE necesita una cabecera.</strong> Sin <code>Accept: application/xml</code> devuelve 400 aunque la URL sea correcta.</li>
+  <li><strong>La BDNS devuelve 50 filas si no pides tamaño de página.</strong> Hay más de 650.000 convocatorias: el total viene en <code>totalElements</code>, pero si no paginas te quedas con las 50 primeras.</li>
+</ul>
+
+<h2>De dónde sale esto y cómo se mantiene</h2>
+<p>Partimos del catálogo abierto de fuentes públicas de <a href="https://github.com/BquantFinance/Administracion-fuentes-publicas" rel="noopener">Bquant</a> (licencia CC0) y lo hemos ampliado y revisado fuente a fuente en octubre de 2026. Las 14 marcadas como probadas se llamaron de verdad; el resto exige alta o solo tiene web, y su ficha sale de la página oficial. También decimos lo que <strong>no</strong> existe, que es igual de útil: no hay API ni descarga masiva de los usos del registro de fitosanitarios, el SIGGAN ganadero es de acceso restringido, y no hay forma de pedir las lonjas de una vez.</p>
+<p>Varias las usamos ya en FnF: el registro de fitosanitarios alimenta la <a href="/herramientas/calculadora-caldo">calculadora de caldo</a> y las páginas de <a href="/usos/">usos autorizados</a>, y SIGPAC, la <a href="/herramientas/direccion-de-trabajo">dirección de trabajo</a>. Publicar la guía nos obliga a mantenerla al día.</p>
+
+<h2>Preguntas frecuentes</h2>
+<h3>¿Puedo usar estos datos en mi propia aplicación?</h3>
+<p>En general sí: casi todas son reutilización libre citando la fuente (SIGPAC es CC BY 4.0). Respeta la licencia de cada una, no las mezcles sin citar y no presentes como oficial un dato derivado.</p>
+<h3>¿Y si necesito un dato que no está aquí?</h3>
+<p>Si es agrario y público, probablemente exista. Escríbenos y lo buscamos; si lo encontramos, lo añadimos y lo comprobamos.</p>
+<h3>¿Esto sustituye a la etiqueta del producto o al registro oficial?</h3>
+<p>No. Es una guía de acceso a datos, con fines informativos. Para fitosanitarios, la etiqueta autorizada es la única referencia legal.</p>
+
+<div class="cta-box">
+  <h2>¿Quieres estos datos dentro de tu sistema, sin montarlo tú?</h2>
+  <p>Es lo que estamos construyendo en FnF: el cuaderno ya valida cada tratamiento contra el registro oficial, y la parcela, la meteo, el satélite y los precios se van conectando encima. Si te interesa, pide acceso y te contamos qué está listo hoy.</p>
+  <p><a class="btn btn-primary" href="/#acceso">Solicita acceso</a> &nbsp; <a href="mailto:hola@fnfanalytics.com?subject=Fuentes%20de%20datos%20p%C3%BAblicos">o escríbenos a hola@fnfanalytics.com</a></p>
+</div>
+
+</main>
+
+<footer>
+  <div class="in">
+    <div class="fl"><img src="/assets/logo-mark.png" alt="" width="13" height="24"><b>food&amp;farm analytics</b></div>
+    <nav aria-label="Pie">
+      <a href="/cuaderno-digital">Cuaderno digital 2027</a>
+      <a href="/plantillas/">Plantillas gratis</a>
+      <a href="/herramientas/calculadora-caldo">Calculadora de caldo</a>
+      <a href="/herramientas/direccion-de-trabajo">Dirección de trabajo</a>
+      <a href="/fuentes-datos-publicos">Fuentes de datos públicos</a>
+      <a href="/usos/">Usos autorizados</a>
+      <a href="/asesores">Asesores</a>
+      <a href="/privacidad">Privacidad</a>
+      <a href="/aviso-legal">Aviso legal</a>
+    </nav>
+    <p>© 2026 · <a href="mailto:hola@fnfanalytics.com">hola@fnfanalytics.com</a></p>
+  </div>
+</footer>
+</body>
+</html>

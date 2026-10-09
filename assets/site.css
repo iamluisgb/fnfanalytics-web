@@ -407,6 +407,18 @@ footer nav a:hover{color:#fff}
 .prose th,.prose td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
 .prose th{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);font-weight:400}
 .prose td.data{white-space:nowrap;font-weight:600;color:var(--ink)}
+/* tablas anchas de guía (fuentes-datos-publicos): en el móvil, cada fila es una ficha */
+@media (max-width:640px){
+  .fuentes tr:first-child{display:none}
+  .fuentes tr{display:block;padding:12px 0;border-bottom:1px solid var(--line)}
+  .fuentes td{display:block;border:0;padding:3px 0}
+  .fuentes td::before{content:attr(data-label);display:block;font-family:var(--font-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+  .fuentes td:first-child{font-weight:600;color:var(--ink)}
+  .fuentes td:first-child::before{content:none}
+  .fuentes.cifras td:first-child{font-weight:400}
+  .fuentes.cifras td:first-child::before{content:attr(data-label)}
+  .fuentes code{word-break:break-all}
+}
 .prose .cta-box{background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--r-m);padding:var(--s-6);margin-top:40px}
 .prose .cta-box h2{margin-top:0}
 .prose .src{font-size:.8rem}
