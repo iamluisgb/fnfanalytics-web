@@ -162,7 +162,7 @@ html,body{background:transparent}
     <div class="cards" id="cards"></div>
     <div class="escena" id="escena" role="img" aria-label="Una finca de frutales en 3D: seis parcelas de frutales con sus árboles en hileras, la parcela El Cercado con árboles más pequeños y en naranja, y los sensores de la explotación sobre el terreno.">
       <div class="hud"><span><b>17</b> fuentes</span><span><b>6</b> parcelas · 13,8 ha</span><span id="reloj">08:14:07</span></div>
-      <div class="leyenda"><span><i style="background:#1fc394"></i>vigor alto</span><span><i style="background:#127f61"></i>vigor medio</span><span><i style="background:#e0a33e"></i>en alerta</span><span>tamaño de copa = NDVI</span></div>
+      <div class="leyenda"><span><i style="background:#4a8530"></i>vigor alto</span><span><i style="background:#6a8034"></i>vigor medio</span><span><i style="background:#e0a33e"></i>en alerta</span><span>tamaño de copa = NDVI</span></div>
       <div class="explora" id="explora" hidden><span class="pista" id="pista" hidden></span><button type="button" class="z" id="zmas" aria-label="Acercar" hidden>+</button><button type="button" class="z" id="zmenos" aria-label="Alejar" hidden>−</button><button type="button" class="ir" id="ir">Explora la finca</button></div>
     </div>
     <aside class="ia" aria-live="polite">
@@ -222,7 +222,7 @@ html,body{background:transparent}
 <script>
 (() => {
   const $ = id => document.getElementById(id);
-  const SUELO = '/assets/inteligencia-suelo.jpg';
+  const SUELO = '/assets/inteligencia-suelo.webp';
   const PARC = {"0":[[584.8,370.9],[584.6,370.9],[570.3,369.1],[549.5,366.6],[411.4,349.6],[412.1,344.7],[428.4,219.8],[428.5,219.4],[432.8,180.3],[453.2,182.2],[590.0,194.8],[601.3,195.9],[600.0,204.0],[598.9,211.3],[587.3,285.7],[584.4,303.8],[584.6,348.5],[584.6,352.6],[584.7,366.7]],"1":[[1163.7,1070.5],[1158.8,1069.9],[1121.1,1064.3],[1103.5,1061.9],[1091.7,1060.2],[1075.8,1058.0],[1067.9,1056.9],[1061.9,1056.1],[1060.0,1055.8],[1056.0,1055.2],[1052.9,1054.8],[1052.9,1054.8],[1052.8,1054.8],[1052.0,1054.7],[1044.1,1053.6],[1034.2,1052.2],[1030.3,1051.6],[1018.4,1050.0],[1008.5,1048.6],[1002.5,1047.8],[994.6,1046.6],[988.7,1045.7],[987.6,1045.6],[987.0,1045.5],[986.5,1045.4],[984.4,1045.1],[984.2,1045.1],[984.7,1040.5],[978.3,1039.9],[975.3,1039.7],[975.4,1038.9],[980.5,1039.4],[981.1,1033.3],[983.6,1006.6],[984.1,1001.3],[986.2,976.7],[986.7,970.1],[987.0,965.6],[992.7,923.1],[991.8,920.1],[993.2,905.3],[993.2,902.3],[993.4,900.7],[993.7,898.4],[996.1,880.5],[997.6,877.8],[1003.2,879.7],[1012.0,880.3],[1014.2,873.8],[1084.3,880.3],[1170.0,889.3],[1200.8,892.4],[1170.0,1067.8],[1169.9,1068.5],[1167.1,1068.0],[1166.0,1069.9],[1165.7,1070.0]],"2":[[601.9,191.9],[590.3,190.8],[453.5,178.2],[433.2,176.3],[446.2,57.8],[466.0,66.0],[472.5,67.2],[475.9,67.5],[478.8,66.9],[482.8,63.0],[485.5,56.5],[488.1,44.8],[489.1,35.9],[489.3,35.9],[503.7,37.9],[515.1,39.5],[534.8,42.3],[537.4,42.7],[538.2,42.8],[538.6,42.9],[539.2,43.0],[550.2,44.5],[553.1,44.9],[554.6,45.2],[555.1,45.2],[623.5,54.9],[622.4,62.1],[603.4,182.4]],"3":[[938.2,1190.7],[848.4,1178.1],[729.6,1161.1],[647.6,1149.8],[639.4,1144.9],[650.3,1128.6],[675.0,1079.6],[676.5,1074.2],[676.8,1072.8],[677.1,1072.8],[688.4,1074.2],[739.0,1080.4],[755.8,1083.1],[845.8,1095.4],[943.2,1108.4],[955.1,1110.8],[960.1,1112.3],[952.9,1157.8],[952.0,1161.7],[950.8,1166.9],[950.1,1168.1],[945.0,1177.6],[942.4,1182.6]],"4":[[581.4,453.9],[510.8,444.7],[485.6,441.4],[446.3,436.3],[407.0,431.2],[404.4,430.8],[400.2,430.3],[403.1,409.4],[403.9,403.5],[404.0,403.2],[406.9,402.5],[412.5,362.2],[414.8,355.3],[419.7,354.2],[459.1,358.9],[578.7,373.5],[581.8,381.7],[579.9,446.1]],"5":[[516.0,783.8],[456.9,763.9],[397.7,743.9],[397.2,743.7],[393.4,742.5],[393.3,742.4],[389.8,741.3],[375.8,736.4],[375.6,736.3],[361.9,731.4],[372.5,651.0],[427.4,667.4],[468.1,679.6],[475.6,683.1],[530.0,700.7],[535.3,700.7],[534.1,707.8],[532.8,714.5],[532.7,715.1],[529.0,735.7],[520.6,764.8],[517.5,777.6]]};   // contornos SIGPAC reales en coordenadas de la imagen de 1600 × 1234
   const NDVI = [.54, .50, .52, .47, .45, .38], NOMBRES = ['La Vega', 'Los Regadíos', 'El Canal', 'Las Suertes', 'El Molino', 'El Cercado'];
   const ALERTA = 5;
@@ -286,24 +286,64 @@ html,body{background:transparent}
   const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let R;
   try { R = new THREE.WebGLRenderer({antialias:true}); } catch (e) { R = null; }
+  if (R) {
+    // color en sRGB con mapeo ACES y sombras suaves del sol
+    R.outputEncoding = THREE.sRGBEncoding; R.toneMapping = THREE.ACESFilmicToneMapping; R.toneMappingExposure = .95;
+    R.shadowMap.enabled = true; R.shadowMap.type = THREE.PCFSoftShadowMap;
+  }
+  // el fondo y la niebla se pintan ya en sRGB; el resto de colores se pasan a lineal al final de la escena
   const S = new THREE.Scene(); S.background = new THREE.Color('#0c1210'); S.fog = new THREE.Fog('#0c1210', 18, 34);
   const cam = new THREE.PerspectiveCamera(38, 1, .1, 100);
-  S.add(new THREE.HemisphereLight(0xdfffee, 0x0c1210, .9));
-  const sol = new THREE.DirectionalLight(0xffffff, .8); sol.position.set(-6, 12, 6); S.add(sol);
+  S.add(new THREE.HemisphereLight(0xd6e6f2, 0x3a3524, .75));
+  // sol de mañana, bajo, para que las copas den sombra larga sobre la ortofoto
+  const sol = new THREE.DirectionalLight(0xfff0d8, 2.1); sol.position.set(-7, 8, 5); S.add(sol);
+  sol.castShadow = true; const ligero = matchMedia('(max-width:560px)').matches || (navigator.hardwareConcurrency || 8) <= 4;
+  sol.shadow.mapSize.setScalar(ligero ? 1024 : 2048); sol.shadow.bias = -.0005; sol.shadow.normalBias = .01; sol.shadow.radius = 3;
+  Object.assign(sol.shadow.camera, {left:-8.5, right:8.5, top:8.5, bottom:-8.5, near:1, far:30});
 
   const W = 16, D = 12.34, mx = x => (x - 800) * .01, mz = y => (y - 617) * .01;
   const tex = new THREE.TextureLoader().load(SUELO, () => draw());
-  const suelo = new THREE.Mesh(new THREE.PlaneGeometry(W, D), new THREE.MeshBasicMaterial({map:tex, color:0x6b7a72}));
-  suelo.rotation.x = -Math.PI / 2; S.add(suelo);
+  tex.encoding = THREE.sRGBEncoding; tex.anisotropy = R ? R.capabilities.getMaxAnisotropy() : 1;
+  // el borde de la ortofoto se funde con la rejilla en vez de cortarse en seco
+  const fundido = (() => { const n = 128, cv = document.createElement('canvas'); cv.width = cv.height = n;
+    const cx = cv.getContext('2d'), im = cx.createImageData(n, n), f = t => { t = Math.min(1, t / .16); return t * t * (3 - 2 * t); };
+    for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) { const u = (i + .5) / n, v = (j + .5) / n, a = 255 * f(Math.min(u, 1 - u)) * f(Math.min(v, 1 - v)), o = (j * n + i) * 4;
+      im.data[o] = im.data[o + 1] = im.data[o + 2] = a; im.data[o + 3] = 255; }
+    cx.putImageData(im, 0, 0); return new THREE.CanvasTexture(cv); })();
+  const suelo = new THREE.Mesh(new THREE.PlaneGeometry(W, D), new THREE.MeshBasicMaterial({map:tex, alphaMap:fundido, transparent:true, color:0x7a847c, toneMapped:false}));
+  suelo.rotation.x = -Math.PI / 2; suelo.renderOrder = -2; S.add(suelo);
+  // la ortofoto no se ilumina (se vería lavada): las sombras van en una capa encima
+  const sombras = new THREE.Mesh(new THREE.PlaneGeometry(W, D), new THREE.ShadowMaterial({opacity:.5}));
+  sombras.rotation.x = -Math.PI / 2; sombras.position.y = .003; sombras.receiveShadow = true; sombras.renderOrder = -1; S.add(sombras);
   // rejilla de sala de control alrededor de la finca
   const rej = new THREE.GridHelper(40, 40, 0x223029, 0x182520); rej.position.y = -.01; S.add(rej);
 
-  const color = v => v >= .5 ? 0x2fbf8c : v >= .46 ? 0x22a079 : 0x1b8466;
+  const color = v => v >= .5 ? 0x4a8530 : v >= .46 ? 0x6a8034 : 0x7a7c3c;
   // ¿un punto (x, z) cae dentro del contorno?
   const dentro = (x, z, poly) => { let d = false; for (let a = 0, b = poly.length - 1; a < poly.length; b = a++) {
     const [xa, za] = poly[a], [xb, zb] = poly[b]; if ((za > z) !== (zb > z) && x < (xb - xa) * (z - za) / (zb - za) + xa) d = !d; } return d; };
-  const arbolGeo = new THREE.IcosahedronGeometry(1, 0);
+  // frutal: tronco y copa de tres masas con relieve; la copa se oscurece hacia abajo (oclusión pintada)
   let semilla = 7; const rnd = () => (semilla = (semilla * 16807) % 2147483647) / 2147483647;
+  function juntar(geos) {
+    const out = new THREE.BufferGeometry(), at = n => [].concat(...geos.map(g => Array.from(g.attributes[n].array)));
+    ['position', 'normal', 'color'].forEach((n, i) => out.setAttribute(n, new THREE.Float32BufferAttribute(at(n), 3)));
+    return out;
+  }
+  const copaGeo = juntar([[1, 0, 1.45, 0], [.72, .42, 1.78, .18], [.62, -.38, 1.62, -.3], [.55, .05, 2.05, -.12]].map(([r, x, y, z]) => {
+    const g = new THREE.IcosahedronGeometry(r, 1), p = g.attributes.position, col = [];
+    for (let k = 0; k < p.count; k++) {
+      const vx = p.getX(k), vy = p.getY(k), vz = p.getZ(k);
+      // relieve fijo por vértice (la misma esquina de dos caras se mueve igual)
+      const n = .86 + .2 * (Math.sin(vx * 12.9 + vz * 7.3) * Math.sin(vy * 9.1 + vx * 3.7) * .5 + .5);
+      p.setXYZ(k, x + vx * n, y + vy * n * .88, z + vz * n);
+      const h = Math.min(1, Math.max(0, (y + vy - .7) / 1.9)); col.push(...Array(3).fill(.42 + .58 * h));
+    }
+    g.setAttribute('color', new THREE.Float32BufferAttribute(col, 3)); g.computeVertexNormals(); return g;
+  }));
+  const troncoGeo = (() => { const g = new THREE.CylinderGeometry(.07, .12, 1.05, 5, 1).toNonIndexed(); g.translate(0, .52, 0);
+    g.setAttribute('color', new THREE.Float32BufferAttribute(Array(g.attributes.position.count * 3).fill(1), 3)); return g; })();
+  const copaMat = new THREE.MeshStandardMaterial({vertexColors:true, flatShading:true, roughness:.9});
+  const troncoMat = new THREE.MeshStandardMaterial({color:0x5b4632, roughness:1});
   const parcelas = Object.entries(PARC).map(([i, pts]) => {
     i = +i; const alerta = i === ALERTA, poly = pts.map(([x, y]) => [mx(x), mz(y)]);
     const g = new THREE.Group(); S.add(g);
@@ -321,93 +361,197 @@ html,body{background:transparent}
     const pos = [];
     for (let v = v0 + .05; v < v1; v += .085) for (let u = u0 + .04; u < u1; u += .06) {
       const x = u * ca - v * sa, z = u * sa + v * ca;
-      if (dentro(x, z, poly) && !(alerta && rnd() < .07)) pos.push([x + (rnd() - .5) * .01, z + (rnd() - .5) * .01, .85 + rnd() * .3]);
+      if (dentro(x, z, poly) && !(alerta && rnd() < .07)) pos.push([x + (rnd() - .5) * .01, z + (rnd() - .5) * .01, .85 + rnd() * .3, rnd() * 6.28]);
     }
     const r = .02 + (NDVI[i] - .3) * .075;               // copa según el vigor
-    const inst = new THREE.InstancedMesh(arbolGeo, new THREE.MeshStandardMaterial({flatShading:true, roughness:.85}), pos.length);
-    const base = new THREE.Color(alerta ? 0xc9a24a : color(NDVI[i]));
-    pos.forEach((_, j) => inst.setColorAt(j, base.clone().offsetHSL(0, 0, (rnd() - .5) * .1)));
-    g.add(inst);
+    const inst = new THREE.InstancedMesh(copaGeo, copaMat, pos.length), tronco = new THREE.InstancedMesh(troncoGeo, troncoMat, pos.length);
+    const base = new THREE.Color(alerta ? 0xc49a3a : color(NDVI[i]));
+    // cada árbol con su matiz; en El Cercado, algunos más secos
+    pos.forEach((_, j) => inst.setColorAt(j, base.clone().offsetHSL((rnd() - .5) * .03, (rnd() - .5) * .1, (rnd() - .5) * .08 - (alerta && rnd() < .25 ? .08 : 0)).convertSRGBToLinear()));
+    [inst, tronco].forEach(m => { m.castShadow = true; g.add(m); });
     const c = poly.reduce((a, [x, z]) => [a[0] + x / poly.length, a[1] + z / poly.length], [0, 0]);
-    return {g, inst, pos, r, alerta, c, poly, h:r * 2, placaMat, crecido:-1};
+    return {g, inst, tronco, pos, r, alerta, c, poly, h:r * 2, placaMat, crecido:-1};
   });
   // los árboles crecen (escala de 0 a 1); solo se recalculan mientras cambian
-  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), vp = new THREE.Vector3(), vs = new THREE.Vector3();
+  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), Y = new THREE.Vector3(0, 1, 0), vp = new THREE.Vector3(), vs = new THREE.Vector3();
   function crecer(p, f) {
     if (Math.abs(f - p.crecido) < .004) return; p.crecido = f;
-    p.pos.forEach(([x, z, k], j) => { const e = Math.max(.0001, p.r * k * f); vp.set(x, e * .9, z); vs.set(e, e * 1.15, e); m4.compose(vp, q, vs); p.inst.setMatrixAt(j, m4); });
-    p.inst.instanceMatrix.needsUpdate = true;
+    p.pos.forEach(([x, z, k, giro], j) => { const e = Math.max(.0001, p.r * k * f * .9); vp.set(x, 0, z); vs.set(e, e, e); q.setFromAxisAngle(Y, giro); m4.compose(vp, q, vs); p.inst.setMatrixAt(j, m4); p.tronco.setMatrixAt(j, m4); });
+    p.inst.instanceMatrix.needsUpdate = p.tronco.instanceMatrix.needsUpdate = true;
   }
   parcelas.forEach(p => crecer(p, 0));
   const cer = parcelas[ALERTA], vega = parcelas[0];
   const ancla = (x, y, z) => new THREE.Vector3(x, y, z);
 
-  // sensores de la explotación
-  const M = c => new THREE.MeshStandardMaterial({color:c, roughness:.5, metalness:.2});
+  // sensores de la explotación: proporciones de los equipos reales, a escala de maqueta
+  const M = (c, rough = .55, metal = .1, extra) => new THREE.MeshStandardMaterial(Object.assign({color:c, roughness:rough, metalness:metal}, extra));
+  const MAT = {alu:M(0xc3ccd0, .4, .3), blanco:M(0xe8ecea, .6), gris:M(0x59626a, .6, .3), negro:M(0x1b1e1f, .85), goma:M(0x151716, .95),
+    panel:M(0x22355c, .3, .3), vidrio:M(0x9fc3d6, .1, .2, {transparent:true, opacity:.35}), madera:M(0x7a5a3a, .9),
+    pvc:M(0x8d989f, .5), azul:M(0x2f6fb8, .5), carro:M(0x4a5a68, .45, .2), amarillo:M(0xe2c23a, .6), oro:M(0xc9a34a, .4, .4)};
+  const led = new THREE.MeshBasicMaterial({color:0x00e0a8});
   const objetos = {};
+  function pieza(g, geo, mat, x = 0, y = 0, z = 0, rx = 0, ry = 0, rz = 0) {
+    const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); m.rotation.set(rx, ry, rz); g.add(m); return m;
+  }
+  const caja = (g, w, h, d, mat, x, y, z, rx, ry, rz) => pieza(g, new THREE.BoxGeometry(w, h, d), mat, x, y, z, rx, ry, rz);
+  const tubo = (g, r1, r2, h, mat, x, y, z, rx, ry, rz, seg = 10) => pieza(g, new THREE.CylinderGeometry(r1, r2, h, seg), mat, x, y, z, rx, ry, rz);
+  // barra entre dos puntos
+  function barra(g, a, b, r, mat) {
+    const d = new THREE.Vector3().subVectors(b, a), m = tubo(g, r, r, d.length(), mat);
+    m.position.copy(a).addScaledVector(d, .5); m.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), d.normalize()); return m;
+  }
+  // panel solar con marco de aluminio
+  function placa(g, w, d, x, y, z, incl, ry = 0) {
+    const p = new THREE.Group(); p.position.set(x, y, z); p.rotation.set(0, ry, 0); g.add(p);
+    caja(p, w + .012, .008, d + .012, MAT.alu, 0, 0, 0, incl); caja(p, w, .01, d, MAT.panel, 0, .001, 0, incl); return p;
+  }
+  // rueda con tacos (los vértices de la banda se alternan hacia dentro)
+  function rueda(g, r, w, x, y, z, llanta) {
+    const geo = new THREE.CylinderGeometry(r, r, w, 48, 1), p = geo.attributes.position;
+    for (let k = 0; k < p.count; k++) { const vx = p.getX(k), vz = p.getZ(k), rr = Math.hypot(vx, vz);
+      if (rr > r * .99 && Math.round(Math.atan2(vz, vx) / (Math.PI / 24)) % 2) p.setXYZ(k, vx * .9, p.getY(k), vz * .9); }
+    geo.computeVertexNormals();
+    pieza(g, geo, MAT.goma, x, y, z, Math.PI / 2);
+    tubo(g, r * .58, r * .58, w * 1.04, llanta, x, y, z, Math.PI / 2, 0, 0, 16);
+    tubo(g, r * .2, r * .2, w * 1.12, MAT.gris, x, y, z, Math.PI / 2, 0, 0, 8);
+  }
   function anillo(x, z) {
     const r = new THREE.Mesh(new THREE.RingGeometry(.28, .36, 32), new THREE.MeshBasicMaterial({color:0xe0a33e, transparent:true, opacity:0, side:THREE.DoubleSide}));
     r.rotation.x = -Math.PI / 2; r.position.set(x, .02, z); S.add(r); return r;
   }
-  // estación meteorológica con anemómetro
+  const V = (x, y, z) => new THREE.Vector3(x, y, z);
+  // estación meteorológica: trípode, mástil, protector de radiación, pluviómetro, panel, registrador, anemómetro y veleta
   {
     const g = new THREE.Group(), x = cer.c[0] + 2.0, z = cer.c[1] - 1.6;
-    const poste = new THREE.Mesh(new THREE.CylinderGeometry(.025, .03, 1.6, 8), M(0xb9c9c1)); poste.position.y = .8; g.add(poste);
-    const caja = new THREE.Mesh(new THREE.BoxGeometry(.18, .22, .12), M(0xe6f0ea)); caja.position.y = 1.0; g.add(caja);
-    const molino = new THREE.Group(); molino.position.y = 1.65; g.add(molino);
-    for (let k = 0; k < 3; k++) { const brazo = new THREE.Mesh(new THREE.BoxGeometry(.32, .015, .015), M(0xb9c9c1)); brazo.rotation.y = k * 2.09; molino.add(brazo);
-      const taza = new THREE.Mesh(new THREE.SphereGeometry(.04, 8, 6), M(0x00c896)); taza.position.set(Math.cos(k * 2.09) * .16, 0, -Math.sin(k * 2.09) * .16); molino.add(taza); }
-    g.position.set(x, 0, z); S.add(g); objetos.est = {g, a:ancla(x, 1.95, z), ring:anillo(x, z), molino};
+    tubo(g, .022, .026, 1.62, MAT.alu, 0, .81, 0);
+    [0, 2.09, 4.19].forEach(a => barra(g, V(0, .5, 0), V(Math.cos(a) * .36, 0, Math.sin(a) * .36), .012, MAT.alu));
+    caja(g, .15, .2, .08, MAT.blanco, 0, .62, .07); pieza(g, new THREE.SphereGeometry(.012, 8, 6), led, .05, .69, .112);
+    placa(g, .26, .18, 0, .95, -.1, -.6);
+    // protector de radiación: platos apilados en un brazo
+    barra(g, V(0, 1.12, 0), V(.2, 1.12, 0), .01, MAT.alu);
+    for (let k = 0; k < 7; k++) tubo(g, .065 - k * .002, .07 - k * .002, .012, MAT.blanco, .22, 1.04 + k * .024, 0, 0, 0, 0, 16);
+    tubo(g, .07, .07, .01, MAT.blanco, .22, 1.214, 0, 0, 0, 0, 16);
+    // pluviómetro
+    barra(g, V(0, 1.3, 0), V(-.2, 1.3, 0), .01, MAT.alu);
+    tubo(g, .05, .045, .14, MAT.blanco, -.22, 1.34, 0, 0, 0, 0, 16);
+    // cruceta con anemómetro de cazoletas y veleta
+    barra(g, V(-.2, 1.62, 0), V(.2, 1.62, 0), .01, MAT.alu);
+    const molino = new THREE.Group(); molino.position.set(.2, 1.68, 0); g.add(molino);
+    tubo(molino, .012, .016, .06, MAT.gris, 0, -.03, 0);
+    const cazo = new THREE.SphereGeometry(.035, 12, 8, 0, Math.PI * 2, 0, Math.PI / 2);
+    for (let k = 0; k < 3; k++) { const a = k * 2.09, bx = Math.cos(a) * .13, bz = -Math.sin(a) * .13;
+      barra(molino, V(0, 0, 0), V(bx, 0, bz), .005, MAT.alu);
+      pieza(molino, cazo, MAT.negro, bx, 0, bz, 0, a, Math.PI / 2); }
+    const vel = new THREE.Group(); vel.position.set(-.2, 1.66, 0); vel.rotation.y = .7; g.add(vel);
+    barra(vel, V(-.1, 0, 0), V(.16, 0, 0), .006, MAT.alu); caja(vel, .09, .07, .004, MAT.negro, .15, 0, 0);
+    pieza(vel, new THREE.ConeGeometry(.015, .04, 8), MAT.negro, -.11, 0, 0, 0, 0, Math.PI / 2);
+    g.position.set(x, 0, z); S.add(g); objetos.est = {g, a:V(x, 1.95, z), ring:anillo(x, z), molino};
   }
-  // sondas de suelo en El Cercado
+  // sondas de humedad: tres tubos a distintas profundidades, cableados a un registrador con panel
   {
-    const g = new THREE.Group(), base = 0;
+    const g = new THREE.Group(), [cx, cz] = cer.c, lx = cx + .5, lz = cz - .4;
     [[-.25, .1], [.05, -.15], [.3, .12]].forEach(([dx, dz]) => {
-      const s = new THREE.Mesh(new THREE.CylinderGeometry(.02, .02, .6, 6), M(0xb9c9c1)); s.position.set(cer.c[0] + dx, base + .3, cer.c[1] + dz); g.add(s);
-      const t = new THREE.Mesh(new THREE.CylinderGeometry(.06, .06, .08, 10), M(0x00c896)); t.position.set(cer.c[0] + dx, base + .62, cer.c[1] + dz); g.add(t);
+      tubo(g, .028, .028, .32, MAT.pvc, cx + dx, .16, cz + dz, 0, 0, 0, 12);
+      tubo(g, .036, .036, .05, MAT.gris, cx + dx, .345, cz + dz, 0, 0, 0, 12);
+      pieza(g, new THREE.SphereGeometry(.01, 8, 6), led, cx + dx, .375, cz + dz);
+      barra(g, V(cx + dx, .02, cz + dz), V(lx, .02, lz), .006, MAT.negro);
     });
-    S.add(g); objetos.sonda = {g, a:ancla(cer.c[0] + .1, base + 1.25, cer.c[1] - .1), ring:anillo(cer.c[0], cer.c[1])};
+    tubo(g, .015, .015, .55, MAT.alu, lx, .275, lz);
+    caja(g, .13, .15, .07, MAT.blanco, lx, .42, lz + .04);
+    placa(g, .16, .12, lx, .58, lz - .02, -.7);
+    S.add(g); objetos.sonda = {g, a:V(cx + .1, 1.25, cz - .1), ring:anillo(cx, cz)};
   }
-  // caudalímetro en la cabecera de riego de El Cercado, con la tubería que entra en la parcela
+  // hidrante de la cabecera de riego: base, tubería vertical, válvula de volante, caudalímetro y manguera plana hasta la parcela
   {
     const g = new THREE.Group(), [cx, cz] = cer.c;
     const esq = cer.poly.reduce((m, p) => (p[0] - p[1] < m[0] - m[1] ? p : m));
     const dx = esq[0] - cx, dz = esq[1] - cz, d = Math.hypot(dx, dz) || 1;
-    const x = esq[0] + dx / d * .2, z = esq[1] + dz / d * .2;
-    const caja = new THREE.Mesh(new THREE.BoxGeometry(.18, .16, .14), M(0x4f8fe6)); caja.position.set(x, .1, z); g.add(caja);
-    const valv = new THREE.Mesh(new THREE.CylinderGeometry(.05, .05, .03, 12), M(0xe0a33e)); valv.position.set(x, .22, z); g.add(valv);
-    const L = Math.hypot(cx - x, cz - z), tg = new THREE.CylinderGeometry(.022, .022, L, 8); tg.rotateZ(Math.PI / 2);
-    const tubo = new THREE.Mesh(tg, M(0x4f8fe6)); tubo.position.set((x + cx) / 2, .035, (z + cz) / 2); tubo.rotation.y = -Math.atan2(cz - z, cx - x); g.add(tubo);
-    S.add(g); objetos.caudal = {g, a:ancla(x, .3, z), ring:anillo(x, z)};
+    const x = esq[0] + dx / d * .2, z = esq[1] + dz / d * .2, ry = -Math.atan2(cz - z, cx - x);
+    const h = new THREE.Group(); h.position.set(x, 0, z); h.rotation.y = ry; g.add(h);
+    caja(h, .34, .05, .26, M(0x9b9a94, .95), 0, .025, 0);
+    tubo(h, .035, .035, .22, MAT.pvc, -.1, .16, 0);
+    tubo(h, .035, .035, .3, MAT.azul, .02, .27, 0, 0, 0, Math.PI / 2);
+    // válvula con volante
+    tubo(h, .045, .045, .07, MAT.gris, -.06, .27, 0, 0, 0, Math.PI / 2);
+    tubo(h, .008, .008, .08, MAT.alu, -.06, .33, 0);
+    pieza(h, new THREE.TorusGeometry(.04, .008, 6, 18), M(0xc0392b, .5), -.06, .37, 0, Math.PI / 2);
+    // caudalímetro: cuerpo con bridas y cabeza de lectura
+    tubo(h, .055, .055, .11, MAT.azul, .1, .27, 0, 0, 0, Math.PI / 2, 16);
+    [.04, .16].forEach(bx => tubo(h, .065, .065, .015, MAT.gris, bx, .27, 0, 0, 0, Math.PI / 2, 16));
+    caja(h, .07, .05, .07, MAT.negro, .1, .345, 0);
+    tubo(h, .03, .03, .006, MAT.vidrio, .1, .372, 0, 0, 0, 0, 16);
+    pieza(h, new THREE.SphereGeometry(.01, 8, 6), led, .135, .36, .03);
+    // bajada y manguera plana azul hasta el centro de la parcela
+    tubo(h, .03, .03, .25, MAT.azul, .17, .145, 0);
+    const L = Math.hypot(cx - x, cz - z) - .17, mg = new THREE.BoxGeometry(L, .012, .07); mg.translate(L / 2 + .17, .01, 0);
+    pieza(h, mg, MAT.azul);
+    S.add(g); objetos.caudal = {g, a:V(x, .45, z), ring:anillo(x, z)};
   }
-
-  // trampa con cámara en La Vega
+  // trampa delta de feromonas en estaca, con cámara y panel encima
   {
     const g = new THREE.Group(), x = vega.c[0] + .3, z = vega.c[1];
-    const poste = new THREE.Mesh(new THREE.CylinderGeometry(.02, .02, 1.3, 6), M(0xb9c9c1)); poste.position.y = .65; g.add(poste);
-    const trampa = new THREE.Mesh(new THREE.ConeGeometry(.16, .22, 3), M(0xf2d24b)); trampa.rotation.z = Math.PI / 2; trampa.position.y = 1.3; g.add(trampa);
-    g.position.set(x, 0, z); S.add(g); objetos.trampa = {g, a:ancla(x, 1.7, z), ring:anillo(x, z)};
+    caja(g, .035, 1.2, .035, MAT.madera, 0, .6, 0);
+    caja(g, .3, .025, .025, MAT.madera, .1, 1.12, 0);
+    const delta = new THREE.CylinderGeometry(.13, .13, .32, 3, 1, true); delta.rotateZ(Math.PI / 2);
+    pieza(g, delta, M(0xd8622b, .7, 0, {side:THREE.DoubleSide}), .14, 1.0, 0, Math.PI);
+    caja(g, .3, .006, .2, MAT.amarillo, .14, .94, 0);
+    barra(g, V(.14, 1.11, 0), V(.14, 1.06, 0), .004, MAT.alu);
+    caja(g, .1, .08, .08, MAT.gris, -.02, 1.2, 0);
+    tubo(g, .018, .018, .03, MAT.negro, .04, 1.2, 0, 0, 0, Math.PI / 2, 12);
+    pieza(g, new THREE.SphereGeometry(.01, 8, 6), led, -.02, 1.25, .042);
+    placa(g, .14, .1, -.02, 1.28, 0, -.5);
+    g.position.set(x, 0, z); S.add(g); objetos.trampa = {g, a:V(x, 1.7, z), ring:anillo(x, z)};
   }
-  // tractor con telemetría
+  // tractor frutero con cabina, antena GNSS y atomizador arrastrado
   {
     const g = new THREE.Group(), x = cer.c[0] + 2.6, z = 4.1;
-    const cuerpo = new THREE.Mesh(new THREE.BoxGeometry(.55, .22, .3), M(0x22312a)); cuerpo.position.set(.08, .26, 0); g.add(cuerpo);
-    const cabina = new THREE.Mesh(new THREE.BoxGeometry(.24, .26, .28), M(0x7fa8b8)); cabina.position.set(-.08, .5, 0); g.add(cabina);
-    [[-.1, .2, .17], [-.1, .2, -.17], [.25, .12, .15], [.25, .12, -.15]].forEach(([wx, r, wz]) => {
-      const rueda = new THREE.Mesh(new THREE.CylinderGeometry(r, r, .08, 14), M(0x0c1210)); rueda.rotation.x = Math.PI / 2; rueda.position.set(wx, r, wz); g.add(rueda); });
-    const atom = new THREE.Mesh(new THREE.CylinderGeometry(.14, .14, .4, 14), M(0xe6f0ea)); atom.rotation.z = Math.PI / 2; atom.position.set(-.45, .3, 0); g.add(atom);
-    const antena = new THREE.Mesh(new THREE.CylinderGeometry(.008, .008, .3, 4), M(0x00c896)); antena.position.set(-.08, .78, .1); g.add(antena);
-    g.rotation.y = .4; g.position.set(x, 0, z); S.add(g); objetos.tractor = {g, a:ancla(x, 1.1, z), ring:anillo(x, z)};
+    // capó y motor
+    caja(g, .4, .15, .18, MAT.carro, .22, .25, 0);
+    caja(g, .02, .12, .16, MAT.negro, .425, .24, 0);
+    caja(g, .08, .03, .19, MAT.gris, .45, .16, 0);
+    tubo(g, .012, .012, .2, MAT.negro, .2, .42, .06);
+    caja(g, .22, .08, .26, MAT.carro, -.1, .25, 0);
+    // cabina: pilares, techo y cristales
+    [[.02, .1], [.02, -.1], [-.2, .1], [-.2, -.1]].forEach(([px, pz]) => caja(g, .018, .3, .018, MAT.negro, px, .44, pz));
+    caja(g, .28, .03, .26, MAT.blanco, -.09, .6, 0);
+    caja(g, .2, .26, .19, MAT.vidrio, -.09, .44, 0);
+    caja(g, .06, .06, .1, MAT.negro, -.12, .38, 0);
+    pieza(g, new THREE.SphereGeometry(.03, 12, 8, 0, Math.PI * 2, 0, Math.PI / 2), MAT.blanco, -.12, .615, 0);
+    pieza(g, new THREE.SphereGeometry(.01, 8, 6), led, -.03, .625, .1);
+    // ruedas: traseras grandes, delanteras pequeñas
+    const llanta = M(0xa9b1b6, .45, .3);
+    [.15, -.15].forEach(wz => { rueda(g, .17, .09, -.1, .17, wz, llanta); rueda(g, .1, .065, .3, .1, wz * .9, llanta); });
+    // atomizador: lanza, depósito, chasis y ventilador trasero
+    barra(g, V(-.24, .14, 0), V(-.42, .14, 0), .012, MAT.gris);
+    tubo(g, .14, .14, .36, MAT.blanco, -.62, .28, 0, 0, 0, Math.PI / 2, 20);
+    caja(g, .4, .03, .2, MAT.gris, -.62, .14, 0);
+    tubo(g, .17, .17, .08, MAT.gris, -.84, .28, 0, 0, 0, Math.PI / 2, 24);
+    pieza(g, new THREE.TorusGeometry(.17, .015, 6, 24), MAT.negro, -.88, .28, 0, 0, Math.PI / 2);
+    tubo(g, .05, .05, .02, MAT.negro, -.885, .28, 0, 0, 0, Math.PI / 2, 12);
+    [.13, -.13].forEach(wz => rueda(g, .09, .06, -.62, .09, wz, MAT.gris));
+    g.rotation.y = .4; g.position.set(x, 0, z); S.add(g); objetos.tractor = {g, a:V(x, 1.1, z), ring:anillo(x, z)};
   }
-  // satélite en órbita, con su haz de barrido
+  // satélite de observación: cuerpo con lámina térmica, ala solar en tres paneles e instrumento óptico
   const sat = new THREE.Group();
-  { const cuerpo = new THREE.Mesh(new THREE.BoxGeometry(.3, .3, .5), M(0xe6f0ea)); sat.add(cuerpo);
-    [-1, 1].forEach(sg => { const panel = new THREE.Mesh(new THREE.BoxGeometry(.9, .02, .34), M(0x2b4a74)); panel.position.x = sg * .62; sat.add(panel); });
-    sat.scale.setScalar(.55); S.add(sat); }
+  { caja(sat, .34, .5, .34, MAT.oro);
+    caja(sat, .22, .14, .22, MAT.blanco, 0, -.31, 0);
+    tubo(sat, .06, .06, .04, MAT.negro, 0, -.39, 0, 0, 0, 0, 16);
+    barra(sat, V(.17, .1, 0), V(.38, .1, 0), .012, MAT.alu);
+    [0, 1, 2].forEach(k => { caja(sat, .42, .02, .4, MAT.alu, .62 + k * .44, .1, 0); caja(sat, .4, .025, .38, MAT.panel, .62 + k * .44, .1, 0); });
+    pieza(sat, new THREE.CylinderGeometry(.09, .02, .08, 16, 1, true), MAT.alu, -.05, .3, 0);
+    sat.scale.setScalar(.5); sat.position.set(6, 8.5, 0); S.add(sat); }
   const conoGeo = new THREE.ConeGeometry(.9, 1, 32, 1, true); conoGeo.translate(0, -.5, 0);
   const haz = new THREE.Mesh(conoGeo, new THREE.MeshBasicMaterial({color:0x6fa8f0, transparent:true, opacity:0, side:THREE.DoubleSide, depthWrite:false}));
   S.add(haz);
-  objetos.sat = {g:sat, a:new THREE.Vector3(), ring:null};
+  objetos.sat = {g:sat, a:new THREE.Vector3(6, 9, 0), ring:null};
+  // los sensores dan sombra; los colores de los materiales se escribieron en sRGB y la escena trabaja en lineal
+  Object.values(objetos).forEach(o => o.g !== sat && o.g.traverse(m => { if (m.isMesh) m.castShadow = true; }));
+  const vistos = new Set();
+  S.traverse(m => { const mt = m.material; if (!mt || vistos.has(mt)) return; vistos.add(mt);
+    if (mt.color) mt.color.convertSRGBToLinear();
+    if (mt.isMeshBasicMaterial || mt.isLineBasicMaterial) mt.toneMapped = false;
+    if (m.isLineSegments && m.geometry.attributes.color) { const c = m.geometry.attributes.color, k = new THREE.Color();
+      for (let j = 0; j < c.count; j++) { k.fromArray(c.array, j * 3).convertSRGBToLinear(); k.toArray(c.array, j * 3); } } });
 
   // etiquetas HTML de los objetos
   Object.entries(FUENTES).filter(([, f]) => f.obj).forEach(([k, f]) => {
@@ -454,6 +598,8 @@ html,body{background:transparent}
   }
   function draw() {
     if (!R) return;
+    // sin bucle (movimiento reducido) los árboles se ponen aquí a su altura
+    if (!running) parcelas.forEach((p, i) => crecer(p, Math.min(1, Math.max(0, E.alzado * 1.6 - i * .12))));
     R.render(S, cam);
     // etiquetas
     Object.entries(FUENTES).filter(([, f]) => f.obj).forEach(([k, f]) => {
