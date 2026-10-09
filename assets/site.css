@@ -428,7 +428,7 @@ footer nav a:hover{color:#fff}
 .fd-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
 .fd-tag{font-family:var(--font-mono);font-size:.62rem;padding:1px 7px;border-radius:var(--r-s);background:var(--bg-alt);color:var(--ink-soft);white-space:nowrap}
 @media (min-width:900px){
-  .fd-filtros,.fd-vacio,.fuentes:not(.cifras),.prose h2:has(+ .fuentes:not(.cifras)){margin-left:calc(50% - min(560px, 50vw - 32px));margin-right:calc(50% - min(560px, 50vw - 32px))}
+  .fd-filtros,.fd-vacio,.fuentes:not(.cifras),.prose h2:has(+ .fuentes:not(.cifras)),.prose h2:has(+ p + .fuentes:not(.cifras)),.prose h2 + p:has(+ .fuentes:not(.cifras)){margin-left:calc(50% - min(560px, 50vw - 32px));margin-right:calc(50% - min(560px, 50vw - 32px))}
   .fuentes:not(.cifras) table{table-layout:fixed}
   .fuentes:not(.cifras) th:nth-child(1){width:17%}
   .fuentes:not(.cifras) th:nth-child(2){width:31%}

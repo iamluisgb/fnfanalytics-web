@@ -7,9 +7,12 @@
   const limpiar = document.getElementById('fdLimpiar'), vacio = document.getElementById('fdVacio');
   const norm = t => t.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase();
   const tablas = [...document.querySelectorAll('.fuentes:not(.cifras)')].map(t => {
-    let h = t.previousElementSibling; while (h && h.tagName !== 'H2') h = h.previousElementSibling;
-    const nota = t.nextElementSibling && t.nextElementSibling.matches('.fd-nota') ? t.nextElementSibling : null;
-    return { t, h, nota, filas: [...t.querySelectorAll('tr[data-para]')].map(r => [r, norm(r.textContent)]) };
+    // la sección es su h2, lo que haya entre el h2 y la tabla, y la nota de debajo si la tiene
+    const extra = [];
+    let h = t.previousElementSibling; while (h && h.tagName !== 'H2') { extra.push(h); h = h.previousElementSibling; }
+    if (h) extra.push(h);
+    if (t.nextElementSibling && t.nextElementSibling.matches('.fd-nota')) extra.push(t.nextElementSibling);
+    return { t, extra, filas: [...t.querySelectorAll('tr[data-para]')].map(r => [r, norm(r.textContent)]) };
   });
   const total = tablas.reduce((n, x) => n + x.filas.length, 0);
   const paras = [...caja.querySelectorAll('[data-para]')], flags = [...caja.querySelectorAll('[data-f]')];
@@ -34,7 +37,7 @@
           && (!t || txt.includes(t));
         r.hidden = !ok; if (ok) m++;
       });
-      [x.t, x.h, x.nota].forEach(el => el && (el.hidden = m === 0));
+      [x.t, ...x.extra].forEach(el => { el.hidden = m === 0; });
       n += m;
     });
     paras.forEach(b => b.setAttribute('aria-pressed', b.dataset.para === st.para));
