@@ -407,11 +407,45 @@ footer nav a:hover{color:#fff}
 .prose th,.prose td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
 .prose th{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);font-weight:400}
 .prose td.data{white-space:nowrap;font-weight:600;color:var(--ink)}
+/* guía de fuentes (fuentes-datos-publicos): filtros, tipo de acceso y «para qué» */
+.fd-filtros{display:grid;gap:14px;margin:28px 0 8px;padding:18px 20px;background:var(--bg-alt);border:1px solid var(--line);border-radius:var(--r-m)}
+.fd-filtros[hidden],.fd-vacio[hidden],.fd-limpiar[hidden]{display:none}
+.fd-filtros .label{display:block;margin-bottom:6px}
+.fd-buscar input{width:100%;font:inherit;font-size:.95rem;padding:10px 12px;border:1px solid var(--line-strong);border-radius:var(--r-s);background:var(--paper);color:var(--ink)}
+.fd-buscar input:focus-visible{outline:none;box-shadow:var(--glow);border-color:var(--brand-deep)}
+.fd-grupo{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.fd-grupo .label{flex-basis:100%;margin-bottom:0}
+.fd-grupo button,.fd-limpiar{font:inherit;font-size:.82rem;padding:6px 12px;border-radius:999px;border:1px solid var(--line-strong);background:var(--paper);color:var(--ink);cursor:pointer;transition:background var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease)}
+.fd-grupo button:hover{border-color:var(--ink-soft)}
+.fd-grupo button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.fd-grupo button:focus-visible,.fd-limpiar:focus-visible{outline:none;box-shadow:var(--glow)}
+.fd-n{margin:0;font-family:var(--font-mono);font-size:.78rem;color:var(--ink-soft);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.fd-limpiar{font-size:.76rem;padding:4px 10px;background:transparent}
+.fd-vacio{padding:24px 0;color:var(--ink-soft)}
+.fuentes td[data-label="Fuente"] a{color:var(--ink);font-weight:600;text-decoration-color:var(--line-strong);text-underline-offset:3px}
+.fuentes td[data-label="Fuente"] a:hover{text-decoration-color:var(--brand-deep)}
+.fd-acc{display:block;margin-top:4px;font-family:var(--font-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--brand-deep)}
+.fd-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.fd-tag{font-family:var(--font-mono);font-size:.62rem;padding:1px 7px;border-radius:var(--r-s);background:var(--bg-alt);color:var(--ink-soft);white-space:nowrap}
+@media (min-width:900px){
+  .fd-filtros,.fd-vacio,.fuentes:not(.cifras),.prose h2:has(+ .fuentes:not(.cifras)){margin-left:calc(50% - min(560px, 50vw - 32px));margin-right:calc(50% - min(560px, 50vw - 32px))}
+  .fuentes:not(.cifras) table{table-layout:fixed}
+  .fuentes:not(.cifras) th:nth-child(1){width:17%}
+  .fuentes:not(.cifras) th:nth-child(2){width:31%}
+  .fuentes:not(.cifras) th:nth-child(3){width:24%}
+  .fuentes:not(.cifras) th:nth-child(4){width:11%}
+  .fuentes:not(.cifras) th:nth-child(5){width:10%}
+  .fuentes:not(.cifras) th:nth-child(6){width:7%}
+}
 /* tablas anchas de guía (fuentes-datos-publicos): en el móvil, cada fila es una ficha */
 @media (max-width:640px){
   .fuentes tr:first-child{display:none}
-  .fuentes tr{display:block;padding:12px 0;border-bottom:1px solid var(--line)}
-  .fuentes td{display:block;border:0;padding:3px 0}
+  .fuentes tr{display:grid;grid-template-columns:repeat(3,1fr);column-gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+  .fuentes tr[hidden]{display:none}
+  .fuentes td{display:block;border:0;padding:3px 0;grid-column:1/-1}
+  .fuentes td[data-label="Clave"],.fuentes td[data-label="Formato"],.fuentes td[data-label="Probado"]{grid-column:auto}
+  .fuentes.cifras tr{grid-template-columns:repeat(2,1fr)}
+  .fuentes.cifras td{grid-column:auto}
   .fuentes td::before{content:attr(data-label);display:block;font-family:var(--font-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
   .fuentes td:first-child{font-weight:600;color:var(--ink)}
   .fuentes td:first-child::before{content:none}
