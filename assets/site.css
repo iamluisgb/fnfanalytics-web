@@ -425,6 +425,9 @@ footer nav a:hover{color:#fff}
 .fuentes td[data-label="Fuente"] a{color:var(--ink);font-weight:600;text-decoration-color:var(--line-strong);text-underline-offset:3px}
 .fuentes td[data-label="Fuente"] a:hover{text-decoration-color:var(--brand-deep)}
 .fd-acc{display:block;margin-top:4px;font-family:var(--font-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--brand-deep)}
+.fd-ccaa-sel select{width:100%;max-width:320px;font:inherit;font-size:.95rem;padding:9px 12px;border:1px solid var(--line-strong);border-radius:var(--r-s);background:var(--paper);color:var(--ink)}
+.fd-ccaa-sel select:focus-visible{outline:none;box-shadow:var(--glow);border-color:var(--brand-deep)}
+.fd-ccaa{display:block;margin-bottom:2px;font-family:var(--font-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
 .fd-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
 .fd-tag{font-family:var(--font-mono);font-size:.62rem;padding:1px 7px;border-radius:var(--r-s);background:var(--bg-alt);color:var(--ink-soft);white-space:nowrap}
 @media (min-width:900px){
