@@ -245,7 +245,7 @@ html,body{background:transparent}
     // lo que apunta el agricultor y su equipo
     notas:  {g:'equipo', c:'nota de campo', n:'Antonio, encargado', v:'«Hojas bronceadas, fila 12» · foto'},
     partes: {g:'equipo', c:'parte por voz', n:'Riego del sector 3', v:'Último: hace 9 días'},
-    trabajo:{g:'equipo', c:'parte de trabajo', n:'Poda en verde', v:'Cuadrilla de 4 · ayer · 26 h'},
+    trabajo:{g:'equipo', c:'parte de trabajo', n:'Poda en verde', v:'Cuadrilla de 4 · hoy, en La Vega'},
     conteos:{g:'equipo', c:'conteo del técnico', n:'Araña roja', v:'4 % de hojas (umbral 10 %)'},
     cosecha:{g:'equipo', c:'registro de cosecha', n:'El Cercado 2025', v:'18,2 t/ha · −22 %'},
     almacen:{g:'equipo', c:'tu almacén', n:'Albaranes y facturas', v:'2 acaricidas en stock'},
@@ -725,19 +725,14 @@ html,body{background:transparent}
     if (Math.abs(s - escalaVista) < .002) return; escalaVista = s;
     ESCALA.forEach(({o, P, p0, ay}) => {
       o.g.scale.setScalar(s * (o.k || 1)); o.g.position.set(P.x + (p0.x - P.x) * s, 0, P.z + (p0.z - P.z) * s);
-      o.a.y = ay * s * (o.k || 1); o.ring.scale.setScalar(s * (o.k || 1)); (o.fijas || []).forEach(m => m.scale.setScalar(1 / s));
+      if (o.a) o.a.y = ay * s * (o.k || 1); if (o.ring) o.ring.scale.setScalar(s * (o.k || 1)); (o.fijas || []).forEach(m => m.scale.setScalar(1 / s));
     });
   }
   // ---- el tractor atomiza Las Suertes: pasa por las calles entre hileras y gira en la cabecera ----
   const tractor = objetos.tractor, TRATA = 3;
   { const e = ESCALA.find(x => x.o === tractor); e.P = e.p0 = tractor.g.position; tractor.k = .7; }
   const ruta = (() => {
-    const p = parcelas[TRATA], w = (u, v) => [u * p.ca - v * p.sa, u * p.sa + v * p.ca], calles = [];
-    for (let v = p.v0 + .05 + .0425; v < p.v1 - .02; v += .085) {
-      let a = Infinity, b = -Infinity;
-      for (let u = p.u0; u <= p.u1; u += .01) { const [x, z] = w(u, v); if (dentro(x, z, p.poly)) { a = Math.min(a, u); b = Math.max(b, u); } }
-      if (b - a > .4) calles.push([v, a + .08, b - .08]);
-    }
+    const {w, calles} = callesDe(parcelas[TRATA]);
     // ida y vuelta por las calles (0, 1, … n−1, n−2, … 1): el sentido se alterna en cada pasada
     const orden = [...calles.keys(), ...[...calles.keys()].reverse().slice(1, -1)], pts = [];
     const inicio = j => { const [, a, b] = calles[orden[j % orden.length]]; return j % 2 ? b : a; };
@@ -789,6 +784,88 @@ html,body{background:transparent}
     nube.material.size = .07 * s; nubeGeo.attributes.position.needsUpdate = nubeGeo.attributes.color.needsUpdate = true;
   }
   moverTractor(0);
+
+  // ---- trabajadores: Antonio en El Cercado (su nota de campo), el técnico contando y la cuadrilla de poda en La Vega ----
+  // Figuras sencillas con piernas y brazos articulados; escalan con el zoom como los equipos.
+  const ROPA = {piel:M(0xc89b78, .8), pantalon:M(0x39414d, .9), botas:M(0x2a2420, .9), paja:M(0xd8c288, .9), movil:M(0x16191b, .3, .4)};
+  function persona(camisa, gorro, chaleco) {
+    const g = new THREE.Group(), cuerpo = new THREE.Group(); g.add(cuerpo);
+    const pierna = lado => { const p = new THREE.Group(); p.position.set(lado * .06, .46, 0); cuerpo.add(p);
+      tubo(p, .05, .045, .42, ROPA.pantalon, 0, -.21, 0, 0, 0, 0, 8); caja(p, .08, .05, .13, ROPA.botas, 0, -.435, .025); return p; };
+    const brazo = lado => { const b = new THREE.Group(); b.position.set(lado * .155, .8, 0); cuerpo.add(b);
+      tubo(b, .038, .033, .34, camisa, 0, -.17, 0, 0, 0, 0, 8); pieza(b, new THREE.SphereGeometry(.035, 8, 6), ROPA.piel, 0, -.36, 0); return b; };
+    tubo(cuerpo, .12, .135, .4, camisa, 0, .64, 0, 0, 0, 0, 10);
+    if (chaleco) tubo(cuerpo, .128, .142, .28, chaleco, 0, .67, 0, 0, 0, 0, 10);
+    pieza(cuerpo, new THREE.SphereGeometry(.085, 12, 10), ROPA.piel, 0, .93, 0);
+    if (gorro === 'paja') { tubo(cuerpo, .17, .17, .012, ROPA.paja, 0, .975, 0, 0, 0, 0, 16); tubo(cuerpo, .08, .09, .08, ROPA.paja, 0, 1.01, 0, 0, 0, 0, 12); }
+    else { pieza(cuerpo, new THREE.SphereGeometry(.09, 12, 8, 0, Math.PI * 2, 0, Math.PI / 2), gorro, 0, .95, 0); caja(cuerpo, .1, .012, .09, gorro, 0, .955, .085); }
+    const w = {g, cuerpo, piernas:[pierna(1), pierna(-1)], brazos:[brazo(1), brazo(-1)], fase:Math.random() * 6};
+    g.traverse(m => { if (m.isMesh) m.castShadow = true; }); g.visible = false; S.add(g); return w;
+  }
+  // calles entre hileras de una parcela de frutales: [v, u inicial, u final] y el paso a coordenadas de la escena
+  function callesDe(p) {
+    const w = (u, v) => [u * p.ca - v * p.sa, u * p.sa + v * p.ca], calles = [];
+    for (let v = p.v0 + .05 + .0425; v < p.v1 - .02; v += .085) {
+      let a = Infinity, b = -Infinity;
+      for (let u = p.u0; u <= p.u1; u += .01) { const [x, z] = w(u, v); if (dentro(x, z, p.poly)) { a = Math.min(a, u); b = Math.max(b, u); } }
+      if (b - a > .4) calles.push([v, a + .08, b - .08]);
+    }
+    return {w, calles};
+  }
+  const VEGA = callesDe(parcelas[0]), CER = callesDe(cer);
+  const GENTE = [];
+  { // Antonio: de pie en El Cercado, con el móvil delante para la foto
+    const w = persona(M(0x3f6b3a, .8), M(0x2a3a2a, .8), M(0xd9ec3c, .6));
+    caja(w.brazos[0], .05, .09, .012, ROPA.movil, 0, -.38, .03);
+    const [v, a] = CER.calles[Math.min(CER.calles.length - 1, 7)];
+    Object.assign(w, {sitio:CER.w(a + .25, v), rumbo:2.2, info:() => ['tu equipo', 'Antonio, encargado', FUENTES.notas.v], refs:['notas'], anima:(w, t) => {
+      w.brazos[0].rotation.x = -1.75 + Math.sin(t * .9) * .06; w.brazos[1].rotation.x = -.25;
+      w.g.rotation.y = w.rumbo + Math.sin(t * .25) * .5; }});
+    GENTE.push(w);
+  }
+  { // el técnico: recorre una calle de El Cercado y para a contar hojas
+    const w = persona(M(0xe7ebe8, .8), M(0x2f5f8a, .7));
+    caja(w.brazos[1], .12, .16, .01, M(0x8a6a44, .8), 0, -.33, .06);
+    const k = Math.min(CER.calles.length - 1, 3);
+    Object.assign(w, {calle:k, u:CER.calles[k][1] + .1, dir:1, info:() => ['técnico de campo', 'Conteo de araña roja', FUENTES.conteos.v], refs:['conteos'], anima:(w, t, dt) => {
+      const [v, a, b] = CER.calles[w.calle], para = Math.sin(t * .7) < -.2;
+      if (!para) { w.u += w.dir * dt * .05; if (w.u > b || w.u < a) { w.dir *= -1; w.u = Math.min(b, Math.max(a, w.u)); } }
+      andar(w, para ? 0 : 1, t * 7);
+      if (para) { w.brazos[0].rotation.x = -1.2; w.brazos[1].rotation.x = -1; w.cuerpo.rotation.x = .25; } else w.cuerpo.rotation.x = 0;
+      w.sitio = CER.w(w.u, v); w.rumbo = Math.atan2(w.dir * (CER.w(1, 0)[0] - CER.w(0, 0)[0]), w.dir * (CER.w(1, 0)[1] - CER.w(0, 0)[1])) + (para ? Math.PI / 2 : 0); }});
+    GENTE.push(w);
+  }
+  // la cuadrilla: cuatro, de dos en dos por calle, avanzando despacio mientras podan
+  [[0, 0], [0, .35], [1, .15], [1, .5]].forEach(([dk, du], n) => {
+    const camisas = [0x2f4f7a, 0x8a3b2e, 0x4c6b2f, 0x6b6b6b];
+    const w = persona(M(camisas[n], .85), 'paja', M(0xd9ec3c, .6));
+    const k = Math.min(VEGA.calles.length - 1, 4 + dk), [, a, b] = VEGA.calles[k];
+    Object.assign(w, {calle:k, u:a + .1 + du, dir:1, info:() => ['tu equipo', 'Cuadrilla de poda', FUENTES.trabajo.v], refs:['trabajo'], anima:(w, t, dt) => {
+      const [v, a, b] = VEGA.calles[w.calle], avanza = Math.sin(t * .5 + w.fase) > .3;
+      if (avanza) { w.u += w.dir * dt * .04; if (w.u > b || w.u < a) { w.dir *= -1; w.u = Math.min(b, Math.max(a, w.u)); } }
+      andar(w, avanza ? 1 : 0, t * 6 + w.fase);
+      if (!avanza) { w.brazos[0].rotation.x = -2.1 + Math.sin(t * 5 + w.fase) * .35; w.brazos[1].rotation.x = -1.6 + Math.sin(t * 5 + w.fase + 1) * .25; }
+      // de cara al árbol cuando poda, en el sentido de la calle cuando anda
+      const fx = VEGA.w(1, 0)[0] - VEGA.w(0, 0)[0], fz = VEGA.w(1, 0)[1] - VEGA.w(0, 0)[1];
+      w.sitio = VEGA.w(w.u, v); w.rumbo = Math.atan2(w.dir * fx, w.dir * fz) + (avanza ? 0 : (n % 2 ? 1 : -1) * Math.PI / 2); }});
+    GENTE.push(w);
+  });
+  function andar(w, k, f) {
+    const s = Math.sin(f) * .5 * k;
+    w.piernas[0].rotation.x = s; w.piernas[1].rotation.x = -s; w.brazos[0].rotation.x = -s * .8; w.brazos[1].rotation.x = s * .8;
+  }
+  GENTE.forEach((w, i) => { w.g.traverse(m => { m.userData.w = i; }); ESCALA.push({o:{g:w.g, k:.6}, P:w.g.position, p0:w.g.position, ay:0}); });
+  let tGente = 0;
+  function trabajar(dt) {
+    tGente += dt;
+    GENTE.forEach(w => {
+      w.anima(w, tGente, dt);
+      w.g.position.set(w.sitio[0], 0, w.sitio[1]);
+      // el giro, suavizado
+      w.g.rotation.y += Math.atan2(Math.sin(w.rumbo - w.g.rotation.y), Math.cos(w.rumbo - w.g.rotation.y)) * Math.min(1, dt * 6 || 1);
+    });
+  }
+  trabajar(0);
 
   // los sensores dan sombra; los colores de los materiales se escribieron en sRGB y la escena trabaja en lineal
   Object.values(objetos).forEach(o => o.g !== sat && o.g.traverse(m => { if (m.isMesh) m.castShadow = true; }));
@@ -888,10 +965,12 @@ html,body{background:transparent}
       f.el.style.transform = `translate(${x}px,${y + f.dy}px) translate(-50%,-100%)`;
     });
     // nombres de las parcelas en el suelo cuando se navega cerca
+    GENTE.forEach(w => { w.g.visible = E.alzado > .9; });
     nombres.forEach(({el, p}) => { const [x, y] = proyectar(new THREE.Vector3(p.c[0], .05, p.c[1]));
       el.style.transform = `translate(${x - ox}px,${y - oy}px) translate(-50%,-50%)`; el.classList.toggle('on', U.on && C.dist < 11 && E.alzado > .9); });
-    if (U.sel && U.sel[0] === 'p') {
-      const p = parcelas[+U.sel.slice(1)], [x, y] = proyectar(new THREE.Vector3(p.c[0], p.h + .1, p.c[1])), r = escena.getBoundingClientRect(), s = $('stage').getBoundingClientRect();
+    if (U.sel && (U.sel[0] === 'p' || U.sel[0] === 'w')) {
+      const n = +U.sel.slice(1), p = parcelas[n], wg = U.sel[0] === 'w' && GENTE[n].g;
+      const [x, y] = proyectar(wg ? new THREE.Vector3(wg.position.x, 1.15 * wg.scale.y, wg.position.z) : new THREE.Vector3(p.c[0], p.h + .1, p.c[1])), r = escena.getBoundingClientRect(), s = $('stage').getBoundingClientRect();
       // dentro de la escena aunque la parcela quede en el borde
       const tw = tip.offsetWidth, th = tip.offsetHeight;
       const tx = Math.min(r.width - tw / 2 - 6, Math.max(tw / 2 + 6, x - (r.left - s.left))), ty = Math.max(th + 6, y - (r.top - s.top));
@@ -926,7 +1005,7 @@ html,body{background:transparent}
     haz.position.copy(sat.position); haz.quaternion.setFromUnitVectors(new THREE.Vector3(0, -1, 0), dir.normalize()); haz.scale.set(E.hot.has('sat') ? .16 : .22, L, E.hot.has('sat') ? .16 : .22);
     haz.material.opacity = sat.visible ? (E.hot.has('sat') ? .18 : .05) : 0;
     if (objetos.est.molino) objetos.est.molino.rotation.y += dt * 4;
-    objetos.tractor.helice.rotation.x += dt * 9; moverTractor(dt);
+    objetos.tractor.helice.rotation.x += dt * 9; moverTractor(dt); trabajar(dt);
     // parcelas que suben
     parcelas.forEach((p, i) => crecer(p, Math.min(1, Math.max(0, E.alzado * 1.6 - i * .6 / parcelas.length))));
     cer.placaMat.opacity = .14 + (cer.alerta && E.hot.size ? .14 + Math.sin(E.t * 5) * .12 : 0);
@@ -960,21 +1039,22 @@ html,body{background:transparent}
   const ray = new THREE.Raycaster(), ptr = new THREE.Vector2(), plano = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0); ray.params.Line.threshold = .04;
   Object.entries(objetos).forEach(([k, o]) => o.g.traverse(m => { m.userData.k = k; }));
   parcelas.forEach((p, i) => p.g.traverse(m => { m.userData.p = i; }));
-  const tocables = [...Object.values(objetos).map(o => o.g), ...parcelas.map(p => p.g)];
+  const tocables = [...Object.values(objetos).map(o => o.g), ...parcelas.map(p => p.g), ...GENTE.map(w => w.g)];
   function apuntar(cx, cy) { const r = R.domElement.getBoundingClientRect(); ptr.set((cx - r.left) / r.width * 2 - 1, -(cy - r.top) / r.height * 2 + 1); ray.setFromCamera(ptr, cam); }
   function pick(ev) {
     apuntar(ev.clientX, ev.clientY);
     const h = ray.intersectObjects(tocables.filter(g => g.visible), true)[0];
     if (!h) return null;
-    const d = h.object.userData; return d.k ? d.k : d.p !== undefined ? 'p' + d.p : null;
+    const d = h.object.userData; return d.k ? d.k : d.p !== undefined ? 'p' + d.p : d.w !== undefined ? 'w' + d.w : null;
   }
   function elegir(sel) {
     if (!E.final || sel === U.sel) return; U.sel = sel; escena.classList.toggle('sobre', !!sel);
     if (sel && !U.tocado) { U.tocado = true; avisa('ig-toca'); }
     // El Cercado enciende todo lo que se apunta de esa parcela; un sensor, su etiqueta completa y su anillo
-    hot(!sel ? [] : sel === 'p' + ALERTA ? Object.keys(DESTINO).filter(k => DESTINO[k] === 'cer') : sel[0] === 'p' ? [] : [sel]);
-    const i = sel && sel[0] === 'p' ? +sel.slice(1) : -1;
-    tip.classList.toggle('on', i >= 0 && i !== ALERTA);
+    hot(!sel ? [] : sel === 'p' + ALERTA ? Object.keys(DESTINO).filter(k => DESTINO[k] === 'cer') : sel[0] === 'w' ? GENTE[+sel.slice(1)].refs : sel[0] === 'p' ? [] : [sel]);
+    const i = sel && sel[0] === 'p' ? +sel.slice(1) : -1, wi = sel && sel[0] === 'w' ? +sel.slice(1) : -1;
+    tip.classList.toggle('on', (i >= 0 && i !== ALERTA) || wi >= 0);
+    if (wi >= 0) { const [t, b, v] = GENTE[wi].info(); tip.innerHTML = `<span class="t">${t}</span><b>${b}</b><span class="v">${v}</span>`; }
     if (i >= 0) tip.innerHTML = `<span class="t">${CULTIVO[i]}</span><b>${NOMBRES[i]}</b><span class="v">${HA[i].toLocaleString('es-ES')} ha · NDVI ${NDVI[i].toLocaleString('es-ES', {minimumFractionDigits:2})} · ${String(MG[i]).replace(/\B(?=(\d{3})+$)/g, '.')} €/ha</span>`;
     redraw();
   }
@@ -1005,7 +1085,7 @@ html,body{background:transparent}
   // tocar un sensor o una parcela: la cámara vuela hasta él
   function volar(sel) {
     if (!sel || sel === 'sat') return;
-    const [x, z] = sel[0] === 'p' ? parcelas[+sel.slice(1)].c : [objetos[sel].a.x, objetos[sel].a.z];
+    const [x, z] = sel[0] === 'p' ? parcelas[+sel.slice(1)].c : sel[0] === 'w' ? GENTE[+sel.slice(1)].sitio : [objetos[sel].a.x, objetos[sel].a.z];
     tomar(); Object.assign(G, {x, z, dist:Math.min(G.dist, 6)}); ajustar(G); U.rapidez = 3; redraw();
   }
   let grande = false;
