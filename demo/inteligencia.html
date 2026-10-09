@@ -117,6 +117,30 @@ html.grande svg.beams{display:none}
 .meta b{color:var(--ink);font-weight:600}
 .again{align-self:flex-start;font:inherit;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);background:none;border:1px solid var(--line-2);border-radius:4px;padding:6px 10px;cursor:pointer}
 .toast{font-family:var(--mono);font-size:11px;color:var(--brand)}
+/* «Pruébalo»: escenarios, la causa que se mueve y la frase que se recalcula. Fija arriba del panel mientras se lee */
+.prueba{position:sticky;top:-18px;margin:0 -18px;padding:10px 18px 12px;background:var(--panel);border-bottom:1px solid var(--line);z-index:1;display:grid;gap:10px}
+.escs{display:flex;flex-wrap:wrap;gap:6px}
+.escs button{font:inherit;font-size:12px;font-weight:600;color:var(--soft);background:var(--panel-2);border:1px solid var(--line-2);border-radius:999px;padding:5px 10px;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.escs button[aria-pressed=true]{color:var(--ink);border-color:var(--brand);background:rgba(0,200,150,.12)}
+.escs button:focus-visible,.causa input:focus-visible{outline:2px solid var(--brand-2);outline-offset:2px}
+kbd{font-family:var(--mono);font-size:9.5px;font-weight:400;color:var(--soft);border:1px solid var(--line-2);border-radius:3px;padding:0 4px;line-height:1.4}
+@media (hover:none){kbd{display:none}}
+.causa{display:grid;gap:4px}
+.causa label{display:flex;justify-content:space-between;gap:8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft)}
+.causa output{color:var(--ink);font-weight:600}
+.causa input{width:100%;height:24px;margin:0;accent-color:var(--brand);cursor:pointer}
+.frase{margin:0;font-size:12.5px;line-height:1.45}
+.fases{list-style:none;margin:0;padding:0;display:flex;gap:4px;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase}
+.fases li{flex:1;text-align:center;padding:4px 0;border:1px solid var(--line-2);border-radius:3px;color:var(--soft)}
+.fases li.on{color:var(--warn);border-color:var(--warn);background:rgba(224,163,62,.12)}
+.fases li.on[data-f=actuar]{color:#2a1a04;background:var(--warn)}
+.fases li.on[data-f=normal],.fases li.on[data-f=hecho]{color:#052018;background:var(--brand);border-color:var(--brand)}
+.decision.ok{border-color:#145a46;background:rgba(0,200,150,.06)}
+.decision.ok .k{color:var(--brand)}
+.hud .a b{color:var(--warn)}
+/* al probar, la decisión sube justo debajo de la frase y los pasos quedan debajo, como el porqué */
+.ia.vivo .decision{order:1}.ia.vivo .pasos{order:2}.ia.vivo .again{order:3}
+.cifras{display:flex;gap:inherit}
 
 .salidas{grid-column:1/-1;border-top:1px solid var(--line);padding:16px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;background:var(--panel)}
 .sal-head{grid-column:1/-1;display:flex;gap:12px;align-items:baseline}
@@ -150,6 +174,8 @@ html.grande svg.beams{display:none}
 .mas{display:none;grid-column:1/-1;justify-self:start;font:inherit;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--brand);background:none;border:1px solid var(--line-2);border-radius:4px;padding:6px 10px;cursor:pointer}
 @media (max-width:1100px){
   .stage{grid-template-columns:minmax(0,1fr)}
+  /* el panel de la IA justo debajo de la finca: al mover el control se ven los dos */
+  .cards{order:1}.salidas{order:2}
   .stage{grid-template-rows:none}
   .cards,.ia{overflow:visible}
   .escena{order:-1;min-height:0;height:440px;border-right:0;border-bottom:1px solid var(--line)}
@@ -157,7 +183,7 @@ html.grande svg.beams{display:none}
   .grupo{grid-column:1/-1}
   svg.beams{display:none}
 }
-@media (max-width:560px){.explora{top:auto;bottom:12px}.explora .pista{top:auto;bottom:calc(100% + 6px)}.explora .txt{display:none}.escena{height:360px}.chip{padding:3px 6px}.chip b{font-size:10.5px}.chip .v{font-size:9.5px}.hud{gap:10px}.leyenda{display:none}}
+@media (max-width:560px){.explora{top:auto;bottom:12px}.explora .pista{top:auto;bottom:calc(100% + 6px)}.explora .txt{display:none}.escena{height:360px}.chip{padding:3px 6px}.chip b{font-size:10.5px}.chip .v{font-size:9.5px}.hud{gap:10px;letter-spacing:.04em}#reloj{display:none}.leyenda{display:none}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 [hidden]{display:none!important}
 html,body{background:transparent}
@@ -169,59 +195,30 @@ html,body{background:transparent}
     <svg class="beams" id="beams" aria-hidden="true"></svg>
     <div class="cards" id="cards"></div>
     <div class="escena" id="escena" role="img" aria-label="Una finca de frutales en 3D: seis parcelas de frutales con sus árboles en hileras, la parcela El Cercado con árboles más pequeños y en naranja, y los sensores de la explotación sobre el terreno.">
-      <div class="hud"><span><b>17</b> fuentes</span><span><b>6</b> parcelas · 13,8 ha</span><span id="reloj">08:14:07</span></div>
+      <div class="hud"><span class="cifras" id="cifras"></span><span id="reloj">08:14:07</span></div>
       <div class="leyenda"><span><i style="background:#4a8530"></i>vigor alto</span><span><i style="background:#6a8034"></i>vigor medio</span><span><i style="background:#e0a33e"></i>en alerta</span><span>tamaño de copa = NDVI</span></div>
       <div class="explora" id="explora"><span class="pista" id="pista" role="status" hidden></span><button type="button" id="saltar" hidden>Saltar al final</button><button type="button" class="z" id="izq" aria-label="Girar a la izquierda" title="Girar a la izquierda">↶</button><button type="button" class="z" id="der" aria-label="Girar a la derecha" title="Girar a la derecha">↷</button><button type="button" class="z" id="inicio" aria-label="Volver a la vista inicial" title="Vista inicial" hidden>⌂</button><button type="button" class="z" id="zmas" aria-label="Acercar">+</button><button type="button" class="z" id="zmenos" aria-label="Alejar">−</button><button type="button" class="ir" id="grande" aria-label="Ver en grande"><span aria-hidden="true">⤢</span><span class="txt"> Ver en grande</span></button><button type="button" class="ir" id="cerrar" hidden>✕ Salir</button></div>
     </div>
-    <aside class="ia" aria-live="polite">
-      <div class="ia-head"><span class="label">IA · razonamiento</span><span class="st" id="st"><i></i>esperando datos</span></div>
-      <ol class="pasos" id="pasos"></ol>
-      <div class="decision" id="decision">
-        <span class="k">Señal C-01 · prioridad alta</span>
-        <h3>Riega El Cercado hoy. La araña roja, vigílala; no trates todavía.</h3>
-        <p>El vigor cae por falta de agua: el bronceado que vio Antonio encaja con estrés hídrico y el conteo está lejos del umbral. Si la próxima semana pasa del 10 %, tienes acaricidas autorizados en el almacén.</p>
-        <div class="acciones">
-          <button type="button" class="btn p" data-t="Orden de riego enviada al programador: sector 3, 4 horas.">Regar el sector 3 <small>4 h · programador</small></button>
-          <button type="button" class="btn" data-t="Nuevo conteo de araña roja asignado a tu técnico para dentro de 7 días, en la fila 12 y cuatro más.">Repetir el conteo <small>en 7 días</small></button>
-          <button type="button" class="btn" data-t="Abriendo los acaricidas autorizados en frutales de hueso que tienes en el almacén.">Ver acaricidas <small>2 en almacén</small></button>
+    <aside class="ia">
+      <div class="ia-head"><span class="label">IA · razonamiento</span><span class="st" id="st" aria-live="polite"><i></i>esperando datos</span></div>
+      <div class="prueba">
+        <div class="escs" id="escs" role="group" aria-label="Escenario">
+          <button type="button" data-esc="calor" aria-pressed="true">Ola de calor <kbd>1</kbd></button>
+          <button type="button" data-esc="normal" aria-pressed="false">Semana normal <kbd>2</kbd></button>
+          <button type="button" data-esc="otono" aria-pressed="false">Lluvia de otoño <kbd>3</kbd></button>
         </div>
-        <span class="toast" id="toast" role="status"></span>
-        <div class="meta"><span>confianza <b>alta</b></span><span>fuentes <b>12 de 17</b></span><span>avisado <b>tu asesor</b></span></div>
+        <div class="causa" id="causa-box" hidden>
+          <label for="causa"><span id="causa-t">Días sin regar</span><output id="causa-v" for="causa"></output></label>
+          <input type="range" id="causa" min="0" max="14" step="1" value="9">
+          <p class="frase" id="frase" aria-live="polite"></p>
+        </div>
       </div>
+      <ol class="pasos" id="pasos" aria-live="polite"></ol>
+      <div class="decision" id="decision"></div>
       <button type="button" class="again" id="again">Ver de nuevo</button>
     </aside>
     <div class="salidas" id="salidas">
       <div class="sal-head"><span class="label">Salidas</span><span class="sub">lo que se actualiza solo con cada decisión</span></div>
-      <div class="salida">
-        <span class="c">Aviso a tu equipo</span><b>Orden de trabajo de hoy</b>
-        <ul class="lista">
-          <li><em>→</em>Antonio: riego S3, 4 h desde las 18:00</li>
-          <li><em>→</em>Mira el envés en las filas 10 a 14</li>
-          <li><em>→</em>Sin tratar: el acaricida, en espera</li>
-        </ul>
-        <span class="pie">enviado al móvil del encargado · 08:16</span>
-      </div>
-      <div class="salida">
-        <span class="c">Plan de riego</span><b>Esta semana, por sector</b>
-        <div class="riego">
-          <i style="--h:62%"><span>S1</span></i><i style="--h:70%"><span>S2</span></i><i class="w" style="--h:96%"><span>S3</span></i><i style="--h:55%"><span>S4</span></i>
-        </div>
-        <span class="pie">S3: +4 h hoy, enviado al programador</span>
-      </div>
-      <div class="salida">
-        <span class="c">Cuaderno digital</span><b>Registro al día</b>
-        <ul class="lista">
-          <li><em>✓</em>Riego sector 3 · 4 h · hoy</li>
-          <li><em>✓</em>Poda en verde · El Cercado · ayer</li>
-          <li><em>◷</em>Conteo de araña roja · en 7 días</li>
-          <li><em>✓</em>Envío al SIEX · sin pendientes</li>
-        </ul>
-      </div>
-      <div class="salida">
-        <span class="c">Para tu asesor</span><b>Informe de El Cercado</b>
-        <svg class="spark" viewBox="0 0 200 50" aria-hidden="true"><path class="m" d="M0 34 L25 30 L50 26 L75 20 L100 16 L125 14 L150 17 L175 21 L200 24"/><path class="s" d="M0 35 L25 31 L50 27 L75 22 L100 18 L125 19 L150 27 L175 34 L200 40"/></svg>
-        <span class="pie">NDVI frente a su media · 12 pruebas · enviado 08:15</span>
-      </div>
     </div>
   </section>
 </div>
@@ -258,13 +255,118 @@ html,body{background:transparent}
     lonja:  {g:'publica', c:'mercado', n:'Lonja de referencia', v:'Ciruela 0,62 €/kg · +8 %'}
   };
   const ORDEN = ['sat', 'notas', 'siar', 'est', 'partes', 'avisos', 'sonda', 'trabajo', 'mapa', 'caudal', 'conteos', 'sigpac', 'trampa', 'cosecha', 'lonja', 'tractor', 'almacen'];
-  const PASOS = [
-    ['El satélite ve caer el vigor de El Cercado un 18 % frente a su media de 3 años desde julio.', ['sat']],
-    ['Tus sondas marcan 18 % de humedad a 40 cm, por debajo del umbral del 22 %.', ['sonda']],
-    ['El caudalímetro del sector 3 no registra riego en 9 días, y el último parte de riego es de entonces. Tu estación da 34 °C y el SiAR, 21 días sin lluvia.', ['caudal', 'partes', 'est', 'siar']],
-    ['Antonio anotó hojas bronceadas en la fila 12, pero el conteo del técnico da un 4 % de hojas con araña roja, lejos del umbral del 10 %. Hay aviso en la comarca y el atomizador no sale desde hace 41 días.', ['notas', 'conteos', 'avisos', 'tractor']],
-    ['El Cercado dio 18,2 t/ha en 2025, un 22 % menos, y ya deja la mitad del margen medio con la ciruela a 0,62 €/kg.', ['cosecha', 'lonja']]
-  ];
+  Object.values(FUENTES).forEach(f => { f.v0 = f.v; });
+
+  // ---- escenarios ----
+  // El estado de la finca sale de un modelo de juguete (lo dice la nota de método de la portada). Cada escenario
+  // pone el contexto; el deslizador mueve la causa: días sin regar, u horas de hoja mojada en otoño.
+  const UMBRAL = 22;
+  const ESC = {
+    calor:  {causa:'dias', tmax:34, v:9},
+    normal: {causa:'dias', tmax:28, v:2},
+    otono:  {causa:'moja', tmax:17, v:30}
+  };
+  const num = (x, d = 0) => x.toLocaleString('es-ES', {minimumFractionDigits:d, maximumFractionDigits:d});
+  const dd = n => n === 1 ? '1 día' : n + ' días';
+  const CAUSA = {dias:{t:'Días sin regar', max:14, u:dd}, moja:{t:'Horas de hoja mojada', max:48, u:v => v + ' h'}};
+  const P = {esc:'calor', v:9, hecho:false};
+  const conteo = {t:'Repetir el conteo', s:'en 7 días', toast:'Nuevo conteo de araña roja asignado a tu técnico para dentro de 7 días, en la fila 12 y cuatro más.'};
+  const pararRiego = p => ({t:'Parar el riego', s:'S3 · esta semana', toast:'Riego de esta tarde cancelado en el programador. Se reanuda cuando las sondas bajen del 26 %.', p});
+  function evaluar(p = P) {
+    const e = ESC[p.esc], T = e.tmax, calor = p.esc === 'calor', r = {pasos:[]};
+    if (e.causa === 'dias') {
+      // el suelo pierde k puntos de humedad al día, más cuanto más calor
+      const dias = p.v, k = .75 + (T - 28) * .075, h = Math.round(29 - dias * k);
+      const fase = h < UMBRAL ? 'actuar' : h < UMBRAL + 2 ? 'vigilar' : 'normal';
+      const ndvi = Math.round(Math.max(.3, .46 - Math.max(0, UMBRAL - h) * .02) * 100) / 100;
+      const caida = Math.round((.465 - ndvi) / .465 * 100), reserva = h < UMBRAL ? 0 : Math.max(1, Math.ceil((h - UMBRAL) / k));   // días hasta cruzar el umbral
+      const cuando = reserva <= 1 ? 'mañana' : `dentro de ${reserva} días`, siar = calor ? 21 : 6;
+      const dif = Math.round(Math.abs(h - UMBRAL));
+      Object.assign(r, {fase, ndvi, alerta:fase !== 'normal',
+        cifras:[['suelo', num(h) + ' %', h < UMBRAL], ['NDVI', num(ndvi, 2), caida >= 3], ['reserva', dd(reserva), reserva === 0]],
+        etiq:[fase === 'actuar' ? 'alerta' : fase === 'vigilar' ? 'vigilar' : 'en rango', `NDVI ${num(ndvi, 2)} · margen 1.400 €/ha`],
+        frase:(dias ? `Con ${dd(dias)} sin regar y ${T} °C` : `Regado hoy y con ${T} °C`) + `, el suelo de El Cercado está al ${num(h)} % a 40 cm, ` +
+          (dif ? `${dif} ${dif === 1 ? 'punto' : 'puntos'} ${h < UMBRAL ? 'por debajo' : 'por encima'} del umbral.` : 'justo en el umbral.') +
+          {actuar:' Toca regar hoy.', vigilar:` Lo cruza ${cuando}.`, normal:' No hace falta regar.'}[fase]});
+      r.v = {
+        sat:`El Cercado ${num(ndvi, 2)} · ${caida >= 3 ? '−' + caida + ' %' : 'en su media'}`,
+        est:`${T} °C · HR ${calor ? 28 : 46} % · 0 mm`,
+        sonda:`${num(h)} % a 40 cm (umbral ${UMBRAL} %)`,
+        caudal:dias ? `0 m³ en ${dd(dias)}` : 'Hoy: 38 m³ en 4 h',
+        partes:dias ? `Último: hace ${dd(dias)}` : 'Último: hoy, 4 h',
+        siar:`${siar} días sin lluvia · ETo ${calor ? '5,1' : '3,8'}`,
+        avisos:calor ? 'Araña roja: riesgo alto en la comarca' : 'Sin avisos para frutales de hueso',
+        conteos:`${calor ? 4 : 2} % de hojas (umbral 10 %)`,
+        notas:calor ? '«Hojas bronceadas, fila 12» · foto' : '«Fruta engordando bien, fila 8»'
+      };
+      r.pasos.push([caida >= 3 ? `El satélite ve caer el vigor de El Cercado un ${caida} % frente a su media de 3 años.` : `El satélite ve El Cercado en su media de vigor, con un NDVI de ${num(ndvi, 2)}.`, ['sat']]);
+      r.pasos.push([`Tus sondas marcan ${num(h)} % de humedad a 40 cm, ${h < UMBRAL ? 'por debajo' : 'por encima'} del umbral del ${UMBRAL} %.` +
+        (fase === 'vigilar' ? ` A ${T} °C pierde ${num(k, 1)} puntos al día: lo cruza ${cuando}.` : ''), ['sonda']]);
+      r.pasos.push([(dias ? `El caudalímetro del sector 3 no registra riego en ${dd(dias)}, y el último parte de riego es de entonces.` : 'El sector 3 se regó hoy: lo dicen el caudalímetro y el parte.') +
+        ` Tu estación da ${T} °C y el SiAR, ${siar} días sin lluvia.`, ['caudal', 'partes', 'est', 'siar']]);
+      r.pasos.push(calor ? ['Antonio anotó hojas bronceadas en la fila 12, pero el conteo del técnico da un 4 % de hojas con araña roja, lejos del umbral del 10 %. Hay aviso en la comarca y el atomizador no sale desde hace 41 días.', ['notas', 'conteos', 'avisos', 'tractor']]
+        : ['El conteo del técnico da un 2 % de hojas con araña roja y Sanidad Vegetal no tiene avisos para tu cultivo.', ['conteos', 'avisos']]);
+      if (fase === 'actuar') r.pasos.push(['El Cercado dio 18,2 t/ha en 2025, un 22 % menos, y ya deja la mitad del margen medio con la ciruela a 0,62 €/kg.', ['cosecha', 'lonja']]);
+      const arana = calor ? ' La araña roja, vigílala; no trates todavía.' : '';
+      r.dec = fase === 'actuar' ? {k:'Señal C-01 · prioridad alta', h:'Riega El Cercado hoy.' + arana,
+          p:calor ? 'El vigor cae por falta de agua: el bronceado que vio Antonio encaja con estrés hídrico y el conteo está lejos del umbral. Si la próxima semana pasa del 10 %, tienes acaricidas autorizados en el almacén.'
+            : 'El suelo está por debajo del umbral y el vigor empieza a caer. Con 4 horas en el sector 3 vuelve a su nivel.',
+          acc:[{t:'Regar el sector 3', s:'4 h · programador', toast:'Orden de riego enviada al programador: sector 3, 4 horas.', p:true},
+            ...(calor ? [conteo, {t:'Ver acaricidas', s:'2 en almacén', toast:'Abriendo los acaricidas autorizados en frutales de hueso que tienes en el almacén.'}] : [])],
+          aviso:calor ? 'tu asesor' : 'tu encargado'}
+        : fase === 'vigilar' ? {k:'Señal C-01 · vigilar', h:`Riega El Cercado ${cuando}.` + arana,
+          p:`Las sondas aún están por encima del umbral, pero a ${T} °C el suelo pierde ${num(k, 1)} puntos al día.`,
+          acc:[{t:'Programar el riego', s:`S3 · 4 h · ${cuando}`, toast:`Riego programado: sector 3, 4 horas, ${cuando}.`, p:true}, ...(calor ? [conteo] : [])], aviso:'tu encargado'}
+        : {k:'Sin señales · todo en rango', ok:true, h:calor ? 'Hoy no hay que regar.' + arana : 'Hoy no hay nada que hacer.',
+          p:`El suelo tiene agua para ${dd(reserva)} y el vigor está en su media. La IA vuelve a mirar cuando pase el satélite.`, acc:calor ? [conteo] : [], aviso:'nadie'};
+      const s3 = {actuar:96, vigilar:84, normal:66}[fase];
+      r.sal = {
+        equipo:fase === 'actuar' ? ['Antonio: riego S3, 4 h desde las 18:00', ...(calor ? ['Mira el envés en las filas 10 a 14', 'Sin tratar: el acaricida, en espera'] : [])]
+          : fase === 'vigilar' ? [`Antonio: riego S3, 4 h, ${cuando}`, ...(calor ? ['Mira el envés en las filas 10 a 14'] : [])]
+          : calor ? ['Mira el envés en las filas 10 a 14'] : [],
+        riego:calor ? [62, 70, s3, 55] : [48, 56, s3 - 10, 44], w:fase === 'normal' ? -1 : 2,
+        riegoPie:fase === 'actuar' ? 'S3: +4 h hoy, enviado al programador' : fase === 'vigilar' ? `S3: +4 h ${cuando}, programado` : 'Sin cambios en el plan',
+        cuaderno:[fase === 'actuar' ? ['✓', 'Riego sector 3 · 4 h · hoy'] : fase === 'vigilar' ? ['◷', `Riego sector 3 · 4 h · ${cuando}`] : ['✓', `Riego sector 3 · ${dias ? 'hace ' + dd(dias) : 'hoy'}`],
+          ['✓', 'Poda en verde · El Cercado · ayer'], ...(calor ? [['◷', 'Conteo de araña roja · en 7 días']] : []), ['✓', 'Envío al SIEX · sin pendientes']],
+        asesor:'Informe de El Cercado', medida:'NDVI frente a su media', envia:fase !== 'normal'
+      };
+    } else {
+      // otoño: llueve, la hoja cae y el cribado infecta con la hoja mojada
+      const m = p.v, fase = m >= 24 ? 'actuar' : m >= 12 ? 'vigilar' : 'normal', riesgo = {actuar:'alto', vigilar:'medio', normal:'bajo'}[fase];
+      Object.assign(r, {fase, ndvi:.41, alerta:fase !== 'normal',
+        cifras:[['lluvia', '24 mm', false], ['hoja mojada', m + ' h', m >= 24], ['riesgo', riesgo, fase === 'actuar']],
+        etiq:[fase === 'normal' ? 'en rango' : 'cribado', `perdigonado · hoja mojada ${m} h`],
+        frase:`Con ${m} ${m === 1 ? 'hora' : 'horas'} de hoja mojada a ${T} °C y la hoja empezando a caer, el riesgo de cribado es ${riesgo}.` +
+          {actuar:' Toca avisar a tu asesor.', vigilar:' Si la hoja sigue mojada, sube.', normal:' No hace falta tratar.'}[fase]});
+      r.v = {sat:'El Cercado 0,41 · caída de hoja', est:`${T} °C · HR 94 % · 24 mm`, sonda:'31 % a 40 cm · a capacidad', caudal:'Programado: 3 h esta tarde',
+        partes:'Último: hace 3 días', siar:'24 mm ayer · ETo 1,2', avisos:fase === 'normal' ? 'Sin avisos para frutales de hueso' : 'Cribado: condiciones de infección',
+        conteos:'0 % de hojas (fin de campaña)', notas:'«Hojas con perdigonado, fila 3» · foto', almacen:'1 cobre y 2 acaricidas en stock', trampa:'Polilla oriental: 0 / sem'};
+      r.pasos.push([`Tu estación recoge 24 mm y el SiAR confirma la lluvia en la zona. La hoja lleva ${m} ${m === 1 ? 'hora' : 'horas'} mojada a ${T} °C.`, ['est', 'siar']]);
+      r.pasos.push([fase === 'normal' ? 'Sanidad Vegetal no tiene avisos para frutales de hueso esta semana.' : 'Sanidad Vegetal avisa de condiciones de infección de cribado en frutales de hueso.', ['avisos']]);
+      r.pasos.push(['Antonio anotó hojas con perdigonado en la fila 3 de El Cercado, con foto, y el satélite ve la hoja empezando a caer.' +
+        (fase === 'normal' ? ' Con tan poca hoja mojada, es difícil que se extienda.' : ' Es el síntoma del cribado, y la caída de la hoja abre la puerta a nuevas infecciones.'), ['notas', 'sat']]);
+      r.pasos.push(['Las sondas están al 31 % a 40 cm: el suelo está a capacidad y el riego programado para esta tarde sobra.', ['sonda', 'caudal']]);
+      if (fase === 'actuar') r.pasos.push(['En el almacén tienes un cobre autorizado en frutales de hueso; si se trata, el producto y la dosis los fija tu asesor.', ['almacen', 'mapa']]);
+      r.dec = fase === 'actuar' ? {k:'Señal C-02 · prioridad alta', h:'Riesgo alto de cribado en El Cercado: que decida tu asesor. Y para el riego.',
+          p:'Lluvia, hoja mojada y caída de la hoja son las condiciones de infección. La IA no receta: le manda las pruebas a tu asesor, que decide si tratar.',
+          acc:[{t:'Mandar al asesor', s:'con las pruebas', toast:'Informe de cribado enviado a tu asesor, con la foto de Antonio y los datos de la estación.', p:true}, pararRiego(false),
+            {t:'Ver productos autorizados', s:'1 cobre en almacén', toast:'Abriendo los productos autorizados contra el cribado en frutales de hueso.'}], aviso:'tu asesor'}
+        : fase === 'vigilar' ? {k:'Señal C-02 · vigilar', h:'Vigila el cribado y para el riego.',
+          p:`Con ${m} horas de hoja mojada el riesgo es medio. Si llega a 24 horas, la IA avisa a tu asesor con las pruebas.`,
+          acc:[pararRiego(true), {t:'Pedir fotos', s:'filas 1 a 5', toast:'Pedido a Antonio: fotos de las hojas en las filas 1 a 5.'}], aviso:'tu encargado'}
+        : {k:'Sin riesgo de enfermedad', ok:true, h:'Hoy no hay que tratar. Eso sí, para el riego: ya ha llovido bastante.',
+          p:'La hoja se secó pronto y no hay avisos. El suelo está a capacidad, así que el riego de esta tarde sobra.', acc:[pararRiego(true)], aviso:'tu encargado'};
+      r.sal = {
+        equipo:['Antonio: para el riego de esta tarde', ...(fase !== 'normal' ? ['Fotos del perdigonado en las filas 1 a 5'] : []), ...(fase === 'actuar' ? ['Sin tratar hasta que decida el asesor'] : [])],
+        riego:[14, 12, 10, 12], w:-1, riegoPie:'Riego parado esta semana: 24 mm de lluvia',
+        cuaderno:[['✓', 'Lluvia de 24 mm · anotada sola'], ['✓', 'Riego S3 cancelado · hoy'], ...(fase === 'actuar' ? [['◷', 'Tratamiento · lo decide el asesor']] : []), ['✓', 'Envío al SIEX · sin pendientes']],
+        asesor:'Informe de cribado', medida:'Riesgo de cribado', envia:fase === 'actuar'
+      };
+    }
+    r.refs = [...new Set(r.pasos.flatMap(x => x[1]))];
+    return r;
+  }
+  let EV = evaluar();
 
   // ---- tarjetas: tu equipo, fuentes públicas; los sensores van en el mapa ----
   const cards = $('cards');
@@ -279,7 +381,7 @@ html,body{background:transparent}
   });
   cabecera('Sensores de tu explotación → en el mapa');
   // en el móvil, solo las fuentes que usa el razonamiento; el resto tras un botón
-  const usadas = new Set(PASOS.flatMap(p => p[1]));
+  const usadas = new Set(Object.keys(ESC).flatMap(k => evaluar({esc:k, v:ESC[k].v}).refs));
   let ocultas = 0;
   Object.entries(FUENTES).forEach(([k, f]) => { if (!f.obj && !usadas.has(k)) { f.el.classList.add('extra'); ocultas++; } });
   if (ocultas) {
@@ -360,7 +462,8 @@ html,body{background:transparent}
     const geo = new THREE.ExtrudeGeometry(shape, {depth:.015, bevelEnabled:false}); geo.rotateX(-Math.PI / 2);
     const placaMat = new THREE.MeshBasicMaterial({color:alerta ? 0xe0a33e : 0x00c896, transparent:true, opacity:.14, depthWrite:false});
     g.add(new THREE.Mesh(geo, placaMat));
-    g.add(new THREE.LineSegments(new THREE.EdgesGeometry(geo), new THREE.LineBasicMaterial({color:alerta ? 0xffc76b : 0x2fe0b0, transparent:true, opacity:.9})));
+    const lineMat = new THREE.LineBasicMaterial({color:alerta ? 0xffc76b : 0x2fe0b0, transparent:true, opacity:.9});
+    g.add(new THREE.LineSegments(new THREE.EdgesGeometry(geo), lineMat));
     // hileras a lo largo del lado más largo de la parcela
     let largo = 0, ang = 0;
     for (let k = 0; k < poly.length; k++) { const [xa, za] = poly[k], [xb, zb] = poly[(k + 1) % poly.length], l = Math.hypot(xb - xa, zb - za); if (l > largo) { largo = l; ang = Math.atan2(zb - za, xb - xa); } }
@@ -375,10 +478,12 @@ html,body{background:transparent}
     const inst = new THREE.InstancedMesh(copaGeo, copaMat, pos.length), tronco = new THREE.InstancedMesh(troncoGeo, troncoMat, pos.length);
     const base = new THREE.Color(alerta ? 0xc49a3a : color(NDVI[i]));
     // cada árbol con su matiz; en El Cercado, algunos más secos
-    pos.forEach((_, j) => inst.setColorAt(j, base.clone().offsetHSL((rnd() - .5) * .03, (rnd() - .5) * .1, (rnd() - .5) * .08 - (alerta && rnd() < .25 ? .08 : 0)).convertSRGBToLinear()));
+    // (se guarda el matiz para repintar El Cercado al cambiar de escenario; mismo orden de rnd(), mismos árboles)
+    const tono = pos.map(() => [(rnd() - .5) * .03, (rnd() - .5) * .1, (rnd() - .5) * .08, alerta && rnd() < .25]);
+    tono.forEach(([a, b, c, seco], j) => inst.setColorAt(j, base.clone().offsetHSL(a, b, c - (seco ? .08 : 0)).convertSRGBToLinear()));
     [inst, tronco].forEach(m => { m.castShadow = true; g.add(m); });
     const c = poly.reduce((a, [x, z]) => [a[0] + x / poly.length, a[1] + z / poly.length], [0, 0]);
-    return {g, inst, tronco, pos, r, alerta, c, poly, h:r * 2, placaMat, crecido:-1};
+    return {g, inst, tronco, pos, r, alerta, c, poly, h:r * 2, placaMat, lineMat, tono, crecido:-1};
   });
   // los árboles crecen (escala de 0 a 1); solo se recalculan mientras cambian
   const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), Y = new THREE.Vector3(0, 1, 0), vp = new THREE.Vector3(), vs = new THREE.Vector3();
@@ -388,6 +493,14 @@ html,body{background:transparent}
     p.inst.instanceMatrix.needsUpdate = p.tronco.instanceMatrix.needsUpdate = true;
   }
   parcelas.forEach(p => crecer(p, 0));
+  // repinta una parcela con otro vigor; va después de la pasada a lineal, así que convierte sus colores ella misma
+  function pintar(p, ndvi, alerta) {
+    p.alerta = alerta; p.r = .02 + (ndvi - .3) * .075; p.h = p.r * 2; p.crecido = -1;
+    const base = new THREE.Color(alerta ? 0xc49a3a : color(ndvi));
+    p.tono.forEach(([a, b, c, seco], j) => p.inst.setColorAt(j, base.clone().offsetHSL(a, b, c - (alerta && seco ? .08 : 0)).convertSRGBToLinear()));
+    p.inst.instanceColor.needsUpdate = true;
+    p.placaMat.color.set(alerta ? 0xe0a33e : 0x00c896).convertSRGBToLinear(); p.lineMat.color.set(alerta ? 0xffc76b : 0x2fe0b0).convertSRGBToLinear();
+  }
   const cer = parcelas[ALERTA], vega = parcelas[0];
   const ancla = (x, y, z) => new THREE.Vector3(x, y, z);
 
@@ -572,7 +685,7 @@ html,body{background:transparent}
   const nombres = parcelas.map((p, i) => ({p, i})).filter(({i}) => i !== ALERTA).map(({p, i}) => {
     const el = document.createElement('div'); el.className = 'chip nombre'; el.textContent = NOMBRES[i]; escena.appendChild(el); return {el, p}; });
   // etiqueta de El Cercado
-  const etiq = document.createElement('div'); etiq.className = 'chip'; etiq.innerHTML = '<span class="t" style="color:var(--warn)">alerta</span><b>El Cercado</b><span class="v">NDVI 0,38 · margen 1.400 €/ha</span>';
+  const etiq = document.createElement('div'); etiq.className = 'chip';
   escena.appendChild(etiq);
 
   // ---- haces desde las tarjetas hasta la finca ----
@@ -689,7 +802,7 @@ html,body{background:transparent}
     if (objetos.est.molino) objetos.est.molino.rotation.y += dt * 4;
     // parcelas que suben
     parcelas.forEach((p, i) => crecer(p, Math.min(1, Math.max(0, E.alzado * 1.6 - i * .12))));
-    cer.placaMat.opacity = .14 + (E.hot.size ? .14 + Math.sin(E.t * 5) * .12 : 0);
+    cer.placaMat.opacity = .14 + (cer.alerta && E.hot.size ? .14 + Math.sin(E.t * 5) * .12 : 0);
     parcelas.forEach((p, i) => { if (!p.alerta) p.placaMat.opacity = U.sel === 'p' + i ? .42 : .14; });
     // anillos de los sensores citados
     Object.entries(objetos).forEach(([k, o]) => { if (o.ring) o.ring.material.opacity = E.hot.has(k) ? .55 + Math.sin(E.t * 6) * .3 : 0; });
@@ -836,6 +949,64 @@ html,body{background:transparent}
     cv.addEventListener('touchcancel', () => { T = null; });
   }
 
+  // ---- lo que cambia con el escenario: fuentes, cifras, El Cercado, pasos, decisión y salidas ----
+  function ponerFuentes(ev) {
+    Object.entries(FUENTES).forEach(([k, f]) => { f.v = ev.v[k] || f.v0; const v = f.el.querySelector('.v'); if (v) v.textContent = f.v; });
+  }
+  function ponerCifras(ev) {
+    $('cifras').innerHTML = ev.cifras.map(([l, v, a]) => `<span${a ? ' class="a"' : ''}>${l} <b>${v}</b></span>`).join('');
+  }
+  function ponerCercado(ev) {
+    NDVI[ALERTA] = ev.ndvi; pintar(cer, ev.ndvi, ev.alerta);
+    etiq.innerHTML = `<span class="t" style="color:var(--${ev.alerta ? 'warn' : 'brand'})">${ev.etiq[0]}</span><b>El Cercado</b><span class="v">${ev.etiq[1]}</span>`;
+  }
+  function ponerCausa() {
+    const c = CAUSA[ESC[P.esc].causa], r = $('causa');
+    $('causa-t').textContent = c.t; r.max = c.max; r.value = P.v; $('causa-v').textContent = c.u(P.v);
+  }
+  const paso = (t, refs, i) => `<span class="n">${String(i + 1).padStart(2, '0')}</span><span>${t}<br>${refs.map(r => `<span class="cita${FUENTES[r].obj && !FUENTES[r].pub ? ' prop' : ''}">${FUENTES[r].n}</span>`).join('')}</span>`;
+  function ponerDecision(ev) {
+    const d = ev.dec, el = $('decision');
+    el.classList.toggle('ok', !!d.ok);
+    el.innerHTML = `<ol class="fases" id="fases" aria-label="Fase">${['normal', 'vigilar', 'actuar', 'hecho'].map(f => `<li data-f="${f}">${f}</li>`).join('')}</ol>` +
+      `<span class="k">${d.k}</span><h3>${d.h}</h3><p>${d.p}</p>` +
+      (d.acc.length ? `<div class="acciones">${d.acc.map((a, i) => `<button type="button" class="btn${a.p ? ' p' : ''}" data-i="${i}">${a.t} <small>${a.s}</small></button>`).join('')}</div>` : '') +
+      `<span class="toast" id="toast" role="status"></span><div class="meta"><span>confianza <b>alta</b></span><span>fuentes <b>${ev.refs.length} de 17</b></span><span>avisado <b>${d.aviso}</b></span></div>`;
+    ponerFase();
+  }
+  function ponerFase() {
+    const f = P.hecho ? 'hecho' : EV.fase;
+    document.querySelectorAll('#fases li').forEach(li => { li.classList.toggle('on', li.dataset.f === f); li.setAttribute('aria-current', li.dataset.f === f ? 'step' : 'false'); });
+  }
+  // NDVI de El Cercado frente a su media: la línea se separa más cuanto más cae el vigor
+  const MEDIA = [34, 30, 26, 20, 16, 14, 17, 21, 24], SEP = [1, 1, 1, 2, 2, 5, 10, 13, 16];
+  function ponerSalidas(ev, on) {
+    const s = ev.sal, li = xs => xs.map(([m, t]) => `<li><em>${m}</em>${t}</li>`).join(''), k = Math.max(0, (.46 - ev.ndvi) / .08);
+    const linea = ys => ys.map((y, i) => `${i ? 'L' : 'M'}${i * 25} ${Math.min(48, Math.round(y * 10) / 10)}`).join(' ');
+    $('salidas').querySelectorAll('.salida').forEach(x => x.remove());
+    $('salidas').insertAdjacentHTML('beforeend', `
+      <div class="salida"><span class="c">Aviso a tu equipo</span><b>Orden de trabajo de hoy</b>
+        <ul class="lista">${li(s.equipo.length ? s.equipo.map(t => ['→', t]) : [['·', 'Nada que mandar hoy']])}</ul>
+        <span class="pie">${s.equipo.length ? 'enviado al móvil del encargado · 08:16' : 'sin avisos'}</span></div>
+      <div class="salida"><span class="c">Plan de riego</span><b>Esta semana, por sector</b>
+        <div class="riego">${s.riego.map((h, i) => `<i${i === s.w ? ' class="w"' : ''} style="--h:${h}%"><span>S${i + 1}</span></i>`).join('')}</div>
+        <span class="pie">${s.riegoPie}</span></div>
+      <div class="salida"><span class="c">Cuaderno digital</span><b>Registro al día</b><ul class="lista">${li(s.cuaderno)}</ul></div>
+      <div class="salida"><span class="c">Para tu asesor</span><b>${s.asesor}</b>
+        <svg class="spark" viewBox="0 0 200 50" aria-hidden="true"><path class="m" d="${linea(MEDIA)}"/><path class="s" d="${linea(MEDIA.map((y, i) => y + SEP[i] * k))}"/></svg>
+        <span class="pie">${s.medida} · ${s.envia ? ev.refs.length + ' pruebas · enviado 08:15' : 'sin cambios · no se envía'}</span></div>`);
+    if (on) $('salidas').querySelectorAll('.salida').forEach(x => x.classList.add('on'));
+  }
+  // con la historia ya contada, mover el escenario o la causa lo recalcula todo al momento
+  function aplicar() {
+    EV = evaluar(); P.hecho = false;
+    ponerFuentes(EV); ponerCifras(EV); ponerCercado(EV); ponerCausa(); $('frase').textContent = EV.frase;
+    $('pasos').setAttribute('aria-live', 'off'); estado(EV.dec.ok ? 'todo en rango' : 'acción propuesta', false);
+    const ia = document.querySelector('.ia'); ia.classList.add('vivo'); ia.scrollTop = 0;
+    $('pasos').innerHTML = EV.pasos.map(([t, refs], i) => `<li class="on">${paso(t, refs, i)}</li>`).join('');
+    ponerDecision(EV); $('decision').classList.add('on'); ponerSalidas(EV, true); hot(EV.refs); redraw();
+  }
+
   // ---- línea de tiempo ----
   let timers = [], alzar = null;
   let rapido = false;
@@ -857,24 +1028,26 @@ html,body{background:transparent}
     E.on.clear(); hot([]); E.alzado = 0; E.final = false; E.razona = false;
     Object.values(FUENTES).forEach(f => { if (f.obj) { if (f.o.g !== sat) f.o.g.visible = false; } else f.el.classList.remove('on'); });
     sat.visible = false;
-    $('pasos').innerHTML = ''; $('decision').classList.remove('on'); $('toast').textContent = '';
+    EV = evaluar(); P.hecho = false; ponerFuentes(EV); ponerCifras(EV); ponerCercado(EV); ponerCausa(); ponerDecision(EV); ponerSalidas(EV, false);
+    $('causa-box').hidden = true; $('pasos').setAttribute('aria-live', 'polite'); document.querySelector('.ia').classList.remove('vivo');
+    $('pasos').innerHTML = ''; $('decision').classList.remove('on');
     document.querySelector('.ia').scrollTop = 0; cards.scrollTop = 0;
-    document.querySelectorAll('.salida').forEach(x => x.classList.remove('on')); $('salidas').classList.remove('on');
+    $('salidas').classList.remove('on');
     estado('conectando fuentes y sensores', true);
     ORDEN.forEach((k, i) => at(300 + i * 200, () => { encender(k); if (k === 'sat') sat.visible = true; }));
     at(3700, () => { estado('construyendo el mapa de la finca', true);
       if (quieto || rapido) E.alzado = 1; else alzar = setInterval(() => { E.alzado = Math.min(1, E.alzado + .025); if (E.alzado >= 1) clearInterval(alzar); }, 30); });
     at(5200, () => { estado('cruzando fuentes', true); E.razona = true; });
-    PASOS.forEach(([t, refs], i) => at(5500 + i * 1900, () => {
+    EV.pasos.forEach(([t, refs], i) => at(5500 + i * 1900, () => {
       hot(refs);
-      const li = document.createElement('li');
-      li.innerHTML = `<span class="n">${String(i + 1).padStart(2, '0')}</span><span>${t}<br>${refs.map(r => `<span class="cita${FUENTES[r].obj && !FUENTES[r].pub ? ' prop' : ''}">${FUENTES[r].n}</span>`).join('')}</span>`;
+      const li = document.createElement('li'); li.innerHTML = paso(t, refs, i);
       $('pasos').appendChild(li); requestAnimationFrame(() => li.classList.add('on'));
       const ia = document.querySelector('.ia'); ia.scrollTo({top:ia.scrollHeight, behavior:quieto ? 'auto' : 'smooth'});
     }));
-    at(5500 + PASOS.length * 1900 + 300, () => {
-      hot([...new Set(PASOS.flatMap(p => p[1]))]); E.final = true;
-      $('decision').classList.add('on'); estado('acción propuesta', false);
+    at(5500 + EV.pasos.length * 1900 + 300, () => {
+      hot(EV.refs); E.final = true;
+      $('decision').classList.add('on'); estado(EV.dec.ok ? 'todo en rango' : 'acción propuesta', false);
+      $('frase').textContent = EV.frase; $('causa-box').hidden = false;
       const ia = document.querySelector('.ia'); setTimeout(() => ia.scrollTo({top:$('decision').offsetTop - ia.offsetTop - 14, behavior:quieto ? 'auto' : 'smooth'}), 200);
       $('salidas').classList.add('on'); $('saltar').hidden = true;
       if (!U.on) pista(fino ? 'Arrastra para moverte · Mayús + arrastrar gira' : 'Toca un punto · dos dedos mueven y giran');
@@ -884,7 +1057,24 @@ html,body{background:transparent}
 
   let s = 8 * 3600 + 14 * 60 + 7;
   setInterval(() => { s++; const h = String(Math.floor(s / 3600) % 24).padStart(2, '0'), m = String(Math.floor(s / 60) % 60).padStart(2, '0'), x = String(s % 60).padStart(2, '0'); $('reloj').textContent = `${h}:${m}:${x}`; }, 1000);
-  document.querySelectorAll('.btn').forEach(b => b.addEventListener('click', () => { $('toast').textContent = '✓ ' + b.dataset.t; }));
+  $('decision').addEventListener('click', e => {
+    const b = e.target.closest('.btn'); if (!b) return; const a = EV.dec.acc[+b.dataset.i];
+    $('toast').textContent = '✓ ' + a.toast; if (a.p) { P.hecho = true; ponerFase(); }
+  });
+  // escenarios (también con 1 2 3) y la causa
+  function elegirEsc(k) {
+    if (!ESC[k] || (k === P.esc && E.final)) return;
+    P.esc = k; P.v = ESC[k].v;
+    document.querySelectorAll('#escs button').forEach(b => b.setAttribute('aria-pressed', b.dataset.esc === k));
+    avisa('ig-esc-' + k); if (window.parent !== window) parent.postMessage({ig:'esc', esc:k}, location.origin);
+    if (E.final) aplicar(); else play(true);
+  }
+  document.querySelectorAll('#escs button').forEach(b => b.addEventListener('click', () => elegirEsc(b.dataset.esc)));
+  addEventListener('keydown', e => { if (!e.ctrlKey && !e.metaKey && !e.altKey && ['1', '2', '3'].includes(e.key)) elegirEsc(Object.keys(ESC)[+e.key - 1]); });
+  let movida = false;
+  $('causa').addEventListener('input', e => { P.v = +e.target.value; if (!movida) { movida = true; avisa('ig-causa'); } aplicar(); });
+  { const k = new URLSearchParams(location.search).get('esc');
+    if (ESC[k]) { P.esc = k; P.v = ESC[k].v; document.querySelectorAll('#escs button').forEach(b => b.setAttribute('aria-pressed', b.dataset.esc === k)); } }
   $('again').addEventListener('click', () => play());
   $('saltar').addEventListener('click', () => play(true));
 
