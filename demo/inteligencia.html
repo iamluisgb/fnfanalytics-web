@@ -171,7 +171,7 @@ html,body{background:transparent}
     <div class="escena" id="escena" role="img" aria-label="Una finca de frutales en 3D: seis parcelas de frutales con sus árboles en hileras, la parcela El Cercado con árboles más pequeños y en naranja, y los sensores de la explotación sobre el terreno.">
       <div class="hud"><span><b>17</b> fuentes</span><span><b>6</b> parcelas · 13,8 ha</span><span id="reloj">08:14:07</span></div>
       <div class="leyenda"><span><i style="background:#4a8530"></i>vigor alto</span><span><i style="background:#6a8034"></i>vigor medio</span><span><i style="background:#e0a33e"></i>en alerta</span><span>tamaño de copa = NDVI</span></div>
-      <div class="explora" id="explora"><span class="pista" id="pista" role="status" hidden></span><button type="button" id="saltar" hidden>Saltar al final</button><button type="button" class="z" id="inicio" aria-label="Volver a la vista inicial" title="Vista inicial" hidden>⟲</button><button type="button" class="z" id="zmas" aria-label="Acercar">+</button><button type="button" class="z" id="zmenos" aria-label="Alejar">−</button><button type="button" class="ir" id="grande" aria-label="Ver en grande"><span aria-hidden="true">⤢</span><span class="txt"> Ver en grande</span></button><button type="button" class="ir" id="cerrar" hidden>✕ Salir</button></div>
+      <div class="explora" id="explora"><span class="pista" id="pista" role="status" hidden></span><button type="button" id="saltar" hidden>Saltar al final</button><button type="button" class="z" id="izq" aria-label="Girar a la izquierda" title="Girar a la izquierda">↶</button><button type="button" class="z" id="der" aria-label="Girar a la derecha" title="Girar a la derecha">↷</button><button type="button" class="z" id="inicio" aria-label="Volver a la vista inicial" title="Vista inicial" hidden>⌂</button><button type="button" class="z" id="zmas" aria-label="Acercar">+</button><button type="button" class="z" id="zmenos" aria-label="Alejar">−</button><button type="button" class="ir" id="grande" aria-label="Ver en grande"><span aria-hidden="true">⤢</span><span class="txt"> Ver en grande</span></button><button type="button" class="ir" id="cerrar" hidden>✕ Salir</button></div>
     </div>
     <aside class="ia" aria-live="polite">
       <div class="ia-head"><span class="label">IA · razonamiento</span><span class="st" id="st"><i></i>esperando datos</span></div>
@@ -773,7 +773,7 @@ html,body{background:transparent}
     grande = on; document.documentElement.classList.toggle('grande', on);
     $('grande').hidden = on; $('cerrar').hidden = !on;
     if (window.parent !== window) parent.postMessage({ig:'grande', on}, location.origin);
-    if (on) { tomar(); avisa('ig-grande'); pista(fino ? 'Arrastra para moverte · rueda para acercar' : 'Un dedo mueve · dos dedos acercan y giran'); $('cerrar').focus(); }
+    if (on) { tomar(); avisa('ig-grande'); pista(fino ? 'Arrastra para moverte · Mayús + arrastrar gira · rueda acerca' : 'Un dedo mueve · dos dedos acercan y giran'); $('cerrar').focus(); }
     else { pista(''); $('grande').focus({preventScroll:true}); }
   }
   addEventListener('keydown', e => { if (e.key === 'Escape' && grande) ponerGrande(false); });
@@ -781,6 +781,10 @@ html,body{background:transparent}
   $('grande').addEventListener('click', () => ponerGrande(true));
   $('cerrar').addEventListener('click', () => ponerGrande(false));
   $('inicio').addEventListener('click', vistaInicial);
+  // girar con botones: un octavo de vuelta, suavizado (con trackpad, arrastrar con el botón derecho no es cómodo)
+  const rotar = d => { tomar(); G.giro += d; U.rapidez = 5; redraw(); };
+  $('izq').addEventListener('click', () => rotar(-Math.PI / 4));
+  $('der').addEventListener('click', () => rotar(Math.PI / 4));
   $('zmas').addEventListener('click', () => acercar(.7));
   $('zmenos').addEventListener('click', () => acercar(1.4));
   if (R) {
@@ -795,7 +799,8 @@ html,body{background:transparent}
     cv.addEventListener('pointermove', ev => {
       if (U.drag) {
         const dx = ev.clientX - U.drag.x, dy = ev.clientY - U.drag.y; U.drag.x = ev.clientX; U.drag.y = ev.clientY; U.drag.mov += Math.abs(dx) + Math.abs(dy);
-        if (U.drag.mov > 4) U.drag.girar ? girar(-dx * .006, -dy * .004) : mover(dx, dy);
+        // la tecla puede pulsarse ya empezado el arrastre
+        if (U.drag.mov > 4) U.drag.girar || ev.shiftKey || ev.altKey ? girar(-dx * .006, -dy * .004) : mover(dx, dy);
       } else if (ev.pointerType === 'mouse') elegir(pick(ev));
     });
     const soltar = () => { U.drag = null; escena.classList.remove('arrastrando'); };
@@ -872,7 +877,7 @@ html,body{background:transparent}
       $('decision').classList.add('on'); estado('acción propuesta', false);
       const ia = document.querySelector('.ia'); setTimeout(() => ia.scrollTo({top:$('decision').offsetTop - ia.offsetTop - 14, behavior:quieto ? 'auto' : 'smooth'}), 200);
       $('salidas').classList.add('on'); $('saltar').hidden = true;
-      if (!U.on) pista(fino ? 'Arrastra para moverte · toca un punto' : 'Toca un punto · dos dedos para moverte');
+      if (!U.on) pista(fino ? 'Arrastra para moverte · Mayús + arrastrar gira' : 'Toca un punto · dos dedos mueven y giran');
       document.querySelectorAll('.salida').forEach((x, i) => setTimeout(() => x.classList.add('on'), quieto || rapido ? 0 : 500 + i * 350));
     });
   }
