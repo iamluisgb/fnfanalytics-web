@@ -27,7 +27,7 @@
 <link rel="preload" href="/assets/fonts/Poppins-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/JetBrainsMono-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/hero-olivar.webp" as="image">
-<link rel="stylesheet" href="/assets/site.css?v=20261009a">
+<link rel="stylesheet" href="/assets/site.css?v=20261009b">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Organization","name":"Food & Farm Analytics","alternateName":"FnF Analytics","url":"https://fnfanalytics.com/","logo":"https://fnfanalytics.com/favicon-512.png","email":"hola@fnfanalytics.com","award":"Premio Emilio Botín 2020 (ceiA3 y Santander Universidades)"}
 </script>
@@ -105,8 +105,9 @@
       <h2>Todo lo que afecta a tu cultivo, conectado. <em>Y una IA que razona con pruebas.</em></h2>
       <p>Lo que apunta tu equipo, los sensores que ya tienes y las fuentes públicas, en un solo mapa vivo de tu explotación. Cuando algo se sale de lo normal, la IA cruza las fuentes, te enseña por qué y te deja la acción preparada. Tú decides; nada se ejecuta sin tu visto bueno.</p>
       <span class="ig-ej">Ejemplo · algunas conexiones están en desarrollo</span>
+      <p class="ig-metodo">Son reales la ortofoto del PNOA y los recintos del SIGPAC. Son inventados los nombres, los sensores, las cifras y el modelo que calcula la humedad del suelo y el riesgo de enfermedad: está simplificado para el ejemplo.</p>
     </div>
-    <iframe id="ig-frame" class="ig-frame" src="/demo/inteligencia.html?v=20261009e" title="Ejemplo animado: fuentes y sensores, la finca en 3D y la decisión de la IA" loading="lazy"></iframe>
+    <iframe id="ig-frame" class="ig-frame" src="/demo/inteligencia.html?v=20261009g" title="Ejemplo interactivo: fuentes y sensores, la finca en 3D y la decisión de la IA en tres escenarios" loading="lazy"></iframe>
     <div class="ig-cta"><a class="btn btn-primary" href="#acceso" data-umami-event="ig-solicita-acceso">Solicita acceso</a><span>Empezamos con tu cuaderno, tus costes y el satélite. El resto se conecta a medida que entra.</span></div>
   </div>
 </section>
@@ -515,6 +516,8 @@
 // Sección «inteligencia»: la demo va en un marco aislado; aquí se ajusta su altura y se le avisa de que ya se ve.
 (function(){
   var f = document.getElementById('ig-frame'); if (!f) return;
+  var ESC = /^(calor|normal|otono)$/, h = location.hash.match(/^#inteligencia-(\w+)$/);
+  if (h && ESC.test(h[1])) { f.src += '&esc=' + h[1]; document.getElementById('inteligencia').scrollIntoView(); }
   var visto = false, avisar = function(){ if (visto) try { f.contentWindow.postMessage({ig:'empieza'}, location.origin); } catch (_) {} };
   // «Ver en grande»: el marco pasa a ocupar toda la pantalla y la página deja de hacer scroll mientras tanto
   var grande = false;
@@ -522,6 +525,8 @@
   addEventListener('message', function(e){ if (e.origin === location.origin && e.data && e.data.ig === 'grande') {
       grande = !!e.data.on; f.classList.toggle('ig-grande', grande); document.documentElement.classList.toggle('ig-bloqueo', grande); if (grande) f.focus(); }
     else if (e.origin === location.origin && e.data && e.data.ig === 'altura') { if (!grande) f.style.height = e.data.h + 'px'; }
+    // el escenario elegido va en el enlace, para compartirlo (#inteligencia-otono)
+    else if (e.origin === location.origin && e.data && e.data.ig === 'esc' && ESC.test(e.data.esc)) history.replaceState(null, '', '#inteligencia-' + e.data.esc);
     // eventos de la demo (explorar la finca, tocar un punto) a Umami
     else if (e.origin === location.origin && e.data && e.data.ig === 'evento' && /^ig-[a-z-]+$/.test(e.data.n) && window.umami) umami.track(e.data.n); });
   f.addEventListener('load', avisar);
