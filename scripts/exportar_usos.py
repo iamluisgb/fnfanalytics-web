@@ -1,6 +1,6 @@
 """Exporta los usos autorizados del MAPA para la calculadora de caldo.
 
-Lee los CSV de workspace/projects/fnf-mapa y escribe herramientas/datos/:
+Lee los CSV de workspace/projects/experimentos/fnf-mapa y escribe herramientas/datos/:
   - cultivos.json        lista de cultivos con su tipo de plantación y la fecha de la fuente
   - c/<slug>.json        productos y usos de un cultivo
 
@@ -10,7 +10,7 @@ cultivos («Melocotonero»). Las equivalencias salen del catálogo de la app
 (agridashboard/fields/catalogo_familias.py), para que la web y la app digan lo mismo; esos usos
 llevan el nombre del cultivo del registro para el que están autorizados.
 
-Uso:  python3 scripts/exportar_usos.py ../fnf-mapa ../agridashboard
+Uso:  python3 scripts/exportar_usos.py ../experimentos/fnf-mapa ../agridashboard
 """
 import csv
 import importlib.util
@@ -20,7 +20,7 @@ import sys
 import unicodedata
 from pathlib import Path
 
-ORIGEN = Path(sys.argv[1] if len(sys.argv) > 1 else "../fnf-mapa")
+ORIGEN = Path(sys.argv[1] if len(sys.argv) > 1 else "../experimentos/fnf-mapa")
 APP = Path(sys.argv[2] if len(sys.argv) > 2 else "../agridashboard")
 DESTINO = Path(__file__).resolve().parent.parent / "herramientas" / "datos"
 
