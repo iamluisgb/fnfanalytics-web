@@ -12,7 +12,10 @@
 # Informe y log en ~/fnf-mapa-logs/. Lo lanza el LaunchAgent com.fnfanalytics.registro (lunes, 7:00).
 set -uo pipefail
 WEB="$(cd "$(dirname "$0")/.." && pwd)"
+# Why: fnf-mapa se movió a experimentos/ el 12-oct-2026 (dentro del repo experimentos).
 MAPA="$WEB/../fnf-mapa"
+[ -d "$MAPA" ] || MAPA="$WEB/../experimentos/fnf-mapa"
+[ -d "$MAPA" ] || { echo "no encuentro fnf-mapa (ni ../fnf-mapa ni ../experimentos/fnf-mapa)" >&2; exit 1; }
 APP="$WEB/../agridashboard"
 LOGS="$HOME/fnf-mapa-logs"; mkdir -p "$LOGS"
 FECHA=$(date +%Y%m%d-%H%M%S)
