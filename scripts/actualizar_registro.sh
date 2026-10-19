@@ -84,7 +84,12 @@ else
   sed -i '' "s#<loc>https://fnfanalytics.com/herramientas/calculadora-caldo</loc><lastmod>[0-9-]*</lastmod>#<loc>https://fnfanalytics.com/herramientas/calculadora-caldo</loc><lastmod>$(date +%Y-%m-%d)</lastmod>#" sitemap.xml
   git add herramientas usos sitemap.xml
   git commit -q -m "datos: carga semanal del registro del MAPA ($(date +%d-%m-%Y))" -m "Informe: $INFORME"
-  if [ "$PUSH" = 1 ]; then git -c http.postBuffer=524288000 push -q && echo "  publicado"; fi
+  if [ "$PUSH" = 1 ]; then
+    git -c http.postBuffer=524288000 push -q && echo "  publicado"
+    # aviso a Bing/IndexNow: sin esto, las 183 páginas esperan a que le toque al rastreador
+    sleep 20
+    python3 -I "$WEB/scripts/indexnow.py" --solo-hoy || echo "  aviso a IndexNow fallido (no bloquea)"
+  fi
   avisar "Registro actualizado en la web. Informe en fnf-mapa-logs"
 fi
 echo "===== $(date) — hecho ====="

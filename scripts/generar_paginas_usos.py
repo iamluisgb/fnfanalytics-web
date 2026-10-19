@@ -7,14 +7,17 @@ enlace a la calculadora con el cálculo rellenado, y la tabla un buscador. Las d
 no existen redirigen a la página nueva. Actualiza el bloque de usos del sitemap.xml.
 
 Vuelve a ejecutarlo tras cada exportación del registro (lo hace actualizar_registro.sh).
-Uso:  python3 scripts/generar_paginas_usos.py
+Uso:  python3 scripts/generar_paginas_usos.py [--reanunciar]  (--reanunciar: pone HOY en
+      todos los lastmod; solo para corregir un lastmod falso, no lo use el job semanal)
 """
 import collections
+import hashlib
 import html
 import json
 import re
 import shutil
 import sys
+import time
 import unicodedata
 from pathlib import Path
 
@@ -151,6 +154,27 @@ def main():
     por = {c["s"]: c for c in indice["cultivos"]}
     lista = {k: v for k, v in json.loads(LISTA.read_text(encoding="utf-8")).items() if not k.startswith("_")}
 
+    # lastmod honesto: el día que cambió la página, no el de la carga de datos. Antes las 183
+    # páginas declaraban la fecha del registro (27-sep) aunque se publicaron el 8-oct, y para el
+    # buscador aparentaban ser viejas. Si el HTML sale idéntico se conserva el lastmod anterior.
+    HOY = time.strftime("%Y-%m-%d")
+    previos = {}
+    if SALIDA.exists():
+        for f in SALIDA.rglob("*.html"):
+            previos[str(f.relative_to(SALIDA))] = hashlib.sha1(f.read_text(encoding="utf-8").encode()).hexdigest()
+    fechas_previas = dict(re.findall(r"<loc>(%s[^<]*)</loc>\s*<lastmod>([^<]*)</lastmod>" % re.escape(WEB),
+                                     (RAIZ / "sitemap.xml").read_text(encoding="utf-8")))
+    fechas = {}
+    # --reanunciar: una sola vez, para sustituir un lastmod falso (el de los datos) por la fecha en
+    # que las páginas se anuncian de verdad. Después manda el hash: solo cambia si cambia el HTML.
+    forzar = "--reanunciar" in sys.argv
+
+    def escribir(destino, contenido, ruta):
+        mismo = (previos.get(str(destino.relative_to(SALIDA)))
+                 == hashlib.sha1(contenido.encode("utf-8")).hexdigest())
+        fechas[ruta] = (fechas_previas.get(WEB + ruta, HOY) if mismo else HOY) if not forzar else HOY
+        destino.write_text(contenido, encoding="utf-8")
+
     # direcciones publicadas antes, para no dejar enlaces rotos
     antiguas = {str(f.relative_to(SALIDA))[:-5] for f in SALIDA.glob("*/*.html") if f.name != "index.html"} if SALIDA.exists() else set()
     if SALIDA.exists():
@@ -234,7 +258,7 @@ def main():
             destino = SALIDA / s / f"{sl}.html"
             destino.parent.mkdir(parents=True, exist_ok=True)
             migas = [("Usos autorizados", "/usos/"), (cultivo, f"/usos/{s}/"), (nombre, ruta)]
-            destino.write_text(pagina(titulo, desc, ruta, migas, cuerpo), encoding="utf-8")
+            escribir(destino, pagina(titulo, desc, ruta, migas, cuerpo), ruta)
             urls.append(ruta); nuevas.add(f"{s}/{sl}")
 
         # índice del cultivo
@@ -244,7 +268,7 @@ def main():
   </div>
   <section class="cc-usos-body"><ul class="cc-usos-list">{items}</ul>
     <p><a class="cc-btn is-primary cc-inline" href="/herramientas/calculadora-caldo?cultivo={s}">Abrir la calculadora con {e(cultivo.lower())}</a></p></section>"""
-        (SALIDA / s / "index.html").write_text(pagina(f"Productos autorizados en {cultivo.lower()}", f"Productos fitosanitarios autorizados por el MAPA en {cultivo.lower()}, por plaga, con dosis y plazo de seguridad.", f"/usos/{s}/", [("Usos autorizados", "/usos/"), (cultivo, f"/usos/{s}/")], cuerpo), encoding="utf-8")
+        escribir(SALIDA / s / "index.html", pagina(f"Productos autorizados en {cultivo.lower()}", f"Productos fitosanitarios autorizados por el MAPA en {cultivo.lower()}, por plaga, con dosis y plazo de seguridad.", f"/usos/{s}/", [("Usos autorizados", "/usos/"), (cultivo, f"/usos/{s}/")], cuerpo), f"/usos/{s}/")
         urls.append(f"/usos/{s}/")
 
     # las direcciones antiguas que ya no existen llevan a su página nueva (o al índice del cultivo)
@@ -263,17 +287,19 @@ def main():
   </div>
   <section class="cc-usos-body"><ul class="cc-usos-list">{items}</ul>
     <p>¿No está tu cultivo o tu plaga? La <a href="/herramientas/calculadora-caldo">calculadora de caldo</a> tiene los {len(indice["cultivos"])} cultivos del registro y todas sus plagas.</p></section>"""
-    (SALIDA / "index.html").write_text(pagina("Productos fitosanitarios autorizados, por cultivo y plaga", "Productos fitosanitarios autorizados por el MAPA para cada cultivo y plaga, con dosis y plazo de seguridad. Gratis.", "/usos/", [("Usos autorizados", "/usos/")], cuerpo), encoding="utf-8")
+    escribir(SALIDA / "index.html", pagina("Productos fitosanitarios autorizados, por cultivo y plaga", "Productos fitosanitarios autorizados por el MAPA para cada cultivo y plaga, con dosis y plazo de seguridad. Gratis.", "/usos/", [("Usos autorizados", "/usos/")], cuerpo), "/usos/")
     urls.insert(0, "/usos/")
 
     # sitemap: el bloque de usos se rehace entero (sin las redirecciones)
     mapa = (RAIZ / "sitemap.xml").read_text(encoding="utf-8")
     mapa = re.sub(r"\s*<!-- usos -->.*?<!-- /usos -->", "", mapa, flags=re.S)
-    bloque = "\n  <!-- usos -->\n" + "\n".join(f"  <url><loc>{WEB}{u}</loc><lastmod>{indice['fecha']}</lastmod></url>" for u in urls) + "\n  <!-- /usos -->"
+    bloque = "\n  <!-- usos -->\n" + "\n".join(f"  <url><loc>{WEB}{u}</loc><lastmod>{fechas.get(u, HOY)}</lastmod></url>" for u in urls) + "\n  <!-- /usos -->"
     mapa = mapa.replace("</urlset>", bloque + "\n</urlset>")
     (RAIZ / "sitemap.xml").write_text(mapa, encoding="utf-8")
     total = sum(len(p) for p in hechas.values())
+    cambiadas = sum(1 for u in urls if fechas.get(u) != fechas_previas.get(WEB + u))
     print(f"{total} páginas de plagas en {len(hechas)} cultivos, {movidas} redirecciones, {len(urls)} URL en el sitemap")
+    print(f"  cambiadas hoy: {cambiadas} · en sitemap.xml solo se actualiza el lastmod de esas")
 
 
 if __name__ == "__main__":
