@@ -213,7 +213,7 @@ img{max-width:100%}
 .nav-links a:not(.btn){font-family:var(--font-mono);font-size:.72rem;letter-spacing:.06em;color:var(--ink-soft-on-dark);text-decoration:none;text-transform:uppercase}
 .nav-links a:not(.btn):hover{color:#fff}
 .nav .btn{padding:9px 16px;font-size:.85rem}
-@media (max-width:760px){.nav-links a:not(.btn){display:none}}
+@media (max-width:860px){.nav-secciones a:not(.btn){display:none}}
 
 /* ---------- hero ---------- */
 .hero{position:relative;background:var(--carbon) url(/assets/hero-olivar.webp) center/cover no-repeat;isolation:isolate;overflow:hidden}
@@ -289,7 +289,15 @@ img{max-width:100%}
 .final .in{max-width:620px;margin:0 auto;padding:0 var(--gutter)}
 .final h2{color:#fff;font-size:var(--fs-h2);font-weight:700}
 .final p{color:var(--ink-soft-on-dark);margin:16px 0 0;font-size:.95rem}
-.waitlist{display:flex;gap:10px;margin:30px auto 0;max-width:560px}
+/* El consentimiento pasó a estar DENTRO del formulario (va antes del botón,
+   que es donde se puede leer). Con flex en una sola fila, todo se apilaba
+   junto y el correo se quedaba en 30 px: se parte en dos líneas. */
+.waitlist{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:30px auto 0;max-width:560px}
+.waitlist select{flex:0 0 auto}
+.waitlist input[name="email"]{flex:1 1 170px}
+.waitlist > button{flex:0 0 auto}
+.waitlist__error{flex:1 1 100%}
+.waitlist .consent{flex:1 1 100%}
 .waitlist input{flex:1;font-family:var(--font-mono);font-size:.82rem;padding:12px 14px;border-radius:var(--r-s);border:1px solid var(--line-dark);background:var(--carbon-2);color:#fff;min-width:0}
 .waitlist input::placeholder{color:#5f7268}
 .waitlist input:focus{outline:none;box-shadow:var(--glow)}
@@ -334,7 +342,12 @@ footer a{color:#8ea59b}
   .step{border-right:none;border-bottom:1px solid var(--line)}
   .step:last-child{border-bottom:none}
     .band{grid-template-columns:1fr;padding:32px 24px}
-  .waitlist{flex-direction:column}
+  .waitlist{flex-direction:column;align-items:stretch}
+  /* En columna, el `flex-basis` de 170 px se aplicaría al ALTO: el campo del
+     correo salía de 170 px de alto. Aquí manda el ancho. */
+  .waitlist input[name="email"],
+  .waitlist select,
+  .waitlist > button{flex:0 0 auto;width:100%}
 }
 
 /* ---------- demo de dictado (hero). Flujo de campo: SIEMPRE claro ---------- */
@@ -595,3 +608,58 @@ html.ig-bloqueo,html.ig-bloqueo body{overflow:hidden}
 .ig-cta span{color:var(--ink-soft-on-dark);font-size:.88rem;max-width:520px}
 @media (max-width:1100px){.ig-frame{height:2000px}}
 @media (max-width:560px){.ig-frame{height:2400px}}
+
+/* ---------- Menú del móvil y puerta de entrada (doc 44) ----------
+   En 375 px los enlaces de sección se ocultaban sin dejar nada en su sitio:
+   no había forma de abrir un menú, y «Precios» quedaba a 8.393 px de scroll.
+   Y no había ningún «Entrar»: quien ya tiene cuenta no tenía puerta. */
+.nav-secciones{display:flex;gap:24px;align-items:center}
+.nav-movil{display:none;position:relative}
+details.nav-movil>summary{
+  list-style:none;cursor:pointer;padding:9px 14px;border:1px solid var(--line-dark);border-radius:8px;
+  font-family:var(--font-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink-soft-on-dark);
+}
+details.nav-movil>summary::-webkit-details-marker{display:none}
+details.nav-movil[open]>summary{color:#fff;border-color:var(--brand)}
+.nav-movil__panel{
+  position:absolute;right:0;top:calc(100% + 10px);z-index:60;min-width:230px;
+  display:grid;gap:2px;padding:8px;background:var(--carbon);
+  border:1px solid var(--line-dark);border-radius:12px;box-shadow:0 24px 48px rgba(0,0,0,.5);
+}
+.nav-movil__panel a{
+  display:block;padding:12px;border-radius:8px;color:#dfeae5;text-decoration:none;
+  font-family:var(--font-mono);font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;
+}
+.nav-movil__panel a:hover{background:rgba(255,255,255,.08);color:#fff}
+@media (max-width:860px){
+  .nav-secciones{display:none}
+  .nav-movil{display:block}
+  .nav-links{gap:8px}
+  .nav-links .btn{padding:9px 12px;font-size:.78rem}
+}
+
+/* Aviso de validación del formulario de acceso, en la página y en castellano. */
+.waitlist__error{
+  margin:0;padding:10px 12px;border:1px solid #b4402f;border-left-width:3px;
+  border-radius:8px;background:rgba(180,64,47,.14);color:#ffd9d2;
+  font-family:var(--font-mono);font-size:.78rem;letter-spacing:.02em;
+}
+#wait-salida{display:inline-block;margin-top:8px;color:#fff;text-decoration:underline;font-weight:600}
+#wait-salida[hidden]{display:none}
+/* El consentimiento va antes del botón: antes se pulsaba «Solicita acceso» y el
+   aviso de la casilla aparecía debajo, fuera de la vista. */
+.waitlist .consent{margin:2px 0 0}
+
+/* En el móvil, iOS amplía la página al enfocar un campo de menos de 16 px y
+   deja el formulario descolocado (el correo medía 13,12 px). Y el cuadradito
+   del consentimiento medía 13 px: imposible acertarlo con el dedo. */
+@media (max-width:860px){
+  .waitlist input, .waitlist select, .waitlist textarea{font-size:16px}
+  .consent input[type="checkbox"]{width:22px;height:22px;flex:none}
+  .consent{align-items:flex-start;gap:10px}
+}
+
+/* El panel del menú se ancla a su botón, así que en pantallas muy estrechas se
+   salía un par de píxeles por la izquierda. Se limita al ancho de la ventana. */
+.nav-movil__panel{max-width:calc(100vw - 16px)}

@@ -42,11 +42,26 @@
   <div class="in">
     <a class="logo" href="/" aria-label="Food & Farm Analytics"><img src="/assets/logo-mark.png" alt="" width="19" height="34"><span class="lt"><b>food&amp;farm</b><i>analytics</i></span></a>
     <div class="nav-links">
-      <a href="#inteligencia">Inteligencia</a>
-      <a href="#analitica">Analítica</a>
-      <a href="/asesores">Asesores</a>
-      <a href="#precios">Precios</a>
-      <a href="#faq">FAQ</a>
+      <div class="nav-secciones">
+        <a href="#inteligencia">Inteligencia</a>
+        <a href="#analitica">Analítica</a>
+        <a href="/asesores">Asesores</a>
+        <a href="#precios">Precios</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <details class="nav-movil">
+        <summary aria-label="Abrir el menú">Menú</summary>
+        <div class="nav-movil__panel">
+          <a href="#inteligencia">Inteligencia</a>
+          <a href="#analitica">Analítica</a>
+          <a href="/asesores">Asesores</a>
+          <a href="#precios">Precios</a>
+          <a href="#faq">FAQ</a>
+          <a href="/cuaderno-digital">Cuaderno digital 2027</a>
+          <a href="#acceso">Solicita acceso</a>
+        </div>
+      </details>
+      <a class="btn btn-ghost nav-entrar" href="https://app.fnfanalytics.com/users/login/" data-umami-event="nav-entrar">Entrar</a>
       <a class="btn btn-primary" href="#acceso">Solicita acceso</a>
     </div>
   </div>
@@ -278,7 +293,7 @@
           <li>Listo para la inspección y el cuaderno digital oficial</li>
           <li>Sin límite de hectáreas</li>
         </ul>
-        <a class="btn btn-secondary" href="#acceso" data-perfil="Agricultor/a">Empieza gratis</a>
+        <a class="btn btn-secondary" href="#acceso" data-perfil="Agricultor/a">Empieza gratis (acceso anticipado)</a>
       </div>
       <div class="plan pro">
         <span class="label label--accent">pro</span>
@@ -348,7 +363,7 @@
     <span class="label" style="color:var(--brand)">acceso anticipado · plazas limitadas</span>
     <h2 style="margin-top:14px">Deja de teclear.<br>Empieza a decidir.</h2>
     <p>Entra antes que nadie con precio de fundador. Te escribimos cuando tu plaza esté lista.</p>
-    <form class="waitlist" id="waitform">
+    <form class="waitlist" id="waitform" novalidate>
       <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off"><select name="perfil" required aria-label="Perfil">
         <option value="" disabled selected>¿Quién eres?</option>
         <option>Agricultor/a</option>
@@ -356,12 +371,13 @@
         <option>Cooperativa</option>
         <option>Otro</option>
       </select>
-      <input type="email" name="email" required placeholder="tu@correo.es" aria-label="Correo electrónico" autocomplete="email">
+      <input type="email" name="email" required placeholder="tu@correo.es" aria-label="Correo electrónico" autocomplete="email" inputmode="email">
+      <p class="waitlist__error" id="wait-err" role="alert" hidden></p>
+      <label class="consent" id="consent-row"><input type="checkbox" name="consent" required> <span>He leído la <a href="/privacidad">política de privacidad</a> y acepto que FnF me escriba sobre mi solicitud y el producto.</span></label>
       <button class="btn btn-primary" type="submit">Solicita acceso</button>
     </form>
-    <label class="consent" id="consent-row"><input type="checkbox" name="consent" form="waitform" required> <span>He leído la <a href="/privacidad">política de privacidad</a> y acepto que FnF me escriba sobre mi solicitud y el producto.</span></label>
     <p class="form-ok" id="ok" role="status">✓ solicitud registrada. te contactamos con los siguientes pasos.</p>
-    <p class="form-err" id="err" role="alert">No se pudo enviar. Inténtalo de nuevo o escríbenos a <a href="mailto:hola@fnfanalytics.com">hola@fnfanalytics.com</a>.</p>
+    <p class="form-err" id="err" role="alert">No se pudo enviar. Inténtalo de nuevo o escríbenos a <a href="mailto:hola@fnfanalytics.com">hola@fnfanalytics.com</a>. <a id="wait-salida" href="mailto:hola@fnfanalytics.com" hidden>Mandar mi solicitud por correo (ya redactada)</a></p>
     <p class="rgpd"><b>Responsable:</b> Luis González Bernal. <b>Finalidad:</b> gestionar tu solicitud de acceso y escribirte sobre FnF. <b>Legitimación:</b> tu consentimiento. <b>Destinatarios:</b> el proveedor del formulario (FormSubmit), con transferencia a EE. UU. <b>Derechos:</b> acceso, rectificación, supresión y los demás que te reconoce el RGPD, en hola@fnfanalytics.com. Más información en la <a href="/privacidad">política de privacidad</a>.</p>
   </div>
 </section>
@@ -377,6 +393,7 @@
       <a href="/fuentes-datos-publicos">Fuentes de datos públicos</a>
       <a href="/usos/">Usos autorizados</a>
       <a href="/asesores">Asesores</a>
+      <a href="https://app.fnfanalytics.com/users/login/">Entrar</a>
       <a href="/privacidad">Privacidad</a>
       <a href="/aviso-legal">Aviso legal</a>
     </nav>
@@ -460,34 +477,79 @@
   // no da acceso a él). Para cambiar el destinatario hay que reactivar.
   var addr = '1cd257196bf9a567d63dd4a68fbab3f4';
   var err = document.getElementById('err');
+  var errCampo = document.getElementById('wait-err');
+
+  function errorDeCampo() {
+    if (!f.perfil.value) return 'Elige quién eres.';
+    var correo = (f.email.value || '').trim();
+    if (!correo) return 'Escribe tu correo.';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(correo)) return 'Ese correo no parece completo.';
+    if (!f.consent.checked) return 'Para escribirte necesitamos que aceptes la política de privacidad.';
+    return '';
+  }
+
   f.addEventListener('submit', async function(e){
     e.preventDefault();
     if (f._honey && f._honey.value) return;
+
+    // Avisos en castellano y en la página. Antes los ponía el navegador y en
+    // inglés («Please select an item in the list.»), que es lo que vieron tres
+    // de los cinco usuarios de la prueba.
+    var fallo = errorDeCampo();
+    errCampo.hidden = !fallo;
+    errCampo.textContent = fallo;
+    if (fallo) { return; }
+
     err.style.display = 'none';
     var btn = f.querySelector('button'); btn.disabled = true; btn.textContent = 'Enviando…';
+    var datos = {
+      perfil: f.perfil.value,
+      email: f.email.value.trim(),
+      consentimiento: 'aceptado ' + new Date().toISOString(),
+      // de dónde llega la solicitud (?origen=calculadora desde la herramienta), para medir
+      origen: new URLSearchParams(location.search).get('origen') || 'web',
+      _subject: 'FnF · nueva solicitud de acceso',
+      _template: 'table',
+      _captcha: 'false'
+    };
+
+    // El correo se queda guardado antes de intentar nada: si la red o el
+    // proveedor fallan, no se pierde lo que la persona ha escrito.
+    try { localStorage.setItem('fnf-acceso-pendiente', JSON.stringify(datos)); } catch (e2) {}
+
+    // FormSubmit puede quedarse colgado sin responder nunca (Cloudflare lo
+    // reta y el fetch no resuelve): se corta a los 10 s en vez de dejar
+    // «Enviando…» para siempre.
+    var corte = new AbortController();
+    var reloj = setTimeout(function(){ corte.abort(); }, 10000);
     try {
       var r = await fetch('https://formsubmit.co/ajax/' + addr, {
         method:'POST',
         headers:{'Content-Type':'application/json','Accept':'application/json'},
-        body: JSON.stringify({
-          perfil: f.perfil.value,
-          email: f.email.value,
-          consentimiento: 'aceptado ' + new Date().toISOString(),
-          // de dónde llega la solicitud (?origen=calculadora desde la herramienta), para medir
-          origen: new URLSearchParams(location.search).get('origen') || 'web',
-          _subject: 'FnF · nueva solicitud de acceso',
-          _template: 'table',
-          _captcha: 'false'
-        })
+        body: JSON.stringify(datos),
+        signal: corte.signal
       });
+      clearTimeout(reloj);
       if(!r.ok) throw 0;
-      if (window.umami) umami.track('acceso-enviado', { perfil: f.perfil.value, origen: new URLSearchParams(location.search).get('origen') || 'web' });
+      try { localStorage.removeItem('fnf-acceso-pendiente'); } catch (e3) {}
+      if (window.umami) umami.track('acceso-enviado', { perfil: f.perfil.value, origen: datos.origen });
       f.style.display='none';
       document.getElementById('consent-row').style.display='none';
       document.getElementById('ok').style.display='block';
     } catch(_){
+      clearTimeout(reloj);
       btn.disabled = false; btn.textContent = 'Solicita acceso';
+      // Además del aviso, se ofrece la salida que sí funciona: el correo, ya
+      // redactado. Un formulario que falla en silencio no puede ser la única
+      // puerta de entrada a la web.
       err.style.display = 'block';
+      var salida = document.getElementById('wait-salida');
+      if (salida) {
+        salida.href = 'mailto:hola@fnfanalytics.com'
+          + '?subject=' + encodeURIComponent('Solicitud de acceso a FnF')
+          + '&body=' + encodeURIComponent('Perfil: ' + datos.perfil + '\nCorreo: ' + datos.email + '\n\nQuiero acceso a FnF Analytics.');
+        salida.hidden = false;
+      }
     }
   });
 })();

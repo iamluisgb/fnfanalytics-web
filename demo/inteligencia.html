@@ -1026,7 +1026,19 @@ html,body{background:transparent}
     cam.updateProjectionMatrix(); draw();
   }
   if (R) { escena.prepend(R.domElement); new ResizeObserver(resize).observe(escena); }
-  else escena.insertAdjacentHTML('afterbegin', '<p style="padding:60px 20px;color:var(--soft)">Tu navegador no muestra 3D.</p>');
+  else {
+    // Sin WebGL no hay mapa 3D, pero un hueco negro de 327 × 1432 px con «Tu
+    // navegador no muestra 3D» es lo peor que se puede enseñar: parece que la
+    // web está rota y encima culpa al usuario. Se dice qué pasa, que el resto
+    // se puede usar igual, y se ofrece lo que sí se ve.
+    escena.insertAdjacentHTML('afterbegin',
+      '<div style="padding:28px 22px;color:var(--soft);font-family:var(--font-mono);font-size:.85rem;line-height:1.6">' +
+      '<p style="margin:0 0 10px;color:var(--ink)"><b>Aquí va la finca en 3D</b></p>' +
+      '<p style="margin:0 0 10px">Este navegador no puede dibujarla (le falta WebGL, pasa en algunos móviles y en modo ahorro). ' +
+      'Todo lo demás de la página funciona igual.</p>' +
+      '<p style="margin:0">Puedes seguir bajando: las fuentes, los sensores y las tres decisiones de la IA se leen sin el mapa.</p>' +
+      '</div>');
+  }
 
   // ---- navegar como un mapa ----
   // En la portada los gestos comparten el scroll: la rueda sola y un dedo mueven la página; Ctrl/⌘ + rueda y dos dedos, la finca.
