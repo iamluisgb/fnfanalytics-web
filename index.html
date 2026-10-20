@@ -378,7 +378,7 @@
     </form>
     <p class="form-ok" id="ok" role="status">✓ solicitud registrada. te contactamos con los siguientes pasos.</p>
     <p class="form-err" id="err" role="alert">No se pudo enviar. Inténtalo de nuevo o escríbenos a <a href="mailto:hola@fnfanalytics.com">hola@fnfanalytics.com</a>. <a id="wait-salida" href="mailto:hola@fnfanalytics.com" hidden>Mandar mi solicitud por correo (ya redactada)</a></p>
-    <p class="rgpd"><b>Responsable:</b> Luis González Bernal. <b>Finalidad:</b> gestionar tu solicitud de acceso y escribirte sobre FnF. <b>Legitimación:</b> tu consentimiento. <b>Destinatarios:</b> el proveedor del formulario (FormSubmit), con transferencia a EE. UU. <b>Derechos:</b> acceso, rectificación, supresión y los demás que te reconoce el RGPD, en hola@fnfanalytics.com. Más información en la <a href="/privacidad">política de privacidad</a>.</p>
+    <p class="rgpd"><b>Responsable:</b> Luis González Bernal. <b>Finalidad:</b> gestionar tu solicitud de acceso y escribirte sobre FnF. <b>Legitimación:</b> tu consentimiento. <b>Destinatarios:</b> el proveedor del formulario (Cloudflare), con transferencia a EE. UU. <b>Derechos:</b> acceso, rectificación, supresión y los demás que te reconoce el RGPD, en hola@fnfanalytics.com. Más información en la <a href="/privacidad">política de privacidad</a>.</p>
   </div>
 </section>
 
@@ -472,10 +472,10 @@
   });
   // Desde otras páginas llega como ?perfil=asesoria.
   if (new URLSearchParams(location.search).get('perfil') === 'asesoria') f.perfil.value = 'Asesoría · ingeniería';
-  // Token de FormSubmit: el correo de destino no viaja en el HTML. Se obtiene
-  // al activar el formulario y es público por diseño (identifica al buzón,
-  // no da acceso a él). Para cambiar el destinatario hay que reactivar.
-  var addr = '1cd257196bf9a567d63dd4a68fbab3f4';
+  // Worker propio (_workers/formulario): manda el formulario a nuestro correo
+  // con Email Service de Cloudflare. El destino es un secret del Worker y no
+  // viaja en el HTML. Sustituye a FormSubmit, que Cloudflare retaba y colgaba.
+  var FORMULARIO = 'https://fnf-formulario.luisgonzalezb93.workers.dev';
   var err = document.getElementById('err');
   var errCampo = document.getElementById('wait-err');
 
@@ -508,22 +508,19 @@
       consentimiento: 'aceptado ' + new Date().toISOString(),
       // de dónde llega la solicitud (?origen=calculadora desde la herramienta), para medir
       origen: new URLSearchParams(location.search).get('origen') || 'web',
-      _subject: 'FnF · nueva solicitud de acceso',
-      _template: 'table',
-      _captcha: 'false'
+      _subject: 'FnF · nueva solicitud de acceso'
     };
 
     // El correo se queda guardado antes de intentar nada: si la red o el
     // proveedor fallan, no se pierde lo que la persona ha escrito.
     try { localStorage.setItem('fnf-acceso-pendiente', JSON.stringify(datos)); } catch (e2) {}
 
-    // FormSubmit puede quedarse colgado sin responder nunca (Cloudflare lo
-    // reta y el fetch no resuelve): se corta a los 10 s en vez de dejar
+    // Si la red se queda colgada, se corta a los 10 s en vez de dejar
     // «Enviando…» para siempre.
     var corte = new AbortController();
     var reloj = setTimeout(function(){ corte.abort(); }, 10000);
     try {
-      var r = await fetch('https://formsubmit.co/ajax/' + addr, {
+      var r = await fetch(FORMULARIO, {
         method:'POST',
         headers:{'Content-Type':'application/json','Accept':'application/json'},
         body: JSON.stringify(datos),

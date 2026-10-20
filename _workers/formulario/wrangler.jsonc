@@ -1,0 +1,22 @@
+// Formularios de fnfanalytics.com (acceso y alerta de la calculadora) → correo de Luis.
+// Sustituye a FormSubmit, que Cloudflare reta y deja colgado. Sin coste: Email Service
+// solo cobra los envíos a destinatarios arbitrarios; a una dirección verificada de Email
+// Routing es gratis en el plan Free.
+// Deploy: `npx wrangler deploy` desde este directorio, con CLOUDFLARE_API_TOKEN y
+// CLOUDFLARE_ACCOUNT_ID de ~/workspace/.env. El destino es un secret y no va en el repo,
+// que es público: `npx wrangler secret put DESTINO` (la dirección verificada).
+{
+  "name": "fnf-formulario",
+  "main": "src/index.js",
+  "compatibility_date": "2026-07-01",
+  "observability": { "enabled": true, "head_sampling_rate": 1 },
+  "vars": {
+    "ALLOWED_ORIGINS": "https://fnfanalytics.com,https://www.fnfanalytics.com,http://localhost:8000",
+    "REMITENTE": "web@fnfanalytics.com"
+  },
+  "send_email": [{ "name": "CORREO" }],
+  // Anti-abuso: el formulario es anónimo. Por IP; una persona no manda más de dos.
+  "ratelimits": [
+    { "name": "ENVIOS", "namespace_id": "3101", "simple": { "limit": 5, "period": 60 } }
+  ]
+}

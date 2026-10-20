@@ -511,8 +511,8 @@
   }
 
   // ---- alerta: «avísame si cambia la autorización» ----
-  // Mismo buzón que el formulario de la landing (token público de FormSubmit).
-  const FORM = 'https://formsubmit.co/ajax/1cd257196bf9a567d63dd4a68fbab3f4';
+  // Mismo Worker que el formulario de la landing (_workers/formulario).
+  const FORM = 'https://fnf-formulario.luisgonzalezb93.workers.dev';
   const claveAlerta = u => `cc-alerta:${u[0]}:${S.cultivo.s}`;
   function pintarAlerta() {
     const u = S.uso, p = prod(u);
@@ -529,7 +529,7 @@
       const r = await fetch(FORM, {method:'POST', headers:{'Content-Type':'application/json', Accept:'application/json'},
         body:JSON.stringify({email:$('aEmail').value, producto:p[0], registro:u[0], cultivo:S.cultivo.n, plaga:S.plaga,
           consentimiento:'aceptado ' + new Date().toISOString(), origen:'calculadora-caldo',
-          _subject:'FnF · alerta del registro', _template:'table', _captcha:'false'})});
+          _subject:'FnF · alerta del registro'})});
       if (!r.ok) throw 0;
       try { localStorage.setItem(claveAlerta(u), '1'); } catch (_) {}
       track('calc-alerta');
