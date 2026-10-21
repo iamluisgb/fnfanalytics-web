@@ -17,6 +17,6 @@
   "send_email": [{ "name": "CORREO" }],
   // Anti-abuso: el formulario es anónimo. Por IP; una persona no manda más de dos.
   "ratelimits": [
-    { "name": "ENVIOS", "namespace_id": "3101", "simple": { "limit": 5, "period": 60 } }
+    { "name": "ENVIOS", "namespace_id": "3102", "simple": { "limit": 5, "period": 60 } }
   ]
 }
