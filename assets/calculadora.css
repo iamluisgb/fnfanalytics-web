@@ -139,8 +139,6 @@
   .cc-hud{font-size:11px;padding:6px 8px}.cc-hud b{font-size:12.5px}.cc-hud.is-bl{min-width:0}
   .cc-ctrl small,.cc-lbl{display:none}
   .cc-stage{height:280px}
-  .nav .in{padding:8px 16px}
-  .nav .btn{padding:8px 12px;font-size:.8rem}
   .cc-kpis{grid-template-columns:1fr 1fr}
   .cc-kpis>div:nth-child(3){grid-column:1/-1;border-left:0;padding-left:0;border-top:1px solid var(--line-dark);margin-top:8px}
 }

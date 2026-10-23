@@ -663,3 +663,23 @@ details.nav-movil[open]>summary{color:#fff;border-color:var(--brand)}
 /* El panel del menú se ancla a su botón, así que en pantallas muy estrechas se
    salía un par de píxeles por la izquierda. Se limita al ancho de la ventana. */
 .nav-movil__panel{max-width:calc(100vw - 16px)}
+
+/* Con «Menú», «Entrar» y «Solicita acceso» la barra mide unos 390 px: en los
+   móviles de 360-390 px empujaba el botón fuera de la pantalla. Se aprieta. */
+@media (max-width:420px){
+  .nav .in{padding-inline:12px;gap:8px}
+  .nav-links{gap:6px}
+  .nav-links .btn,details.nav-movil>summary{padding:8px 10px}
+}
+@media (max-width:860px){
+  /* El panel se ancla a la barra, no al botón: anclado al botón se salía por la izquierda. */
+  .nav .in{position:relative}
+  .nav-movil{position:static}
+  .nav-movil__panel{right:12px;top:calc(100% + 4px)}
+  .nav .logo{flex:none}
+}
+.nav-movil__panel a.nav-movil__entrar{display:none}
+@media (max-width:390px){
+  .nav-entrar{display:none}
+  .nav-movil__panel a.nav-movil__entrar{display:block}
+}
