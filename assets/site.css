@@ -344,11 +344,6 @@ img{max-width:100%}
 
 
 /* rotador de casos de uso */
-.rotator{height:1.9em;overflow:hidden;margin-top:16px;position:relative}
-.rotator span{display:block;font-weight:600;font-size:1.05rem;color:#e7f3ec;opacity:0;position:absolute;inset:0;transform:translateY(10px);transition:opacity .45s var(--ease),transform .45s var(--ease)}
-.rotator span.on{opacity:1;transform:none}
-.rotator em{font-style:normal;color:var(--brand)}
-@media (prefers-reduced-motion: reduce){.rotator span{transition:none}}
 
 /* faq */
 /* preguntas frecuentes: conversación con Luis (idea de savvia.studio). La pregunta es el globo de quien pregunta,
@@ -655,7 +650,13 @@ footer nav a:hover{color:#fff}
 .ig .sec-head p{color:var(--ink-soft-on-dark)}
 .ig-ej{display:inline-block;margin-top:16px;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft-on-dark);border:1px solid var(--line-dark);border-radius:4px;padding:4px 8px}
 .ig-metodo{margin:10px 0 0;max-width:640px;font-size:.82rem;line-height:1.5;color:var(--ink-soft-on-dark)}
-.ig-frame{display:block;width:100%;height:1040px;border:0;margin-top:32px;background:transparent;color-scheme:dark}
+.ig-frame{display:block;width:100%;height:1040px;border:0;background:transparent;color-scheme:dark}
+/* la demo, recortada: se ve la finca y la decisión; las salidas y el resto de fuentes, tras «Ver la demo completa».
+   El tope lo calcula la portada leyendo la demo (mismo origen); sin JS no hay tope. */
+.ig-marco{position:relative;margin-top:32px;overflow:hidden}
+.ig-marco.recortado::after{content:"";position:absolute;left:0;right:0;bottom:0;height:120px;pointer-events:none;background:linear-gradient(transparent,var(--carbon))}
+.ig-mas{display:none}
+.ig-marco.recortado+.ig-mas{display:flex;margin:-8px auto 0;position:relative;z-index:1}
 .ig-frame.ig-grande{position:fixed;inset:0;width:100%;height:100vh!important;height:100dvh!important;margin:0;z-index:1000;background:#0c1210}
 html.ig-bloqueo,html.ig-bloqueo body{overflow:hidden}
 .ig-cta{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:28px}

@@ -72,11 +72,6 @@
   <div class="in">
     <div>
       <h1>El centro de decisiones de <em>tu explotación.</em></h1>
-      <div class="rotator" aria-hidden="true">
-        <span class="on">Dicta el tratamiento <em>desde el tractor</em></span>
-        <span>Sabe cuánto ganas <em>en cada parcela</em></span>
-        <span>Te dice <em>por qué cae una parcela</em></span>
-      </div>
       <p class="sub">Dices lo que has hecho en el campo y FnF lo convierte en una operación validada, con su coste imputado a la parcela. El cuaderno se mantiene al día sin teclear y sabes el margen de cada parcela cuando lo necesitas.</p>
       <div class="ctas">
         <a class="btn btn-primary" href="#acceso">Solicita acceso</a>
@@ -107,22 +102,64 @@
 <div class="kstrip">
   <div class="in">
     <div class="k"><div class="kpi">+3.000</div><span class="label">Operaciones registradas por usuarios de la v1</span></div>
-    <div class="k"><div class="kpi kpi--accent">0 €</div><span class="label">El cuaderno básico, para siempre</span></div>
-    <div class="k"><div class="kpi">sin límite</div><span class="label">De hectáreas ni de parcelas</span></div>
+    <div class="k"><div class="kpi">1.718</div><span class="label"><a href="/metodo" style="color:inherit">Productos del registro oficial, comprobados en cada parte</a></span></div>
+    <div class="k"><div class="kpi">65</div><span class="label"><a href="/fuentes-datos-publicos" style="color:inherit">Fuentes públicas revisadas a mano</a></span></div>
     <div class="k"><div class="kpi">2020</div><span class="label"><a href="http://www.ceia3.es/es/noticias/premios/el-proyecto-de-empresa-food-and-farm-analytics-ganador-de-los-premios-emilio-botin-2020-promovido-por-ceia3-y-santander-universidades/" target="_blank" rel="noopener" style="color:inherit">Premio Emilio Botín · ceiA3 ↗</a></span></div>
   </div>
 </div>
+
+<section class="section" id="flujo" style="background:var(--bg-alt);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="container">
+    <div class="sec-head">
+      <span class="label label--accent">cómo funciona</span>
+      <h2>Los datos entran solos. <em>Las decisiones salen listas.</em></h2>
+    </div>
+    <p class="ruta-intro">Cada operación llega por el canal que ya usas, pasa las mismas comprobaciones y, cuando la confirmas, alimenta todo lo demás. Nadie aprende nada nuevo.</p>
+    <figure class="ruta" id="ruta">
+      <ul class="ruta-col ruta-in" aria-label="Por dónde entra">
+        <li><button type="button" data-k="0" aria-pressed="true">Audio desde el móvil</button></li>
+        <li><button type="button" data-k="1" aria-pressed="false">Foto del albarán o del parte</button></li>
+        <li><button type="button" data-k="2" aria-pressed="false">Importación de otro cuaderno</button></li>
+        <li><button type="button" data-k="3" aria-pressed="false">Nota de voz por Telegram</button></li>
+      </ul>
+      <div class="ruta-nucleo">
+        <div class="ruta-cab"><span>fnf · validación</span><span class="ruta-llega" id="ruta-llega" aria-live="polite">audio de 14 s</span></div>
+        <h3>Nada entra sin tu visto bueno</h3>
+        <ol class="ruta-checks">
+          <li>Producto autorizado en el registro oficial</li>
+          <li>Dosis dentro de lo autorizado para el cultivo</li>
+          <li>Plazo de seguridad hasta la cosecha</li>
+          <li>Parcela y recinto SIGPAC</li>
+          <li>Equipo, tractor y horas</li>
+        </ol>
+        <p class="ruta-pie">Si falta algo en el parte, te lo pregunta. Lo confirmas con un toque.</p>
+      </div>
+      <ul class="ruta-col ruta-out" aria-label="Adónde va después">
+        <li>Cuaderno de campo al día</li>
+        <li>Coste imputado a la parcela</li>
+        <li>Margen de cada parcela</li>
+        <li>Señales y avisos</li>
+        <li>Presentación oficial en lote</li>
+      </ul>
+      <svg class="ruta-lineas" aria-hidden="true"></svg>
+      <figcaption>De dónde llega cada operación y adónde va después. Pulsa una entrada para seguirla. <a href="/metodo" data-umami-event="ruta-metodo">Cómo lo comprobamos</a></figcaption>
+    </figure>
+  </div>
+</section>
 
 <section class="section ig" id="inteligencia">
   <div class="container">
     <div class="sec-head">
       <span class="label">inteligencia</span>
       <h2>Todo lo que afecta a tu cultivo, conectado. <em>Y una IA que razona con pruebas.</em></h2>
-      <p>Lo que apunta tu equipo, los sensores que ya tienes y las fuentes públicas, en un solo mapa vivo de tu explotación. Cuando algo se sale de lo normal, la IA cruza las fuentes, te enseña por qué y te deja la acción preparada. Tú decides; nada se ejecuta sin tu visto bueno.</p>
+      <p>Lo que apunta tu equipo, los sensores que ya tienes y las fuentes públicas, en un solo mapa vivo de tu explotación. Cuando algo se sale de lo normal, la IA cruza las fuentes, te enseña por qué y te deja la acción preparada.</p>
       <span class="ig-ej">Ejemplo · algunas conexiones están en desarrollo</span>
       <p class="ig-metodo">Son reales la ortofoto del PNOA y los recintos del SIGPAC. Son inventados los nombres, los sensores, las cifras y el modelo que calcula la humedad del suelo y el riesgo de enfermedad: está simplificado para el ejemplo.</p>
     </div>
-    <iframe id="ig-frame" class="ig-frame" src="/demo/inteligencia.html?v=20261009i" title="Ejemplo interactivo: fuentes y sensores, la finca en 3D y la decisión de la IA en tres escenarios" loading="lazy"></iframe>
+    <div class="ig-marco" id="ig-marco">
+      <iframe id="ig-frame" class="ig-frame" src="/demo/inteligencia.html?v=20261009i" title="Ejemplo interactivo: fuentes y sensores, la finca en 3D y la decisión de la IA en tres escenarios" loading="lazy"></iframe>
+    </div>
+    <button type="button" class="btn btn-ghost ig-mas" id="ig-mas" data-umami-event="ig-completa">Ver la demo completa</button>
     <div class="ig-cta"><a class="btn btn-primary" href="#acceso" data-umami-event="ig-solicita-acceso">Solicita acceso</a><span>Empezamos con tu cuaderno, tus costes y el satélite. El resto se conecta a medida que entra.</span></div>
   </div>
 </section>
@@ -224,44 +261,6 @@
   </div>
 </section>
 
-<section class="section" id="flujo" style="background:var(--bg-alt);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
-  <div class="container">
-    <div class="sec-head">
-      <span class="label label--accent">cómo funciona</span>
-      <h2>Los datos entran solos. <em>Las decisiones salen listas.</em></h2>
-    </div>
-    <p class="ruta-intro">Cada operación llega por el canal que ya usas, pasa las mismas comprobaciones y, cuando la confirmas, alimenta todo lo demás. Nadie aprende nada nuevo.</p>
-    <figure class="ruta" id="ruta">
-      <ul class="ruta-col ruta-in" aria-label="Por dónde entra">
-        <li><button type="button" data-k="0" aria-pressed="true">Audio desde el móvil</button></li>
-        <li><button type="button" data-k="1" aria-pressed="false">Foto del albarán o del parte</button></li>
-        <li><button type="button" data-k="2" aria-pressed="false">Importación de otro cuaderno</button></li>
-        <li><button type="button" data-k="3" aria-pressed="false">Nota de voz por Telegram</button></li>
-      </ul>
-      <div class="ruta-nucleo">
-        <div class="ruta-cab"><span>fnf · validación</span><span class="ruta-llega" id="ruta-llega" aria-live="polite">audio de 14 s</span></div>
-        <h3>Nada entra sin tu visto bueno</h3>
-        <ol class="ruta-checks">
-          <li>Producto autorizado en el registro oficial</li>
-          <li>Dosis dentro de lo autorizado para el cultivo</li>
-          <li>Plazo de seguridad hasta la cosecha</li>
-          <li>Parcela y recinto SIGPAC</li>
-          <li>Equipo, tractor y horas</li>
-        </ol>
-        <p class="ruta-pie">Si falta algo en el parte, te lo pregunta. Lo confirmas con un toque.</p>
-      </div>
-      <ul class="ruta-col ruta-out" aria-label="Adónde va después">
-        <li>Cuaderno de campo al día</li>
-        <li>Coste imputado a la parcela</li>
-        <li>Margen de cada parcela</li>
-        <li>Señales y avisos</li>
-        <li>Presentación oficial en lote</li>
-      </ul>
-      <svg class="ruta-lineas" aria-hidden="true"></svg>
-      <figcaption>De dónde llega cada operación y adónde va después. Pulsa una entrada para seguirla. <a href="/metodo" data-umami-event="ruta-metodo">Cómo lo comprobamos</a></figcaption>
-    </figure>
-  </div>
-</section>
 
 <section class="section" id="asesores" style="padding-top:0">
   <div class="container">
@@ -333,10 +332,8 @@
         <h3>Para gestionar una cartera</h3>
         <div class="price">A medida<small>Según el tamaño de tu cartera</small></div>
         <ul>
-          <li>Panel con toda la cartera</li>
-          <li>Incoherencias antes de la inspección</li>
-          <li>Presentación en lote</li>
-          <li>Tus agricultores registran por voz</li>
+          <li>Todo lo de Pro, para cada agricultor de tu cartera</li>
+          <li>El panel de cartera de <a href="#asesores">más arriba</a></li>
         </ul>
         <a class="btn btn-secondary" href="/asesores">Ver la solución</a>
       </div>
@@ -369,7 +366,7 @@
       </details>
       <details>
         <summary>¿Vale para la inspección y el cuaderno digital?</summary>
-        <div class="a"><img src="/assets/luis.webp" width="28" height="28" alt="" loading="lazy"><p>Sí. Cada operación queda registrada conforme al cuaderno digital de explotación (RD 1054/2022, CUE/SIEX), validada contra el registro oficial de productos del MAPA y con su traza completa. Los asesores presentan en lote toda su cartera. Si quieres saber qué te toca y cuándo, lo tienes en <a href="/cuaderno-digital">la guía del cuaderno digital</a>.</p></div>
+        <div class="a"><img src="/assets/luis.webp" width="28" height="28" alt="" loading="lazy"><p>Sí. Cada operación queda registrada conforme al cuaderno digital de explotación (RD 1054/2022, CUE/SIEX), validada contra el registro oficial de productos del MAPA y con su traza completa. Si quieres saber qué te toca y cuándo, lo tienes en <a href="/cuaderno-digital">la guía del cuaderno digital</a>.</p></div>
       </details>
       <details>
         <summary>¿De quién son los datos?</summary>
@@ -377,11 +374,7 @@
       </details>
       <details>
         <summary>¿Y si la IA entiende mal un audio?</summary>
-        <div class="a"><img src="/assets/luis.webp" width="28" height="28" alt="" loading="lazy"><p>Nada queda registrado sin tu confirmación: el sistema te enseña la operación estructurada y la corriges con un toque. Cada dosis se valida contra los límites oficiales antes de entrar.</p></div>
-      </details>
-      <details>
-        <summary>¿Cuánto cuesta?</summary>
-        <div class="a"><img src="/assets/luis.webp" width="28" height="28" alt="" loading="lazy"><p>El cuaderno básico es gratis y sin límite de hectáreas. La captura por voz, los costes por parcela y las señales van en el plan Pro, con precio de fundador para quienes entren ahora, que se mantiene para siempre. <a href="#precios">Ver precios</a>.</p></div>
+        <div class="a"><img src="/assets/luis.webp" width="28" height="28" alt="" loading="lazy"><p>Lo ves antes de que entre y lo corriges con un toque. Qué se comprueba y contra qué, en <a href="/metodo">cómo lo comprobamos</a>.</p></div>
       </details>
     </div>
     </div>
@@ -432,15 +425,6 @@
   </div>
 </footer>
 
-<script>
-(function(){
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var el = document.querySelectorAll('.rotator span'), i = 0;
-  setInterval(function(){
-    el[i].classList.remove('on'); i = (i+1) % el.length; el[i].classList.add('on');
-  }, 3200);
-})();
-</script>
 <script>
 // Demo de dictado: simulada, sin micrófono ni servidor. Enseña el recorrido
 // frase → operación estructurada → validación con dos ejemplos que se alternan.
@@ -596,7 +580,7 @@
       vistas[id] = 1; io.unobserve(e.target); umami.track('ve-' + id);
     });
   }, { rootMargin: '0px 0px -40% 0px' });
-  ['inteligencia','analitica','asesores','precios','acceso'].forEach(function(id){
+  ['flujo','inteligencia','analitica','asesores','precios','acceso'].forEach(function(id){
     var el = document.getElementById(id); if (el) io.observe(el);
   });
 })();
@@ -615,12 +599,27 @@
   addEventListener('keydown', function(e){ if (e.key === 'Escape' && grande) try { f.contentWindow.postMessage({ig:'salir'}, location.origin); } catch (_) {} });
   addEventListener('message', function(e){ if (e.origin === location.origin && e.data && e.data.ig === 'grande') {
       grande = !!e.data.on; f.classList.toggle('ig-grande', grande); document.documentElement.classList.toggle('ig-bloqueo', grande); if (grande) f.focus(); }
-    else if (e.origin === location.origin && e.data && e.data.ig === 'altura') { if (!grande) f.style.height = e.data.h + 'px'; }
+    else if (e.origin === location.origin && e.data && e.data.ig === 'altura') { if (!grande) f.style.height = e.data.h + 'px'; recortar(); }
     // el escenario elegido va en el enlace, para compartirlo (#inteligencia-otono)
     else if (e.origin === location.origin && e.data && e.data.ig === 'esc' && ESC.test(e.data.esc)) history.replaceState(null, '', '#inteligencia-' + e.data.esc);
     // eventos de la demo (explorar la finca, tocar un punto) a Umami
     else if (e.origin === location.origin && e.data && e.data.ig === 'evento' && /^ig-[a-z-]+$/.test(e.data.n) && window.umami) umami.track(e.data.n); });
+  // recorte: hasta el final de la finca y de la decisión (lo de debajo repite «cómo funciona»)
+  var marco = document.getElementById('ig-marco'), mas = document.getElementById('ig-mas'), abierta = false;
+  function recortar(){
+    if (abierta) return;
+    try {
+      var d = f.contentDocument, ia = d.querySelector('.ia'), esc = d.querySelector('.escena');
+      var tope = Math.max(ia ? ia.getBoundingClientRect().bottom : 0, esc ? esc.getBoundingClientRect().bottom : 0);
+      var alto = f.getBoundingClientRect().height;
+      if (tope > 200 && tope + 80 < alto) { marco.style.maxHeight = Math.ceil(tope + 24) + 'px'; marco.classList.add('recortado'); }
+      else { marco.style.maxHeight = ''; marco.classList.remove('recortado'); }
+    } catch (_) {}
+  }
+  mas.addEventListener('click', function(){ abierta = true; marco.style.maxHeight = ''; marco.classList.remove('recortado'); });
+  addEventListener('resize', recortar);
   f.addEventListener('load', avisar);
+  f.addEventListener('load', recortar);
   // en el móvil el marco es muy alto: cuenta lo que se ve en píxeles (la finca está arriba del todo), no en proporción
   if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ if (es.some(function(x){ return x.isIntersecting && (x.intersectionRatio >= .2 || x.intersectionRect.height >= Math.min(240, innerHeight * .3)); })) { visto = true; avisar(); } }, {threshold:[0, .05, .1, .15, .2]}).observe(f);
   else { visto = true; avisar(); }
