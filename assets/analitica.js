@@ -10,6 +10,17 @@
     {id:5,  n:'El Cercado', ha:1.4, v:0.38, dv:-0.18, mg:1400, alerta:true}
   ];
   var MESES = ['oct','nov','dic','ene','feb','mar','abr','may','jun','jul','ago','sep'];
+  var MES_LARGO = ['octubre','noviembre','diciembre','enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre'];
+  // La campaña de un frutal de hueso en regadío, mes a mes (ejemplo): la fase y la labor típica.
+  var FASES = [
+    ['Postcosecha', 'Riego de mantenimiento y abonado de otoño'], ['Caída de hoja', 'Tratamiento de otoño con cobre'],
+    ['Reposo', 'Poda de invierno'], ['Reposo', 'Poda y tratamiento de invierno'],
+    ['Floración', 'Vigilar heladas; tratamientos en floración'], ['Floración y cuajado', 'Fungicida contra la monilia'],
+    ['Cuajado', 'Aclareo de frutos y primeros riegos'], ['Engorde del fruto', 'Riego y fertirrigación'],
+    ['Cosecha temprana', 'Recolección de las variedades tempranas'], ['Cosecha', 'Recolección: cuenta el plazo de seguridad'],
+    ['Cosecha tardía', 'Recolección y riego'], ['Postcosecha', 'Riego de mantenimiento. Hoy']
+  ];
+  var mes = 11;   // el mes que se ve en el mapa y el panel; 11 = septiembre, «hoy»
   var num = function(x, d){ return x.toFixed(d).replace('.', ','); };
   var miles = function(x){ return String(Math.round(x)).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); };
   var pct = function(x){ var r = Math.round(x*100); return (r > 0 ? '+' : r < 0 ? '−' : '') + Math.abs(r) + '%'; };
@@ -31,11 +42,22 @@
   var sig = document.getElementById('sig'); if (!sig) return;
   var svgNS = 'http://www.w3.org/2000/svg';
   var paths = sig.querySelectorAll('.parcela');
-  var byId = {}; PARCELAS.forEach(function(p){ byId[p.id] = p; });
+  var byId = {}; PARCELAS.forEach(function(p){ byId[p.id] = p; p.s = serie(p); });
+  var alertaG = sig.querySelector('.alerta'), elegida = 5;
+  var desvio = function(p, t){ var d = p.s[t]; return d.v/d.media - 1; };
+  // el mapa del mes: color por tramo de NDVI y la alerta solo cuando la caída ya se ve
+  function pintarMapa(){
+    paths.forEach(function(el){
+      var p = byId[el.getAttribute('data-p')], v = p.s[mes].v;
+      for (var b = 1; b <= 5; b++) el.classList.toggle('b' + b, b === tramo(v));
+      el.classList.toggle('alerta-p', !!p.alerta && desvio(p, mes) <= -.08);
+      el.setAttribute('aria-label', p.n + ', ' + num(p.ha,1) + ' ha, NDVI ' + num(v,2) + ' en ' + MES_LARGO[mes]);
+    });
+    var a = byId[5]; alertaG.style.visibility = desvio(a, mes) <= -.08 ? 'visible' : 'hidden';
+    alertaG.querySelector('text').textContent = '▼ ' + pct(desvio(a, mes));
+  }
   paths.forEach(function(el){
     var p = byId[el.getAttribute('data-p')];
-    el.classList.add('b' + tramo(p.v));
-    if (p.alerta) el.classList.add('alerta-p');
     el.addEventListener('click', function(){ elegir(p.id); });
     el.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); elegir(p.id); } });
   });
@@ -46,7 +68,7 @@
   function el(tag, attrs, parent){ var e = document.createElementNS(svgNS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); (parent||svg).appendChild(e); return e; }
 
   function dibujar(p){
-    var s = serie(p), neg = p.dv <= -.1;
+    var s = p.s, neg = desvio(p, mes) <= -.08;
     svg.innerHTML = '';
     [.30,.40,.50,.60].forEach(function(v){
       el('line', {class:'grid', x1:L, x2:W-R, y1:Y(v), y2:Y(v)});
@@ -57,8 +79,9 @@
     el('polygon', {class:'band', points:sup.concat(inf).join(' ')});
     el('polyline', {class:'media', points:s.map(function(d,i){ return X(i)+','+Y(d.media); }).join(' ')});
     el('polyline', {class:'serie' + (neg ? ' neg' : ''), points:s.map(function(d,i){ return X(i)+','+Y(d.v); }).join(' ')});
+    if (mes < 11) el('line', {class:'mes', x1:X(mes), x2:X(mes), y1:T, y2:H-B});
     var cross = el('line', {class:'cross', y1:T, y2:H-B, visibility:'hidden'});
-    var pt = el('circle', {class:'pt', r:4.5, stroke: neg ? 'var(--warn)' : 'var(--brand-deep)', cx:X(11), cy:Y(s[11].v)});
+    var pt = el('circle', {class:'pt', r:4.5, stroke: neg ? 'var(--warn)' : 'var(--brand-deep)', cx:X(mes), cy:Y(s[mes].v)});
     var hit = el('rect', {class:'hit', x:L, y:T, width:W-L-R, height:H-T-B});
     function mover(ev){
       var r = svg.getBoundingClientRect(), x = (ev.clientX - r.left) * W / r.width;
@@ -73,23 +96,24 @@
     hit.addEventListener('pointerdown', mover);
     hit.addEventListener('pointerleave', function(){
       tip.hidden = true; cross.setAttribute('visibility', 'hidden');
-      pt.setAttribute('cx', X(11)); pt.setAttribute('cy', Y(s[11].v));
+      pt.setAttribute('cx', X(mes)); pt.setAttribute('cy', Y(s[mes].v));
     });
   }
 
   function elegir(id){
-    var p = byId[id];
+    var p = byId[id], v = p.s[mes].v, dvm = desvio(p, mes); elegida = id;
     paths.forEach(function(e){ e.classList.toggle('sel', +e.getAttribute('data-p') === id); });
     for (var k in filas) filas[k].classList.toggle('sel', +k === id);
     document.getElementById('p-nom').textContent = p.n;
     document.getElementById('p-ha').textContent = num(p.ha,1) + ' ha';
-    document.getElementById('p-v').textContent = num(p.v,2);
+    document.getElementById('p-v-l').textContent = mes === 11 ? 'NDVI hoy' : 'NDVI en ' + MESES[mes];
+    document.getElementById('p-v').textContent = num(v,2);
     var dv = document.getElementById('p-dv');
-    dv.textContent = pct(p.dv); dv.className = 'data ' + (p.dv <= -.03 ? 'neg' : p.dv > 0 ? 'pos' : '');
+    dv.textContent = pct(dvm); dv.className = 'data ' + (dvm <= -.03 ? 'neg' : dvm > .005 ? 'pos' : '');
     var s = document.getElementById('p-senal');
-    if (p.alerta) s.innerHTML = '<span class="ic warn">▼ SEÑAL ABIERTA</span> · El vigor cae un <b>18%</b> frente a su media de 3 años desde julio. Revisa riego y estado sanitario antes de la próxima aplicación.';
-    else if (p.dv <= -.03) s.innerHTML = '<span class="ic warn">▼ VIGILAR</span> · Algo por debajo de su media (' + pct(p.dv) + '). Sin señal abierta: seguimiento normal.';
-    else s.innerHTML = '<span class="ic ok">✓ NORMAL</span> · Dentro de lo esperable para esta época (' + pct(p.dv) + ' frente a su media).';
+    if (p.alerta && dvm <= -.08) s.innerHTML = '<span class="ic warn">▼ SEÑAL ABIERTA</span> · El vigor cae un <b>' + Math.round(-dvm*100) + '%</b> frente a su media de 3 años desde julio. Revisa riego y estado sanitario antes de la próxima aplicación.';
+    else if (dvm <= -.03) s.innerHTML = '<span class="ic warn">▼ VIGILAR</span> · Algo por debajo de su media (' + pct(dvm) + '). Sin señal abierta: seguimiento normal.';
+    else s.innerHTML = '<span class="ic ok">✓ NORMAL</span> · Dentro de lo esperable para ' + MES_LARGO[mes] + ' (' + pct(dvm) + ' frente a su media).';
     dibujar(p);
   }
 
@@ -117,6 +141,36 @@
   var foot = document.createElement('p'); foot.className = 'bi-foot';
   foot.innerHTML = 'MEDIA DE LA EXPLOTACIÓN = <b>2.865 €/ha</b> · pulsa una barra o una parcela del mapa para verla en los dos sitios.';
   cont.appendChild(foot);
-  elegir(5);
+  // La campaña como hilo: un deslizador recorre los 12 meses; el mapa, el panel y la curva siguen al mes.
+  // Al verse por primera vez, la campaña se recorre sola una vez (de octubre a hoy); tocar algo la para.
+  var rango = document.getElementById('campana-mes'), play = document.getElementById('campana-play');
+  var fase = document.getElementById('campana-fase'), labor = document.getElementById('campana-labor');
+  var tic = 0, tocado = false, quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function ponerMes(m){
+    mes = m; rango.value = m; rango.setAttribute('aria-valuetext', MES_LARGO[m]);
+    fase.textContent = FASES[m][0]; labor.textContent = FASES[m][1];
+    pintarMapa(); elegir(elegida);
+  }
+  function parar(){ clearInterval(tic); tic = 0; play.textContent = '▶'; play.setAttribute('aria-label', 'Recorrer la campaña'); }
+  function recorrer(){
+    if (tic) { parar(); return; }
+    var m = mes === 11 ? 0 : mes; ponerMes(m);
+    play.textContent = '❚❚'; play.setAttribute('aria-label', 'Parar');
+    tic = setInterval(function(){ if (mes >= 11) parar(); else ponerMes(mes + 1); }, 650);
+  }
+  rango.addEventListener('input', function(){
+    parar(); ponerMes(+rango.value);
+    if (!tocado && window.umami) umami.track('sig-campana');
+    tocado = true;
+  });
+  play.addEventListener('click', function(){ tocado = true; recorrer(); });
+  sig.addEventListener('pointerdown', function(e){ if (!play.contains(e.target)) { tocado = true; parar(); } });
+  if (!quieto && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(es){
+      if (es[0].isIntersecting && !tocado) { io.disconnect(); recorrer(); }
+    }, { threshold: .45 });
+    io.observe(sig);
+  }
+  ponerMes(11);
 })();
 

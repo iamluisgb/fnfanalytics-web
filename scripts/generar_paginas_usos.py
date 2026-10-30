@@ -135,6 +135,7 @@ def pagina(titulo, descripcion, ruta, migas, cuerpo):
       <a href="/herramientas/direccion-de-trabajo">Dirección de trabajo</a>
       <a href="/fuentes-datos-publicos">Fuentes de datos públicos</a>
       <a href="/usos/">Usos autorizados</a>
+      <a href="/metodo">Cómo comprobamos</a>
       <a href="/asesores">Asesores</a>
       <a href="/privacidad">Privacidad</a>
       <a href="/aviso-legal">Aviso legal</a>

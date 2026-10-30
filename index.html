@@ -71,8 +71,7 @@
 <header class="hero">
   <div class="in">
     <div>
-      <span class="label label--accent" style="color:var(--brand)">DEL CAMPO AL PANEL · SIN FRICCIÓN</span>
-      <h1 style="margin-top:14px">El centro de decisiones de <em>tu explotación.</em></h1>
+      <h1>El centro de decisiones de <em>tu explotación.</em></h1>
       <div class="rotator" aria-hidden="true">
         <span class="on">Dicta el tratamiento <em>desde el tractor</em></span>
         <span>Sabe cuánto ganas <em>en cada parcela</em></span>
@@ -84,9 +83,9 @@
         <a class="btn btn-ghost" href="#inteligencia" data-umami-event="hero-ver-como-razona">Ver cómo razona</a>
       </div>
       <div class="trust">
-        <div><i></i>VALIDACIÓN CONTRA EL REGISTRO OFICIAL</div>
-        <div><i></i>FUNCIONA SIN COBERTURA</div>
-        <div><i></i>TUS DATOS SON TUYOS</div>
+        <div><i></i>Validación contra el registro oficial</div>
+        <div><i></i>Funciona sin cobertura</div>
+        <div><i></i>Tus datos son tuyos</div>
       </div>
     </div>
 
@@ -107,9 +106,9 @@
 
 <div class="kstrip">
   <div class="in">
-    <div class="k"><div class="kpi">+3.000</div><span class="label">operaciones registradas por usuarios de la v1</span></div>
-    <div class="k"><div class="kpi kpi--accent">0 €</div><span class="label">el cuaderno básico, para siempre</span></div>
-    <div class="k"><div class="kpi">sin límite</div><span class="label">de hectáreas ni de parcelas</span></div>
+    <div class="k"><div class="kpi">+3.000</div><span class="label">Operaciones registradas por usuarios de la v1</span></div>
+    <div class="k"><div class="kpi kpi--accent">0 €</div><span class="label">El cuaderno básico, para siempre</span></div>
+    <div class="k"><div class="kpi">sin límite</div><span class="label">De hectáreas ni de parcelas</span></div>
     <div class="k"><div class="kpi">2020</div><span class="label"><a href="http://www.ceia3.es/es/noticias/premios/el-proyecto-de-empresa-food-and-farm-analytics-ganador-de-los-premios-emilio-botin-2020-promovido-por-ceia3-y-santander-universidades/" target="_blank" rel="noopener" style="color:inherit">Premio Emilio Botín · ceiA3 ↗</a></span></div>
   </div>
 </div>
@@ -172,7 +171,7 @@
           <h3 id="p-nom">El Cercado</h3>
           <div class="p-kpis">
             <div><span class="label">superficie</span><b class="data" id="p-ha">1,4 ha</b></div>
-            <div><span class="label">NDVI hoy</span><b class="data" id="p-v">0,38</b></div>
+            <div><span class="label" id="p-v-l">NDVI hoy</span><b class="data" id="p-v">0,38</b></div>
             <div><span class="label">vs media 3 años</span><b class="data" id="p-dv">−18%</b></div>
           </div>
           <div class="chart" id="ndvi-chart">
@@ -183,6 +182,14 @@
           </div>
           <p class="p-senal" id="p-senal"></p>
         </aside>
+      </div>
+      <div class="campana" id="campana">
+        <div class="campana-cab">
+          <button type="button" class="campana-play" id="campana-play" aria-label="Recorrer la campaña">▶</button>
+          <div><span class="label">campaña 2025/26</span><b id="campana-fase">Postcosecha</b><span id="campana-labor">Riego de mantenimiento y abonado de otoño</span></div>
+        </div>
+        <input type="range" id="campana-mes" min="0" max="11" step="1" value="11" aria-label="Mes de la campaña" aria-valuetext="septiembre">
+        <div class="campana-meses" aria-hidden="true"><span>oct</span><span>nov</span><span>dic</span><span>ene</span><span>feb</span><span>mar</span><span>abr</span><span>may</span><span>jun</span><span>jul</span><span>ago</span><span>sep</span></div>
       </div>
       <details class="tabla">
         <summary>Ver los datos en tabla</summary>
@@ -251,7 +258,7 @@
         <li>Presentación oficial en lote</li>
       </ul>
       <svg class="ruta-lineas" aria-hidden="true"></svg>
-      <figcaption>De dónde llega cada operación y adónde va después. Pulsa una entrada para seguirla.</figcaption>
+      <figcaption>De dónde llega cada operación y adónde va después. Pulsa una entrada para seguirla. <a href="/metodo" data-umami-event="ruta-metodo">Cómo lo comprobamos</a></figcaption>
     </figure>
   </div>
 </section>
@@ -300,7 +307,7 @@
       <div class="plan">
         <span class="label">cuaderno</span>
         <h3>Para llevar el registro al día</h3>
-        <div class="price">0 €<small>PARA SIEMPRE · SIN TARJETA</small></div>
+        <div class="price">0 €<small>Para siempre · sin tarjeta</small></div>
         <ul>
           <li>Tratamientos, fertilización y riego</li>
           <li>Validación de producto, dosis y plazo de seguridad</li>
@@ -312,7 +319,7 @@
       <div class="plan pro">
         <span class="label label--accent">pro</span>
         <h3>Para decidir con tus números</h3>
-        <div class="price">Precio de fundador<small>TE LO CONTAMOS AL ENTRAR · SE MANTIENE PARA SIEMPRE</small></div>
+        <div class="price">Precio de fundador<small>Te lo contamos al entrar · se mantiene para siempre</small></div>
         <ul>
           <li>Todo lo del Cuaderno</li>
           <li>Captura por voz, sin límite (por WhatsApp, próximamente)</li>
@@ -324,7 +331,7 @@
       <div class="plan">
         <span class="label">asesores y cooperativas</span>
         <h3>Para gestionar una cartera</h3>
-        <div class="price">A medida<small>SEGÚN EL TAMAÑO DE TU CARTERA</small></div>
+        <div class="price">A medida<small>Según el tamaño de tu cartera</small></div>
         <ul>
           <li>Panel con toda la cartera</li>
           <li>Incoherencias antes de la inspección</li>
@@ -339,35 +346,44 @@
 
 <section class="section" id="faq" style="border-top:1px solid var(--line)">
   <div class="container">
-    <div class="sec-head" style="max-width:760px;margin:0 auto;text-align:center">
-      <span class="label label--accent">preguntas frecuentes</span>
-      <h2>Lo que nos preguntan <em>antes de entrar.</em></h2>
+    <div class="faq-wrap">
+    <div class="faq-lado">
+      <div class="sec-head">
+        <span class="label label--accent">preguntas frecuentes</span>
+        <h2>Lo que nos preguntan <em>antes de entrar.</em></h2>
+      </div>
+      <div class="quien">
+        <img src="/assets/luis.webp" width="56" height="56" alt="Luis González, fundador de FnF">
+        <div><b>Luis González</b><span>Fundador de FnF. Suelo contestar en el día.</span></div>
+      </div>
+      <p class="quien-mas">¿No está tu pregunta? <a href="mailto:hola@fnfanalytics.com" data-umami-event="faq-escribe">Escríbeme</a> o <a href="#acceso">solicita acceso</a> y lo vemos con tu explotación.</p>
     </div>
     <div class="faq">
-      <details>
+      <details open>
         <summary>¿Tengo que instalar algo o aprender un programa?</summary>
-        <div class="a">No. La entrada es hablar: un audio desde la app, que se abre en el navegador del móvil (y, si quieres, se instala como una app más). Pronto, también por WhatsApp. El panel se abre en el navegador cuando quieres consultar o decidir — no para teclear.</div>
+        <div class="a"><img src="/assets/luis.webp" width="28" height="28" alt="" loading="lazy"><p>No. La entrada es hablar: un audio desde la app, que se abre en el navegador del móvil (y, si quieres, se instala como una app más). Pronto, también por WhatsApp. El panel se abre en el navegador cuando quieres consultar o decidir — no para teclear.</p></div>
       </details>
       <details>
         <summary>¿Y si no tengo cobertura en el campo?</summary>
-        <div class="a">Lo que dictas, fotografías o escribes se guarda en tu móvil y entra al sistema cuando vuelve la señal. No se pierde nada y la operación conserva su hora real. Solo hace falta haber abierto la app una vez con cobertura; en el iPhone, instálala en la pantalla de inicio.</div>
+        <div class="a"><img src="/assets/luis.webp" width="28" height="28" alt="" loading="lazy"><p>Lo que dictas, fotografías o escribes se guarda en tu móvil y entra al sistema cuando vuelve la señal. No se pierde nada y la operación conserva su hora real. Solo hace falta haber abierto la app una vez con cobertura; en el iPhone, instálala en la pantalla de inicio.</p></div>
       </details>
       <details>
         <summary>¿Vale para la inspección y el cuaderno digital?</summary>
-        <div class="a">Sí. Cada operación queda registrada conforme al cuaderno digital de explotación (RD 1054/2022, CUE/SIEX), validada contra el registro oficial de productos del MAPA y con su traza completa. Los asesores presentan en lote toda su cartera. Si quieres saber qué te toca y cuándo, lo tienes en <a href="/cuaderno-digital">la guía del cuaderno digital</a>.</div>
+        <div class="a"><img src="/assets/luis.webp" width="28" height="28" alt="" loading="lazy"><p>Sí. Cada operación queda registrada conforme al cuaderno digital de explotación (RD 1054/2022, CUE/SIEX), validada contra el registro oficial de productos del MAPA y con su traza completa. Los asesores presentan en lote toda su cartera. Si quieres saber qué te toca y cuándo, lo tienes en <a href="/cuaderno-digital">la guía del cuaderno digital</a>.</p></div>
       </details>
       <details>
         <summary>¿De quién son los datos?</summary>
-        <div class="a">Tuyos. No se venden ni se comparten con tu comprador ni con nadie. Solo salen agregados y anónimos si tú das permiso expreso.</div>
+        <div class="a"><img src="/assets/luis.webp" width="28" height="28" alt="" loading="lazy"><p>Tuyos. No se venden ni se comparten con tu comprador ni con nadie. Solo salen agregados y anónimos si tú das permiso expreso.</p></div>
       </details>
       <details>
         <summary>¿Y si la IA entiende mal un audio?</summary>
-        <div class="a">Nada queda registrado sin tu confirmación: el sistema te enseña la operación estructurada y la corriges con un toque. Cada dosis se valida contra los límites oficiales antes de entrar.</div>
+        <div class="a"><img src="/assets/luis.webp" width="28" height="28" alt="" loading="lazy"><p>Nada queda registrado sin tu confirmación: el sistema te enseña la operación estructurada y la corriges con un toque. Cada dosis se valida contra los límites oficiales antes de entrar.</p></div>
       </details>
       <details>
         <summary>¿Cuánto cuesta?</summary>
-        <div class="a">El cuaderno básico es gratis y sin límite de hectáreas. La captura por voz, los costes por parcela y las señales van en el plan Pro, con precio de fundador para quienes entren ahora, que se mantiene para siempre. <a href="#precios">Ver precios</a>.</div>
+        <div class="a"><img src="/assets/luis.webp" width="28" height="28" alt="" loading="lazy"><p>El cuaderno básico es gratis y sin límite de hectáreas. La captura por voz, los costes por parcela y las señales van en el plan Pro, con precio de fundador para quienes entren ahora, que se mantiene para siempre. <a href="#precios">Ver precios</a>.</p></div>
       </details>
+    </div>
     </div>
   </div>
 </section>
@@ -406,6 +422,7 @@
       <a href="/herramientas/direccion-de-trabajo">Dirección de trabajo</a>
       <a href="/fuentes-datos-publicos">Fuentes de datos públicos</a>
       <a href="/usos/">Usos autorizados</a>
+      <a href="/metodo">Cómo comprobamos</a>
       <a href="/asesores">Asesores</a>
       <a href="https://app.fnfanalytics.com/users/login/">Entrar</a>
       <a href="/privacidad">Privacidad</a>
@@ -584,7 +601,7 @@
   });
 })();
 </script>
-<script src="/assets/analitica.js?v=20261008" defer></script>
+<script src="/assets/analitica.js?v=20261030" defer></script>
 <script src="/assets/ruta.js?v=20261030" defer></script>
 <script>
 // Sección «inteligencia»: la demo va en un marco aislado; aquí se ajusta su altura y se le avisa de que ya se ve.
