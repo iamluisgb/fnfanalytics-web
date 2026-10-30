@@ -265,13 +265,50 @@ img{max-width:100%}
 .entrada{font-family:var(--font-mono);font-size:.66rem;color:var(--ink-soft);margin-bottom:8px;display:block}
 .entrada b{color:var(--brand-deep);font-weight:600}
 
-/* como funciona */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:44px;border:1px solid var(--line);border-radius:var(--r-m);overflow:hidden;background:var(--paper)}
-.step{padding:var(--s-6);border-right:1px solid var(--line)}
-.step:last-child{border-right:none}
-.step .label{display:block;margin-bottom:12px}
-.step h3{font-size:var(--fs-h3);font-weight:600}
-.step p{font-size:var(--fs-small);color:var(--ink-soft);margin:10px 0 0}
+/* como funciona: diagrama del recorrido de una operación (entradas → validación → salidas).
+   Las líneas las dibuja assets/ruta.js en el <svg>; en el móvil se apila y las sustituye un trazo vertical. */
+.ruta-intro{max-width:620px;color:var(--ink-soft);font-size:var(--fs-body);margin:14px 0 0}
+.ruta{position:relative;margin:48px 0 0;display:grid;grid-template-columns:1fr minmax(300px,380px) 1fr;column-gap:110px;align-items:center}
+.ruta-lineas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:0}
+.ruta-lineas path{fill:none;stroke:var(--line-strong);stroke-width:1;transition:stroke var(--t-med) var(--ease)}
+.ruta-lineas path.on{stroke:var(--brand-deep);stroke-width:1.5}
+.ruta-lineas circle{fill:var(--brand)}
+.ruta-col{list-style:none;margin:0;padding:0;display:grid;gap:12px;position:relative;z-index:1}
+.ruta-in{justify-items:end}
+.ruta-out{justify-items:start}
+.ruta-in button,.ruta-out li{font:inherit;font-size:var(--fs-small);color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);border-radius:var(--r-s);padding:8px 14px;line-height:1.3;
+  transition:color var(--t-med) var(--ease),border-color var(--t-med) var(--ease),box-shadow var(--t-med) var(--ease)}
+.ruta-in button{cursor:pointer}
+.ruta-in button:hover{color:var(--ink);border-color:var(--line-strong)}
+.ruta-in button:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.ruta-in button[aria-pressed="true"],.ruta-out li.on{color:var(--ink);border-color:var(--brand-deep);box-shadow:var(--glow)}
+.ruta-in small{font-family:var(--font-mono);font-size:.64rem;color:var(--warn);margin-left:4px}
+.ruta-nucleo{position:relative;z-index:1;background:var(--paper);border:1px solid var(--line-strong);border-radius:var(--r-l);box-shadow:var(--shadow);overflow:hidden}
+.ruta-cab{display:flex;justify-content:space-between;gap:12px;padding:10px 18px;border-bottom:1px solid var(--line);background:var(--bg-alt);
+  font-family:var(--font-mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:uppercase;color:var(--ink-soft)}
+.ruta-llega{color:var(--brand-deep);text-transform:none;letter-spacing:0}
+.ruta-nucleo h3{font-size:1.1rem;font-weight:600;padding:18px 18px 0}
+.ruta-checks{list-style:none;margin:12px 0 0;padding:0 18px}
+.ruta-checks li{position:relative;padding:8px 0 8px 28px;border-top:1px solid var(--line);font-size:var(--fs-small);color:var(--ink-soft);transition:color var(--t-med) var(--ease)}
+.ruta-checks li:first-child{border-top:none}
+.ruta-checks li::before{content:"";position:absolute;left:0;top:10px;width:16px;height:16px;border-radius:50%;border:1px solid var(--line-strong);background:var(--paper);
+  transition:background var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease)}
+.ruta-checks li::after{content:"";position:absolute;left:5px;top:14px;width:6px;height:3px;border-left:1.5px solid var(--on-brand);border-bottom:1.5px solid var(--on-brand);transform:rotate(-45deg);opacity:0;transition:opacity var(--t-fast) var(--ease)}
+.ruta-checks li.ok{color:var(--ink)}
+.ruta-checks li.ok::before{background:var(--brand);border-color:var(--brand)}
+.ruta-checks li.ok::after{opacity:1}
+.ruta-pie{margin:6px 0 0;padding:12px 18px 16px;border-top:1px solid var(--line);font-size:var(--fs-caption);color:var(--ink-soft)}
+.ruta figcaption{grid-column:1/-1;margin-top:28px;font-size:var(--fs-caption);color:var(--ink-soft);text-align:center}
+@media (max-width:1100px){.ruta{grid-template-columns:1fr minmax(280px,340px) 1fr;column-gap:56px}}
+@media (max-width:860px){
+  .ruta{grid-template-columns:1fr;row-gap:36px}
+  .ruta-lineas{display:none}
+  .ruta-in,.ruta-out{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+  .ruta-in::after,.ruta-nucleo::after{content:"";position:absolute;left:50%;bottom:-36px;height:36px;border-left:1px dashed var(--brand-deep)}
+  .ruta-nucleo{overflow:visible}
+  .ruta-cab{border-radius:var(--r-l) var(--r-l) 0 0}
+  .ruta figcaption{margin-top:0}
+}
 
 /* modulos */
 

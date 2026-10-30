@@ -27,7 +27,7 @@
 <link rel="preload" href="/assets/fonts/Poppins-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/JetBrainsMono-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/hero-olivar.webp" as="image">
-<link rel="stylesheet" href="/assets/site.css?v=20261023">
+<link rel="stylesheet" href="/assets/site.css?v=20261030">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Organization","name":"Food & Farm Analytics","alternateName":"FnF Analytics","url":"https://fnfanalytics.com/","logo":"https://fnfanalytics.com/favicon-512.png","email":"hola@fnfanalytics.com","award":"Premio Emilio Botín 2020 (ceiA3 y Santander Universidades)"}
 </script>
@@ -223,23 +223,36 @@
       <span class="label label--accent">cómo funciona</span>
       <h2>Los datos entran solos. <em>Las decisiones salen listas.</em></h2>
     </div>
-    <div class="steps">
-      <div class="step">
-        <span class="label">01 · captura</span>
-        <h3>Por el canal que ya usas</h3>
-        <p>Un audio desde el móvil (pronto, también por WhatsApp), una foto del albarán o una importación. El operario no aprende nada nuevo.</p>
+    <p class="ruta-intro">Cada operación llega por el canal que ya usas, pasa las mismas comprobaciones y, cuando la confirmas, alimenta todo lo demás. Nadie aprende nada nuevo.</p>
+    <figure class="ruta" id="ruta">
+      <ul class="ruta-col ruta-in" aria-label="Por dónde entra">
+        <li><button type="button" data-k="0" aria-pressed="true">Audio desde el móvil</button></li>
+        <li><button type="button" data-k="1" aria-pressed="false">Foto del albarán o del parte</button></li>
+        <li><button type="button" data-k="2" aria-pressed="false">Importación de otro cuaderno</button></li>
+        <li><button type="button" data-k="3" aria-pressed="false">WhatsApp <small>pronto</small></button></li>
+      </ul>
+      <div class="ruta-nucleo">
+        <div class="ruta-cab"><span>fnf · validación</span><span class="ruta-llega" id="ruta-llega" aria-live="polite">audio de 14 s</span></div>
+        <h3>Nada entra sin tu visto bueno</h3>
+        <ol class="ruta-checks">
+          <li>Producto autorizado en el registro oficial</li>
+          <li>Dosis dentro de lo autorizado para el cultivo</li>
+          <li>Plazo de seguridad hasta la cosecha</li>
+          <li>Parcela y recinto SIGPAC</li>
+          <li>Equipo, tractor y horas</li>
+        </ol>
+        <p class="ruta-pie">Si falta algo en el parte, te lo pregunta. Lo confirmas con un toque.</p>
       </div>
-      <div class="step">
-        <span class="label">02 · validación</span>
-        <h3>El sistema estructura y verifica</h3>
-        <p>Producto, dosis, parcela, equipo y tractor, con su plazo de seguridad. Lo que falta en el parte, te lo pregunta. Nada queda registrado sin tu confirmación.</p>
-      </div>
-      <div class="step">
-        <span class="label">03 · decisión</span>
-        <h3>Registro, costes y señales</h3>
-        <p>Cada operación alimenta tu registro, el margen por parcela y el motor de señales. Papeles fuera, criterio dentro.</p>
-      </div>
-    </div>
+      <ul class="ruta-col ruta-out" aria-label="Adónde va después">
+        <li>Cuaderno de campo al día</li>
+        <li>Coste imputado a la parcela</li>
+        <li>Margen de cada parcela</li>
+        <li>Señales y avisos</li>
+        <li>Presentación oficial en lote</li>
+      </ul>
+      <svg class="ruta-lineas" aria-hidden="true"></svg>
+      <figcaption>De dónde llega cada operación y adónde va después. Pulsa una entrada para seguirla.</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -572,6 +585,7 @@
 })();
 </script>
 <script src="/assets/analitica.js?v=20261008" defer></script>
+<script src="/assets/ruta.js?v=20261030" defer></script>
 <script>
 // Sección «inteligencia»: la demo va en un marco aislado; aquí se ajusta su altura y se le avisa de que ya se ve.
 (function(){
