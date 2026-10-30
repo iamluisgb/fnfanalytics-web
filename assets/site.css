@@ -283,7 +283,6 @@ img{max-width:100%}
 .ruta-in button:hover{color:var(--ink);border-color:var(--line-strong)}
 .ruta-in button:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 .ruta-in button[aria-pressed="true"],.ruta-out li.on{color:var(--ink);border-color:var(--brand-deep);box-shadow:var(--glow)}
-.ruta-in small{font-family:var(--font-mono);font-size:.64rem;color:var(--warn);margin-left:4px}
 .ruta-nucleo{position:relative;z-index:1;background:var(--paper);border:1px solid var(--line-strong);border-radius:var(--r-l);box-shadow:var(--shadow);overflow:hidden}
 .ruta-cab{display:flex;justify-content:space-between;gap:12px;padding:10px 18px;border-bottom:1px solid var(--line);background:var(--bg-alt);
   font-family:var(--font-mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:uppercase;color:var(--ink-soft)}

@@ -8,7 +8,7 @@
   var outs = [].slice.call(fig.querySelectorAll('.ruta-out li'));
   var checks = [].slice.call(fig.querySelectorAll('.ruta-checks li'));
   var llega = document.getElementById('ruta-llega');
-  var LLEGA = ['audio de 14 s', 'foto · 3 líneas', 'CSV · 214 operaciones', 'nota de voz'];
+  var LLEGA = ['audio de 14 s', 'foto · 3 líneas', 'CSV · 214 operaciones', 'nota de voz de 9 s'];
   var NS = 'http://www.w3.org/2000/svg', quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var pIn = [], pOut = [], punto = null, k = 0, tocado = false, visible = false, timers = [], raf = 0;
 
