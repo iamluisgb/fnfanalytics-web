@@ -56,10 +56,17 @@ export default {
 
     // Sin saltos de línea en el asunto: es una cabecera.
     const asunto = String(datos._subject || 'FnF · formulario de la web').replace(/[\r\n]+/g, ' ').slice(0, 120);
-    const text = filas.map(([k, v]) => `${k}: ${v}`).join('\n');
+    // Una solicitud de acceso (lleva perfil) trae el enlace a la pantalla de alta
+    // de la app, ya rellena: crea la explotación y la invitación en un paso.
+    const alta = datos.perfil
+      ? 'https://app.fnfanalytics.com/cuenta/clientes/nuevo/?email=' + encodeURIComponent(email)
+      : '';
+    const text = filas.map(([k, v]) => `${k}: ${v}`).join('\n')
+      + (alta ? `\n\nDarle de alta: ${alta}` : '');
     const html = '<table cellpadding="6" style="border-collapse:collapse;font-family:sans-serif">'
       + filas.map(([k, v]) => `<tr><th align="left" style="border-bottom:1px solid #ddd">${escapar(k)}</th><td style="border-bottom:1px solid #ddd">${escapar(v)}</td></tr>`).join('')
-      + '</table>';
+      + '</table>'
+      + (alta ? `<p style="font-family:sans-serif;margin-top:16px"><a href="${escapar(alta)}" style="background:#00c896;color:#0c1210;padding:10px 16px;border-radius:6px;text-decoration:none;font-weight:bold">Darle de alta en la app</a></p>` : '');
 
     try {
       await env.CORREO.send({
