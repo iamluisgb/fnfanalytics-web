@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /auditoria/
 
 Sitemap: https://fnfanalytics.com/sitemap.xml
