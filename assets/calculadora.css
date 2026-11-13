@@ -225,6 +225,8 @@
   .cc-bar-main b{font-family:var(--font-mono);font-size:17px;color:var(--brand);font-variant-numeric:tabular-nums}
   .cc-bar-main span{font-size:12px;color:var(--ink-soft-on-dark)}
   .cc-bar-go{font-size:13px;font-weight:600;color:var(--ink-on-dark)}
+  /* la barra es oscura: las píldoras usan los tonos de estado para fondo oscuro */
+  .cc-bar .cc-pill.is-ok{color:#2fe0b0}.cc-bar .cc-pill.is-warn{color:#e0a33e}.cc-bar .cc-pill.is-bad{color:#f08a8a}
   body{padding-bottom:72px}
 }
 

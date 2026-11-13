@@ -22,9 +22,9 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#0c1210">
 <link rel="preload" href="/assets/fonts/Poppins-700.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/herramientas/datos/cultivos.json?v=52db5c94a0" as="fetch" crossorigin>
-<link rel="stylesheet" href="/assets/site.css?v=20261030">
-<link rel="stylesheet" href="/assets/calculadora.css?v=52db5c94a0">
+<link rel="preload" href="/herramientas/datos/cultivos.json?v=2b43196410" as="fetch" crossorigin>
+<link rel="stylesheet" href="/assets/site.css?v=d1a8dcbed8">
+<link rel="stylesheet" href="/assets/calculadora.css?v=2b43196410">
 <script defer src="/u/s.js" data-website-id="08c1619b-4bb8-471b-9dc9-9b6cda88e8ae" data-host-url="https://cloud.umami.is" data-domains="fnfanalytics.com,www.fnfanalytics.com"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"Calculadora de caldo y dosis de fitosanitarios","url":"https://fnfanalytics.com/herramientas/calculadora-caldo","applicationCategory":"BusinessApplication","operatingSystem":"Web","inLanguage":"es","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"publisher":{"@type":"Organization","name":"Food & Farm Analytics","url":"https://fnfanalytics.com"}}
@@ -32,9 +32,10 @@
 </head>
 <body>
 
-<nav class="nav">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<nav class="nav" aria-label="Principal">
   <div class="in">
-    <a class="logo" href="/" aria-label="Food & Farm Analytics"><img src="/assets/logo-mark.png" alt="" width="19" height="34"><span class="lt"><b>food&amp;farm</b><i>analytics</i></span></a>
+    <a class="logo" href="/"><img src="/assets/logo-mark.png" alt="" width="19" height="34"><span class="lt"><b>food&amp;farm</b><i>analytics</i></span></a>
     <div class="nav-links">
       <div class="nav-secciones">
         <a href="/#inteligencia">Inteligencia</a>
@@ -43,7 +44,7 @@
         <a href="/cuaderno-digital">Cuaderno digital</a>
       </div>
       <details class="nav-movil">
-        <summary aria-label="Abrir el menú">Menú</summary>
+        <summary>Menú</summary>
         <div class="nav-movil__panel">
           <a class="nav-movil__entrar" href="https://app.fnfanalytics.com/users/login/" data-umami-event="nav-entrar">Entrar</a>
           <a href="/#inteligencia">Inteligencia</a>
@@ -56,12 +57,12 @@
         </div>
       </details>
       <a class="btn btn-ghost nav-entrar" href="https://app.fnfanalytics.com/users/login/" data-umami-event="nav-entrar">Entrar</a>
-      <a class="btn btn-primary" href="/#acceso">Solicita acceso</a>
+      <a class="btn btn-primary" href="/?origen=calculadora#acceso">Solicita acceso</a>
     </div>
   </div>
 </nav>
 
-<main class="cc">
+<main id="contenido" class="cc">
   <div class="cc-head">
     <div class="cc-crumb"><a href="/plantillas/">Herramientas gratis</a><span aria-hidden="true">›</span><span id="crumbC">Calculadora de caldo</span><span aria-hidden="true">›</span><span id="crumbP"></span></div>
     <h1>¿Cuánto producto echo en la cuba?</h1>
@@ -216,7 +217,7 @@
     </section>
 
     <aside class="cc-result" aria-label="Resultado">
-      <section class="cc-scene" id="scene" aria-label="Simulación del tratamiento en tu parcela" hidden>
+      <section class="cc-scene" id="scene" aria-label="Simulación del tratamiento en tu parcela">
         <div class="cc-stage" id="stage">
           <div class="cc-loading" id="sceneLoading">Cargando la parcela…</div>
           <span class="cc-pill is-bad cc-scene-bad" id="hBad" hidden>Dosis fuera de lo autorizado</span>
@@ -307,12 +308,13 @@
       <a href="/usos/">Usos autorizados</a>
       <a href="/metodo">Cómo comprobamos</a>
       <a href="/asesores">Asesores</a>
+      <a href="https://app.fnfanalytics.com/users/login/">Entrar</a>
       <a href="/privacidad">Privacidad</a>
       <a href="/aviso-legal">Aviso legal</a>
     </nav>
     <p>© 2026 · <a href="mailto:hola@fnfanalytics.com">hola@fnfanalytics.com</a></p>
   </div>
 </footer>
-<script src="/assets/calculadora.js?v=52db5c94a0"></script>
+<script src="/assets/calculadora.js?v=2b43196410"></script>
 </body>
 </html>
