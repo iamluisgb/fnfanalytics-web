@@ -1,0 +1,6459 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Ayuda de FnF Analytics — el cuaderno de explotación que se rellena solo.">
+      
+      
+        <meta name="author" content="luis">
+      
+      
+        <link rel="canonical" href="https://fnfanalytics.com/ayuda/referencia/objetos-y-campos/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../tipos-de-parte/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Objetos y campos - FnF Ayuda</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../estilos/ayuda.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#explotaciones-y-parcelas-fields" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="FnF Ayuda" class="md-header__button md-logo" aria-label="FnF Ayuda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FnF Ayuda
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Objetos y campos
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="FnF Ayuda" class="md-nav__button md-logo" aria-label="FnF Ayuda" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    FnF Ayuda
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guías prácticas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guías prácticas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guias/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guías prácticas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guias/alta-explotacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dar de alta tu explotación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guias/importar-parcelas-sigpac/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Importar parcelas desde SIGPAC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guias/registrar-tratamiento-fitosanitario/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Registrar un tratamiento fitosanitario
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guias/registrar-fertilizacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Registrar una fertilización
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guias/dictar-parte-voz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dictar un parte por voz
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guias/parte-por-foto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Registrar un parte con foto del papel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guias/coste-por-hectarea/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ver el coste por hectárea
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guias/almacen-entradas-salidas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Llevar el almacén
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guias/invitar-asesor-trabajador/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Invitar a tu asesor o a un trabajador
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guias/exportar-cuaderno-siex/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exportar el cuaderno a SIEX
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guias/trabajar-sin-cobertura/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trabajar sin cobertura
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guias/horas-de-maquinaria/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Registrar horas de maquinaria
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutoriales
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutoriales
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutoriales/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutoriales
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutoriales/tu-primer-dia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tu primer día
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutoriales/tu-primer-siex/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tu primer SIEX
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutoriales/tu-primera-cartera/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tu primera cartera
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutoriales/tu-primer-parte/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tu primer parte en 2 minutos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Explicación
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Explicación
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explicacion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Explicación
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explicacion/que-es-obligatorio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qué es obligatorio y cuándo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explicacion/como-se-calcula-el-coste/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cómo se calcula el coste por hectárea
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explicacion/como-se-reparte-el-coste/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cómo se reparte el coste entre cultivos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explicacion/que-pasa-con-tu-dictado/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qué pasa con tu dictado
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explicacion/que-es-el-cue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qué es el CUE
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referencia
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Referencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referencia
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Objetos y campos
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Objetos y campos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#explotaciones-y-parcelas-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explotaciones y parcelas (fields)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Explotaciones y parcelas (fields)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#empresa-company" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Empresa — Company
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#finca-farm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Finca — Farm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#familia-de-cultivos-family" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Familia de cultivos — Family
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cultivo-crop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cultivo — Crop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#acceso-a-empresa-membership" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acceso a empresa — Membership
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#perfil-normativo-perfilnormativo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perfil normativo — PerfilNormativo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recinto-sigpac-recinto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recinto SIGPAC — Recinto
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#partes-de-trabajo-activities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partes de trabajo (activities)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Partes de trabajo (activities)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tipo-de-labor-typeactivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipo de labor — TypeActivity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#labor-activity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Labor — Activity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parte-de-trabajo-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parte de trabajo — Task
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mano-de-obra-del-parte-partworker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mano de obra del parte — PartWorker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maquinaria-del-parte-partmachinery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maquinaria del parte — PartMachinery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#producto-aplicado-partproduct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Producto aplicado — PartProduct
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#servicio-externo-externalservice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Servicio externo — ExternalService
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#palet-pallet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Palet — Pallet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#caja-box" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Caja — Box
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trabajadores-y-proveedores-contacts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trabajadores y proveedores (contacts)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Trabajadores y proveedores (contacts)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#trabajador-worker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trabajador — Worker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#proveedor-supplier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Proveedor — Supplier
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#costes-costs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Costes (costs)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Costes (costs)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#coste-de-trabajador-workercost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coste de trabajador — WorkerCost
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coste-de-maquinaria-machinerycost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coste de maquinaria — MachineryCost
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coste-de-producto-productcost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coste de producto — ProductCost
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maquinaria-machinery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maquinaria (machinery)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Maquinaria (machinery)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maquina-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Máquina — Machine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mantenimiento-maintenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mantenimiento — Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trabajador-de-mantenimiento-maintenanceworker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trabajador de mantenimiento — MaintenanceWorker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consumo-consumption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consumo — Consumption
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#almacen-y-productos-warehouse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Almacén y productos (warehouse)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Almacén y productos (warehouse)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tipo-de-producto-typeproduct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipo de producto — TypeProduct
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#producto-product" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Producto — Product
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#catalogo-catalog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Catálogo — Catalog
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#almacen-almacen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Almacén — Almacen
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lote-lote" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lote — Lote
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#movimiento-movimiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Movimiento — Movimiento
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recuento-recuento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recuento — Recuento
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linea-de-recuento-recuentolinea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Línea de recuento — RecuentoLinea
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entrada-de-almacen-entrada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entrada de almacén — Entrada
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linea-de-entrada-entradalinea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Línea de entrada — EntradaLinea
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traspaso-traspaso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Traspaso — Traspaso
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linea-de-traspaso-traspasolinea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Línea de traspaso — TraspasoLinea
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#carga-de-usos-del-mapa-cargausos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Carga de usos del MAPA — CargaUsos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uso-autorizado-usoautorizado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uso autorizado — UsoAutorizado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#novedad-del-registro-novedad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Novedad del registro — Novedad
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#partes-por-voz-voz" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partes por voz (voz)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Partes por voz (voz)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dictado-dictado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dictado — Dictado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#envio-desde-el-movil-enviodelmovil" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Envío desde el móvil — EnvioDelMovil
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usuarios-y-accesos-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usuarios y accesos (users)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usuarios y accesos (users)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#perfil-de-usuario-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perfil de usuario — Profile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#app-bi-appbi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        App BI — AppBI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invitacion-invitacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Invitación — Invitacion
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tipos-de-parte/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tipos de parte
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vademecum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vademécum y validaciones
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../roles-y-permisos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roles y permisos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../developer-bi-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer — BI API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Novedades
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Novedades
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../novedades/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Novedades
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#explotaciones-y-parcelas-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explotaciones y parcelas (fields)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Explotaciones y parcelas (fields)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#empresa-company" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Empresa — Company
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#finca-farm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Finca — Farm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#familia-de-cultivos-family" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Familia de cultivos — Family
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cultivo-crop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cultivo — Crop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#acceso-a-empresa-membership" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acceso a empresa — Membership
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#perfil-normativo-perfilnormativo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perfil normativo — PerfilNormativo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recinto-sigpac-recinto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recinto SIGPAC — Recinto
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#partes-de-trabajo-activities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partes de trabajo (activities)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Partes de trabajo (activities)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tipo-de-labor-typeactivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipo de labor — TypeActivity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#labor-activity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Labor — Activity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parte-de-trabajo-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parte de trabajo — Task
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mano-de-obra-del-parte-partworker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mano de obra del parte — PartWorker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maquinaria-del-parte-partmachinery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maquinaria del parte — PartMachinery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#producto-aplicado-partproduct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Producto aplicado — PartProduct
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#servicio-externo-externalservice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Servicio externo — ExternalService
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#palet-pallet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Palet — Pallet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#caja-box" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Caja — Box
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trabajadores-y-proveedores-contacts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trabajadores y proveedores (contacts)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Trabajadores y proveedores (contacts)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#trabajador-worker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trabajador — Worker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#proveedor-supplier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Proveedor — Supplier
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#costes-costs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Costes (costs)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Costes (costs)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#coste-de-trabajador-workercost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coste de trabajador — WorkerCost
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coste-de-maquinaria-machinerycost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coste de maquinaria — MachineryCost
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coste-de-producto-productcost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Coste de producto — ProductCost
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maquinaria-machinery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maquinaria (machinery)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Maquinaria (machinery)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maquina-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Máquina — Machine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mantenimiento-maintenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mantenimiento — Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trabajador-de-mantenimiento-maintenanceworker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trabajador de mantenimiento — MaintenanceWorker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consumo-consumption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consumo — Consumption
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#almacen-y-productos-warehouse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Almacén y productos (warehouse)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Almacén y productos (warehouse)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tipo-de-producto-typeproduct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipo de producto — TypeProduct
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#producto-product" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Producto — Product
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#catalogo-catalog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Catálogo — Catalog
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#almacen-almacen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Almacén — Almacen
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lote-lote" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lote — Lote
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#movimiento-movimiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Movimiento — Movimiento
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recuento-recuento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recuento — Recuento
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linea-de-recuento-recuentolinea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Línea de recuento — RecuentoLinea
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entrada-de-almacen-entrada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entrada de almacén — Entrada
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linea-de-entrada-entradalinea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Línea de entrada — EntradaLinea
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traspaso-traspaso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Traspaso — Traspaso
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linea-de-traspaso-traspasolinea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Línea de traspaso — TraspasoLinea
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#carga-de-usos-del-mapa-cargausos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Carga de usos del MAPA — CargaUsos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uso-autorizado-usoautorizado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uso autorizado — UsoAutorizado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#novedad-del-registro-novedad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Novedad del registro — Novedad
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#partes-por-voz-voz" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partes por voz (voz)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Partes por voz (voz)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dictado-dictado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dictado — Dictado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#envio-desde-el-movil-enviodelmovil" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Envío desde el móvil — EnvioDelMovil
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usuarios-y-accesos-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usuarios y accesos (users)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usuarios y accesos (users)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#perfil-de-usuario-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Perfil de usuario — Profile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#app-bi-appbi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        App BI — AppBI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invitacion-invitacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Invitación — Invitacion
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Objetos y campos</h1>
+
+<p class="doc-meta">Autor: <b>luis</b> · Revisado: <b>13-nov-2026</b> · <span>Generado con tools/generar_referencia.py — no editar a mano</span></p>
+
+<p>Los datos que guarda la app, tal como salen de la ontología: cada objeto con sus campos, su etiqueta en español y sus notas. Los campos sin etiqueta aparecen con su nombre técnico en <code>código</code>: es deuda pendiente, no un estilo.</p>
+<h2 id="explotaciones-y-parcelas-fields">Explotaciones y parcelas (<code>fields</code>)</h2>
+<h3 id="empresa-company">Empresa — <code>Company</code></h3>
+<p>CIF/NIF: Con letra, sin puntos ni guiones</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>Razón social</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>nif</code></td>
+<td>CIF/NIF</td>
+<td>CharField</td>
+<td>Con letra, sin puntos ni guiones</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td>Correo electrónico</td>
+<td>CharField</td>
+<td>único</td>
+</tr>
+<tr>
+<td><code>phone_number</code></td>
+<td>Teléfono</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>website</code></td>
+<td>Página web</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>address</code></td>
+<td>Dirección</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>town</code></td>
+<td>Municipio</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>postal_code</code></td>
+<td>Código postal</td>
+<td>FloatField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>province</code></td>
+<td>Provincia</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>country</code></td>
+<td>País</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>register</code></td>
+<td>Nº de registro</td>
+<td>CharField</td>
+<td>Registro de explotaciones o de industrias, si procede</td>
+</tr>
+<tr>
+<td><code>picture</code></td>
+<td>Logotipo</td>
+<td>FileField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>representative_name</code></td>
+<td>Representante (nombre)</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>representative_nif</code></td>
+<td>Representante (NIF)</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>nivel_inventario</code></td>
+<td>nivel de inventario</td>
+<td>PositiveSmallIntegerField</td>
+<td>Valores: Apagado — ni menú ni movimientos · Solo entradas — registro de albaranes y Ficha 14 · Completo — existencias, consumo y trazabilidad</td>
+</tr>
+<tr>
+<td><code>controla_lotes</code></td>
+<td><code>controla_lotes</code></td>
+<td>BooleanField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>members</code></td>
+<td>Usuarios</td>
+<td>ManyToManyField → User</td>
+<td>relación N:M</td>
+</tr>
+</tbody>
+</table>
+<h3 id="finca-farm">Finca — <code>Farm</code></h3>
+<p>Superficie (ha): En hectáreas.</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>company</code> (<code>company_id</code>)</td>
+<td>Empresa</td>
+<td>ForeignKey → Company</td>
+<td></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>Nombre</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>area</code></td>
+<td>Superficie (ha)</td>
+<td>FloatField</td>
+<td>En hectáreas.</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>Tipo de tenencia</td>
+<td>CharField</td>
+<td>Valores: Arrendada · Propiedad · Estructura</td>
+</tr>
+<tr>
+<td><code>responsible</code> (<code>responsible_id</code>)</td>
+<td>Responsable</td>
+<td>ForeignKey → User</td>
+<td></td>
+</tr>
+<tr>
+<td><code>is_active</code></td>
+<td>Activa</td>
+<td>BooleanField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="familia-de-cultivos-family">Familia de cultivos — <code>Family</code></h3>
+<p>Cultivos del MAPA: Uno por línea, como los escribe el registro del MAPA.</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>Nombre</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>observation</code></td>
+<td>Observaciones</td>
+<td>TextField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>cultivos_mapa</code></td>
+<td>Cultivos del MAPA</td>
+<td>TextField</td>
+<td>Uno por línea, como los escribe el registro del MAPA. opcional</td>
+</tr>
+<tr>
+<td><code>usos_sigpac</code></td>
+<td>Usos SIGPAC</td>
+<td>CharField</td>
+<td>Códigos separados por espacios: VI, OV, TA, FY… opcional</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cultivo-crop">Cultivo — <code>Crop</code></h3>
+<p>Superficie (ha): En hectáreas.</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>company</code> (<code>company_id</code>)</td>
+<td>Empresa</td>
+<td>ForeignKey → Company</td>
+<td></td>
+</tr>
+<tr>
+<td><code>farm</code> (<code>farm_id</code>)</td>
+<td>Finca</td>
+<td>ForeignKey → Farm</td>
+<td></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>Nombre</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>area</code></td>
+<td>Superficie (ha)</td>
+<td>FloatField</td>
+<td>En hectáreas.</td>
+</tr>
+<tr>
+<td><code>family</code> (<code>family_id</code>)</td>
+<td>Familia</td>
+<td>ForeignKey → Family</td>
+<td>La del registro del MAPA: con ella se comprueban los tratamientos.</td>
+</tr>
+<tr>
+<td><code>variety</code></td>
+<td>Variedad</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>closure</code></td>
+<td>Fecha de cierre</td>
+<td>DateTimeField</td>
+<td>Se rellena cuando el cultivo deja de explotarse opcional</td>
+</tr>
+<tr>
+<td><code>is_active</code></td>
+<td>Activo</td>
+<td>BooleanField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="acceso-a-empresa-membership">Acceso a empresa — <code>Membership</code></h3>
+<p>Membership is the table that holds the relationship between a user and a company</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>user</code> (<code>user_id</code>)</td>
+<td>Usuario</td>
+<td>ForeignKey → User</td>
+<td></td>
+</tr>
+<tr>
+<td><code>profile</code> (<code>profile_id</code>)</td>
+<td>perfil</td>
+<td>ForeignKey → Profile</td>
+<td></td>
+</tr>
+<tr>
+<td><code>company</code> (<code>company_id</code>)</td>
+<td>Empresa</td>
+<td>ForeignKey → Company</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="perfil-normativo-perfilnormativo">Perfil normativo — <code>PerfilNormativo</code></h3>
+<p>Nº operador de explotación: Nº de Operador de la Explotación (ROPO), ficha 5</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>company</code> (<code>company_id</code>)</td>
+<td>empresa</td>
+<td>OneToOneField → Company</td>
+<td>único</td>
+</tr>
+<tr>
+<td><code>comunidad</code></td>
+<td><code>comunidad</code></td>
+<td>CharField</td>
+<td>Valores: Extremadura · Andalucía</td>
+</tr>
+<tr>
+<td><code>superficie_declarada</code></td>
+<td>Superficie declarada (ha)</td>
+<td>FloatField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>n_registro_autonomico</code></td>
+<td>Nº registro autonómico</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>n_registro_nacional</code></td>
+<td>Nº registro nacional</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>n_operador_explotacion</code></td>
+<td>Nº operador de explotación</td>
+<td>CharField</td>
+<td>Nº de Operador de la Explotación (ROPO), ficha 5 opcional</td>
+</tr>
+<tr>
+<td><code>asesoramiento</code></td>
+<td><code>asesoramiento</code></td>
+<td>CharField</td>
+<td>Valores: Asesor externo · El titular es asesor y se asesora a sí mismo · Todos los cultivos exentos de asesoramiento</td>
+</tr>
+<tr>
+<td><code>asesor_propio</code> (<code>asesor_propio_id</code>)</td>
+<td><code>asesor_propio</code></td>
+<td>ForeignKey → Worker</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>asesor_nombre</code></td>
+<td><code>asesor_nombre</code></td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>asesor_nif</code></td>
+<td><code>asesor_nif</code></td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>asesor_ropo</code></td>
+<td>Nº ROPO (asesor)</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>asesor_entidad</code></td>
+<td><code>asesor_entidad</code></td>
+<td>CharField</td>
+<td>Agrupación o entidad (ATRIA, ADV, ASaVe...), ficha 5 opcional</td>
+</tr>
+<tr>
+<td><code>exige_registro_tratamientos</code></td>
+<td><code>exige_registro_tratamientos</code></td>
+<td>BooleanField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>exige_cuaderno_fertilizacion</code></td>
+<td><code>exige_cuaderno_fertilizacion</code></td>
+<td>BooleanField</td>
+<td>Obligatorio en zona vulnerable a nitratos, ecológico y producción integrada.</td>
+</tr>
+<tr>
+<td><code>exige_cuaderno_digital</code></td>
+<td><code>exige_cuaderno_digital</code></td>
+<td>BooleanField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>cuaderno_digital_desde</code></td>
+<td><code>cuaderno_digital_desde</code></td>
+<td>DateField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="recinto-sigpac-recinto">Recinto SIGPAC — <code>Recinto</code></h3>
+<p>N ID: N de orden dentro de la explotacion.</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>company</code> (<code>company_id</code>)</td>
+<td>Empresa</td>
+<td>ForeignKey → Company</td>
+<td></td>
+</tr>
+<tr>
+<td><code>numero_id</code></td>
+<td>N ID</td>
+<td>PositiveIntegerField</td>
+<td>N de orden dentro de la explotacion.</td>
+</tr>
+<tr>
+<td><code>farm</code> (<code>farm_id</code>)</td>
+<td>Finca</td>
+<td>ForeignKey → Farm</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>provincia</code></td>
+<td><code>provincia</code></td>
+<td>PositiveSmallIntegerField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>municipio</code></td>
+<td><code>municipio</code></td>
+<td>PositiveSmallIntegerField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>agregado</code></td>
+<td><code>agregado</code></td>
+<td>PositiveSmallIntegerField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>zona</code></td>
+<td><code>zona</code></td>
+<td>PositiveSmallIntegerField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>poligono</code></td>
+<td>Polígono</td>
+<td>PositiveIntegerField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>parcela</code></td>
+<td><code>parcela</code></td>
+<td>PositiveIntegerField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>recinto</code></td>
+<td><code>recinto</code></td>
+<td>PositiveIntegerField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>uso_sigpac</code></td>
+<td>Uso SIGPAC</td>
+<td>CharField</td>
+<td>TA, OV, VI, FY… según el SIGPAC. opcional</td>
+</tr>
+<tr>
+<td><code>superficie</code></td>
+<td>Superficie (ha)</td>
+<td>FloatField</td>
+<td>La del recinto, que es la que declara el cuaderno. opcional</td>
+</tr>
+<tr>
+<td><code>cultivo_declarado</code></td>
+<td>Cultivo declarado (SIGPAC)</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>variedad</code></td>
+<td><code>variedad</code></td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>rexa</code></td>
+<td>REXA</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>regimen_agua</code></td>
+<td>Secano / Regadio</td>
+<td>CharField</td>
+<td>opcional Valores: Secano · Regadio</td>
+</tr>
+<tr>
+<td><code>exposicion</code></td>
+<td>Aire libre / protegido</td>
+<td>CharField</td>
+<td>opcional Valores: Aire libre · Protegido</td>
+</tr>
+<tr>
+<td><code>asesoramiento_gip</code></td>
+<td>Sistema de asesoramiento en GIP</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>anio_alta</code></td>
+<td>Año de alta</td>
+<td>PositiveSmallIntegerField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>anio_baja</code></td>
+<td>Año de baja</td>
+<td>PositiveSmallIntegerField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>lic_zepa</code></td>
+<td>LIC / ZEPA</td>
+<td>BooleanField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>zona_vulnerable</code></td>
+<td>Zona vulnerable a nitratos</td>
+<td>BooleanField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>distancia_pozos</code></td>
+<td>Distancia a pozos o tomas superficiales (m)</td>
+<td>FloatField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>distancia_rios</code></td>
+<td>Distancia a rios o embalses de consumo humano (m)</td>
+<td>FloatField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>estacion_control</code></td>
+<td>Estacion de control de referencia</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>regimen_tenencia</code></td>
+<td>Régimen de tenencia</td>
+<td>CharField</td>
+<td>opcional Valores: Propiedad · Arrendamiento · Aparceria · Otros</td>
+</tr>
+<tr>
+<td><code>geometria</code></td>
+<td>Geometría</td>
+<td>JSONField</td>
+<td>Polígono en GeoJSON (WGS84) opcional</td>
+</tr>
+<tr>
+<td><code>is_active</code></td>
+<td>Activo</td>
+<td>BooleanField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>crops</code></td>
+<td>Cultivos que hay dentro</td>
+<td>ManyToManyField → Crop</td>
+<td>opcional relación N:M</td>
+</tr>
+</tbody>
+</table>
+<h2 id="partes-de-trabajo-activities">Partes de trabajo (<code>activities</code>)</h2>
+<h3 id="tipo-de-labor-typeactivity">Tipo de labor — <code>TypeActivity</code></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>Nombre</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>observation</code></td>
+<td>Observaciones</td>
+<td>TextField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="labor-activity">Labor — <code>Activity</code></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>company</code> (<code>company_id</code>)</td>
+<td>Empresa</td>
+<td>ForeignKey → Company</td>
+<td></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>Nombre</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>is_active</code></td>
+<td>Activa</td>
+<td>BooleanField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>type</code> (<code>type_id</code>)</td>
+<td>Tipo de labor</td>
+<td>ForeignKey → TypeActivity</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="parte-de-trabajo-task">Parte de trabajo — <code>Task</code></h3>
+<p>Volumen de caldo: Litros por hectárea</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>user</code> (<code>user_id</code>)</td>
+<td>Creado por</td>
+<td>ForeignKey → User</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>profile</code> (<code>profile_id</code>)</td>
+<td>perfil</td>
+<td>ForeignKey → Profile</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>company</code> (<code>company_id</code>)</td>
+<td>Empresa</td>
+<td>ForeignKey → Company</td>
+<td></td>
+</tr>
+<tr>
+<td><code>worked_area</code></td>
+<td>Superficie trabajada (ha)</td>
+<td>FloatField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>init_date</code></td>
+<td>Fecha de inicio</td>
+<td>DateField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>end_date</code></td>
+<td>Fecha de fin</td>
+<td>DateField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>activity</code> (<code>activity_id</code>)</td>
+<td>Labor</td>
+<td>ForeignKey → Activity</td>
+<td></td>
+</tr>
+<tr>
+<td><code>is_completed</code></td>
+<td>Completado</td>
+<td>BooleanField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>observation</code></td>
+<td>Observaciones</td>
+<td>TextField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>spray_volume_ha</code></td>
+<td>Volumen de caldo</td>
+<td>FloatField</td>
+<td>Litros por hectárea opcional</td>
+</tr>
+<tr>
+<td><code>grupo</code></td>
+<td>Grupo</td>
+<td>UUIDField</td>
+<td>no editable</td>
+</tr>
+<tr>
+<td><code>cliente_id</code></td>
+<td>Id del móvil</td>
+<td>UUIDField</td>
+<td>no editable único</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>crops</code></td>
+<td>Cultivos</td>
+<td>ManyToManyField → Crop</td>
+<td>relación N:M</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mano-de-obra-del-parte-partworker">Mano de obra del parte — <code>PartWorker</code></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>task</code> (<code>task_id</code>)</td>
+<td>Parte</td>
+<td>ForeignKey → Task</td>
+<td></td>
+</tr>
+<tr>
+<td><code>init_date</code></td>
+<td>Fecha de inicio</td>
+<td>DateField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>end_date</code></td>
+<td>Fecha de fin</td>
+<td>DateField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>init_hour</code></td>
+<td>Hora de inicio</td>
+<td>TimeField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>end_hour</code></td>
+<td>Hora de fin</td>
+<td>TimeField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rest</code></td>
+<td>Descanso</td>
+<td>TimeField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>worker</code></td>
+<td>Trabajadores</td>
+<td>ManyToManyField → Worker</td>
+<td>relación N:M</td>
+</tr>
+</tbody>
+</table>
+<h3 id="maquinaria-del-parte-partmachinery">Maquinaria del parte — <code>PartMachinery</code></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>task</code> (<code>task_id</code>)</td>
+<td>Parte</td>
+<td>ForeignKey → Task</td>
+<td></td>
+</tr>
+<tr>
+<td><code>time</code></td>
+<td>Tiempo (h)</td>
+<td>TimeField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>machine</code></td>
+<td>Máquinas</td>
+<td>ManyToManyField → Machine</td>
+<td>relación N:M</td>
+</tr>
+</tbody>
+</table>
+<h3 id="producto-aplicado-partproduct">Producto aplicado — <code>PartProduct</code></h3>
+<p>Orden del asesor: Marcado si viene de la orden del asesor técnico</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>task</code> (<code>task_id</code>)</td>
+<td>Parte</td>
+<td>ForeignKey → Task</td>
+<td></td>
+</tr>
+<tr>
+<td><code>product</code> (<code>product_id</code>)</td>
+<td>Producto</td>
+<td>ForeignKey → Product</td>
+<td></td>
+</tr>
+<tr>
+<td><code>quantity</code></td>
+<td>Cantidad</td>
+<td>FloatField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>unit</code></td>
+<td>Unidad</td>
+<td>CharField</td>
+<td>Valores: l — litros · ml — mililitros · kg — kilogramos · g — gramos · ud — unidades · m — metros · m² — metros cuadrados</td>
+</tr>
+<tr>
+<td><code>almacen</code> (<code>almacen_id</code>)</td>
+<td>Almacén del que sale</td>
+<td>ForeignKey → Almacen</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>lote</code> (<code>lote_id</code>)</td>
+<td>Lote</td>
+<td>ForeignKey → Lote</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>dosis</code></td>
+<td>Dosis</td>
+<td>FloatField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>dosis_unit</code></td>
+<td>Unidad de dosis</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>concentration</code></td>
+<td>Concentración</td>
+<td>FloatField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>concentration_unit</code></td>
+<td>Unidad de concentración</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>pest_disease</code></td>
+<td>Plaga o enfermedad</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>superficie_tratada</code></td>
+<td>Superficie tratada</td>
+<td>CharField</td>
+<td>opcional Valores: Total (toda la parcela) · Parcial (más del 10 %) · Focos o rodales (menos del 10 %)</td>
+</tr>
+<tr>
+<td><code>orden_asesor</code></td>
+<td>Orden del asesor</td>
+<td>BooleanField</td>
+<td>Marcado si viene de la orden del asesor técnico opcional</td>
+</tr>
+<tr>
+<td><code>eficacia</code></td>
+<td>Eficacia</td>
+<td>CharField</td>
+<td>opcional Valores: Buena · Regular · Mala</td>
+</tr>
+<tr>
+<td><code>tecnica</code></td>
+<td>Técnica de aplicación</td>
+<td>CharField</td>
+<td>opcional Valores: Inyección · Inmersión · Espolvoreo · Granulado · Pulverización · Atomización · Cebo · Agua de riego · Otros</td>
+</tr>
+<tr>
+<td><code>otras_medidas</code></td>
+<td>Otras medidas</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>tipo_fertilizacion</code></td>
+<td>Tipo de fertilización</td>
+<td>CharField</td>
+<td>opcional Valores: Fertirrigación · Abonado de fondo · Abonado de cobertera</td>
+</tr>
+<tr>
+<td><code>albaran</code></td>
+<td>Albarán</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="servicio-externo-externalservice">Servicio externo — <code>ExternalService</code></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>task</code> (<code>task_id</code>)</td>
+<td>Parte</td>
+<td>ForeignKey → Task</td>
+<td></td>
+</tr>
+<tr>
+<td><code>supplier</code> (<code>supplier_id</code>)</td>
+<td>Proveedor</td>
+<td>ForeignKey → Supplier</td>
+<td></td>
+</tr>
+<tr>
+<td><code>time_hour</code></td>
+<td>Horas</td>
+<td>IntegerField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>time_min</code></td>
+<td>Minutos</td>
+<td>IntegerField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>cost_by_hour</code></td>
+<td>Coste por hora (€)</td>
+<td>FloatField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>cost_by_ha</code></td>
+<td>Coste por ha (€)</td>
+<td>FloatField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>total_cost</code></td>
+<td>Coste total (€)</td>
+<td>FloatField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>observation</code></td>
+<td>Observaciones</td>
+<td>TextField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="palet-pallet">Palet — <code>Pallet</code></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>company</code> (<code>company_id</code>)</td>
+<td>Empresa</td>
+<td>ForeignKey → Company</td>
+<td></td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>Fecha</td>
+<td>DateField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>pallet</code></td>
+<td>Nº de palés</td>
+<td>IntegerField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>weight</code></td>
+<td>Peso (kg)</td>
+<td>IntegerField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>observation</code></td>
+<td>Observaciones</td>
+<td>TextField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>crops</code></td>
+<td>Cultivos</td>
+<td>ManyToManyField → Crop</td>
+<td>relación N:M</td>
+</tr>
+</tbody>
+</table>
+<h3 id="caja-box">Caja — <code>Box</code></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>Pallet</code> (<code>Pallet_id</code>)</td>
+<td>Palet</td>
+<td>ForeignKey → Pallet</td>
+<td></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>Nombre</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h2 id="trabajadores-y-proveedores-contacts">Trabajadores y proveedores (<code>contacts</code>)</h2>
+<h3 id="trabajador-worker">Trabajador — <code>Worker</code></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>Nombre y apellidos</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>nif</code></td>
+<td>NIF/NIE</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>qualification</code></td>
+<td>Categoría profesional</td>
+<td>CharField</td>
+<td>Valores: Básico · Cualificado · Fumigador · Asesor · Tractorista (uso interno, no es carné oficial)</td>
+</tr>
+<tr>
+<td><code>anio_alta</code></td>
+<td>Año de alta</td>
+<td>PositiveSmallIntegerField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>anio_baja</code></td>
+<td>Año de baja</td>
+<td>PositiveSmallIntegerField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>company</code> (<code>company_id</code>)</td>
+<td>Empresa</td>
+<td>ForeignKey → Company</td>
+<td></td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td>Correo electrónico</td>
+<td>CharField</td>
+<td>opcional único</td>
+</tr>
+<tr>
+<td><code>phone_number</code></td>
+<td>Teléfono</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>address</code></td>
+<td>Dirección</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>town</code></td>
+<td>Municipio</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>postal_code</code></td>
+<td>Código postal</td>
+<td>FloatField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>province</code></td>
+<td>Provincia</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>country</code></td>
+<td>País</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="proveedor-supplier">Proveedor — <code>Supplier</code></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>company</code> (<code>company_id</code>)</td>
+<td>Empresa</td>
+<td>ForeignKey → Company</td>
+<td></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>Nombre</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>nif</code></td>
+<td>CIF/NIF</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td>Correo electrónico</td>
+<td>CharField</td>
+<td>único</td>
+</tr>
+<tr>
+<td><code>phone_number</code></td>
+<td>Teléfono</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>address</code></td>
+<td>Dirección</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>town</code></td>
+<td>Municipio</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>postal_code</code></td>
+<td>Código postal</td>
+<td>FloatField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>province</code></td>
+<td>Provincia</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>country</code></td>
+<td>País</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+</tbody>
+</table>
+<h2 id="costes-costs">Costes (<code>costs</code>)</h2>
+<h3 id="coste-de-trabajador-workercost">Coste de trabajador — <code>WorkerCost</code></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>worker</code> (<code>worker_id</code>)</td>
+<td>trabajador</td>
+<td>ForeignKey → Worker</td>
+<td></td>
+</tr>
+<tr>
+<td><code>price</code></td>
+<td>precio</td>
+<td>FloatField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>fecha</td>
+<td>DateField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="coste-de-maquinaria-machinerycost">Coste de maquinaria — <code>MachineryCost</code></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>machine</code> (<code>machine_id</code>)</td>
+<td>máquina</td>
+<td>ForeignKey → Machine</td>
+<td></td>
+</tr>
+<tr>
+<td><code>price</code></td>
+<td>precio</td>
+<td>FloatField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>fecha</td>
+<td>DateField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="coste-de-producto-productcost">Coste de producto — <code>ProductCost</code></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>company</code> (<code>company_id</code>)</td>
+<td>empresa</td>
+<td>ForeignKey → Company</td>
+<td></td>
+</tr>
+<tr>
+<td><code>product</code> (<code>product_id</code>)</td>
+<td>producto</td>
+<td>ForeignKey → Product</td>
+<td></td>
+</tr>
+<tr>
+<td><code>price</code></td>
+<td>precio</td>
+<td>FloatField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>fecha</td>
+<td>DateField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>origen</code></td>
+<td><code>origen</code></td>
+<td>CharField</td>
+<td>Valores: A mano · Precio medio ponderado de los albaranes · Media de las compras de 12 meses</td>
+</tr>
+<tr>
+<td><code>entrada</code> (<code>entrada_id</code>)</td>
+<td><code>entrada</code></td>
+<td>ForeignKey → Entrada</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>detalle</code></td>
+<td><code>detalle</code></td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h2 id="maquinaria-machinery">Maquinaria (<code>machinery</code>)</h2>
+<h3 id="maquina-machine">Máquina — <code>Machine</code></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>company</code> (<code>company_id</code>)</td>
+<td>empresa</td>
+<td>ForeignKey → Company</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>nombre</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>vehicle_registration</code></td>
+<td>matrícula</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>brand</code></td>
+<td>marca</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>es_equipo_aplicacion</code></td>
+<td><code>es_equipo_aplicacion</code></td>
+<td>BooleanField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>tipo_identificacion</code></td>
+<td><code>tipo_identificacion</code></td>
+<td>CharField</td>
+<td>opcional Valores: Nº ROMA · Nº censo de maquinaria de aplicación · Nº de bastidor · Nº de serie · Sin identificación (p. ej. mochila)</td>
+</tr>
+<tr>
+<td><code>identificacion</code></td>
+<td><code>identificacion</code></td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>fecha_adquisicion</code></td>
+<td><code>fecha_adquisicion</code></td>
+<td>DateField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>fecha_ultima_inspeccion</code></td>
+<td><code>fecha_ultima_inspeccion</code></td>
+<td>DateField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mantenimiento-maintenance">Mantenimiento — <code>Maintenance</code></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>machine</code> (<code>machine_id</code>)</td>
+<td>máquina</td>
+<td>ForeignKey → Machine</td>
+<td></td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>tipo</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>fecha</td>
+<td>DateField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>cost</code></td>
+<td>coste</td>
+<td>FloatField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>observations</code></td>
+<td>observaciones</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="trabajador-de-mantenimiento-maintenanceworker">Trabajador de mantenimiento — <code>MaintenanceWorker</code></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>Maintenance</code> (<code>Maintenance_id</code>)</td>
+<td>mantenimiento</td>
+<td>ForeignKey → Maintenance</td>
+<td></td>
+</tr>
+<tr>
+<td><code>init_hour</code></td>
+<td>hora de inicio</td>
+<td>TimeField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>end_hour</code></td>
+<td>hora de fin</td>
+<td>TimeField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>rest</code></td>
+<td>descanso</td>
+<td>TimeField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>worker</code></td>
+<td>trabajadores</td>
+<td>ManyToManyField → Worker</td>
+<td>relación N:M</td>
+</tr>
+</tbody>
+</table>
+<h3 id="consumo-consumption">Consumo — <code>Consumption</code></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>machine</code> (<code>machine_id</code>)</td>
+<td>máquina</td>
+<td>ForeignKey → Machine</td>
+<td></td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>fecha</td>
+<td>DateField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>counter</code></td>
+<td>contador</td>
+<td>FloatField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>unit_count</code></td>
+<td>unidad del contador</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>product</code> (<code>product_id</code>)</td>
+<td>producto</td>
+<td>ForeignKey → Product</td>
+<td></td>
+</tr>
+<tr>
+<td><code>quantity</code></td>
+<td>cantidad</td>
+<td>FloatField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>unit_product</code></td>
+<td>unidad del producto</td>
+<td>CharField</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="almacen-y-productos-warehouse">Almacén y productos (<code>warehouse</code>)</h2>
+<h3 id="tipo-de-producto-typeproduct">Tipo de producto — <code>TypeProduct</code></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>nombre</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>observation</code></td>
+<td>observaciones</td>
+<td>TextField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="producto-product">Producto — <code>Product</code></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>company</code> (<code>company_id</code>)</td>
+<td>empresa</td>
+<td>ForeignKey → Company</td>
+<td></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>nombre</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>type</code> (<code>type_id</code>)</td>
+<td>tipo</td>
+<td>ForeignKey → TypeProduct</td>
+<td></td>
+</tr>
+<tr>
+<td><code>manufacturer</code></td>
+<td>fabricante</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>composition</code></td>
+<td>composición</td>
+<td>TextField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>registration</code></td>
+<td>nº de registro</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>unit</code></td>
+<td>unidad</td>
+<td>CharField</td>
+<td>Valores: l — litros · ml — mililitros · kg — kilogramos · g — gramos · ud — unidades · m — metros · m² — metros cuadrados</td>
+</tr>
+<tr>
+<td><code>allowed</code></td>
+<td>autorizado</td>
+<td>BooleanField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>link</code></td>
+<td>enlace</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>titular</code></td>
+<td><code>titular</code></td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>fecha_inscripcion</code></td>
+<td><code>fecha_inscripcion</code></td>
+<td>DateField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>fecha_caducidad</code></td>
+<td><code>fecha_caducidad</code></td>
+<td>DateField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>funciones</code></td>
+<td><code>funciones</code></td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>sustancias</code></td>
+<td><code>sustancias</code></td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>tipo_preparado</code></td>
+<td><code>tipo_preparado</code></td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>riqueza_n</code></td>
+<td>% N</td>
+<td>FloatField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>riqueza_p</code></td>
+<td>% P2O5</td>
+<td>FloatField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>riqueza_k</code></td>
+<td>% K2O</td>
+<td>FloatField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>observaciones</code></td>
+<td><code>observaciones</code></td>
+<td>TextField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="catalogo-catalog">Catálogo — <code>Catalog</code></h3>
+<p>Catalog is the table that holds the relationship between a company and a product</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>company</code> (<code>company_id</code>)</td>
+<td>empresa</td>
+<td>ForeignKey → Company</td>
+<td></td>
+</tr>
+<tr>
+<td><code>product</code> (<code>product_id</code>)</td>
+<td>producto</td>
+<td>ForeignKey → Product</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="almacen-almacen">Almacén — <code>Almacen</code></h3>
+<p>código: Referencia corta para los albaranes (p. ej. NAVE-1)</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>company</code> (<code>company_id</code>)</td>
+<td>empresa</td>
+<td>ForeignKey → Company</td>
+<td></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>nombre</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>codigo</code></td>
+<td>código</td>
+<td>CharField</td>
+<td>Referencia corta para los albaranes (p. ej. NAVE-1) opcional</td>
+</tr>
+<tr>
+<td><code>tipo</code></td>
+<td><code>tipo</code></td>
+<td>CharField</td>
+<td>Valores: Nave o almacén general · Armario o local de fitosanitarios · Almacén de finca · Móvil (remolque, cuba, furgoneta)</td>
+</tr>
+<tr>
+<td><code>farm</code> (<code>farm_id</code>)</td>
+<td>finca</td>
+<td>ForeignKey → Farm</td>
+<td>Finca donde está, si está en una opcional</td>
+</tr>
+<tr>
+<td><code>es_principal</code></td>
+<td>es el principal</td>
+<td>BooleanField</td>
+<td>El que se propone por defecto al apuntar una entrada o un consumo.</td>
+</tr>
+<tr>
+<td><code>is_active</code></td>
+<td>activo</td>
+<td>BooleanField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>address</code></td>
+<td>dirección</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>town</code></td>
+<td>municipio</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>province</code></td>
+<td>provincia</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>postal_code</code></td>
+<td>código postal</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>latitud</code></td>
+<td><code>latitud</code></td>
+<td>DecimalField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>longitud</code></td>
+<td><code>longitud</code></td>
+<td>DecimalField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>referencia_sigpac</code></td>
+<td><code>referencia_sigpac</code></td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>responsable</code> (<code>responsable_id</code>)</td>
+<td><code>responsable</code></td>
+<td>ForeignKey → User</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>telefono</code></td>
+<td>teléfono</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>guarda_fitosanitarios</code></td>
+<td><code>guarda_fitosanitarios</code></td>
+<td>BooleanField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>cerrado_con_llave</code></td>
+<td><code>cerrado_con_llave</code></td>
+<td>BooleanField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>ventilacion</code></td>
+<td>ventilación</td>
+<td>BooleanField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>separado_de_alimentos</code></td>
+<td><code>separado_de_alimentos</code></td>
+<td>BooleanField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>cubeto_retencion</code></td>
+<td>cubeto de retención</td>
+<td>BooleanField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>material_absorbente</code></td>
+<td><code>material_absorbente</code></td>
+<td>BooleanField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>senalizacion</code></td>
+<td>señalización</td>
+<td>BooleanField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>agua_o_lavaojos</code></td>
+<td><code>agua_o_lavaojos</code></td>
+<td>BooleanField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>extintor</code></td>
+<td><code>extintor</code></td>
+<td>BooleanField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>botiquin</code></td>
+<td>botiquín</td>
+<td>BooleanField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>epi_disponible</code></td>
+<td>EPI disponible</td>
+<td>BooleanField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>capacidad</code></td>
+<td><code>capacidad</code></td>
+<td>CharField</td>
+<td>Superficie o volumen, en texto libre (p. ej. 12 m²) opcional</td>
+</tr>
+<tr>
+<td><code>inventario_desde</code></td>
+<td><code>inventario_desde</code></td>
+<td>DateField</td>
+<td>La fija el primer recuento cerrado. opcional</td>
+</tr>
+<tr>
+<td><code>observation</code></td>
+<td>observaciones</td>
+<td>TextField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="lote-lote">Lote — <code>Lote</code></h3>
+<p>caducidad: La del envase.</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>product</code> (<code>product_id</code>)</td>
+<td>producto</td>
+<td>ForeignKey → Product</td>
+<td></td>
+</tr>
+<tr>
+<td><code>codigo</code></td>
+<td>código</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>caducidad</code></td>
+<td><code>caducidad</code></td>
+<td>DateField</td>
+<td>La del envase. opcional</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="movimiento-movimiento">Movimiento — <code>Movimiento</code></h3>
+<p>cantidad: Con signo: positiva entra, negativa sale</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>company</code> (<code>company_id</code>)</td>
+<td>empresa</td>
+<td>ForeignKey → Company</td>
+<td></td>
+</tr>
+<tr>
+<td><code>almacen</code> (<code>almacen_id</code>)</td>
+<td>almacén</td>
+<td>ForeignKey → Almacen</td>
+<td></td>
+</tr>
+<tr>
+<td><code>product</code> (<code>product_id</code>)</td>
+<td>producto</td>
+<td>ForeignKey → Product</td>
+<td></td>
+</tr>
+<tr>
+<td><code>lote</code> (<code>lote_id</code>)</td>
+<td><code>lote</code></td>
+<td>ForeignKey → Lote</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>tipo</code></td>
+<td><code>tipo</code></td>
+<td>CharField</td>
+<td>Valores: Entrada · Consumo en parte · Traspaso: salida · Traspaso: entrada · Ajuste de recuento · Baja, merma o retirada · Devolución a proveedor</td>
+</tr>
+<tr>
+<td><code>cantidad</code></td>
+<td><code>cantidad</code></td>
+<td>FloatField</td>
+<td>Con signo: positiva entra, negativa sale</td>
+</tr>
+<tr>
+<td><code>unit</code></td>
+<td>unidad</td>
+<td>CharField</td>
+<td>Valores: l — litros · ml — mililitros · kg — kilogramos · g — gramos · ud — unidades · m — metros · m² — metros cuadrados</td>
+</tr>
+<tr>
+<td><code>fecha</code></td>
+<td><code>fecha</code></td>
+<td>DateField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>coste_unitario</code></td>
+<td><code>coste_unitario</code></td>
+<td>FloatField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>task</code> (<code>task_id</code>)</td>
+<td>parte</td>
+<td>ForeignKey → Task</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>entrada</code> (<code>entrada_id</code>)</td>
+<td>albarán de entrada</td>
+<td>ForeignKey → Entrada</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>traspaso</code> (<code>traspaso_id</code>)</td>
+<td><code>traspaso</code></td>
+<td>ForeignKey → Traspaso</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>recuento</code> (<code>recuento_id</code>)</td>
+<td><code>recuento</code></td>
+<td>ForeignKey → Recuento</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>user</code> (<code>user_id</code>)</td>
+<td>apuntado por</td>
+<td>ForeignKey → User</td>
+<td></td>
+</tr>
+<tr>
+<td><code>observation</code></td>
+<td>observaciones</td>
+<td>TextField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="recuento-recuento">Recuento — <code>Recuento</code></h3>
+<p>fecha: El día en que se contó.</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>company</code> (<code>company_id</code>)</td>
+<td>empresa</td>
+<td>ForeignKey → Company</td>
+<td></td>
+</tr>
+<tr>
+<td><code>almacen</code> (<code>almacen_id</code>)</td>
+<td>almacén</td>
+<td>ForeignKey → Almacen</td>
+<td></td>
+</tr>
+<tr>
+<td><code>fecha</code></td>
+<td><code>fecha</code></td>
+<td>DateField</td>
+<td>El día en que se contó.</td>
+</tr>
+<tr>
+<td><code>cerrado</code></td>
+<td><code>cerrado</code></td>
+<td>BooleanField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>user</code> (<code>user_id</code>)</td>
+<td>contado por</td>
+<td>ForeignKey → User</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>observation</code></td>
+<td>observaciones</td>
+<td>TextField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="linea-de-recuento-recuentolinea">Línea de recuento — <code>RecuentoLinea</code></h3>
+<p>según el libro: Foto del saldo en el momento de abrir el recuento</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>recuento</code> (<code>recuento_id</code>)</td>
+<td><code>recuento</code></td>
+<td>ForeignKey → Recuento</td>
+<td></td>
+</tr>
+<tr>
+<td><code>product</code> (<code>product_id</code>)</td>
+<td>producto</td>
+<td>ForeignKey → Product</td>
+<td></td>
+</tr>
+<tr>
+<td><code>lote</code> (<code>lote_id</code>)</td>
+<td><code>lote</code></td>
+<td>ForeignKey → Lote</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>cantidad_teorica</code></td>
+<td>según el libro</td>
+<td>FloatField</td>
+<td>Foto del saldo en el momento de abrir el recuento</td>
+</tr>
+<tr>
+<td><code>cantidad_contada</code></td>
+<td>contado</td>
+<td>FloatField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>unit</code></td>
+<td>unidad</td>
+<td>CharField</td>
+<td>opcional Valores: l — litros · ml — mililitros · kg — kilogramos · g — gramos · ud — unidades · m — metros · m² — metros cuadrados</td>
+</tr>
+</tbody>
+</table>
+<h3 id="entrada-de-almacen-entrada">Entrada de almacén — <code>Entrada</code></h3>
+<p>nº de albarán: O el de la factura</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>company</code> (<code>company_id</code>)</td>
+<td>empresa</td>
+<td>ForeignKey → Company</td>
+<td></td>
+</tr>
+<tr>
+<td><code>almacen</code> (<code>almacen_id</code>)</td>
+<td>almacén</td>
+<td>ForeignKey → Almacen</td>
+<td></td>
+</tr>
+<tr>
+<td><code>supplier</code> (<code>supplier_id</code>)</td>
+<td>proveedor</td>
+<td>ForeignKey → Supplier</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>fecha</code></td>
+<td><code>fecha</code></td>
+<td>DateField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>albaran</code></td>
+<td>nº de albarán</td>
+<td>CharField</td>
+<td>O el de la factura opcional</td>
+</tr>
+<tr>
+<td><code>documento</code></td>
+<td>foto del albarán</td>
+<td>FileField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>confirmada</code></td>
+<td><code>confirmada</code></td>
+<td>BooleanField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>user</code> (<code>user_id</code>)</td>
+<td>apuntada por</td>
+<td>ForeignKey → User</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>observation</code></td>
+<td>observaciones</td>
+<td>TextField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="linea-de-entrada-entradalinea">Línea de entrada — <code>EntradaLinea</code></h3>
+<p>precio por unidad: Sin IVA.</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>entrada</code> (<code>entrada_id</code>)</td>
+<td><code>entrada</code></td>
+<td>ForeignKey → Entrada</td>
+<td></td>
+</tr>
+<tr>
+<td><code>product</code> (<code>product_id</code>)</td>
+<td>producto</td>
+<td>ForeignKey → Product</td>
+<td></td>
+</tr>
+<tr>
+<td><code>lote</code> (<code>lote_id</code>)</td>
+<td><code>lote</code></td>
+<td>ForeignKey → Lote</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>cantidad</code></td>
+<td><code>cantidad</code></td>
+<td>FloatField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>unit</code></td>
+<td>unidad</td>
+<td>CharField</td>
+<td>opcional Valores: l — litros · ml — mililitros · kg — kilogramos · g — gramos · ud — unidades · m — metros · m² — metros cuadrados</td>
+</tr>
+<tr>
+<td><code>precio_unitario</code></td>
+<td>precio por unidad</td>
+<td>FloatField</td>
+<td>Sin IVA. opcional</td>
+</tr>
+</tbody>
+</table>
+<h3 id="traspaso-traspaso">Traspaso — <code>Traspaso</code></h3>
+<p>Mover producto de un almacén a otro.</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>company</code> (<code>company_id</code>)</td>
+<td>empresa</td>
+<td>ForeignKey → Company</td>
+<td></td>
+</tr>
+<tr>
+<td><code>origen</code> (<code>origen_id</code>)</td>
+<td><code>origen</code></td>
+<td>ForeignKey → Almacen</td>
+<td></td>
+</tr>
+<tr>
+<td><code>destino</code> (<code>destino_id</code>)</td>
+<td><code>destino</code></td>
+<td>ForeignKey → Almacen</td>
+<td></td>
+</tr>
+<tr>
+<td><code>fecha_salida</code></td>
+<td>fecha de salida</td>
+<td>DateField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>fecha_recepcion</code></td>
+<td>fecha de recepción</td>
+<td>DateField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>estado</code></td>
+<td><code>estado</code></td>
+<td>CharField</td>
+<td>Valores: Borrador · En tránsito · Recibido</td>
+</tr>
+<tr>
+<td><code>responsable</code> (<code>responsable_id</code>)</td>
+<td><code>responsable</code></td>
+<td>ForeignKey → User</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>observation</code></td>
+<td>observaciones</td>
+<td>TextField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="linea-de-traspaso-traspasolinea">Línea de traspaso — <code>TraspasoLinea</code></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>traspaso</code> (<code>traspaso_id</code>)</td>
+<td><code>traspaso</code></td>
+<td>ForeignKey → Traspaso</td>
+<td></td>
+</tr>
+<tr>
+<td><code>product</code> (<code>product_id</code>)</td>
+<td>producto</td>
+<td>ForeignKey → Product</td>
+<td></td>
+</tr>
+<tr>
+<td><code>lote</code> (<code>lote_id</code>)</td>
+<td><code>lote</code></td>
+<td>ForeignKey → Lote</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>cantidad_enviada</code></td>
+<td>enviado</td>
+<td>FloatField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>cantidad_recibida</code></td>
+<td>recibido</td>
+<td>FloatField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>unit</code></td>
+<td>unidad</td>
+<td>CharField</td>
+<td>opcional Valores: l — litros · ml — mililitros · kg — kilogramos · g — gramos · ud — unidades · m — metros · m² — metros cuadrados</td>
+</tr>
+</tbody>
+</table>
+<h3 id="carga-de-usos-del-mapa-cargausos">Carga de usos del MAPA — <code>CargaUsos</code></h3>
+<p>Una carga del CSV de usos: de qué fecha es la fuente y cuánto trajo.</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>fecha_fuente</code></td>
+<td><code>fecha_fuente</code></td>
+<td>DateField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>fichero</code></td>
+<td><code>fichero</code></td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>filas</code></td>
+<td><code>filas</code></td>
+<td>PositiveIntegerField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>productos</code></td>
+<td><code>productos</code></td>
+<td>PositiveIntegerField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="uso-autorizado-usoautorizado">Uso autorizado — <code>UsoAutorizado</code></h3>
+<p>Una fila de la tabla de usos de la ficha oficial de un producto.</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>carga</code> (<code>carga_id</code>)</td>
+<td><code>carga</code></td>
+<td>ForeignKey → CargaUsos</td>
+<td></td>
+</tr>
+<tr>
+<td><code>clave</code></td>
+<td><code>clave</code></td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>num_registro</code></td>
+<td><code>num_registro</code></td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>id_producto</code></td>
+<td><code>id_producto</code></td>
+<td>PositiveIntegerField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>vigente</code></td>
+<td><code>vigente</code></td>
+<td>BooleanField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>cultivo</code></td>
+<td><code>cultivo</code></td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>plaga</code></td>
+<td><code>plaga</code></td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>plaga_comun</code></td>
+<td><code>plaga_comun</code></td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>plaga_cientifico</code></td>
+<td><code>plaga_cientifico</code></td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>arrastrado</code></td>
+<td><code>arrastrado</code></td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>dosis_min</code></td>
+<td><code>dosis_min</code></td>
+<td>FloatField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>dosis_max</code></td>
+<td><code>dosis_max</code></td>
+<td>FloatField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>dosis_unidad</code></td>
+<td><code>dosis_unidad</code></td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>dosis_base</code></td>
+<td><code>dosis_base</code></td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>dosis_min_norm</code></td>
+<td><code>dosis_min_norm</code></td>
+<td>FloatField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>dosis_max_norm</code></td>
+<td><code>dosis_max_norm</code></td>
+<td>FloatField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>dosis_unidad_norm</code></td>
+<td><code>dosis_unidad_norm</code></td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>caldo_min</code></td>
+<td><code>caldo_min</code></td>
+<td>FloatField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>caldo_max</code></td>
+<td><code>caldo_max</code></td>
+<td>FloatField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>caldo_unidad</code></td>
+<td><code>caldo_unidad</code></td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>max_aplicaciones</code></td>
+<td><code>max_aplicaciones</code></td>
+<td>PositiveSmallIntegerField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>intervalo_dias</code></td>
+<td><code>intervalo_dias</code></td>
+<td>PositiveSmallIntegerField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>plazo_seguridad_dias</code></td>
+<td><code>plazo_seguridad_dias</code></td>
+<td>PositiveSmallIntegerField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>condiciones</code></td>
+<td><code>condiciones</code></td>
+<td>TextField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>pagina</code></td>
+<td><code>pagina</code></td>
+<td>PositiveSmallIntegerField</td>
+<td>opcional</td>
+</tr>
+</tbody>
+</table>
+<h3 id="novedad-del-registro-novedad">Novedad del registro — <code>Novedad</code></h3>
+<p>Lo que cambió en una revisión del registro del MAPA (deploy/actualizar_mapa.sh).</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>ejecucion</code></td>
+<td><code>ejecucion</code></td>
+<td>CharField</td>
+<td>único</td>
+</tr>
+<tr>
+<td><code>tipo</code></td>
+<td><code>tipo</code></td>
+<td>CharField</td>
+<td>Valores: Revisión semanal del registro · Revisión mensual de usos</td>
+</tr>
+<tr>
+<td><code>ok</code></td>
+<td><code>ok</code></td>
+<td>BooleanField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td><code>error</code></td>
+<td>TextField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>detalle</code></td>
+<td><code>detalle</code></td>
+<td>JSONField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td><code>created</code></td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td><code>modified</code></td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h2 id="partes-por-voz-voz">Partes por voz (<code>voz</code>)</h2>
+<h3 id="dictado-dictado">Dictado — <code>Dictado</code></h3>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>company</code> (<code>company_id</code>)</td>
+<td>Empresa</td>
+<td>ForeignKey → Company</td>
+<td></td>
+</tr>
+<tr>
+<td><code>origen</code></td>
+<td>Origen</td>
+<td>CharField</td>
+<td>Valores: Dictado · Foto de un parte en papel</td>
+</tr>
+<tr>
+<td><code>user</code> (<code>user_id</code>)</td>
+<td>Quién dictó</td>
+<td>ForeignKey → User</td>
+<td></td>
+</tr>
+<tr>
+<td><code>audio</code></td>
+<td>Audio</td>
+<td>FileField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>imagen</code></td>
+<td>Foto</td>
+<td>FileField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>hoja</code> (<code>hoja_id</code>)</td>
+<td>Hoja</td>
+<td>ForeignKey → Dictado</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>grabado</code></td>
+<td>Grabado</td>
+<td>DateTimeField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>estado</code></td>
+<td>Estado</td>
+<td>CharField</td>
+<td>Valores: Pendiente de procesar · Borrador listo para confirmar · Confirmado: ya es un parte · Descartado · No se pudo procesar</td>
+</tr>
+<tr>
+<td><code>transcripcion</code></td>
+<td>Transcripción</td>
+<td>TextField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>borrador</code></td>
+<td>Borrador</td>
+<td>TextField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td>Error</td>
+<td>TextField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>intentos</code></td>
+<td>Intentos</td>
+<td>PositiveSmallIntegerField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>proximo_intento</code></td>
+<td>Próximo intento</td>
+<td>DateTimeField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>task</code> (<code>task_id</code>)</td>
+<td>Parte</td>
+<td>ForeignKey → Task</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>confirmado_por</code> (<code>confirmado_por_id</code>)</td>
+<td>Confirmado por</td>
+<td>ForeignKey → User</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>confirmado</code></td>
+<td>Confirmado</td>
+<td>DateTimeField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>correcciones</code></td>
+<td>Correcciones</td>
+<td>TextField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>purgado</code></td>
+<td>Purgado</td>
+<td>DateTimeField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>cliente_id</code></td>
+<td>Id del móvil</td>
+<td>UUIDField</td>
+<td>no editable único</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="envio-desde-el-movil-enviodelmovil">Envío desde el móvil — <code>EnvioDelMovil</code></h3>
+<p>Una petición que llegó desde la cola del móvil (relanzamiento/30 §F4).</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>user</code> (<code>user_id</code>)</td>
+<td>Quién</td>
+<td>ForeignKey → User</td>
+<td></td>
+</tr>
+<tr>
+<td><code>tipo</code></td>
+<td>Tipo</td>
+<td>CharField</td>
+<td>Valores: Dictado · Foto · Parte escrito</td>
+</tr>
+<tr>
+<td><code>cliente_id</code></td>
+<td>Id del móvil</td>
+<td>UUIDField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>resultado</code></td>
+<td>Respuesta</td>
+<td>PositiveSmallIntegerField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>espera_ms</code></td>
+<td>Espera en el móvil (ms)</td>
+<td>PositiveBigIntegerField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>intentos</code></td>
+<td>Intento nº</td>
+<td>PositiveSmallIntegerField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Llegó</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h2 id="usuarios-y-accesos-users">Usuarios y accesos (<code>users</code>)</h2>
+<h3 id="perfil-de-usuario-profile">Perfil de usuario — <code>Profile</code></h3>
+<p>Profile model.</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>user</code> (<code>user_id</code>)</td>
+<td>usuario</td>
+<td>OneToOneField → User</td>
+<td>único</td>
+</tr>
+<tr>
+<td><code>website</code></td>
+<td>web</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>biography</code></td>
+<td>biografía</td>
+<td>TextField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>phone_number</code></td>
+<td>teléfono</td>
+<td>CharField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>picture</code></td>
+<td>foto</td>
+<td>FileField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="app-bi-appbi">App BI — <code>AppBI</code></h3>
+<p>Save the link for app in shiny server with the business intelligence app.</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>company</code> (<code>company_id</code>)</td>
+<td>empresa</td>
+<td>ForeignKey → Company</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>nombre</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>link</code></td>
+<td>enlace</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>descripción</td>
+<td>TextField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+<tr>
+<td><code>modified</code></td>
+<td>Última modificación</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+<h3 id="invitacion-invitacion">Invitación — <code>Invitacion</code></h3>
+<p>Nombre: Opcional: si lo sabes, le aparece ya escrito.</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Etiqueta</th>
+<th>Tipo</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>ID</td>
+<td>AutoField</td>
+<td>clave primaria automática</td>
+</tr>
+<tr>
+<td><code>company</code> (<code>company_id</code>)</td>
+<td>Explotación</td>
+<td>ForeignKey → Company</td>
+<td></td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td>Correo</td>
+<td>CharField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>nombre</code></td>
+<td>Nombre</td>
+<td>CharField</td>
+<td>Opcional: si lo sabes, le aparece ya escrito. opcional</td>
+</tr>
+<tr>
+<td><code>token</code></td>
+<td>código</td>
+<td>CharField</td>
+<td>no editable único</td>
+</tr>
+<tr>
+<td><code>invitado_por</code> (<code>invitado_por_id</code>)</td>
+<td>Invita</td>
+<td>ForeignKey → User</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>caduca</code></td>
+<td>Caduca</td>
+<td>DateTimeField</td>
+<td></td>
+</tr>
+<tr>
+<td><code>enviada</code></td>
+<td>Enviada</td>
+<td>DateTimeField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>aceptada</code></td>
+<td>Aceptada</td>
+<td>DateTimeField</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>usuario</code> (<code>usuario_id</code>)</td>
+<td>Cuenta</td>
+<td>ForeignKey → User</td>
+<td>opcional</td>
+</tr>
+<tr>
+<td><code>created</code></td>
+<td>Fecha de alta</td>
+<td>DateTimeField</td>
+<td>se rellena sola</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["search.highlight", "search.suggest", "content.tooltips", "navigation.top"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>

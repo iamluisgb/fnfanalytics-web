@@ -1,0 +1,159 @@
+/* FnF Ayuda — el estilo de la landing (fnfanalytics.com) transplantado al
+   tema Material. Los tokens son los de assets/site.css del repo
+   fnfanalytics-web: mismos colores, mismas fuentes, mismos radios.
+   Las fuentes van autoalojadas (docs/estilos/fonts/), como en la landing. */
+
+/* ---- Fuentes (la landing no usa Google Fonts y esto tampoco) ---- */
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-400.woff2') format('woff2');
+  font-weight: 400; font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-600.woff2') format('woff2');
+  font-weight: 600; font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-700.woff2') format('woff2');
+  font-weight: 700; font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('fonts/JetBrainsMono-400.woff2') format('woff2');
+  font-weight: 400; font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('fonts/JetBrainsMono-600.woff2') format('woff2');
+  font-weight: 600; font-display: swap;
+}
+
+/* ---- Tokens de la marca (copiados de la landing) ---- */
+:root {
+  --brand:        #00c896;
+  --brand-deep:   #077a5c;
+  --brand-bright: #2fe0b0;
+  --on-brand:     #052018;
+  --ink-soft:     #4f5f58;
+  --bg:           #fbfdfc;
+  --bg-alt:       #f2f7f4;
+  --line:         #d9e4de;
+  --ok:           #066a50;  --ok-bg:   rgba(0, 200, 150, .14);
+  --warn:         #955608;  --warn-bg: rgba(212, 144, 32, .15);
+  --r-s: 6px; --r-m: 10px; --r-l: 14px;
+
+  /* Material vestido de marca: la cabecera lleva el verde texto de la
+     landing (AA con blanco), el acento es el verde marca. */
+  --md-primary-fg-color:        var(--brand-deep);
+  --md-primary-fg-color--light: #0a8a68;
+  --md-primary-fg-color--dark:  #055a44;
+  --md-primary-bg-color:        var(--brand-deep);
+  --md-accent-fg-color:         var(--brand-deep);
+  --md-accent-bg-color:         var(--brand-deep);
+  --md-typeset-font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+  --md-code-font-family: 'JetBrains Mono', ui-monospace, monospace;
+  --md-text-font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color:        #0c1210;  /* carbon */
+  --md-primary-fg-color--light: #111917;
+  --md-primary-fg-color--dark:  #0c1210;
+  --md-primary-bg-color:        #0c1210;
+  --md-accent-fg-color:         var(--brand-bright);
+  --md-accent-bg-color:         var(--brand-bright);
+}
+
+/* ---- Vocabulario de Material afinado con la mano de la landing ---- */
+.md-typeset {
+  font-size: .96rem;            /* --fs-body de la landing */
+  line-height: 1.55;
+}
+.md-typeset h1, .md-typeset h2, .md-typeset h3 {
+  letter-spacing: -.02em;       /* --ls-tight */
+}
+.md-typeset h2 {
+  font-weight: 600;
+  border-bottom-color: var(--line);
+}
+.md-header {
+  box-shadow: none;
+  border-bottom: 1px solid var(--line);
+}
+[data-md-color-scheme="slate"] .md-header {
+  border-bottom-color: #223029; /* --line-dark */
+}
+.md-nav {
+  font-size: .82rem;
+}
+.md-nav__item--active > .md-nav__link {
+  color: var(--md-primary-fg-color);
+}
+.md-search__form {
+  border-radius: var(--r-s);
+}
+.md-button, .md-typeset .md-button {
+  font-weight: 600;
+  border-radius: var(--r-s);
+}
+.md-typeset code, .md-code, .md-clipboard {
+  border-radius: var(--r-s);
+}
+.md-typeset :is(.admonition, details) {
+  border-radius: var(--r-m);
+  box-shadow: none;
+}
+.md-typeset :is(.admonition, details):is(.tip, .hint) {
+  border-left-color: var(--brand);
+}
+
+/* ---- Barra de validez (Procedencia, doc 48) con la paleta de marca ---- */
+.doc-meta {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+  background: var(--bg-alt);
+  border: 1px solid var(--line);
+  border-radius: var(--r-s);
+  padding: 6px 12px;
+  margin: 0 0 1.2em 0;
+}
+.doc-meta b {
+  color: var(--brand-deep);
+}
+[data-md-color-scheme="slate"] .doc-meta {
+  color: #8ea59b;               /* --ink-soft-on-dark */
+  background: #111917;          /* --carbon-2 */
+  border-color: #223029;
+}
+.doc-meta-exp {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: var(--warn-bg);
+  color: var(--warn);
+  font-weight: 600;
+}
+[data-md-color-scheme="slate"] .doc-meta-exp {
+  color: #fbbf24;
+}
+
+/* ---- Capturas: un teléfono en la página, no tiras gigantes.
+   Borde fino porque casi todas son capturas de la app en claro. ---- */
+.md-typeset img {
+  display: block;
+  margin: 0.6em auto;
+  border: 1px solid var(--line);
+  border-radius: var(--r-m);
+  box-shadow: 0 16px 40px -20px rgba(6, 20, 15, .35);
+}
+
+/* ---- «Related» y «Si algo va mal» discretos, al final ---- */
+h2#related, h2#si-algo-va-mal {
+  font-size: 1rem;
+  opacity: 0.85;
+}
