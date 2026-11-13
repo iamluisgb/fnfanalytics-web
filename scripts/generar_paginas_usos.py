@@ -87,6 +87,7 @@ def pagina(titulo, descripcion, ruta, migas, cuerpo):
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#0c1210">
 <link rel="preload" href="/assets/fonts/Poppins-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/Poppins-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/site.css{VERSION_SITIO}">
 <link rel="stylesheet" href="/assets/calculadora.css{VERSION}">
 <script defer src="/assets/usos.js{VERSION}"></script>

@@ -1,6 +1,8 @@
 @font-face{font-family:'Poppins';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/Poppins-400.woff2) format('woff2');}
 @font-face{font-family:'Poppins';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/Poppins-600.woff2) format('woff2');}
 @font-face{font-family:'Poppins';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/Poppins-700.woff2) format('woff2');}
+/* Reserva con las medidas de Poppins: mientras llega el woff2 el texto ocupa lo mismo y la página no salta. */
+@font-face{font-family:'Poppins reserva';src:local('Arial'),local('Helvetica Neue'),local('Roboto');size-adjust:112.16%;ascent-override:93.62%;descent-override:31.21%;line-gap-override:8.92%;}
 @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/JetBrainsMono-400.woff2) format('woff2');}
 @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/JetBrainsMono-600.woff2) format('woff2');}
 
@@ -53,7 +55,7 @@
   --chat-bg: #eef2ef; --bubble-user: #d7f5e9; --bubble-bot: #ffffff;
 
   /* ---- Tipografía ---- */
-  --font:      'Poppins', ui-sans-serif, system-ui, sans-serif;      /* marca y titulares */
+  --font:      'Poppins', 'Poppins reserva', ui-sans-serif, system-ui, sans-serif;      /* marca y titulares */
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace; /* datos, etiquetas, unidades, logs */
   --fs-display: clamp(2rem, 4.6vw, 3rem);
   --fs-h2:      clamp(1.45rem, 3vw, 2rem);
@@ -263,7 +265,6 @@ img{max-width:100%}
 .pill-dark-ok{background:rgba(0,200,150,.16);color:var(--brand)}
 .pill-dark-warn{background:rgba(212,144,32,.2);color:#e0a33e}
 .pill-dark-bad{background:rgba(214,69,69,.18);color:#e07070}
-.sello{display:inline-block;font-family:var(--font-mono);font-size:.6rem;font-weight:600;letter-spacing:.05em;color:var(--brand-deep);border:1px solid var(--brand);border-radius:var(--r-s);padding:2px 7px;margin-top:10px}
 .entrada{font-family:var(--font-mono);font-size:.66rem;color:var(--ink-soft);margin-bottom:8px;display:block}
 .entrada b{color:var(--brand-deep);font-weight:600}
 
@@ -321,7 +322,6 @@ img{max-width:100%}
 .band ul{margin:18px 0 0;padding:0;list-style:none;display:grid;gap:9px}
 .band li{font-size:.88rem;padding-left:22px;position:relative}
 .band li::before{content:"";position:absolute;left:0;top:8px;width:10px;height:6px;border-left:2px solid var(--brand);border-bottom:2px solid var(--brand);transform:rotate(-45deg)}
-.band .cta2{margin-top:26px}
 
 /* final */
 .final{background:var(--carbon);border-top:1px solid var(--line-dark);padding:88px 0;text-align:center}
@@ -340,7 +340,6 @@ img{max-width:100%}
 .waitlist input{flex:1;font-family:var(--font-mono);font-size:.82rem;padding:12px 14px;border-radius:var(--r-s);border:1px solid var(--line-dark);background:var(--carbon-2);color:#fff;min-width:0}
 .waitlist input::placeholder{color:var(--ink-soft-on-dark)}
 
-.form-note{margin-top:12px;font-family:var(--font-mono);font-size:.62rem;letter-spacing:.04em;color:var(--ink-soft-on-dark)}
 .form-ok{margin-top:16px;font-family:var(--font-mono);font-size:.8rem;color:var(--brand);display:none}
 
 
@@ -387,7 +386,6 @@ footer a{color:#8ea59b}
 
 @media (max-width:900px){
   .hero .in{padding-top:56px;grid-template-columns:1fr;gap:36px}
-    .steps{grid-template-columns:1fr}
   .step{border-right:none;border-bottom:1px solid var(--line)}
   .step:last-child{border-bottom:none}
     .band{grid-template-columns:1fr;padding:32px 24px}
@@ -407,7 +405,8 @@ footer a{color:#8ea59b}
 .demo .dbar .label{color:var(--d-soft)}
 .demo .dtag{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.06em;color:var(--d-soft);border:1px solid var(--d-line);border-radius:var(--r-s);padding:1px 6px}
 .demo .dbody{padding:16px}
-.demo .said{min-height:3.4em;font-family:var(--font-mono);font-size:.78rem;line-height:1.5;background:var(--d-alt);border:1px solid var(--d-line);border-radius:var(--r-s);padding:10px 12px;color:var(--d-ink)}
+/* hueco para las tres líneas de la frase: si no, la tarjeta crece mientras se escribe y salta (CLS) */
+.demo .said{min-height:calc(4.5em + 22px);font-family:var(--font-mono);font-size:.78rem;line-height:1.5;background:var(--d-alt);border:1px solid var(--d-line);border-radius:var(--r-s);padding:10px 12px;color:var(--d-ink)}
 .demo .said .ph{color:var(--d-soft)}
 .demo .said .caret{display:inline-block;width:7px;height:1em;background:#077a5c;vertical-align:-2px;margin-left:2px;animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}

@@ -297,3 +297,5 @@
   .cc-sheet-t{font-size:13pt}
   .cc-sign{margin-top:40pt}
 }
+/* atribución del mapa (Leaflet): enlaces subrayados, que solo por el color no se distinguen del texto */
+.cc .leaflet-container .leaflet-control-attribution a{text-decoration:underline}
