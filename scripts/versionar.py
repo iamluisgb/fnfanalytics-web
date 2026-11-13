@@ -1,4 +1,4 @@
-"""Pone ?v=<huella> a los archivos de la calculadora en su HTML.
+"""Pone ?v=<huella> a los archivos de la calculadora en su HTML y a los estilos y scripts comunes.
 
 calculadora.js reenvía esa misma ?v= al módulo 3D y a los datos, así que basta con
 ejecutarlo tras cambiar cualquiera de ellos para que nadie mezcle versiones de caché.
@@ -30,4 +30,16 @@ vd = hashlib.sha256((RAIZ / "assets" / "direccion.js").read_bytes() + (RAIZ / "a
 d = DIR.read_text(encoding="utf-8")
 d = re.sub(r'(/assets/(?:direccion\.js|calculadora\.css))(?:\?v=[0-9a-f]+)?"', rf'\1?v={vd}"', d)
 DIR.write_text(d, encoding="utf-8")
+
+# estilos y scripts comunes: cada uno con la huella de su contenido, en todas las páginas escritas a mano
+# (las de usos/ copian la de site.css al generarse). Antes era una fecha puesta a mano y se olvidaba.
+COMUNES = ["assets/site.css", "assets/analitica.js", "assets/ruta.js", "assets/fuentes.js"]
+paginas = [p for p in list(RAIZ.glob("*.html")) + list((RAIZ / "herramientas").glob("*.html"))]
+for a in COMUNES:
+    va = hashlib.sha256((RAIZ / a).read_bytes()).hexdigest()[:10]
+    for p in paginas:
+        t = p.read_text(encoding="utf-8")
+        n = re.sub(r'(/%s)(?:\?v=[0-9a-z]+)?"' % re.escape(a), rf'\1?v={va}"', t)
+        if n != t:
+            p.write_text(n, encoding="utf-8")
 print("versión", v, "· dirección", vd)

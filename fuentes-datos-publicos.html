@@ -18,8 +18,8 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#0c1210">
 <link rel="preload" href="/assets/fonts/Poppins-700.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/site.css?v=20261030">
-<script defer src="/assets/fuentes.js"></script>
+<link rel="stylesheet" href="/assets/site.css?v=d1a8dcbed8">
+<script defer src="/assets/fuentes.js?v=44498e989a"></script>
 <script defer src="/u/s.js" data-website-id="08c1619b-4bb8-471b-9dc9-9b6cda88e8ae" data-host-url="https://cloud.umami.is" data-domains="fnfanalytics.com,www.fnfanalytics.com"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Article","headline":"Fuentes de datos públicos del agro español","description":"65 fuentes oficiales de datos agrarios, nacionales y autonómicas, con acceso, clave, formato y trampas; 49 comprobadas con llamadas reales.","url":"https://fnfanalytics.com/fuentes-datos-publicos","inLanguage":"es","datePublished":"2026-10-09","dateModified":"2026-10-09","author":{"@type":"Organization","name":"Food & Farm Analytics","url":"https://fnfanalytics.com"}}
@@ -27,9 +27,10 @@
 </head>
 <body>
 
-<nav class="nav">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<nav class="nav" aria-label="Principal">
   <div class="in">
-    <a class="logo" href="/" aria-label="Food &amp; Farm Analytics"><img src="/assets/logo-mark.png" alt="" width="19" height="34"><span class="lt"><b>food&amp;farm</b><i>analytics</i></span></a>
+    <a class="logo" href="/"><img src="/assets/logo-mark.png" alt="" width="19" height="34"><span class="lt"><b>food&amp;farm</b><i>analytics</i></span></a>
     <div class="nav-links">
       <div class="nav-secciones">
         <a href="/#inteligencia">Inteligencia</a>
@@ -38,7 +39,7 @@
         <a href="/cuaderno-digital">Cuaderno digital</a>
       </div>
       <details class="nav-movil">
-        <summary aria-label="Abrir el menú">Menú</summary>
+        <summary>Menú</summary>
         <div class="nav-movil__panel">
           <a class="nav-movil__entrar" href="https://app.fnfanalytics.com/users/login/" data-umami-event="nav-entrar">Entrar</a>
           <a href="/#inteligencia">Inteligencia</a>
@@ -51,12 +52,12 @@
         </div>
       </details>
       <a class="btn btn-ghost nav-entrar" href="https://app.fnfanalytics.com/users/login/" data-umami-event="nav-entrar">Entrar</a>
-      <a class="btn btn-primary" href="/#acceso">Solicita acceso</a>
+      <a class="btn btn-primary" href="/?origen=fuentes#acceso">Solicita acceso</a>
     </div>
   </div>
 </nav>
 
-<header class="page-head">
+<header class="page-head" id="contenido">
   <div class="container">
     <span class="label" style="color:var(--brand)">recursos · datos abiertos</span>
     <h1>Los datos públicos del campo, en un solo sitio.</h1>
@@ -265,7 +266,7 @@
 <div class="cta-box">
   <h2>¿Quieres estos datos dentro de tu sistema, sin montarlo tú?</h2>
   <p>Es lo que estamos construyendo en FnF: el cuaderno ya valida cada tratamiento contra el registro oficial, y la parcela, la meteo, el satélite y los precios se van conectando encima. Si te interesa, pide acceso y te contamos qué está listo hoy.</p>
-  <p><a class="btn btn-primary" href="/#acceso">Solicita acceso</a> &nbsp; <a href="mailto:hola@fnfanalytics.com?subject=Fuentes%20de%20datos%20p%C3%BAblicos">o escríbenos a hola@fnfanalytics.com</a></p>
+  <p><a class="btn btn-primary" href="/?origen=fuentes#acceso">Solicita acceso</a> &nbsp; <a href="mailto:hola@fnfanalytics.com?subject=Fuentes%20de%20datos%20p%C3%BAblicos">o escríbenos a hola@fnfanalytics.com</a></p>
 </div>
 
 </main>
@@ -282,6 +283,7 @@
       <a href="/usos/">Usos autorizados</a>
       <a href="/metodo">Cómo comprobamos</a>
       <a href="/asesores">Asesores</a>
+      <a href="https://app.fnfanalytics.com/users/login/">Entrar</a>
       <a href="/privacidad">Privacidad</a>
       <a href="/aviso-legal">Aviso legal</a>
     </nav>

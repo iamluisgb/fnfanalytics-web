@@ -21,11 +21,14 @@ import time
 import unicodedata
 from pathlib import Path
 
+from cabecera_pie import cabecera, pie
+
 RAIZ = Path(__file__).resolve().parent.parent
 DATOS = RAIZ / "herramientas" / "datos"
 SALIDA = RAIZ / "usos"
 WEB = "https://fnfanalytics.com"
 VERSION = ""  # la misma ?v= que la calculadora (scripts/versionar.py)
+VERSION_SITIO = ""  # la ?v= de site.css, también de versionar.py
 LISTA = Path(__file__).resolve().parent / "plagas_clave.json"
 MESES = "enero febrero marzo abril mayo junio julio agosto septiembre octubre noviembre diciembre".split()
 
@@ -62,12 +65,14 @@ def pagina(titulo, descripcion, ruta, migas, cuerpo):
     ld = json.dumps({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": lista}, ensure_ascii=False)
     nav_migas = ' <span aria-hidden="true">›</span> '.join(
         f'<a href="{r}">{e(n)}</a>' if i < len(migas) - 1 else f"<span>{e(n)}</span>" for i, (n, r) in enumerate(migas))
+    # el nombre largo de la marca cortaba en Google los títulos de más de ~60 caracteres
+    marca = " · Food &amp; Farm Analytics" if len(titulo) <= 38 else " · FnF"
     return f"""<!doctype html>
 <html lang="es" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{e(titulo)} · Food & Farm Analytics</title>
+<title>{e(titulo)}{marca}</title>
 <meta name="description" content="{e(descripcion)}">
 <link rel="canonical" href="{url}">
 <meta property="og:title" content="{e(titulo)}">
@@ -82,7 +87,7 @@ def pagina(titulo, descripcion, ruta, migas, cuerpo):
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#0c1210">
 <link rel="preload" href="/assets/fonts/Poppins-700.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/site.css?v=20261030">
+<link rel="stylesheet" href="/assets/site.css{VERSION_SITIO}">
 <link rel="stylesheet" href="/assets/calculadora.css{VERSION}">
 <script defer src="/assets/usos.js{VERSION}"></script>
 <script defer src="/u/s.js" data-website-id="08c1619b-4bb8-471b-9dc9-9b6cda88e8ae" data-host-url="https://cloud.umami.is" data-domains="fnfanalytics.com,www.fnfanalytics.com"></script>
@@ -90,59 +95,15 @@ def pagina(titulo, descripcion, ruta, migas, cuerpo):
 </head>
 <body>
 
-<nav class="nav">
-  <div class="in">
-    <a class="logo" href="/" aria-label="Food & Farm Analytics"><img src="/assets/logo-mark.png" alt="" width="19" height="34"><span class="lt"><b>food&amp;farm</b><i>analytics</i></span></a>
-    <div class="nav-links">
-      <div class="nav-secciones">
-        <a href="/#inteligencia">Inteligencia</a>
-        <a href="/asesores">Asesores</a>
-        <a href="/#precios">Precios</a>
-        <a href="/cuaderno-digital">Cuaderno digital</a>
-      </div>
-      <details class="nav-movil">
-        <summary aria-label="Abrir el menú">Menú</summary>
-        <div class="nav-movil__panel">
-          <a class="nav-movil__entrar" href="https://app.fnfanalytics.com/users/login/" data-umami-event="nav-entrar">Entrar</a>
-          <a href="/#inteligencia">Inteligencia</a>
-          <a href="/#analitica">Analítica</a>
-          <a href="/asesores">Asesores</a>
-          <a href="/#precios">Precios</a>
-          <a href="/#faq">FAQ</a>
-          <a href="/cuaderno-digital">Cuaderno digital 2027</a>
-          <a href="/plantillas/">Herramientas gratis</a>
-        </div>
-      </details>
-      <a class="btn btn-ghost nav-entrar" href="https://app.fnfanalytics.com/users/login/" data-umami-event="nav-entrar">Entrar</a>
-      <a class="btn btn-primary" href="/#acceso">Solicita acceso</a>
-    </div>
-  </div>
-</nav>
+{cabecera("usos")}
 
-<main class="cc cc-usos">
+<main class="cc cc-usos" id="contenido">
   <div class="cc-head">
     <div class="cc-crumb">{nav_migas}</div>
 {cuerpo}
 </main>
 
-<footer>
-  <div class="in">
-    <div class="fl"><img src="/assets/logo-mark.png" alt="" width="13" height="24"><b>food&amp;farm analytics</b></div>
-    <nav aria-label="Pie">
-      <a href="/cuaderno-digital">Cuaderno digital 2027</a>
-      <a href="/plantillas/">Plantillas gratis</a>
-      <a href="/herramientas/calculadora-caldo">Calculadora de caldo</a>
-      <a href="/herramientas/direccion-de-trabajo">Dirección de trabajo</a>
-      <a href="/fuentes-datos-publicos">Fuentes de datos públicos</a>
-      <a href="/usos/">Usos autorizados</a>
-      <a href="/metodo">Cómo comprobamos</a>
-      <a href="/asesores">Asesores</a>
-      <a href="/privacidad">Privacidad</a>
-      <a href="/aviso-legal">Aviso legal</a>
-    </nav>
-    <p>© 2026 · <a href="mailto:hola@fnfanalytics.com">hola@fnfanalytics.com</a></p>
-  </div>
-</footer>
+{pie()}
 </body>
 </html>
 """
@@ -161,10 +122,12 @@ def redireccion(destino):
 
 
 def main():
-    global VERSION
+    global VERSION, VERSION_SITIO
     pag = (RAIZ / "herramientas" / "calculadora-caldo.html").read_text(encoding="utf-8")
     m = re.search(r"calculadora\.css(\?v=[0-9a-f]+)", pag)
     VERSION = m.group(1) if m else ""
+    m = re.search(r"site\.css(\?v=[0-9a-z]+)", pag)
+    VERSION_SITIO = m.group(1) if m else ""
     indice = json.loads((DATOS / "cultivos.json").read_text(encoding="utf-8"))
     a, m, d = indice["fecha"].split("-")
     fecha = f"{int(d)} de {MESES[int(m) - 1]} de {a}"
@@ -257,7 +220,7 @@ def main():
     </div>
     <div class="cc-table" role="region" aria-label="Productos autorizados" tabindex="0">
       <table>
-        <thead><tr><th>Producto</th>{'<th>Contra</th>' if varias else ''}<th>Materia activa</th><th>Dosis</th><th>Caldo</th><th>Aplic.</th><th>P.&nbsp;S.</th><th></th></tr></thead>
+        <thead><tr><th>Producto</th>{'<th>Contra</th>' if varias else ''}<th>Materia activa</th><th>Dosis</th><th>Caldo</th><th>Aplic.</th><th><abbr title="Plazo de seguridad">P.&nbsp;S.</abbr></th><th><span class="vh">Calculadora</span></th></tr></thead>
         <tbody id="filas">
         {"".join(filas)}
         </tbody>
