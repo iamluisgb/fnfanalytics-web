@@ -733,9 +733,25 @@ details.nav-movil[open]>summary{color:#fff;border-color:var(--brand)}
   .nav .logo{flex:none}
 }
 .nav-movil__panel a.nav-movil__entrar{display:none}
-@media (max-width:390px){
+/* «Solicita acceso» es el botón que más importa: no se parte en dos líneas nunca.
+   Pasaba de 391 a 480 px, donde «Entrar» seguía en la barra y no cabía: el texto
+   se partía («Solicita» / «acceso») y el botón quedaba más alto que sus vecinos. */
+.nav .btn{white-space:nowrap}
+/* Entre 391 y 480 px la barra no da para «Menú» + «Entrar» + «Solicita acceso»
+   (logo 134 + 60 + 60 + 118 + huecos = 420 px en una pantalla de 393). «Entrar»
+   se va al menú desplegable, donde ya estaba previsto y va el primero. */
+@media (max-width:480px){
   .nav-entrar{display:none}
   .nav-movil__panel a.nav-movil__entrar{display:block}
+}
+/* En 320-360 px, ni con el arreglo anterior: se aprieta la barra para que el
+   botón quepa con su margen. */
+@media (max-width:360px){
+  .nav .in{padding-inline:10px;gap:6px}
+  .nav-links{gap:6px}
+  .nav .logo b{font-size:1rem}
+  .nav .logo i{letter-spacing:.3em}
+  .nav-links .btn,details.nav-movil>summary{padding:8px 9px;font-size:.76rem}
 }
 
 /* página de método: cifras del registro, tabla de comprobaciones y un aviso de ejemplo */
