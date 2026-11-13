@@ -151,11 +151,13 @@
     fase.textContent = FASES[m][0]; labor.textContent = FASES[m][1];
     pintarMapa(); elegir(elegida);
   }
-  function parar(){ clearInterval(tic); tic = 0; play.textContent = '▶'; play.setAttribute('aria-label', 'Recorrer la campaña'); }
+  // Mientras la campaña corre sola, el panel cambia 12 veces seguidas: no se anuncia al lector de pantalla hasta que para.
+  var panel = sig.querySelector('.sig-side');
+  function parar(){ clearInterval(tic); tic = 0; play.textContent = '▶'; play.setAttribute('aria-label', 'Recorrer la campaña'); if (panel) panel.setAttribute('aria-live', 'polite'); }
   function recorrer(){
     if (tic) { parar(); return; }
     var m = mes === 11 ? 0 : mes; ponerMes(m);
-    play.textContent = '❚❚'; play.setAttribute('aria-label', 'Parar');
+    play.textContent = '❚❚'; play.setAttribute('aria-label', 'Parar'); if (panel) panel.setAttribute('aria-live', 'off');
     tic = setInterval(function(){ if (mes >= 11) parar(); else ponerMes(mes + 1); }, 650);
   }
   rango.addEventListener('input', function(){
@@ -172,5 +174,13 @@
     io.observe(sig);
   }
   ponerMes(11);
+  // La ortofoto del mapa (la imagen más pesada de la portada) no se pide con la página: se carga cuando la
+  // sección está a menos de una pantalla.
+  var foto = sig.querySelector('image[data-href]');
+  function cargarFoto(){ if (foto) { foto.setAttribute('href', foto.getAttribute('data-href')); foto = null; } }
+  if ('IntersectionObserver' in window) {
+    var iof = new IntersectionObserver(function(es){ if (es[0].isIntersecting) { iof.disconnect(); cargarFoto(); } }, { rootMargin: '100% 0px' });
+    iof.observe(sig);
+  } else cargarFoto();
 })();
 
