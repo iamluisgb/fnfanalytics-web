@@ -60,7 +60,8 @@
 
   ins.forEach(function(b, i){ b.addEventListener('click', function(){
     if (!tocado && window.umami) umami.track('ruta-toca');
-    tocado = true; recorrer(i);
+    // el rótulo de la tarjeta solo se anuncia al lector de pantalla desde que alguien elige una entrada
+    tocado = true; llega.setAttribute('aria-live', 'polite'); recorrer(i);
   }); });
 
   dibujar();
