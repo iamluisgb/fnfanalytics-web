@@ -15,13 +15,13 @@ Quedan pendientes de decisión de Luis doce puntos de mensaje, contenido y texto
 
 ## 1. Cómo se midió
 
-- Servidor local que imita GitHub Pages (rutas sin `.html`, `404.html`, gzip): `auditoria/herramientas/servidor.py`.
+- Servidor local que imita GitHub Pages (rutas sin `.html`, `404.html`, gzip): `_auditoria/herramientas/servidor.py`.
 - Lighthouse 12 en móvil (4G lenta y CPU ×4 simuladas) y en escritorio, sobre portada, calculadora, dirección de trabajo, una página de usos, método y fuentes: `lh.sh`.
 - axe-core (WCAG 2.0, 2.1 y 2.2 A y AA, más buenas prácticas) con Playwright a 375 y 1440 px en 17 páginas, con consola, peticiones fallidas, desbordamiento horizontal y captura de página entera: `medir.mjs`. También con el tema oscuro del sistema: `oscuro.mjs`.
 - Enlaces internos, anclas, páginas huérfanas, sitemap y metadatos de las 230 páginas, leyendo los archivos: `enlaces.py`.
 - Flujos a mano con Playwright (formulario, demo, mapa, calculadora, filtros, buscador de usos), en móvil y escritorio, con movimiento reducido y sin JavaScript: `flujos.mjs`. 57 comprobaciones, todas correctas al final.
 
-Para repetirlo: `cd auditoria/herramientas && npm i lighthouse @axe-core/playwright playwright && python3 servidor.py ../.. 8765 &` y luego `node medir.mjs salida`, `./lh.sh salida`, `python3 enlaces.py ../.. salida/externos.json`, `node flujos.mjs`.
+Para repetirlo: `cd _auditoria/herramientas && npm i lighthouse @axe-core/playwright playwright && python3 servidor.py ../.. 8765 &` y luego `node medir.mjs salida`, `./lh.sh salida`, `python3 enlaces.py ../.. salida/externos.json`, `node flujos.mjs`.
 
 **Límites de esta medición, para leer bien las cifras:**
 
@@ -75,7 +75,7 @@ El CLS sube de 0,000 a 0,02 en varias páginas porque ahora sí se carga Poppins
 | Páginas de usos con la miga de pan rota | 168 | 0 |
 | Títulos de más de 65 caracteres en `usos/` | 134 | 0 |
 
-Capturas de antes y después en `auditoria/capturas/`: `tipografia-hero-1440.jpg`, `portada-375-arriba.jpg`, `formulario-pie-375.jpg`, `usos-miga-de-pan-1440.jpg`, `plantillas-375.jpg`, `calculadora-375.jpg`.
+Capturas de antes y después en `_auditoria/capturas/`: `tipografia-hero-1440.jpg`, `portada-375-arriba.jpg`, `formulario-pie-375.jpg`, `usos-miga-de-pan-1440.jpg`, `plantillas-375.jpg`, `calculadora-375.jpg`.
 
 ## 3. Hallazgos arreglados en la rama
 
@@ -153,14 +153,14 @@ No he tocado nada de esto. Va por orden de impacto.
 | P8 | **Títulos y descripciones largos** | `cuaderno-digital.html:6` (89 caracteres), fichas de plantillas (hasta 94), descripciones de 175 a 225 caracteres en método, cuaderno, fuentes, calculadora y dirección | Google corta el título hacia los 60 y la descripción hacia los 160 | Te paso textos propuestos si quieres; es redacción |
 | P9 | **Creador de plantillas** | `plantillas/creador.html` (línea 153 y formulario) | En móvil la hoja A4 desborda (1.135 px de ancho) y 16 campos no tienen etiqueta para lector de pantalla; sin `<h1>` | Arreglarlo es un trabajo aparte en una herramienta con diseño propio. ¿Lo hago? |
 | P10 | **Tarjetas «pendientes» de la demo al 25 % de opacidad** | `demo/inteligencia.html:148` | Contraste 1,7:1 mientras no se encienden (9 avisos de axe en móvil). Es un estado intencionado | Subir a 0,5–0,6: se sigue leyendo como «aún no» |
-| P11 | **`auditoria/`, `scripts/` y `README.md` se publican** en fnfanalytics.com | raíz del repo | GitHub Pages sirve todo lo que no empieza por `_`. He excluido `auditoria/` en `robots.txt` | Un `_config.yml` con `exclude`. No lo he puesto porque cambia cómo se construye el sitio y no lo puedo probar desde aquí |
+| P11 | **`auditoria/`, `scripts/` y `README.md` se publican** en fnfanalytics.com | raíz del repo | GitHub Pages sirve todo lo que no empieza por `_`. He excluido `auditoria/` en `robots.txt` | Un `_config.yml` con `exclude`. No lo he puesto porque cambia cómo se construye el sitio y no lo puedo probar desde aquí. **Resuelto el 13-nov-2026:** la carpeta pasó a `_auditoria/`, que GitHub Pages no publica |
 | P12 | **Enlace al premio por `http://`** | `index.html:107` | No pude comprobar si `https://www.ceia3.es/…` responde (sin salida a internet) | Cambiarlo si carga |
 
 Ideas menores, sin urgencia: `FAQPage` y `WebSite` en JSON-LD de la portada; `plantillas/logo-fnf.png` pesa 66 KB para verse a 30 px; three.js r128 (604 KB, 150 KB comprimido) lo usan la demo y la calculadora, y una versión recortada ahorraría unos 75 KB; en escritorio a 1440 px, el botón «Saltar al final» de la demo pisa las cifras de la esquina mientras dura la historia.
 
 ## 5. Cómo publicar
 
-1. Revisa la rama en local: `python3 auditoria/herramientas/servidor.py . 8765` y abre `http://localhost:8765`.
+1. Revisa la rama en local: `python3 _auditoria/herramientas/servidor.py . 8765` y abre `http://localhost:8765`.
 2. Mira sobre todo la tipografía (A1), que cambia el aspecto de toda la web.
 3. Merge a `main`. No hay nada que desplegar aparte: el Worker no se ha tocado.
 4. Después, en Umami, las solicitudes llegarán con su `origen`.
