@@ -190,11 +190,11 @@ html,body{background:transparent}
 </style>
 </head>
 <body>
-<div class="wrap" style="padding:0">
+<main class="wrap" style="padding:0">
   <section class="stage" id="stage" style="margin-top:0" aria-label="Animación: fuentes y sensores, la finca en 3D y la decisión">
     <svg class="beams" id="beams" aria-hidden="true"></svg>
-    <div class="cards" id="cards"></div>
-    <div class="escena" id="escena" role="img" aria-label="Una explotación en 3D: seis parcelas de ciruelos y otras cuatro de tomate, maíz, viña y olivar, en hileras; la parcela El Cercado con árboles más pequeños y en naranja; los sensores sobre el terreno y un tractor que atomiza Las Suertes.">
+    <div class="cards" id="cards" role="region" aria-label="Fuentes y sensores" tabindex="0"></div>
+    <div class="escena" id="escena" role="group" aria-label="Una explotación en 3D: seis parcelas de ciruelos y otras cuatro de tomate, maíz, viña y olivar, en hileras; la parcela El Cercado con árboles más pequeños y en naranja; los sensores sobre el terreno y un tractor que atomiza Las Suertes.">
       <div class="hud"><span class="cifras" id="cifras"></span><span id="reloj">08:14:07</span></div>
       <div class="leyenda"><span><i style="background:#4a8530"></i>vigor alto</span><span><i style="background:#6a8034"></i>vigor medio</span><span><i style="background:#e0a33e"></i>en alerta</span><span>tamaño de copa = NDVI</span></div>
       <div class="explora" id="explora"><span class="pista" id="pista" role="status" hidden></span><button type="button" id="saltar" hidden>Saltar al final</button><button type="button" class="z" id="izq" aria-label="Girar a la izquierda" title="Girar a la izquierda">↶</button><button type="button" class="z" id="der" aria-label="Girar a la derecha" title="Girar a la derecha">↷</button><button type="button" class="z" id="inicio" aria-label="Volver a la vista inicial" title="Vista inicial" hidden>⌂</button><button type="button" class="z" id="zmas" aria-label="Acercar">+</button><button type="button" class="z" id="zmenos" aria-label="Alejar">−</button><button type="button" class="ir" id="grande" aria-label="Ver en grande"><span aria-hidden="true">⤢</span><span class="txt"> Ver en grande</span></button><button type="button" class="ir" id="cerrar" hidden>✕ Salir</button></div>
@@ -217,11 +217,11 @@ html,body{background:transparent}
       <div class="decision" id="decision"></div>
       <button type="button" class="again" id="again">Ver de nuevo</button>
     </aside>
-    <div class="salidas" id="salidas">
+    <div class="salidas" id="salidas" role="region" aria-label="Salidas" tabindex="0">
       <div class="sal-head"><span class="label">Salidas</span><span class="sub">lo que se actualiza solo con cada decisión</span></div>
     </div>
   </section>
-</div>
+</main>
 
 <script src="/assets/vendor/three-r128.min.js"></script>
 <script>
@@ -1013,7 +1013,8 @@ html,body{background:transparent}
     // anillos de los sensores citados
     Object.entries(objetos).forEach(([k, o]) => { if (o.ring) o.ring.material.opacity = E.hot.has(k) ? .55 + Math.sin(E.t * 6) * .3 : 0; });
     placeCam(dt); draw();
-    if (running) requestAnimationFrame(frame);
+    enMarcha = running && aLaVista;
+    if (enMarcha) requestAnimationFrame(frame);
   }
   function resize() {
     const w = escena.clientWidth, h = escena.clientHeight;
@@ -1298,7 +1299,14 @@ html,body{background:transparent}
   $('saltar').addEventListener('click', () => play(true));
 
   resize(); metaHistoria(0); Object.assign(C, G); placeCam(0);
-  if (!quieto) requestAnimationFrame(frame); else { running = false; }
+  // La escena solo se pinta mientras se ve. Antes seguía a 60 imágenes por segundo con la sección fuera de
+  // pantalla o la pestaña oculta, y en el móvil frenaba el resto de la portada (formulario incluido).
+  let enPantalla = true, aLaVista = true, enMarcha = false;
+  const reanudar = () => { aLaVista = enPantalla && !document.hidden; if (running && aLaVista && !enMarcha) { enMarcha = true; last = performance.now(); requestAnimationFrame(frame); } };
+  // dentro del marco de la portada, el observador mide contra la ventana de la portada (mismo origen)
+  if ('IntersectionObserver' in window) new IntersectionObserver(es => { enPantalla = es[es.length - 1].isIntersecting; reanudar(); }, {rootMargin: '200px'}).observe(escena);
+  document.addEventListener('visibilitychange', reanudar);
+  if (!quieto) reanudar(); else { running = false; }
   let hecho = false;
   const go = () => { if (!hecho) { hecho = true; play(); if (quieto) setTimeout(() => { placeCam(0); draw(); }, 50); } };
   const enPortada = window.parent !== window;
