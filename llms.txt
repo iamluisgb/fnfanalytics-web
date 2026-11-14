@@ -17,7 +17,6 @@ Datos clave:
 - [Portada](https://fnfanalytics.com/): qué hace FnF, planes y preguntas frecuentes.
 - [Para asesores y cooperativas](https://fnfanalytics.com/asesores): el panel de cartera.
 - [Cómo comprueba FnF cada operación](https://fnfanalytics.com/metodo): contra qué registros oficiales se valida cada parte.
-- [FnF o Agroptima](https://fnfanalytics.com/fnf-o-agroptima): comparativa con fuentes, comprobada el 14-nov-2026.
 
 ## Ayuda
 
