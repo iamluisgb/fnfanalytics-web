@@ -156,6 +156,12 @@
    Borde fino porque casi todas son capturas de la app en claro. ---- */
 .md-typeset img {
   display: block;
+  /* Del tamaño de un móvil de verdad (390 px de ancho): a todo el ancho de
+     la columna una captura medía 688×1487 y se comía el paso que explica.
+     Clic para verla en grande (estilos/ampliar.js). */
+  width: min(300px, 72%);
+  height: auto;
+  cursor: zoom-in;
   margin: 0.6em auto;
   border: 1px solid var(--line);
   border-radius: var(--r-m);
@@ -339,4 +345,18 @@ h2#relacionado, h2#related, h2#si-algo-va-mal {
     background-color: var(--carbon);
     color: var(--ink-on-dark);
   }
+}
+
+/* ---- Captura ampliada (estilos/ampliar.js) ---- */
+.fnf-ampliada {
+  padding: 0; border: 0; background: transparent;
+  max-width: 100vw; max-height: 100vh;
+}
+.fnf-ampliada::backdrop { background: rgba(6, 20, 15, .82); }
+.fnf-ampliada img {
+  display: block;
+  max-width: 94vw; max-height: 94vh;
+  width: auto; height: auto;
+  border-radius: var(--r-m);
+  cursor: zoom-out;
 }

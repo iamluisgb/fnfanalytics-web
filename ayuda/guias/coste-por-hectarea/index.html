@@ -1354,7 +1354,7 @@
   <span class="md-ellipsis">
     
   
-    Developer — BI API
+    Para desarrolladores — API de BI
   
 
     
@@ -1562,57 +1562,52 @@ lo que hay debajo está bien.</p>
 </ul>
 <h2 id="pasos">Pasos</h2>
 <ol>
-<li><strong>Abre el panel.</strong> En el menú lateral, «BI». Sale una tabla con las apps de
-   tus empresas («Nombre» y «Descripción»): abre la del panel de costes. Se
-   abre en otra pestaña.</li>
-</ol>
+<li>
+<p><strong>Abre el panel.</strong> En el menú lateral, «BI». Sale una tabla con las apps de
+    tus empresas («Nombre» y «Descripción»): abre la del panel de costes. Se
+    abre en otra pestaña.</p>
 <!-- captura: menú lateral con «BI» resaltado y la tabla de apps -->
-
-<ol>
+</li>
 <li>
 <p><strong>Elige la finca y la campaña.</strong> El panel enseña el €/ha por cultivo y por
-   grupo de labores (abonado, aclareo, cosecha…), con la evolución frente a la
-   campaña anterior.
-   <!-- verificar: nombres exactos de pantallas y filtros del panel; vive en otro repositorio y puede haber cambiado -->
-</p>
+    grupo de labores (abonado, aclareo, cosecha…), con la evolución frente a la
+    campaña anterior.
+    <!-- verificar: nombres exactos de pantallas y filtros del panel; vive en otro repositorio y puede haber cambiado --></p>
 </li>
 <li>
 <p><strong>Sabe qué entra en el cálculo.</strong> Para cada parte, el panel coge y deriva:</p>
-</li>
-<li>
-<p>las horas de cada persona (hora inicio, hora fin y descanso), por su €/h;</p>
-</li>
+<ul>
+<li>las horas de cada persona (hora inicio, hora fin y descanso), por su €/h;</li>
 <li>las horas de cada máquina, por su €/h;</li>
 <li>los productos aplicados (la cantidad), por su precio: si apuntas albaranes,
-     el precio medio ponderado de lo que hay en el almacén; si no, el de «Costes»;</li>
+ el precio medio ponderado de lo que hay en el almacén; si no, el de «Costes»;</li>
 <li>los servicios externos, con su coste por ha o su coste total;</li>
 <li>y aparte, los mantenimientos (lo que costó el taller) y el gasoil de los
-     consumos.</li>
-</ol>
+ consumos.</li>
+</ul>
 <p>Nada de esto se almacena: en cada parte se usa el precio que valía ese día
-   (el último cuya fecha no sea posterior a la del parte).</p>
-<ol>
+(el último cuya fecha no sea posterior a la del parte).</p>
+</li>
 <li>
 <p><strong>Comprueba la división.</strong> El €/ha sale de dividir el coste del parte entre
-   su «Superficie trabajada». Si esa superficie no cuadra con la suma de las
-   superficies de sus cultivos, el €/ha se mueve (y el panel avisa de hectáreas
-   descuadradas).</p>
+    su «Superficie trabajada». Si esa superficie no cuadra con la suma de las
+    superficies de sus cultivos, el €/ha se mueve (y el panel avisa de hectáreas
+    descuadradas).</p>
 </li>
 <li>
 <p><strong>El coste por cultivo.</strong> Un parte puede tocar varios cultivos: el coste se
-   reparte entre ellos según la superficie de cada uno.
-   <!-- verificar: la regla exacta de reparto vive en el panel, no en la app -->
-</p>
+    reparte entre ellos según la superficie de cada uno.
+    <!-- verificar: la regla exacta de reparto vive en el panel, no en la app --></p>
 </li>
 <li>
 <p><strong>Cuida los precios en la app.</strong> «Costes» → «Mano de obra», «Maquinaria» o
-   «Productos»: cada fila dice su estado («✓ Al día», «◷ Sin actualizar»,
-   «✕ Sin precio»). Abre la fila y, en «Nuevo precio», escribe el «Precio» y
-   desde cuándo vale («Vale desde») → «Guardar precio». El precio anterior no
-   se borra: queda en el histórico.</p>
+    «Productos»: cada fila dice su estado («✓ Al día», «◷ Sin actualizar»,
+    «✕ Sin precio»). Abre la fila y, en «Nuevo precio», escribe el «Precio» y
+    desde cuándo vale («Vale desde») → «Guardar precio». El precio anterior no
+    se borra: queda en el histórico.</p>
+<p><img alt="La ficha de precios, con su gráfica en escalón y el formulario «Nuevo precio»" src="../../img/guias/coste-por-hectarea-tarifas.png" /></p>
 </li>
 </ol>
-<p><img alt="La ficha de precios, con su gráfica en escalón y el formulario «Nuevo precio»" src="../../img/guias/coste-por-hectarea-tarifas.png" /></p>
 <h2 id="si-algo-va-mal">Si algo va mal</h2>
 <ul>
 <li><strong>«✕ Sin precio»</strong> → esas horas o cantidades cuentan 0 € en el panel, y el
@@ -1785,6 +1780,8 @@ lo que hay debajo está bien.</p>
     
     
       <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../../estilos/ampliar.js"></script>
       
     
   </body>
