@@ -1,0 +1,47 @@
+# Food & Farm Analytics (FnF)
+
+> Software agrícola para España: cuaderno de campo digital y gestión de la explotación. El agricultor dicta por voz (en la app o por Telegram) lo que ha hecho en el campo, o hace una foto del parte en papel, y FnF lo convierte en un parte de trabajo validado contra el Registro Oficial de Productos Fitosanitarios del MAPA (producto autorizado en el cultivo, dosis y plazo de seguridad), con su coste imputado a la parcela. El cuaderno digital de explotación (CUE/SIEX, RD 1054/2022) es gratis y sin límite de hectáreas.
+
+Datos clave:
+
+- Para quién: agricultores, asesores técnicos (ATRIA, ADV) y cooperativas agrarias en España.
+- Planes: «Cuaderno», 0 € para siempre y sin tarjeta (tratamientos, fertilización y riego; validación de producto, dosis y plazo de seguridad; listo para la inspección y el cuaderno digital oficial). «Pro», con precio de fundador que se da al entrar (voz sin límite, coste y margen por parcela y campaña, avisos de meteo, plazos y satélite). «Asesores y cooperativas», a medida según la cartera.
+- Funciona en el navegador del móvil y se instala como app (Android e iOS). Guarda los partes sin cobertura y los sube al volver la señal.
+- Las parcelas se importan desde SIGPAC. La campaña va del 1 de octubre al 30 de septiembre, configurable por explotación.
+- Avisa, no bloquea: un parte con un producto no autorizado o una dosis alta se guarda igual y queda anotado el aviso.
+- Los datos son del agricultor: no se venden ni se comparten con el comprador.
+- Acceso: por invitación durante el acceso anticipado. Contacto: hola@fnfanalytics.com.
+
+## Producto
+
+- [Portada](https://fnfanalytics.com/): qué hace FnF, planes y preguntas frecuentes.
+- [Para asesores y cooperativas](https://fnfanalytics.com/asesores): el panel de cartera.
+- [Cómo comprueba FnF cada operación](https://fnfanalytics.com/metodo): contra qué registros oficiales se valida cada parte.
+- [FnF o Agroptima](https://fnfanalytics.com/fnf-o-agroptima): comparativa con fuentes, comprobada el 14-nov-2026.
+
+## Ayuda
+
+- [Centro de ayuda](https://fnfanalytics.com/ayuda/): guías, tutoriales, explicaciones y referencia.
+- [Registrar un tratamiento fitosanitario](https://fnfanalytics.com/ayuda/guias/registrar-tratamiento-fitosanitario/)
+- [Dictar un parte por voz](https://fnfanalytics.com/ayuda/guias/dictar-parte-voz/)
+- [Exportar el cuaderno a SIEX](https://fnfanalytics.com/ayuda/guias/exportar-cuaderno-siex/)
+- [Qué es obligatorio y cuándo](https://fnfanalytics.com/ayuda/explicacion/que-es-obligatorio/): calendario del cuaderno digital.
+- [Roles y permisos](https://fnfanalytics.com/ayuda/referencia/roles-y-permisos/)
+
+## Normativa y herramientas gratis
+
+- [Cuaderno digital de explotación: qué te toca y cuándo (2026-2027)](https://fnfanalytics.com/cuaderno-digital)
+- [Productos fitosanitarios autorizados, por cultivo y plaga](https://fnfanalytics.com/usos/): 168 páginas sacadas del registro del MAPA.
+- [Calculadora de caldo y dosis de fitosanitarios](https://fnfanalytics.com/herramientas/calculadora-caldo)
+- [Dirección de trabajo de la parcela](https://fnfanalytics.com/herramientas/direccion-de-trabajo)
+- [Plantillas de partes de campo, gratis](https://fnfanalytics.com/plantillas/)
+- [Fuentes de datos públicos del agro español](https://fnfanalytics.com/fuentes-datos-publicos): 65 fuentes probadas.
+
+## Asistentes de IA
+
+- Quien tiene cuenta en FnF puede conectar su propio asistente (Claude, ChatGPT, Cursor, n8n u otro) por MCP en `https://app.fnfanalytics.com/mcp`, entrando con su cuenta y eligiendo los permisos. El asistente puede leer el cuaderno, el catálogo, el almacén y los costes, comprobar un tratamiento contra el registro del MAPA y, si se le da permiso, proponer partes como borradores que una persona confirma. Condiciones: [privacidad, asistentes de IA](https://fnfanalytics.com/privacidad#asistentes-de-ia).
+
+## Optional
+
+- [Aviso legal](https://fnfanalytics.com/aviso-legal)
+- [Privacidad](https://fnfanalytics.com/privacidad)

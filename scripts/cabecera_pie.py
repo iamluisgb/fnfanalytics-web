@@ -23,6 +23,7 @@ RAIZ = Path(__file__).resolve().parent.parent
 PAGINAS = {
     "asesores.html": "asesores",
     "metodo.html": "metodo",
+    "fnf-o-agroptima.html": "agroptima",
     "cuaderno-digital.html": "cuaderno-digital",
     "fuentes-datos-publicos.html": "fuentes",
     "privacidad.html": "",
