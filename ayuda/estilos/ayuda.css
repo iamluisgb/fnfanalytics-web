@@ -32,6 +32,11 @@
 
 /* ---- Tokens de la marca (copiados de la landing) ---- */
 :root {
+  --carbon:       #0c1210;
+  --carbon-2:     #111917;
+  --line-dark:    #223029;
+  --ink-on-dark:  #e6f0ea;
+  --ink-soft-on-dark: #8ea59b;
   --brand:        #00c896;
   --brand-deep:   #077a5c;
   --brand-bright: #2fe0b0;
@@ -240,4 +245,98 @@ h2#relacionado, h2#related, h2#si-algo-va-mal {
 .md-typeset .ayuda-contacto p { margin: 0; }
 [data-md-color-scheme="slate"] .md-typeset :is(.ayuda-tarjeta, .ayuda-contacto, .ayuda-buscar) {
   border-color: #223029;
+}
+
+/* ---- Cabecera como la de la app (agridashboard custom.css §15) ----------
+   Barra carbón de 56 px, logo compuesto y migas en mono. La estructura
+   está en overrides/partials/header.html. */
+.md-header.fnf-cabecera {
+  background-color: var(--carbon);
+  color: var(--ink-on-dark);
+  border-bottom: 0;
+}
+.fnf-cabecera .md-header__inner { min-height: 56px; align-items: center; }
+.fnf-cabecera .md-header__button.md-icon { color: var(--ink-on-dark); }
+
+.fnf-logo {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin: 0 .4rem; text-decoration: none; flex: none;
+}
+.fnf-logo__mark { height: 34px; width: auto; }
+.fnf-logo__txt { display: inline-block; line-height: 1; }
+.fnf-logo__txt b {
+  display: block;
+  font-size: 19px; font-weight: 700; letter-spacing: -.02em;
+  color: #fff;
+}
+.fnf-logo__txt i {
+  display: block;
+  font-style: normal;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 9px; letter-spacing: .42em; text-transform: uppercase;
+  color: var(--brand);
+  margin-top: 3px;
+}
+
+/* Migas: «AYUDA / REGISTRAR UN TRATAMIENTO…», el nivel actual en verde. */
+.md-header__title.fnf-migas {
+  display: flex; align-items: center; gap: 10px;
+  min-width: 0;
+  margin-left: 14px; padding-left: 14px;
+  border-left: 1px solid var(--line-dark);
+  height: 24px; line-height: 24px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink-soft-on-dark);
+}
+.fnf-migas__raiz { color: var(--ink-on-dark); text-decoration: none; flex: none; }
+.fnf-migas__raiz:hover, .fnf-migas__raiz:focus-visible { text-decoration: underline; }
+.fnf-migas__sep { flex: none; }
+.fnf-migas__actual { color: var(--brand); min-width: 0; }
+.md-header__title.fnf-migas:only-child,
+.fnf-migas:not(:has(.fnf-migas__actual)) .fnf-migas__raiz { color: var(--brand); }
+
+/* Buscador sobre carbón. */
+.fnf-cabecera .md-search__form {
+  background-color: var(--carbon-2);
+  border: 1px solid var(--line-dark);
+}
+.fnf-cabecera .md-search__form:hover { background-color: #16211d; }
+.fnf-cabecera .md-search__input::placeholder,
+.fnf-cabecera .md-search__icon { color: var(--ink-soft-on-dark); }
+
+/* «Ir a la app»: secundario, con el borde de la barra. */
+.fnf-cab-app {
+  flex: none;
+  margin-left: .8rem;
+  padding: 6px 12px;
+  border: 1px solid var(--line-dark);
+  border-radius: var(--r-s);
+  font-size: .72rem; font-weight: 600;
+  color: var(--ink-on-dark);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.fnf-cab-app:hover, .fnf-cab-app:focus-visible {
+  border-color: var(--brand); color: #fff;
+}
+
+/* Móvil, como la app: sin texto del logo, solo el isotipo; migas solo
+   con «Ayuda»; sin «Ir a la app» (la app ya está en el móvil). */
+@media (max-width: 575.98px) {
+  .fnf-logo__txt { display: none; }
+  .fnf-logo { margin: 0 .2rem; }
+}
+@media (max-width: 767.98px) {
+  .fnf-migas__sep, .fnf-migas__actual { display: none; }
+  .fnf-migas .fnf-migas__raiz { color: var(--brand); }
+  .fnf-cab-app { display: none; }
+}
+
+/* Cajón del móvil: su cabecera también en carbón, como la barra. */
+@media (max-width: 76.234375em) {
+  .md-nav--primary .md-nav__title[for="__drawer"] {
+    background-color: var(--carbon);
+    color: var(--ink-on-dark);
+  }
 }
