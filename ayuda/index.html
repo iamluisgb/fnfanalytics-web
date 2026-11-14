@@ -52,9 +52,37 @@
     <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
+  
+
+
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var form = document.forms.feedback
+    if (!form) return
+    form.hidden = false
+    form.querySelectorAll("[type=submit]").forEach(function (boton) {
+      boton.addEventListener("click", function (ev) {
+        ev.preventDefault()
+        var valor = this.getAttribute("data-md-value")
+        if (window.umami) {
+          window.umami.track("ayuda-util", {
+            pagina: document.location.pathname, valor: valor
+          })
+        }
+        form.firstElementChild.disabled = true
+        var nota = form.querySelector(".md-feedback__note [data-md-value='" + valor + "']")
+        if (nota) nota.hidden = false
+      })
+    })
+  })
+</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
 
     
-    
+    <script defer src="/u/s.js" data-website-id="08c1619b-4bb8-471b-9dc9-9b6cda88e8ae" data-host-url="https://cloud.umami.is" data-domains="fnfanalytics.com,www.fnfanalytics.com"></script>
+
   </head>
   
   
@@ -72,7 +100,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#tu-explotacion" class="md-skip">
+        <a href="#en-que-te-podemos-ayudar" class="md-skip">
           Saltar a contenido
         </a>
       
@@ -179,7 +207,9 @@
           
             
               
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -211,6 +241,8 @@
       
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
+      
+        
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
@@ -254,6 +286,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -262,10 +296,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#tu-explotacion" class="md-nav__link">
+  <a href="#empieza-de-cero" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tu explotación
+        Empieza de cero
       
     </span>
   </a>
@@ -273,10 +307,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#tu-cartera-asesor-cooperativa" class="md-nav__link">
+  <a href="#apuntar-partes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tu cartera (asesor / cooperativa)
+        Apuntar partes
       
     </span>
   </a>
@@ -284,10 +318,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#por-momento" class="md-nav__link">
+  <a href="#tratamientos-y-abonados" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Por momento
+        Tratamientos y abonados
       
     </span>
   </a>
@@ -295,10 +329,54 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#entender-el-porque" class="md-nav__link">
+  <a href="#cuaderno-y-siex" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Entender el porqué
+        Cuaderno y SIEX
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#almacen-y-costes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Almacén y costes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#asesores-y-cooperativas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asesores y cooperativas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#segun-el-momento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Según el momento
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#para-ir-mas-a-fondo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Para ir más a fondo
       
     </span>
   </a>
@@ -1459,7 +1537,9 @@
             
             
               
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -1467,6 +1547,8 @@
 <nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
   
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -1476,10 +1558,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#tu-explotacion" class="md-nav__link">
+  <a href="#empieza-de-cero" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tu explotación
+        Empieza de cero
       
     </span>
   </a>
@@ -1487,10 +1569,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#tu-cartera-asesor-cooperativa" class="md-nav__link">
+  <a href="#apuntar-partes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tu cartera (asesor / cooperativa)
+        Apuntar partes
       
     </span>
   </a>
@@ -1498,10 +1580,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#por-momento" class="md-nav__link">
+  <a href="#tratamientos-y-abonados" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Por momento
+        Tratamientos y abonados
       
     </span>
   </a>
@@ -1509,10 +1591,54 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#entender-el-porque" class="md-nav__link">
+  <a href="#cuaderno-y-siex" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Entender el porqué
+        Cuaderno y SIEX
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#almacen-y-costes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Almacén y costes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#asesores-y-cooperativas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asesores y cooperativas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#segun-el-momento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Según el momento
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#para-ir-mas-a-fondo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Para ir más a fondo
       
     </span>
   </a>
@@ -1533,56 +1659,92 @@
               <article class="md-content__inner md-typeset">
                 
                   
+  
 
 
 
-  <h1>Inicio</h1>
 
-<p class="doc-meta">
-  Autor: <b>luis</b> · Revisado: <b>13-nov-2026</b>
-</p>
-
-<p>Busca arriba, o entra por tu puerta:</p>
-<h2 id="tu-explotacion">Tu explotación</h2>
-<p><strong>Empieza de cero</strong>: del alta al primer parte dictado por voz y el primer
-<a href="guias/exportar-cuaderno-siex/">SIEX exportado</a> — sin llamadas. El recorrido
-completo, paso a paso: <a href="tutoriales/tu-primer-dia/">Tu primer día</a>.
-- <a href="guias/alta-explotacion/">Dar de alta tu explotación</a>
-- <a href="guias/importar-parcelas-sigpac/">Importar parcelas desde SIGPAC</a>
-- <a href="guias/dictar-parte-voz/">Dictar un parte por voz</a></p>
-<p><strong>Tu día a día</strong>:</p>
+<div class="ayuda-portada">
+<h1 id="en-que-te-podemos-ayudar">¿En qué te podemos ayudar?</h1>
+<p><label class="ayuda-buscar" for="__search">
+  <span class="ayuda-buscar__icono" aria-hidden="true"></span>
+  Busca: tratamiento, SIEX, dictado, almacén…
+</label></p>
+</div>
+<div class="ayuda-tarjetas">
+<div class="ayuda-tarjeta">
+<h3 id="empieza-de-cero"><a href="tutoriales/tu-primer-dia/">Empieza de cero</a></h3>
+<p>Del alta al primer parte dictado y el primer SIEX, sin llamadas.</p>
+<ul>
+<li><a href="guias/alta-explotacion/">Dar de alta tu explotación</a></li>
+<li><a href="guias/importar-parcelas-sigpac/">Importar parcelas desde SIGPAC</a></li>
+<li><a href="tutoriales/tu-primer-parte/">Tu primer parte en 2 minutos</a></li>
+</ul>
+</div>
+<div class="ayuda-tarjeta">
+<h3 id="apuntar-partes"><a href="guias/dictar-parte-voz/">Apuntar partes</a></h3>
+<p>Lo de cada día: hablando, con una foto del papel o escribiendo.</p>
+<ul>
+<li><a href="guias/dictar-parte-voz/">Dictar un parte por voz</a></li>
+<li><a href="guias/parte-por-foto/">Registrar un parte con foto del papel</a></li>
+<li><a href="guias/horas-de-maquinaria/">Registrar horas de maquinaria</a></li>
+</ul>
+</div>
+<div class="ayuda-tarjeta">
+<h3 id="tratamientos-y-abonados"><a href="guias/registrar-tratamiento-fitosanitario/">Tratamientos y abonados</a></h3>
+<p>Lo que pide el cuaderno y lo que la app comprueba contra el MAPA.</p>
 <ul>
 <li><a href="guias/registrar-tratamiento-fitosanitario/">Registrar un tratamiento fitosanitario</a></li>
 <li><a href="guias/registrar-fertilizacion/">Registrar una fertilización</a></li>
-<li><a href="guias/parte-por-foto/">Registrar un parte con foto del papel</a></li>
-<li><a href="guias/horas-de-maquinaria/">Registrar horas de maquinaria</a></li>
-<li><a href="guias/almacen-entradas-salidas/">Llevar el almacén</a></li>
-<li><a href="guias/trabajar-sin-cobertura/">Trabajar sin cobertura</a></li>
+<li><a href="referencia/vademecum/">Vademécum y validaciones</a></li>
 </ul>
-<p><strong>Tus números</strong>:</p>
+</div>
+<div class="ayuda-tarjeta">
+<h3 id="cuaderno-y-siex"><a href="guias/exportar-cuaderno-siex/">Cuaderno y SIEX</a></h3>
+<p>Qué te exige la norma, desde cuándo, y cómo sacar el cuaderno.</p>
 <ul>
-<li><a href="guias/coste-por-hectarea/">Ver el coste por hectárea</a></li>
-</ul>
-<h2 id="tu-cartera-asesor-cooperativa">Tu cartera (asesor / cooperativa)</h2>
-<ul>
-<li><a href="guias/invitar-asesor-trabajador/">Invitar a tu asesor o a un trabajador</a></li>
 <li><a href="guias/exportar-cuaderno-siex/">Exportar el cuaderno a SIEX</a></li>
-</ul>
-<h2 id="por-momento">Por momento</h2>
-<ul>
-<li>Empiezo de cero → <a href="guias/alta-explotacion/">alta</a> y <a href="tutoriales/">tu primer día</a></li>
-<li>Tratamientos de invierno → <a href="guias/registrar-tratamiento-fitosanitario/">tratamiento fitosanitario</a></li>
-<li>Cierre de campaña → <a href="guias/coste-por-hectarea/">coste por hectárea</a></li>
-<li>Preparo el SIEX anual → <a href="guias/exportar-cuaderno-siex/">exportar a SIEX</a></li>
-<li>Sin cobertura en campo → <a href="guias/trabajar-sin-cobertura/">trabajar sin cobertura</a></li>
-</ul>
-<h2 id="entender-el-porque">Entender el porqué</h2>
-<ul>
 <li><a href="explicacion/que-es-obligatorio/">Qué es obligatorio y cuándo</a></li>
-<li><a href="tutoriales/">Tutoriales: de cero a tu primer SIEX</a></li>
-<li><a href="referencia/">Referencia: objetos, campos y glosario</a></li>
-<li><a href="novedades/">Novedades: producto y regulación</a></li>
+<li><a href="explicacion/que-es-el-cue/">Qué es el CUE</a></li>
 </ul>
+</div>
+<div class="ayuda-tarjeta">
+<h3 id="almacen-y-costes"><a href="guias/coste-por-hectarea/">Almacén y costes</a></h3>
+<p>Qué tienes, dónde, y cuánto te cuesta cada hectárea.</p>
+<ul>
+<li><a href="guias/almacen-entradas-salidas/">Llevar el almacén</a></li>
+<li><a href="guias/coste-por-hectarea/">Ver el coste por hectárea</a></li>
+<li><a href="explicacion/como-se-calcula-el-coste/">Cómo se calcula el coste</a></li>
+</ul>
+</div>
+<div class="ayuda-tarjeta">
+<h3 id="asesores-y-cooperativas"><a href="tutoriales/tu-primera-cartera/">Asesores y cooperativas</a></h3>
+<p>Llevar varias explotaciones y trabajar con tu equipo.</p>
+<ul>
+<li><a href="tutoriales/tu-primera-cartera/">Tu primera cartera</a></li>
+<li><a href="guias/invitar-asesor-trabajador/">Invitar a tu asesor o a un trabajador</a></li>
+<li><a href="referencia/roles-y-permisos/">Roles y permisos</a></li>
+</ul>
+</div>
+</div>
+<h2 id="segun-el-momento">Según el momento</h2>
+<ul>
+<li><strong>Empiezo de cero</strong> → <a href="guias/alta-explotacion/">alta</a> y <a href="tutoriales/tu-primer-dia/">tu primer día</a></li>
+<li><strong>Tratamientos de invierno</strong> → <a href="guias/registrar-tratamiento-fitosanitario/">tratamiento fitosanitario</a></li>
+<li><strong>Cierre de campaña</strong> → <a href="guias/coste-por-hectarea/">coste por hectárea</a></li>
+<li><strong>Preparo el SIEX anual</strong> → <a href="guias/exportar-cuaderno-siex/">exportar a SIEX</a></li>
+<li><strong>Sin cobertura en el campo</strong> → <a href="guias/trabajar-sin-cobertura/">trabajar sin cobertura</a></li>
+</ul>
+<h2 id="para-ir-mas-a-fondo">Para ir más a fondo</h2>
+<ul>
+<li><a href="guias/">Todas las guías</a>, una tarea por artículo</li>
+<li><a href="referencia/">Referencia</a>: objetos, campos, tipos de parte y glosario</li>
+<li><a href="novedades/">Novedades</a>: lo que cambia en la app y en la normativa</li>
+</ul>
+<div class="ayuda-contacto">
+<p><strong>¿No lo encuentras?</strong> Escríbenos a
+<a href="mailto:hola@fnfanalytics.com">hola@fnfanalytics.com</a> y te contestamos.</p>
+</div>
 
 
 
@@ -1595,7 +1757,61 @@ completo, paso a paso: <a href="tutoriales/tu-primer-dia/">Tu primer día</a>.
 
 
 
+  
 
+
+  
+
+
+  <form class="md-feedback" name="feedback" hidden>
+    <fieldset>
+      <legend class="md-feedback__title">
+        ¿Te ha servido esta página?
+      </legend>
+      <div class="md-feedback__inner">
+        <div class="md-feedback__list">
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="Sí" data-md-value="1">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 9v12H1V9zm4 12a2 2 0 0 1-2-2V9c0-.55.22-1.05.59-1.41L14.17 1l1.06 1.06c.27.27.44.64.44 1.05l-.03.32L14.69 8H21a2 2 0 0 1 2 2v2c0 .26-.05.5-.14.73l-3.02 7.05C19.54 20.5 18.83 21 18 21zm0-2h9.03L21 12v-2h-8.79l1.13-5.32L9 9.03z"/></svg>
+            </button>
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="False" data-md-value="0">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 15V3h4v12zM15 3a2 2 0 0 1 2 2v10c0 .55-.22 1.05-.59 1.41L9.83 23l-1.06-1.06c-.27-.27-.44-.64-.44-1.06l.03-.31.95-4.57H3a2 2 0 0 1-2-2v-2c0-.26.05-.5.14-.73l3.02-7.05C4.46 3.5 5.17 3 6 3zm0 2H5.97L3 12v2h8.78l-1.13 5.32L15 14.97z"/></svg>
+            </button>
+          
+        </div>
+        <div class="md-feedback__note">
+          
+            <div data-md-value="1" hidden>
+              
+              
+                
+              
+              
+              
+                
+                
+              
+              Gracias. Nos ayuda a saber qué páginas funcionan.
+            </div>
+          
+            <div data-md-value="0" hidden>
+              
+              
+                
+              
+              
+              
+                
+                
+              
+              Gracias. Cuéntanos qué buscabas en <a href="mailto:hola@fnfanalytics.com?subject=Ayuda%20FnF">hola@fnfanalytics.com</a> y lo añadimos.
+            </div>
+          
+        </div>
+      </div>
+    </fieldset>
+  </form>
 
 
                 
@@ -1616,15 +1832,40 @@ completo, paso a paso: <a href="tutoriales/tu-primer-dia/">Tu primer día</a>.
       
         <footer class="md-footer">
   
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie" >
+        
+        
+          
+          <a href="guias/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: Guías prácticas">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Siguiente
+              </span>
+              <div class="md-ellipsis">
+                Guías prácticas
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
   
+    <div class="md-copyright__highlight">
+      <a href="https://fnfanalytics.com/">FnF Analytics</a> · ¿No lo encuentras? <a href="mailto:hola@fnfanalytics.com">hola@fnfanalytics.com</a>
+    </div>
   
-    Made with
-    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-      Material for MkDocs
-    </a>
   
 </div>
       
@@ -1641,7 +1882,7 @@ completo, paso a paso: <a href="tutoriales/tu-primer-dia/">Tu primer día</a>.
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["search.highlight", "search.suggest", "content.tooltips", "navigation.top"], "search": "assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["search.highlight", "search.suggest", "content.tooltips", "navigation.top", "navigation.footer"], "search": "assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
     
     
       <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
