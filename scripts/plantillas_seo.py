@@ -34,6 +34,7 @@ PIE = ('<nav class="pie-sitio" aria-label="Food &amp; Farm Analytics" style="mar
        '<a href="/">Food &amp; Farm Analytics</a> · <a href="/plantillas/">Plantillas</a> · '
        '<a href="/herramientas/calculadora-caldo">Calculadora de caldo</a> · '
        '<a href="/herramientas/direccion-de-trabajo">Dirección de trabajo</a> · <a href="/usos/">Usos autorizados</a> · '
+       '<a href="/ayuda/">Ayuda</a> · '
        '<a href="/?origen=plantillas#acceso">Solicita acceso</a></nav>')
 
 
@@ -100,8 +101,11 @@ def procesar(f):
                    lambda _: '<div class="rejilla" id="rejilla">\n' + tarjetas() + '\n  </div><!-- /rejilla -->', t, count=1, flags=re.S)
         t = re.sub(r"// Las hojas en datos:.*?\.join\(\"\"\);\n", "", t, flags=re.S)
     # pie: vuelta al sitio y al formulario de acceso
-    if nombre != "creador" and 'class="pie-sitio"' not in t:
-        t = re.sub(r'(<footer><div class="env">)', lambda m: m.group(1) + PIE, t, count=1)
+    if nombre != "creador":
+        if 'class="pie-sitio"' in t:  # si ya estaba, se sustituye: así un enlace nuevo llega a todas
+            t = re.sub(r'<nav class="pie-sitio".*?</nav>', lambda _: PIE, t, count=1, flags=re.S)
+        else:
+            t = re.sub(r'(<footer><div class="env">)', lambda m: m.group(1) + PIE, t, count=1)
     if t != original:
         f.write_text(t, encoding="utf-8")
         print("actualizada", f.relative_to(RAIZ))

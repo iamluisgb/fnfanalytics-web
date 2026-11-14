@@ -217,7 +217,7 @@ img{max-width:100%}
 .nav-links a:not(.btn){font-size:.86rem;color:var(--ink-soft-on-dark);text-decoration:none}
 .nav-links a:not(.btn):hover{color:#fff}
 .nav .btn{padding:9px 16px;font-size:.85rem}
-@media (max-width:860px){.nav-secciones a:not(.btn){display:none}}
+@media (max-width:960px){.nav-secciones a:not(.btn){display:none}}
 
 /* ---------- hero ---------- */
 .hero{position:relative;background:var(--carbon) url(/assets/hero-olivar.webp) center/cover no-repeat;isolation:isolate;overflow:hidden}
@@ -686,7 +686,8 @@ details.nav-movil[open]>summary{color:#fff;border-color:var(--brand)}
   font-size:.92rem;
 }
 .nav-movil__panel a:hover{background:rgba(255,255,255,.08);color:#fff}
-@media (max-width:860px){
+/* 960 y no 860: con «Ayuda» en la barra, a 870 px el logo tocaba «Inteligencia». */
+@media (max-width:960px){
   .nav-secciones{display:none}
   .nav-movil{display:block}
   .nav-links{gap:8px}

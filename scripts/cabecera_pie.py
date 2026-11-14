@@ -43,6 +43,7 @@ ENLACES_PIE = """    <nav aria-label="Pie">
       <a href="/usos/">Usos autorizados</a>
       <a href="/metodo">Cómo comprobamos</a>
       <a href="/asesores">Asesores</a>
+      <a href="/ayuda/">Ayuda</a>
       <a href="https://app.fnfanalytics.com/users/login/">Entrar</a>
       <a href="/privacidad">Privacidad</a>
       <a href="/aviso-legal">Aviso legal</a>
@@ -65,6 +66,7 @@ def cabecera(origen=""):
         <a href="/asesores">Asesores</a>
         <a href="/#precios">Precios</a>
         <a href="/cuaderno-digital">Cuaderno digital</a>
+        <a href="/ayuda/">Ayuda</a>
       </div>
       <details class="nav-movil">
         <summary>Menú</summary>
@@ -77,6 +79,7 @@ def cabecera(origen=""):
           <a href="/#faq">FAQ</a>
           <a href="/cuaderno-digital">Cuaderno digital 2027</a>
           <a href="/plantillas/">Herramientas gratis</a>
+          <a href="/ayuda/">Ayuda</a>
         </div>
       </details>
       <a class="btn btn-ghost nav-entrar" href="https://app.fnfanalytics.com/users/login/" data-umami-event="nav-entrar">Entrar</a>
